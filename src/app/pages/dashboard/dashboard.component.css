@@ -1,0 +1,55 @@
+.container1 {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* Adjust minmax width as needed */
+    grid-gap: 10px;
+  }
+  
+  .column {
+    background-color: #ced1b1;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 18px;
+    /* Additional styling */
+  }
+  
+  /* Media query for 3 columns per row */
+  @media (min-width: 1200px) {
+    .container {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  /* Media query for 4 columns per row */
+  @media (min-width: 1600px) {
+    .container {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  
+  /* Media query for 5 columns per row */
+  @media (min-width: 2000px) {
+    .container {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+  
+  /* Media query for smaller screens */
+  @media (max-width: 768px) {
+    .column {
+      flex: 0 0 calc(50% - 20px); /* Two columns per row */
+    }
+  }
+  @media (max-width: 768px) {
+    .column {
+      flex: 0 0 calc(50% - 20px); /* Two columns per row */
+    }
+  }
+  
+  /* Media query for even smaller screens */
+  @media (max-width: 576px) {
+    .column {
+      flex: 0 0 100%; /* One column per row */
+    }
+  }

@@ -1,0 +1,62 @@
+<div class="wrapper">
+  <div class="sidebarMenu" [ngClass]="status ? 'darSideBar' : 'genisSideBar'">
+
+    <div class="sideBarUst text-center pt-3">
+      <div class="logo">
+        VSK
+      </div><br>
+    </div>
+
+    <div class="sideBarOrta mt-3">
+      <ul class="nav flex-column">
+
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="" href="#">
+            <span class="navIcon"><i class="bi bi-house-add-fill"></i></span>
+            <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Registered</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/school" href="#">
+            <span class="navIcon"><i class="bi bi-clipboard2-data-fill"></i></span>
+            <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">School</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <span class="navIcon"><i class="bi bi-backpack4-fill"></i></span>
+            <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Attendance</span>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+
+
+    <!-- <div class="genisSideBarAlt d-flex justify-content-center fixed-bottom">
+      <button (click)="clickEvent()">tikla</button>
+    </div> -->
+
+  </div>
+
+  <!-- Page Content  -->
+  <div id="content">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+
+        <button type="button" id="sidebarCollapse" class="btn btn-secondary" (click)="clickEvent() ">
+          <i class="bi bi-justify"></i>
+        </button>
+        <h4 class="text-center">Vidya Samiksha Kendra, Delhi</h4>
+      </div>
+    </nav>
+
+    <!-- Body content -->
+    <router-outlet></router-outlet>
+    <!-- Body content -->
+
+  </div>
+</div>

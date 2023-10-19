@@ -1,0 +1,250 @@
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button class="nav-link" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button"
+            role="tab" aria-controls="overview" aria-selected="true">Overview</button>
+        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
+            role="tab" aria-controls="nav-home" aria-selected="true">Schools</button>
+        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"
+            role="tab" aria-controls="nav-profile" aria-selected="false">Teachers</button>
+        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button"
+            role="tab" aria-controls="nav-contact" aria-selected="false">Students</button>
+    </div>
+</nav>
+<div class="tab-content p-3" id="nav-tabContent">
+    <div class="tab-pane fade" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+        <div class="row justify-content-around">
+            <div class="col-md-4">
+                <div class="card tabs-card p-3 shadow-sm border-0">
+                    <div class="container-fluid">
+                        <div class="card-group card-1 mb-2">
+                            <div class="card text-end text-white p-2">
+                                <h2>2,000</h2>
+                                <h4>Number of schools</h4>
+                                <i class="bi bi-building"></i>
+                                <div class="ring"></div>
+                            </div>
+                        </div>
+                        <div class="card-group card-2 mb-2">
+                            <div class="card text-end text-white p-2">
+                                <h2>40,000</h2>
+                                <h4>Number of teachers</h4>
+                                <i class="bi bi-person-workspace"></i>
+                                <div class="ring"></div>
+                            </div>
+                        </div>
+                        <div class="card-group card-3 mb-2">
+                            <div class="card text-end text-white p-2">
+                                <h2>20,00,000</h2>
+                                <h4>Number of students</h4>
+                                <i class="bi bi-people-fill"></i>
+                                <div class="ring"></div>
+                            </div>
+                        </div>
+                        <div class="card-group card-4 mb-2">
+                            <div class="card text-end text-white p-2">
+                                <h2>1: 50</h2>
+                                <h4>Teacher ratio</h4>
+                                <i class="bi bi-person-workspace"></i>
+                                <div class="ring"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 ms-auto">
+                <div class="card tabs-card p-3 shadow-sm border-0">
+                    <div>
+                        <h5 class="text-center pt-2">Head of school gender ratio</h5>
+                        <apx-chart [series]="chartOptions3.series" [chart]="chartOptions3.chart"
+                            [labels]="chartOptions3.labels" [fill]="chartOptions3.fill"
+                            [dataLabels]="chartOptions3.dataLabels" [labels]="chartOptions3.labels"
+                            [plotOptions]="chartOptions3.plotOptions"
+                            [responsive]="chartOptions3.responsive"></apx-chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div class="card tabs-card p-3 shadow-sm border-0">
+            <div class="container-fluid">
+                <div class="row justify-content-around">
+                    <div class="col-lg-3 col-md-4">
+                        <div class="card-group card-1">
+                            <div class="card text-end text-white p-2">
+                                <h2>2,000</h2>
+                                <h4>Total schools</h4>
+                                <i class="bi bi-building"></i>
+                                <div class="ring"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4">
+                        <div class="card-group card-2">
+                            <div class="card text-end text-white p-2">
+                                <h2>1: 50</h2>
+                                <h4>Teacher ratio</h4>
+                                <i class="bi bi-person-workspace"></i>
+                                <div class="ring"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4">
+                        <div class="card-group card-3">
+                            <div class="card text-end text-white p-2">
+                                <h2>50</h2>
+                                <h4>Average teachers</h4>
+                                <i class="bi bi-people-fill"></i>
+                                <div class="ring"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4">
+                        <div class="card-group card-4">
+                            <div class="card text-end text-white p-2">
+                                <h2>1,500</h2>
+                                <h4>Avg. enrollment</h4>
+                                <i class="bi bi-pencil-square"></i>
+                                <div class="ring"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card tabs-card p-3 shadow-sm border-0 mt-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <select class="form-select">
+                        <option value="null" disabled selected>Select school category</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select">
+                        <option value="null" disabled selected>Select shift</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select">
+                        <option value="null" disabled selected>Select school</option>
+                    </select>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="bg-white">
+                        <h5 class="text-center pt-2">Number of schools by school category</h5>
+                        <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                            [yaxis]="chartOptions.yaxis" [xaxis]="chartOptions.xaxis" [labels]="chartOptions.labels"
+                            [stroke]="chartOptions.stroke" [dataLabels]="chartOptions.dataLabels"
+                            [fill]="chartOptions.fill" [tooltip]="chartOptions.tooltip"></apx-chart>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="bg-white">
+                        <h5 class="text-center pt-2">Head of school gender ratio</h5>
+                        <apx-chart [series]="chartOptions2.series" [chart]="chartOptions2.chart"
+                            [labels]="chartOptions2.labels" [fill]="chartOptions2.fill"
+                            [dataLabels]="chartOptions2.dataLabels" [labels]="chartOptions2.labels"
+                            [plotOptions]="chartOptions2.plotOptions"
+                            [responsive]="chartOptions2.responsive"></apx-chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <div class="card tabs-card p-3 shadow-sm border-0">
+            <div class="container-fluid">
+                <div class="row justify-content-around">
+                    <div class="col-lg-3 col-md-4">
+                        <div class="card-group card-1">
+                            <div class="card text-end text-white p-2">
+                                <h2>40,000</h2>
+                                <h4>Total teachers</h4>
+                                <i class="bi bi-building"></i>
+                                <div class="ring"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4">
+                        <div class="card-group card-2">
+                            <div class="card text-end text-white p-2">
+                                <h2>1: 50</h2>
+                                <h4>Teachers per school</h4>
+                                <i class="bi bi-person-workspace"></i>
+                                <div class="ring"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4">
+                        <div class="card-group card-3">
+                            <div class="card text-end text-white p-2">
+                                <h2>50</h2>
+                                <h4>Avg. teacher experience</h4>
+                                <i class="bi bi-people-fill"></i>
+                                <div class="ring"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4">
+                        <div class="card-group card-4">
+                            <div class="card text-end text-white p-2">
+                                <h2>1,500</h2>
+                                <h4>Avg. enrollment</h4>
+                                <i class="bi bi-pencil-square"></i>
+                                <div class="ring"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card tabs-card p-3 shadow-sm border-0 mt-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <select class="form-select">
+                        <option value="null" disabled selected>Select school category</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select">
+                        <option value="null" disabled selected>Select shift</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select">
+                        <option value="null" disabled selected>Select school</option>
+                    </select>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="bg-white">
+                        <h5 class="text-center pt-2">Number of schools by school category</h5>
+                        <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                            [yaxis]="chartOptions.yaxis" [xaxis]="chartOptions.xaxis" [labels]="chartOptions.labels"
+                            [stroke]="chartOptions.stroke" [dataLabels]="chartOptions.dataLabels"
+                            [fill]="chartOptions.fill" [tooltip]="chartOptions.tooltip"></apx-chart>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="bg-white">
+                        <h5 class="text-center pt-2">Head of school gender ratio</h5>
+                        <apx-chart [series]="chartOptions2.series" [chart]="chartOptions2.chart"
+                            [labels]="chartOptions2.labels" [fill]="chartOptions2.fill"
+                            [dataLabels]="chartOptions2.dataLabels" [labels]="chartOptions2.labels"
+                            [plotOptions]="chartOptions2.plotOptions"
+                            [responsive]="chartOptions2.responsive"></apx-chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+</div>
