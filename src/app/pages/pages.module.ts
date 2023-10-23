@@ -5,12 +5,14 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { SchoolComponent } from './school/school.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { ShowGraphComponent } from './show-graph/show-graph.component';
 
 
 @NgModule({
   declarations: [
     SchoolComponent,
-    DashboardComponent
+    DashboardComponent,
+    ShowGraphComponent
   ],
   imports: [
     CommonModule,
