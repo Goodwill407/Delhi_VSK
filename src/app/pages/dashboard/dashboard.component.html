@@ -1,26 +1,33 @@
 <div class="container1">
-    <div class="column">
-        <img src="../assets/images/slide1.PNG" class="container-fluid" [routerLink]="['/show-graph']"
-            [queryParams]="{graph: 1}">
-        <!-- <section id="report">
-            <div #embeddedReport1></div>
-        </section> -->
+    <div class="column" [routerLink]="['/show-graph']" [queryParams]="{graph: 1}">
+        <object
+            data="https://app.powerbi.com/reportEmbed?reportId=bf377e08-3ef7-4b29-a908-bdd8baee909b&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d"
+            type="text/html">
+            Alternative Content
+        </object>
     </div>
-    <div class="column">
-        <section id="report">
-            <div #embeddedReport2></div>
-        </section>
+    <div class="column" [routerLink]="['/show-graph']" [queryParams]="{graph: 2}">
+        <object
+            data="https://app.powerbi.com/reportEmbed?reportId=d58c80a9-9b50-4d61-8145-30846c7b81b8&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d"
+            type="text/html">
+            Alternative Content
+        </object>
     </div>
-    <div class="column">
-        <section id="report">
-            <div #embeddedReport3></div>
-        </section>
+    <div class="column"  [routerLink]="['/show-graph']" [queryParams]="{graph: 3}">
+        <object
+            data="https://app.powerbi.com/reportEmbed?reportId=735d3769-0dbf-4f77-9610-49fcaa89747f&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d"
+            type="text/html">
+            Alternative Content
+        </object>
     </div>
-    <div class="column">
-        <section id="report">
-            <div #embeddedReport4></div>
-        </section>
-    </div>
+
+    <div class="column" [routerLink]="['/show-graph']" [queryParams]="{graph: 4}">
+        <object
+            data="https://app.powerbi.com/reportEmbed?reportId=bf5ed903-047e-4e1d-9bee-4088ae31b327&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d"
+            type="text/html" >
+            Alternative Content
+        </object>
+    <!-- </div>
     <div class="column">
         <section id="report">
             <div #embeddedReport5></div>
@@ -70,6 +77,6 @@
         <section id="report">
             <div #embeddedReport14></div>
         </section>
-    </div>
+    </div> -->
 
-</div>
+</div> 
