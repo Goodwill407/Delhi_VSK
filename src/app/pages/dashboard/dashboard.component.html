@@ -1,82 +1,68 @@
-<div class="container1">
-    <div class="column" [routerLink]="['/show-graph']" [queryParams]="{graph: 1}">
-        <object
-            data="https://app.powerbi.com/reportEmbed?reportId=bf377e08-3ef7-4b29-a908-bdd8baee909b&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d"
-            type="text/html">
-            Alternative Content
-        </object>
+<div class="d-flex">
+    <div class="col-md-4 graph">
+        <iframe title="State wise Disctrict"
+            src="https://app.powerbi.com/reportEmbed?reportId=e529ea7d-d396-4e2a-b34c-70c22b586975&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d&navContentPaneEnabled=false&filterPaneEnabled=false"
+            frameborder="0" allowFullScreen="true"></iframe>
     </div>
-    <div class="column" [routerLink]="['/show-graph']" [queryParams]="{graph: 2}">
-        <object
-            data="https://app.powerbi.com/reportEmbed?reportId=d58c80a9-9b50-4d61-8145-30846c7b81b8&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d"
-            type="text/html">
-            Alternative Content
-        </object>
-    </div>
-    <div class="column"  [routerLink]="['/show-graph']" [queryParams]="{graph: 3}">
-        <object
-            data="https://app.powerbi.com/reportEmbed?reportId=735d3769-0dbf-4f77-9610-49fcaa89747f&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d"
-            type="text/html">
-            Alternative Content
-        </object>
-    </div>
+    <div class="col-md-8">
 
-    <div class="column" [routerLink]="['/show-graph']" [queryParams]="{graph: 4}">
-        <object
-            data="https://app.powerbi.com/reportEmbed?reportId=bf5ed903-047e-4e1d-9bee-4088ae31b327&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d"
-            type="text/html" >
-            Alternative Content
-        </object>
-    <!-- </div>
-    <div class="column">
-        <section id="report">
-            <div #embeddedReport5></div>
-        </section>
-    </div>
-    <div class="column">
-        <section id="report">
-            <div #embeddedReport6></div>
-        </section>
-    </div>
-    <div class="column">
-        <section id="report">
-            <div #embeddedReport7></div>
-        </section>
-    </div>
-    <div class="column">
-        <section id="report">
-            <div #embeddedReport8></div>
-        </section>
-    </div>
-    <div class="column">
-        <section id="report">
-            <div #embeddedReport9></div>
-        </section>
-    </div>
-    <div class="column">
-        <section id="report">
-            <div #embeddedReport10></div>
-        </section>
-    </div>
-    <div class="column">
-        <section id="report">
-            <div #embeddedReport11></div>
-        </section>
-    </div>
-    <div class="column">
-        <section id="report">
-            <div #embeddedReport12></div>
-        </section>
-    </div>
-    <div class="column">
-        <section id="report">
-            <div #embeddedReport13></div>
-        </section>
-    </div>
-    <div class="column">
-        <section id="report">
-            <div #embeddedReport14></div>
-        </section>
-    </div> -->
+        <div class="container1">
+            <div class="column" [routerLink]="['/show-graph']" [queryParams]="{graph: 1}">
+                <h5 class="bg-light p-2 m-2">Central District</h5>
+                <iframe title="Central District"
+                    src="https://app.powerbi.com/reportEmbed?reportId=d58c80a9-9b50-4d61-8145-30846c7b81b8&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d&navContentPaneEnabled=false&filterPaneEnabled=false"
+                    frameborder="0" allowFullScreen="true"></iframe>
+            </div>
+            <div class="column" routerLink="north-delhi">
+                <h5 class="bg-light p-2 m-2">North Delhi District</h5>
+                <iframe
+                    src="https://app.powerbi.com/reportEmbed?reportId=d58c80a9-9b50-4d61-8145-30846c7b81b8&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d&navContentPaneEnabled=false&filterPaneEnabled=false"
+                    type="text/html">
+                </iframe>
+            </div>
+            <div class="column" routerLink="east-delhi">
+                <h5 class="bg-light p-2 m-2">East Delhi District</h5>
+                <iframe
+                    src="https://app.powerbi.com/reportEmbed?reportId=735d3769-0dbf-4f77-9610-49fcaa89747f&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d&navContentPaneEnabled=false&filterPaneEnabled=false"
+                    type="text/html">
+                </iframe>
+            </div>
+            <div class="column" routerLink="north-east-delhi">
+                <h5 class="bg-light p-2 m-2">North East Delhi District</h5>
+                <iframe
+                    src="https://app.powerbi.com/reportEmbed?reportId=735d3769-0dbf-4f77-9610-49fcaa89747f&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d&navContentPaneEnabled=false&filterPaneEnabled=false"
+                    type="text/html">
+                </iframe>
+            </div>
+            <div class="column" routerLink="south-delhi">
+                <h5 class="bg-light p-2 m-2">South Delhi District</h5>
+                <iframe
+                    src="https://app.powerbi.com/reportEmbed?reportId=735d3769-0dbf-4f77-9610-49fcaa89747f&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d&navContentPaneEnabled=false&filterPaneEnabled=false"
+                    type="text/html">
+                </iframe>
+            </div>
+            <div class="column" routerLink="north-west-delhi">
+                <h5 class="bg-light p-2 m-2">North West Delhi District</h5>
+                <iframe
+                    src="https://app.powerbi.com/reportEmbed?reportId=735d3769-0dbf-4f77-9610-49fcaa89747f&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d&navContentPaneEnabled=false&filterPaneEnabled=false"
+                    type="text/html">
+                </iframe>
+            </div>
+            <div class="column" routerLink="west-delhi">
+                <h5 class="bg-light p-2 m-2">West Delhi District</h5>
+                <iframe
+                    src="https://app.powerbi.com/reportEmbed?reportId=735d3769-0dbf-4f77-9610-49fcaa89747f&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d&navContentPaneEnabled=false&filterPaneEnabled=false"
+                    type="text/html">
+                </iframe>
+            </div>
+            <div class="column" routerLink="new-delhi">
+                <h5 class="bg-light p-2 m-2">New Delhi District</h5>
+                <iframe
+                    src="https://app.powerbi.com/reportEmbed?reportId=735d3769-0dbf-4f77-9610-49fcaa89747f&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d&navContentPaneEnabled=false&filterPaneEnabled=false"
+                    type="text/html">
+                </iframe>
+            </div>
+        </div>
 
-</div> 
+    </div>
+</div>

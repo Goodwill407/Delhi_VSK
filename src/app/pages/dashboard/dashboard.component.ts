@@ -130,21 +130,6 @@ export class DashboardComponent {
       pbi.factories.wpmpFactory,
       pbi.factories.routerFactory
     );
-    powerbi.embed(this.embeddedReport1.nativeElement, config);
-    powerbi.embed(this.embeddedReport2.nativeElement, config);
-    powerbi.embed(this.embeddedReport3.nativeElement, config);
-    powerbi.embed(this.embeddedReport4.nativeElement, config);
-    powerbi.embed(this.embeddedReport5.nativeElement, config);
-    powerbi.embed(this.embeddedReport6.nativeElement, config);
-    powerbi.embed(this.embeddedReport7.nativeElement, config);
-    powerbi.embed(this.embeddedReport8.nativeElement, config);
-    powerbi.embed(this.embeddedReport9.nativeElement, config);
-    powerbi.embed(this.embeddedReport10.nativeElement, config);
-    powerbi.embed(this.embeddedReport11.nativeElement, config);
-    powerbi.embed(this.embeddedReport12.nativeElement, config);
-    powerbi.embed(this.embeddedReport13.nativeElement, config);
-    powerbi.embed(this.embeddedReport14.nativeElement, config);
-
   }
 }
 

@@ -3,9 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CategoryService, ChartModule, LineSeriesService } from '@syncfusion/ej2-angular-charts';
-import { NgApexchartsModule } from 'ng-apexcharts';
+import { ChartModule } from '@syncfusion/ej2-angular-charts';
 import { PagesModule } from './pages/pages.module';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,7 @@ import { PagesModule } from './pages/pages.module';
     ChartModule,
     PagesModule
   ],
-  providers: [LineSeriesService, CategoryService],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

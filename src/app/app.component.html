@@ -13,21 +13,21 @@
         <li class="nav-item">
           <a class="nav-link active" routerLink="" href="#">
             <span class="navIcon"><i class="bi bi-house-add-fill"></i></span>
-            <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Registered</span>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="#">
-            <span class="navIcon"><i class="bi bi-clipboard2-data-fill"></i></span>
             <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">School</span>
           </a>
         </li>
 
         <li class="nav-item">
           <a class="nav-link" href="#">
+            <span class="navIcon"><i class="bi bi-clipboard2-data-fill"></i></span>
+            <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Teacher</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="attendance" href="#">
             <span class="navIcon"><i class="bi bi-backpack4-fill"></i></span>
-            <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Attendance</span>
+            <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Student</span>
           </a>
         </li>
 
