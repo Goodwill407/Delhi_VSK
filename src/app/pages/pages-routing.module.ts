@@ -11,6 +11,8 @@ import { SouthDelhiComponent } from './south-delhi/south-delhi.component';
 import { NorthWestDelhiComponent } from './north-west-delhi/north-west-delhi.component';
 import { WestDelhiComponent } from './west-delhi/west-delhi.component';
 import { NewDelhiComponent } from './new-delhi/new-delhi.component';
+import { SouthWestDelhiComponent } from './south-west-delhi/south-west-delhi.component';
+import { SouthEastDelhiComponent } from './south-east-delhi/south-east-delhi.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -24,6 +26,8 @@ const routes: Routes = [
   { path: 'north-west-delhi', component: NorthWestDelhiComponent },
   { path: 'west-delhi', component: WestDelhiComponent },
   { path: 'new-delhi', component: NewDelhiComponent },
+  { path: 'south-west-delhi', component: SouthWestDelhiComponent },
+  { path: 'south-east-delhi', component: SouthEastDelhiComponent },
 ];
 
 @NgModule({

@@ -15,6 +15,8 @@ import { SouthDelhiComponent } from './south-delhi/south-delhi.component';
 import { NorthWestDelhiComponent } from './north-west-delhi/north-west-delhi.component';
 import { WestDelhiComponent } from './west-delhi/west-delhi.component';
 import { NewDelhiComponent } from './new-delhi/new-delhi.component';
+import { SouthWestDelhiComponent } from './south-west-delhi/south-west-delhi.component';
+import { SouthEastDelhiComponent } from './south-east-delhi/south-east-delhi.component';
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import { NewDelhiComponent } from './new-delhi/new-delhi.component';
     SouthDelhiComponent,
     NorthWestDelhiComponent,
     WestDelhiComponent,
-    NewDelhiComponent
+    NewDelhiComponent,
+    SouthWestDelhiComponent,
+    SouthEastDelhiComponent
   ],
   imports: [
     CommonModule,
