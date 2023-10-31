@@ -1,28 +1,32 @@
 import { Component } from '@angular/core';
-
+import { HttpServiceService } from 'src/app/services/http-service.service';
 @Component({
   selector: 'app-teacher',
   templateUrl: './teacher.component.html',
   styleUrls: ['./teacher.component.css']
 })
-export class TeacherComponent { commonBarGraph: any;
+export class TeacherComponent { 
+  commonBarGraph: any;
   commonPieGraph: any;
 
   teacherGenderRatio: any;
   studentsGenderRatio: any;
   typesOfSchools: any;
   shiftWiseSchools: any;
-  teacherRaio:any;
-  totalTeachers: number = 41236;
 
-  constructor() {
+  teachersRatio: any;
+  totalTeacher: any;
+  totalMaleTeachers: any;
+  totalFemaleTeachers: any;
+  averageTeacherOfSchool: any
+
+  constructor(private httpService: HttpServiceService) {
     this.commonBarGraph = {
       series: [],
       chart: {
         type: "bar",
         events: {
           click: function (chart: any, w: any, e: any) {
-            // console.log(chart, w, e)
           }
         }
       },
@@ -43,12 +47,26 @@ export class TeacherComponent { commonBarGraph: any;
       },
       xaxis: {
         categories: [],
-        labels: {
+        title: {
+          text: "",
           style: {
-            fontSize: "12px"
+            fontSize: "14px",
+            color: "#6d7fcc",
+            fontWeight: "600"
           }
         }
+      },
+      yaxis: {
+        title: {
+          text: "",
+          style: {
+            fontSize: "14px",
+            color: "#6d7fcc",
+            fontWeight: "600"
+          }
+        },
       }
+
     };
 
     this.commonPieGraph = {
@@ -67,14 +85,19 @@ export class TeacherComponent { commonBarGraph: any;
           donut: {
             labels: {
               show: true,
-              showAlways: false,
-              formatter: (w: any) => {
-                return ' tCO2e'
+              total: {
+                show: true,
+                formatter: (w: any) => {
+                  return w.globals.seriesTotals.reduce((a: any, b: any) => {
+                    return a + b
+                  }, 0) + ' Schools'
+                }
               }
             }
           }
         }
       },
+      labels: ['Goods & Services', 'Offices', 'Marketing', 'Employees', 'Travel', 'Other'],
       legend: {
         formatter: function (val: any, opts: any) {
           return val + " - " + opts.w.globals.series[opts.seriesIndex];
@@ -93,40 +116,76 @@ export class TeacherComponent { commonBarGraph: any;
           }
         }
       ]
-    }
+    };
   }
 
   ngOnInit() {
-    this.getStudentsGenderRatio();
-    this.getTeachersGenderRatio();
-    this.getTypesOfSchools();
-    this.getShiftWiseSchools();
-    this.getTeacherRatio();
+    this.getAllData();
+    this.getAllSchoolGraph();
   }
 
-  getStudentsGenderRatio() {
+  getAllData() {
+    this.httpService.get('graphs').subscribe((data: any) => {
+      if (data) {
+        this.teachersRatio = data.teacherStudentRatio.toFixed(2);
+        this.totalTeacher = data.totalTeachers;
+        this.totalMaleTeachers = data.totalMaleTeachers;
+        this.totalFemaleTeachers =  data.totalFemaleTeachers;
+        this.averageTeacherOfSchool =  data.averageTeacherOfSchool;
+        
+
+        const studentsGender = {
+          totalBoys: data.totalBoys,
+          totalGirls: data.totalGirls
+        }
+        this.getStudentsGenderRatio(studentsGender);
+
+        const teachersGender = {
+          totalMaleTeachers: data.totalMaleTeachers,
+          totalFemaleTeachers: data.totalFemaleTeachers
+        }
+        this.getTeachersGenderRatio(teachersGender);
+
+
+      }
+    })
+  }
+
+  getAllSchoolGraph() {
+    this.httpService.get('graphs/school-graph').subscribe((data: any) => {
+      if (data) {
+        this.getShiftWiseSchools(data.shiftWiseCount);
+      }
+    })
+  }
+
+  getStudentsGenderRatio(studentsGender: any) {
     const series = [{
       name: "Graphical",
-      data: [21, 22]
+      data: [studentsGender.totalBoys, studentsGender.totalGirls]
     }];
     const categories = [
-      "Mary", "Evans", "David", "Wilson", "Lily", "Roberts", "Julia", "May"
+      "Boys", "Girls"
     ]
-    this.studentsGenderRatio = this.commonBarGraph;
+    this.studentsGenderRatio = JSON.parse(JSON.stringify(this.commonBarGraph));
     this.studentsGenderRatio.series = [...series];
+    this.studentsGenderRatio.xaxis.title.text = "Students Gender";
+    this.studentsGenderRatio.yaxis.title.text = "Total Students";
     this.studentsGenderRatio.xaxis.categories = [...categories];
   }
 
-  getTeachersGenderRatio() {
+  getTeachersGenderRatio(teachersGender: any) {
     const series = [{
       name: "Graphical",
-      data: [21, 22]
+      data: [teachersGender.totalMaleTeachers, teachersGender.totalFemaleTeachers]
     }];
     const categories = [
-      "Mary", "Evans", "David", "Wilson", "Lily", "Roberts", "Julia", "May"
+      "Male", "Female"
     ]
-    this.teacherGenderRatio = this.commonBarGraph;
+    this.teacherGenderRatio = JSON.parse(JSON.stringify(this.commonBarGraph));
     this.teacherGenderRatio.series = [...series];
+    this.teacherGenderRatio.xaxis.title.text = "Teachers Gender";
+    this.teacherGenderRatio.yaxis.title.text = "Total Teachers";
     this.teacherGenderRatio.xaxis.categories = [...categories];
   }
 
@@ -136,229 +195,19 @@ export class TeacherComponent { commonBarGraph: any;
     this.typesOfSchools.series = [...series];
   }
 
-  getShiftWiseSchools() {
+  getShiftWiseSchools(shiftWiseCount: any) {
     const series = [{
       name: "Graphical",
-      data: [21, 22, 10, 28, 16, 21, 13, 30]
+      data: [shiftWiseCount.Morning, shiftWiseCount.Afternoon, shiftWiseCount.Evening, shiftWiseCount.General]
     }];
     const categories = [
-      "Mary", "Evans", "David", "Wilson", "Lily", "Roberts", "Julia", "May"
+      "Morning", "Afternoon", "Evening", "General"
     ]
-    this.shiftWiseSchools = this.commonBarGraph;
+    this.shiftWiseSchools = JSON.parse(JSON.stringify(this.commonBarGraph));
     this.shiftWiseSchools.series = [...series];
+    this.shiftWiseSchools.xaxis.title.text = "Shifts";
+    this.shiftWiseSchools.yaxis.title.text = "Total Schools";
     this.shiftWiseSchools.xaxis.categories = [...categories];
-  }
-
-  getTeacherRatio(){
-    this.teacherRaio = {
-      series: [
-      {
-        type: 'rangeArea',
-        name: 'Team B Range',
-    
-        data: [
-          {
-            x: 'Jan',
-            y: [1100, 1900]
-          },
-          {
-            x: 'Feb',
-            y: [1200, 1800]
-          },
-          {
-            x: 'Mar',
-            y: [900, 2900]
-          },
-          {
-            x: 'Apr',
-            y: [1400, 2700]
-          },
-          {
-            x: 'May',
-            y: [2600, 3900]
-          },
-          {
-            x: 'Jun',
-            y: [500, 1700]
-          },
-          {
-            x: 'Jul',
-            y: [1900, 2300]
-          },
-          {
-            x: 'Aug',
-            y: [1000, 1500]
-          }
-        ]
-      },
-    
-      {
-        type: 'rangeArea',
-        name: 'Team A Range',
-        data: [
-          {
-            x: 'Jan',
-            y: [3100, 3400]
-          },
-          {
-            x: 'Feb',
-            y: [4200, 5200]
-          },
-          {
-            x: 'Mar',
-            y: [3900, 4900]
-          },
-          {
-            x: 'Apr',
-            y: [3400, 3900]
-          },
-          {
-            x: 'May',
-            y: [5100, 5900]
-          },
-          {
-            x: 'Jun',
-            y: [5400, 6700]
-          },
-          {
-            x: 'Jul',
-            y: [4300, 4600]
-          },
-          {
-            x: 'Aug',
-            y: [2100, 2900]
-          }
-        ]
-      },
-    
-      {
-        type: 'line',
-        name: 'Team B Median',
-        data: [
-          {
-            x: 'Jan',
-            y: 1500
-          },
-          {
-            x: 'Feb',
-            y: 1700
-          },
-          {
-            x: 'Mar',
-            y: 1900
-          },
-          {
-            x: 'Apr',
-            y: 2200
-          },
-          {
-            x: 'May',
-            y: 3000
-          },
-          {
-            x: 'Jun',
-            y: 1000
-          },
-          {
-            x: 'Jul',
-            y: 2100
-          },
-          {
-            x: 'Aug',
-            y: 1200
-          },
-          {
-            x: 'Sep',
-            y: 1800
-          },
-          {
-            x: 'Oct',
-            y: 2000
-          }
-        ]
-      },
-      {
-        type: 'line',
-        name: 'Team A Median',
-        data: [
-          {
-            x: 'Jan',
-            y: 3300
-          },
-          {
-            x: 'Feb',
-            y: 4900
-          },
-          {
-            x: 'Mar',
-            y: 4300
-          },
-          {
-            x: 'Apr',
-            y: 3700
-          },
-          {
-            x: 'May',
-            y: 5500
-          },
-          {
-            x: 'Jun',
-            y: 5900
-          },
-          {
-            x: 'Jul',
-            y: 4500
-          },
-          {
-            x: 'Aug',
-            y: 2400
-          },
-          {
-            x: 'Sep',
-            y: 2100
-          },
-          {
-            x: 'Oct',
-            y: 1500
-          }
-        ]
-      }
-    ],
-      chart: {
-      height: 250,
-      type: 'rangeArea',
-      animations: {
-        speed: 500
-      }
-    },
-    colors: ['#d4526e', '#33b2df', '#d4526e', '#33b2df'],
-    dataLabels: {
-      enabled: false
-    },
-    fill: {
-      opacity: [0.24, 0.24, 1, 1]
-    },
-    forecastDataPoints: {
-      count: 2
-    },
-    stroke: {
-      curve: 'straight',
-      width: [0, 0, 2, 2]
-    },
-    legend: {
-      show: true,
-      customLegendItems: ['Team B', 'Team A'],
-      inverseOrder: true
-    },
-    title: {
-      text: 'Range Area with Forecast Line (Combo)'
-    },
-    markers: {
-      hover: {
-        sizeOffset: 5
-      }
-    }
-    };
   }
 
 }
