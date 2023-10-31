@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpServiceService } from 'src/app/services/http-service.service';
 
 @Component({
   selector: 'app-student',
@@ -6,24 +7,25 @@ import { Component } from '@angular/core';
   styleUrls: ['./student.component.css']
 })
 export class StudentComponent {
-  TotalStudentOfSchool: any;
-  commonBarGraph:any
-  commonPieGraph:any
-  typesOfSchools:any
-  studentCatagity:any
-  studentAttendance:any
-  student_info:any
-  studentresult:any
-  
+  totalStudent: any;
+  totalBoys: any;
+  totalGirls: any;
+  commonBarGraph: any
+  commonPieGraph: any
+  studentsGenderRatio: any
+  averageStudentOfSchool: any
+  teacherStudentRatio: any
+  student_info: any
+  studentresult: any
 
-  constructor() {
+
+  constructor(private httpService: HttpServiceService) {
     this.commonBarGraph = {
       series: [],
       chart: {
         type: "bar",
         events: {
           click: function (chart: any, w: any, e: any) {
-            // console.log(chart, w, e)
           }
         }
       },
@@ -44,12 +46,26 @@ export class StudentComponent {
       },
       xaxis: {
         categories: [],
-        labels: {
+        title: {
+          text: "",
           style: {
-            fontSize: "12px"
+            fontSize: "14px",
+            color: "#6d7fcc",
+            fontWeight: "600"
           }
         }
+      },
+      yaxis: {
+        title: {
+          text: "",
+          style: {
+            fontSize: "14px",
+            color: "#6d7fcc",
+            fontWeight: "600"
+          }
+        },
       }
+
     };
 
     this.commonPieGraph = {
@@ -68,14 +84,19 @@ export class StudentComponent {
           donut: {
             labels: {
               show: true,
-              showAlways: false,
-              formatter: (w: any) => {
-                return ' tCO2e'
+              total: {
+                show: true,
+                formatter: (w: any) => {
+                  return w.globals.seriesTotals.reduce((a: any, b: any) => {
+                    return a + b
+                  }, 0) + ' Schools'
+                }
               }
             }
           }
         }
       },
+      labels: ['Goods & Services', 'Offices', 'Marketing', 'Employees', 'Travel', 'Other'],
       legend: {
         formatter: function (val: any, opts: any) {
           return val + " - " + opts.w.globals.series[opts.seriesIndex];
@@ -94,140 +115,92 @@ export class StudentComponent {
           }
         }
       ]
-    }
-  }
-
-  ngOnInit(){
-   this.getTotalStudentOfSchool()
-   this. getTypesOfSchools()
-   this.getstudentCatagity()
-   this.StudentAttendance()
-   this.studentInfo()
-   this.getStuentResult()
-  }
-
-  getTotalStudentOfSchool() {
-    
-  }
-  getTypesOfSchools() {
-    const series = [44, 55, 41, 17, 15]
-    this.typesOfSchools = this.commonPieGraph;
-    this.typesOfSchools.series = [...series];
-  }
-
-  getstudentCatagity() {
-    this.studentCatagity
-    = {
-      series: [{
-      data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
-    }],
-      chart: {
-      type: 'bar',
-      height: 250
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 4,
-        horizontal: true,
-      }
-    },
-    dataLabels: {
-      enabled: false
-    },
-    xaxis: {
-      categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan',
-        'United States', 'China', 'Germany'
-      ],
-    }
     };
   }
-  StudentAttendance(){
-  
-    this.studentAttendance = {
-      series: [
-        {
-          name: "Desktops",
-          data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+
+  ngOnInit() {
+    this.getAllData()
+    this.studentInfo()
+    this.getStuentResult()
+  }
+
+  getAllData() {
+    this.httpService.get('graphs').subscribe((data: any) => {
+      if (data) {
+        this.totalStudent = data.totalStudents;
+        this.totalBoys = data.totalBoys
+        this.totalGirls = data.totalGirls
+        this.averageStudentOfSchool=data.averageStudentOfSchool
+        this.teacherStudentRatio=data.teacherStudentRatio
+
+        const studentsGender = {
+          totalBoys: data.totalBoys,
+          totalGirls: data.totalGirls
         }
-      ],
+        this.getStudentsGenderRatio(studentsGender);
+
+      }
+    })
+  }
+
+
+  getStudentsGenderRatio(studentsGender: any) {
+    const series = [{
+      name: "Graphical",
+      data: [studentsGender.totalBoys, studentsGender.totalGirls]
+    }];
+    const categories = [
+      "Boys", "Girls"
+    ]
+    this.studentsGenderRatio = JSON.parse(JSON.stringify(this.commonBarGraph));
+    this.studentsGenderRatio.series = [...series];
+    this.studentsGenderRatio.xaxis.title.text = "Students Gender";
+    this.studentsGenderRatio.yaxis.title.text = "Total Students";
+    this.studentsGenderRatio.xaxis.categories = [...categories];
+  }
+
+ 
+  
+
+  studentInfo() {
+    this.student_info = {
+      series: [{
+        data: [44, 55, 41, 64, 22, 43, 21]
+      }, {
+        data: [53, 32, 33, 52, 13, 44, 32]
+      }],
       chart: {
-        height: 250,
-        type: "line",
-        zoom: {
-          enabled: false
+        type: 'bar',
+        height: 250
+      },
+      plotOptions: {
+        bar: {
+          horizontal: true,
+          dataLabels: {
+            position: 'top',
+          },
         }
       },
       dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: "straight"
-      },
-      title: {
-        text: "Product Trends by Month",
-        align: "left"
-      },
-      grid: {
-        row: {
-          colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-          opacity: 0.5
+        enabled: true,
+        offsetX: -6,
+        style: {
+          fontSize: '12px',
+          colors: ['#fff']
         }
       },
-      xaxis: {
-        categories: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep"
-        ]
-      }
-    };
-  }
-
-  studentInfo(){
-    this.student_info = {
-      series: [{
-      data: [44, 55, 41, 64, 22, 43, 21]
-    }, {
-      data: [53, 32, 33, 52, 13, 44, 32]
-    }],
-      chart: {
-      type: 'bar',
-      height: 250
-    },
-    plotOptions: {
-      bar: {
-        horizontal: true,
-        dataLabels: {
-          position: 'top',
-        },
-      }
-    },
-    dataLabels: {
-      enabled: true,
-      offsetX: -6,
-      style: {
-        fontSize: '12px',
+      stroke: {
+        show: true,
+        width: 1,
         colors: ['#fff']
-      }
-    },
-    stroke: {
-      show: true,
-      width: 1,
-      colors: ['#fff']
-    },
-    tooltip: {
-      shared: true,
-      intersect: false
-    },
-    xaxis: {
-      categories: [2001, 2002, 2003, 2004, 2005, 2006, 2007],
-    },
+      },
+      tooltip: {
+        shared: true,
+        intersect: false
+      },
+      xaxis: {
+        categories: [2001, 2002, 2003, 2004, 2005, 2006, 2007],
+      },
     };
   }
 
