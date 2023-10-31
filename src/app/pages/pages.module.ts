@@ -7,13 +7,15 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { HttpClientModule } from '@angular/common/http';
 import { StudentComponent } from './student/student.component';
+import { TeacherComponent } from './teacher/teacher.component';
 
 
 @NgModule({
   declarations: [
     SchoolComponent,
     DashboardComponent,
-    StudentComponent
+    StudentComponent,
+    TeacherComponent
   ],
   imports: [
     CommonModule,
