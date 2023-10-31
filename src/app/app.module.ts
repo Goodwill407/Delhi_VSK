@@ -6,10 +6,12 @@ import { AppComponent } from './app.component';
 import { ChartModule } from '@syncfusion/ej2-angular-charts';
 import { PagesModule } from './pages/pages.module';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { TeacherComponent } from './teacher/teacher.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TeacherComponent
   ],
   imports: [
     BrowserModule,
