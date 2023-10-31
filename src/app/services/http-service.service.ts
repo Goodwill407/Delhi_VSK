@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class HttpServiceService {
 
-  apiURL = 'https://www.edudel.nic.in/mis/EduWebService_Other/vidyasamikshakendra.asmx/'
+  apiURL = 'http://165.22.216.223:3000/v1/'
 
   constructor(private http: HttpClient) { }
 
