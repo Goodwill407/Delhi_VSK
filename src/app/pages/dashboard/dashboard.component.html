@@ -1,82 +1,33 @@
-<div class="d-flex">
-    <div class="col-md-4 graph">
-        <iframe title="State wise Disctrict"
-            src="https://app.powerbi.com/reportEmbed?reportId=e529ea7d-d396-4e2a-b34c-70c22b586975&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d&navContentPaneEnabled=false&filterPaneEnabled=false"
-            frameborder="0" allowFullScreen="true"></iframe>
+<div class="container1">
+    <div class="column">
+        <h5 class="bg-light p-2 m-2">Central District</h5>
     </div>
-    <div class="col-md-8">
-
-        <div class="container1">
-            <div class="column" [routerLink]="['/show-graph']" [queryParams]="{graph: 1}">
-                <h5 class="bg-light p-2 m-2">Central District</h5>
-                <iframe title="No of Schools"
-                    src="https://app.powerbi.com/reportEmbed?reportId=e8a43f0a-8180-4766-8fc2-8a331e723384&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d&navContentPaneEnabled=false&filterPaneEnabled=false"
-                    frameborder="0" allowFullScreen="true"></iframe>
-            </div>
-            <div class="column" routerLink="north-delhi">
-                <h5 class="bg-light p-2 m-2">North Delhi District</h5>
-                <iframe
-                    src="https://app.powerbi.com/reportEmbed?reportId=d58c80a9-9b50-4d61-8145-30846c7b81b8&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d&navContentPaneEnabled=false&filterPaneEnabled=false"
-                    type="text/html">
-                </iframe>
-            </div>
-            <div class="column" routerLink="east-delhi">
-                <h5 class="bg-light p-2 m-2">East Delhi District</h5>
-                <iframe
-                    src="https://app.powerbi.com/reportEmbed?reportId=735d3769-0dbf-4f77-9610-49fcaa89747f&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d&navContentPaneEnabled=false&filterPaneEnabled=false"
-                    type="text/html">
-                </iframe>
-            </div>
-            <div class="column" routerLink="north-east-delhi">
-                <h5 class="bg-light p-2 m-2">North East Delhi District</h5>
-                <iframe
-                    src="https://app.powerbi.com/reportEmbed?reportId=735d3769-0dbf-4f77-9610-49fcaa89747f&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d&navContentPaneEnabled=false&filterPaneEnabled=false"
-                    type="text/html">
-                </iframe>
-            </div>
-            <div class="column" routerLink="south-delhi">
-                <h5 class="bg-light p-2 m-2">South Delhi District</h5>
-                <iframe
-                    src="https://app.powerbi.com/reportEmbed?reportId=735d3769-0dbf-4f77-9610-49fcaa89747f&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d&navContentPaneEnabled=false&filterPaneEnabled=false"
-                    type="text/html">
-                </iframe>
-            </div>
-            <div class="column" routerLink="north-west-delhi">
-                <h5 class="bg-light p-2 m-2">North West Delhi District</h5>
-                <iframe
-                    src="https://app.powerbi.com/reportEmbed?reportId=735d3769-0dbf-4f77-9610-49fcaa89747f&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d&navContentPaneEnabled=false&filterPaneEnabled=false"
-                    type="text/html">
-                </iframe>
-            </div>
-            <div class="column" routerLink="west-delhi">
-                <h5 class="bg-light p-2 m-2">West Delhi District</h5>
-                <iframe
-                    src="https://app.powerbi.com/reportEmbed?reportId=735d3769-0dbf-4f77-9610-49fcaa89747f&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d&navContentPaneEnabled=false&filterPaneEnabled=false"
-                    type="text/html">
-                </iframe>
-            </div>
-            <div class="column" routerLink="new-delhi">
-                <h5 class="bg-light p-2 m-2">New Delhi District</h5>
-                <iframe
-                    src="https://app.powerbi.com/reportEmbed?reportId=735d3769-0dbf-4f77-9610-49fcaa89747f&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d&navContentPaneEnabled=false&filterPaneEnabled=false"
-                    type="text/html">
-                </iframe>
-            </div>
-            <div class="column" routerLink="south-west-delhi">
-                <h5 class="bg-light p-2 m-2">South West Delhi District</h5>
-                <iframe
-                    src="https://app.powerbi.com/reportEmbed?reportId=735d3769-0dbf-4f77-9610-49fcaa89747f&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d&navContentPaneEnabled=false&filterPaneEnabled=false"
-                    type="text/html">
-                </iframe>
-            </div>
-            <div class="column" routerLink="south-east-delhi">
-                <h5 class="bg-light p-2 m-2">South East Delhi District</h5>
-                <iframe
-                    src="https://app.powerbi.com/reportEmbed?reportId=735d3769-0dbf-4f77-9610-49fcaa89747f&autoAuth=true&ctid=ecfb30c2-768d-476e-a8e3-d07db1074d7d&navContentPaneEnabled=false&filterPaneEnabled=false"
-                    type="text/html">
-                </iframe>
-            </div>
-        </div>
-
+    <div class="column">
+        <h5 class="bg-light p-2 m-2">Central District</h5>
+    </div>
+    <div class="column">
+        <h5 class="mb-0">Students Gender Ratio</h5>
+        <apx-chart [series]="studentsGenderRatio?.series" [chart]="studentsGenderRatio?.chart"
+            [dataLabels]="studentsGenderRatio?.dataLabels" [plotOptions]="studentsGenderRatio?.plotOptions"
+            [yaxis]="studentsGenderRatio?.yaxis" [xaxis]="studentsGenderRatio?.xaxis"
+            [legend]="studentsGenderRatio?.legend" [colors]="studentsGenderRatio?.colors"
+            [grid]="studentsGenderRatio?.grid"></apx-chart>
+    </div>
+    <div class="column">
+        <h5 class="mb-0">Teachers Gender Ratio</h5>
+        <apx-chart [series]="teacherGenderRatio?.series" [chart]="teacherGenderRatio?.chart"
+            [dataLabels]="teacherGenderRatio?.dataLabels" [plotOptions]="teacherGenderRatio?.plotOptions"
+            [yaxis]="teacherGenderRatio?.yaxis" [xaxis]="teacherGenderRatio?.xaxis"
+            [legend]="teacherGenderRatio?.legend" [colors]="teacherGenderRatio?.colors"
+            [grid]="teacherGenderRatio?.grid"></apx-chart>
+    </div>
+    <div class="column">
+        <h5 class="mb-0">Types of Schools</h5>
+        <apx-chart [series]="typesOfSchools?.series" [chart]="typesOfSchools?.chart" [labels]="typesOfSchools?.labels"
+            [fill]="typesOfSchools?.fill" [dataLabels]="typesOfSchools?.dataLabels" [plotOptions]="typesOfSchools?.plotOptions"
+            [responsive]="typesOfSchools?.responsive"></apx-chart>
+    </div>
+    <div class="column">
+        <h5 class="bg-light p-2 m-2">Central District</h5>
     </div>
 </div>
