@@ -6,12 +6,14 @@ import { SchoolComponent } from './school/school.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { HttpClientModule } from '@angular/common/http';
+import { TeacherComponent } from './teacher/teacher.component';
 
 
 @NgModule({
   declarations: [
     SchoolComponent,
-    DashboardComponent
+    DashboardComponent,
+    TeacherComponent
   ],
   imports: [
     CommonModule,
