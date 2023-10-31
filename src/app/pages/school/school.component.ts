@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpServiceService } from 'src/app/services/http-service.service';
 
 @Component({
   selector: 'app-school',
@@ -15,14 +16,16 @@ export class SchoolComponent {
   typesOfSchools: any;
   shiftWiseSchools: any;
 
-  constructor() {
+  teachersRatio: any;
+  totalSchools: any;
+
+  constructor(private httpService: HttpServiceService) {
     this.commonBarGraph = {
       series: [],
       chart: {
         type: "bar",
         events: {
           click: function (chart: any, w: any, e: any) {
-            // console.log(chart, w, e)
           }
         }
       },
@@ -43,12 +46,26 @@ export class SchoolComponent {
       },
       xaxis: {
         categories: [],
-        labels: {
+        title: {
+          text: "",
           style: {
-            fontSize: "12px"
+            fontSize: "14px",
+            color: "#6d7fcc",
+            fontWeight: "600"
           }
         }
+      },
+      yaxis: {
+        title: {
+          text: "",
+          style: {
+            fontSize: "14px",
+            color: "#6d7fcc",
+            fontWeight: "600"
+          }
+        },
       }
+
     };
 
     this.commonPieGraph = {
@@ -67,14 +84,19 @@ export class SchoolComponent {
           donut: {
             labels: {
               show: true,
-              showAlways: false,
-              formatter: (w: any) => {
-                return ' tCO2e'
+              total: {
+                show: true,
+                formatter: (w: any) => {
+                  return w.globals.seriesTotals.reduce((a: any, b: any) => {
+                    return a + b
+                  }, 0) + ' Schools'
+                }
               }
             }
           }
         }
       },
+      labels: ['Goods & Services', 'Offices', 'Marketing', 'Employees', 'Travel', 'Other'],
       legend: {
         formatter: function (val: any, opts: any) {
           return val + " - " + opts.w.globals.series[opts.seriesIndex];
@@ -93,39 +115,72 @@ export class SchoolComponent {
           }
         }
       ]
-    }
+    };
   }
 
   ngOnInit() {
-    this.getStudentsGenderRatio();
-    this.getTeachersGenderRatio();
-    this.getTypesOfSchools();
-    this.getShiftWiseSchools();
+    this.getAllData();
+    this.getAllSchoolGraph();
   }
 
-  getStudentsGenderRatio() {
+  getAllData() {
+    this.httpService.get('graphs').subscribe((data: any) => {
+      if (data) {
+        this.teachersRatio = data.teacherStudentRatio.toFixed(2);
+        this.totalSchools = data.totalSchools;
+
+        const studentsGender = {
+          totalBoys: data.totalBoys,
+          totalGirls: data.totalGirls
+        }
+        this.getStudentsGenderRatio(studentsGender);
+
+        const teachersGender = {
+          totalMaleTeachers: data.totalMaleTeachers,
+          totalFemaleTeachers: data.totalFemaleTeachers
+        }
+        this.getTeachersGenderRatio(teachersGender);
+
+
+      }
+    })
+  }
+
+  getAllSchoolGraph() {
+    this.httpService.get('graphs/school-graph').subscribe((data: any) => {
+      if (data) {
+        this.getShiftWiseSchools(data.shiftWiseCount);
+      }
+    })
+  }
+
+  getStudentsGenderRatio(studentsGender: any) {
     const series = [{
       name: "Graphical",
-      data: [21, 22]
+      data: [studentsGender.totalBoys, studentsGender.totalGirls]
     }];
     const categories = [
-      "Mary", "Evans", "David", "Wilson", "Lily", "Roberts", "Julia", "May"
+      "Boys", "Girls"
     ]
-    this.studentsGenderRatio = this.commonBarGraph;
+    this.studentsGenderRatio = JSON.parse(JSON.stringify(this.commonBarGraph));
     this.studentsGenderRatio.series = [...series];
+    this.studentsGenderRatio.xaxis.title.text = "Students Gender";
+    this.studentsGenderRatio.yaxis.title.text = "Total Students";
     this.studentsGenderRatio.xaxis.categories = [...categories];
   }
 
-  getTeachersGenderRatio() {
+  getTeachersGenderRatio(teachersGender: any) {
     const series = [{
       name: "Graphical",
-      data: [21, 22]
+      data: [teachersGender.totalMaleTeachers, teachersGender.totalFemaleTeachers]
     }];
     const categories = [
-      "Mary", "Evans", "David", "Wilson", "Lily", "Roberts", "Julia", "May"
+      "Male", "Female"
     ]
-    this.teacherGenderRatio = this.commonBarGraph;
+    this.teacherGenderRatio = JSON.parse(JSON.stringify(this.commonBarGraph));
     this.teacherGenderRatio.series = [...series];
+    this.teacherGenderRatio.xaxis.title.text = "Teachers Gender";
+    this.teacherGenderRatio.yaxis.title.text = "Total Teachers";
     this.teacherGenderRatio.xaxis.categories = [...categories];
   }
 
@@ -135,16 +190,18 @@ export class SchoolComponent {
     this.typesOfSchools.series = [...series];
   }
 
-  getShiftWiseSchools() {
+  getShiftWiseSchools(shiftWiseCount: any) {
     const series = [{
       name: "Graphical",
-      data: [21, 22, 10, 28, 16, 21, 13, 30]
+      data: [shiftWiseCount.Morning, shiftWiseCount.Afternoon, shiftWiseCount.Evening, shiftWiseCount.General]
     }];
     const categories = [
-      "Mary", "Evans", "David", "Wilson", "Lily", "Roberts", "Julia", "May"
+      "Morning", "Afternoon", "Evening", "General"
     ]
-    this.shiftWiseSchools = this.commonBarGraph;
+    this.shiftWiseSchools = JSON.parse(JSON.stringify(this.commonBarGraph));
     this.shiftWiseSchools.series = [...series];
+    this.shiftWiseSchools.xaxis.title.text = "Shifts";
+    this.shiftWiseSchools.yaxis.title.text = "Total Schools";
     this.shiftWiseSchools.xaxis.categories = [...categories];
   }
 
