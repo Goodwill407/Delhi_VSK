@@ -1,0 +1,67 @@
+<div class="container1">
+    <div class="column">
+        <h5 class="bg-light p-2 m-2">Total Student</h5>
+       
+  </div>
+  <div class="column">
+    <h5 class="bg-light p-2 m-2">Total Boys</h5>
+</div>
+<div class="column">
+    <h5 class="bg-light p-2 m-2">Total Girls</h5>
+</div>
+  
+    <div class="column">
+        <h5 class="bg-light p-2 m-2">Type of school</h5>
+        <apx-chart [series]="typesOfSchools?.series" [chart]="typesOfSchools?.chart" [labels]="typesOfSchools?.labels"
+            [fill]="typesOfSchools?.fill" [dataLabels]="typesOfSchools?.dataLabels" [plotOptions]="typesOfSchools?.plotOptions"
+            [responsive]="typesOfSchools?.responsive"></apx-chart>
+    </div>
+    <div class="column">
+        <h5 class="bg-light p-2 m-2">Student Catagiry</h5>
+            <apx-chart
+              [series]="studentCatagity?.series"
+              [chart]="studentCatagity?.chart"
+              [labels]="studentCatagity?.labels"
+              [fill]="studentCatagity?.fill"
+              [dataLabels]="studentCatagity?.dataLabels"
+              [plotOptions]="studentCatagity?.plotOptions"
+              [responsive]="studentCatagity?.responsive"
+
+            ></apx-chart>
+        </div>
+    <div class="column">
+        <h5 class="bg-light p-2 m-2">Central District</h5>
+        <apx-chart
+        [series]="studentAttendance.series"
+        [chart]="studentAttendance.chart"
+        [xaxis]="studentAttendance.xaxis"
+        [dataLabels]="studentAttendance.dataLabels"
+        [grid]="studentAttendance.grid"
+        [stroke]="studentAttendance.stroke"
+        [title]="studentAttendance.title"
+      ></apx-chart>
+    </div>
+    <div class="column">
+        <h5 class="bg-light p-2 m-2">Student Info</h5>
+        <apx-chart
+        [series]="student_info.series"
+        [chart]="student_info.chart"
+        [xaxis]="student_info.xaxis"
+        [dataLabels]="student_info.dataLabels"
+        [grid]="student_info.grid"
+        [stroke]="student_info.stroke"
+        [title]="student_info.title"
+      ></apx-chart>
+    </div>
+    <div class="column">
+        <h5 class="bg-light p-2 m-2">Central District</h5>
+        <apx-chart
+    [series]="studentresult.series"
+    [chart]="studentresult.chart"
+    [xaxis]="studentresult.xaxis"
+    [stroke]="studentresult.stroke"
+    [tooltip]="studentresult.tooltip"
+    [dataLabels]="studentresult.dataLabels"
+  ></apx-chart>
+    </div>
+</div>
