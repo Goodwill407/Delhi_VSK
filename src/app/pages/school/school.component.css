@@ -8,11 +8,14 @@
 
 .column {
   box-sizing: border-box;
-  text-align: center;
   font-size: 18px;
   cursor: pointer;
   /* height: 208px; */
   border: 1px solid;
+}
+
+.column h5 {
+  text-align: center;
 }
 
 .column img {
