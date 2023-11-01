@@ -84,6 +84,6 @@
             </div>
 
         </div>
-        <button class="btn text-white rounded-pill mt-3 mb-2" >Go to Dashboard</button>
+        <button class="btn text-white rounded-pill mt-3 mb-2" [routerLink]="['/school']" [queryParams]="{districtName : data.districtName}" >Go to Dashboard</button>
     </div>
 </div>

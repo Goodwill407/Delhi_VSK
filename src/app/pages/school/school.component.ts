@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ActivatedRoute } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 
 @Component({
@@ -8,18 +10,32 @@ import { HttpServiceService } from 'src/app/services/http-service.service';
 })
 export class SchoolComponent {
 
+  @ViewChild('chart') chartEl: ElementRef | undefined;
+
   commonBarGraph: any;
   commonPieGraph: any;
+  commonPollarChart: any;
+  commonTreeMap: any;
 
+  // Graphs
   teacherGenderRatio: any;
   studentsGenderRatio: any;
   typesOfSchools: any;
   shiftWiseSchools: any;
+  schoolsByManagement: any;
+  lowClassHighClass: any;
+  allZones: any;
 
+  // Single data
   teachersRatio: any;
   totalSchools: any;
+  averageTeacherOfSchool: any;
+  averageStudentOfSchool: any;
+  allDistricts: any;
+  districtModel: any = "";
+  districtName: any;
 
-  constructor(private httpService: HttpServiceService) {
+  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute) {
     this.commonBarGraph = {
       series: [],
       chart: {
@@ -96,7 +112,7 @@ export class SchoolComponent {
           }
         }
       },
-      labels: ['Goods & Services', 'Offices', 'Marketing', 'Employees', 'Travel', 'Other'],
+      labels: [],
       legend: {
         formatter: function (val: any, opts: any) {
           return val + " - " + opts.w.globals.series[opts.seriesIndex];
@@ -106,9 +122,6 @@ export class SchoolComponent {
         {
           breakpoint: 480,
           options: {
-            chart: {
-              width: 200
-            },
             legend: {
               position: "bottom"
             }
@@ -116,19 +129,84 @@ export class SchoolComponent {
         }
       ]
     };
+
+    this.commonPollarChart = {
+      series: [],
+      chart: {
+        type: "polarArea"
+      },
+      stroke: {
+        colors: ["#fff"]
+      },
+      fill: {
+        opacity: 0.8
+      },
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            legend: {
+              position: "bottom"
+            }
+          }
+        }
+      ],
+      labels: []
+    };
+
+    this.commonTreeMap = {
+      series: [
+        {
+          data: []
+        }
+      ],
+
+      legend: {
+        show: false
+      },
+      chart: {
+        height: 350,
+        type: "treemap"
+      },
+      title: {
+        text: "Multi-dimensional Treemap",
+        align: "center"
+      }
+    }
+  }
+
+  onChartClick() {
+    this.chartEl?.nativeElement;
   }
 
   ngOnInit() {
     this.getAllData();
     this.getAllSchoolGraph();
+    this.getAllDistricts();
+    this.getDistrictName();
   }
 
-  getAllData() {
-    this.httpService.get('graphs').subscribe((data: any) => {
-      if (data) {
-        this.teachersRatio = data.teacherStudentRatio.toFixed(2);
-        this.totalSchools = data.totalSchools;
+  getAllDistricts() {
+    this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
+      if (data && data.length > 0) {
+        this.allDistricts = data;
+      }
+    })
+  }
 
+  getGraphsByDistrictName() {
+    this.spinner.show();
+    const district = {
+      districtName: this.districtModel
+    }
+    this.httpService.post('graphs/school-student-teacher-graph-districtname', district).subscribe((data: any) => {
+      if (data) {
+        this.totalSchools = data.totalSchools;
+        this.averageTeacherOfSchool = data.averageTeacherOfSchool.toFixed(2);
+        this.averageStudentOfSchool = data.averageStudentOfSchool.toFixed(2);
+        this.teachersRatio = data.teacherStudentRatio.toFixed(2);
+
+        //
         const studentsGender = {
           totalBoys: data.totalBoys,
           totalGirls: data.totalGirls
@@ -141,7 +219,41 @@ export class SchoolComponent {
         }
         this.getTeachersGenderRatio(teachersGender);
 
+        //
+        this.getShiftWiseSchools(data.shiftWiseCount);
+        this.getSchoolsByManagement(data.schoolManagementWise);
+        const lowClassHighClass = {
+          lowClassCount: data.lowClassCount,
+          highClassCount: data.highClassCount
+        }
+        this.getLowClassHighClass(lowClassHighClass);
+        this.spinner.hide();
+        this.getAllZones(data.zoneWiseCounts);
+      }
+    }, (error) => {
+      this.spinner.hide();
+    })
+  }
 
+  getAllData() {
+    this.httpService.get('graphs').subscribe((data: any) => {
+      if (data) {
+        this.teachersRatio = data.teacherStudentRatio.toFixed(2);
+        this.totalSchools = data.totalSchools;
+        this.averageStudentOfSchool = data.averageStudentOfSchool.toFixed(2);;
+        this.averageTeacherOfSchool = data.averageTeacherOfSchool.toFixed(2);;
+
+        const studentsGender = {
+          totalBoys: data.totalBoys,
+          totalGirls: data.totalGirls
+        }
+        this.getStudentsGenderRatio(studentsGender);
+
+        const teachersGender = {
+          totalMaleTeachers: data.totalMaleTeachers,
+          totalFemaleTeachers: data.totalFemaleTeachers
+        }
+        this.getTeachersGenderRatio(teachersGender);
       }
     })
   }
@@ -150,6 +262,13 @@ export class SchoolComponent {
     this.httpService.get('graphs/school-graph').subscribe((data: any) => {
       if (data) {
         this.getShiftWiseSchools(data.shiftWiseCount);
+        this.getSchoolsByManagement(data.schoolManagementWise);
+        const lowClassHighClass = {
+          lowClassCount: data.lowClassCount,
+          highClassCount: data.highClassCount
+        }
+        this.getLowClassHighClass(lowClassHighClass);
+        this.getAllZones(data.zoneWiseCounts);
       }
     })
   }
@@ -184,25 +303,38 @@ export class SchoolComponent {
     this.teacherGenderRatio.xaxis.categories = [...categories];
   }
 
-  getTypesOfSchools() {
-    const series = [44, 55, 41, 17, 15]
-    this.typesOfSchools = this.commonPieGraph;
-    this.typesOfSchools.series = [...series];
+  getSchoolsByManagement(schoolManagementWise: any) {
+    this.schoolsByManagement = JSON.parse(JSON.stringify(this.commonPieGraph));
+    this.schoolsByManagement.series = [schoolManagementWise.Government, schoolManagementWise.Aided];
+    this.schoolsByManagement.labels = ['Government', 'Aided']
   }
 
   getShiftWiseSchools(shiftWiseCount: any) {
-    const series = [{
-      name: "Graphical",
-      data: [shiftWiseCount.Morning, shiftWiseCount.Afternoon, shiftWiseCount.Evening, shiftWiseCount.General]
-    }];
-    const categories = [
-      "Morning", "Afternoon", "Evening", "General"
-    ]
-    this.shiftWiseSchools = JSON.parse(JSON.stringify(this.commonBarGraph));
+    const series = [shiftWiseCount.Morning, shiftWiseCount.Afternoon, shiftWiseCount.Evening, shiftWiseCount.General]
+    this.shiftWiseSchools = JSON.parse(JSON.stringify(this.commonPollarChart));
     this.shiftWiseSchools.series = [...series];
-    this.shiftWiseSchools.xaxis.title.text = "Shifts";
-    this.shiftWiseSchools.yaxis.title.text = "Total Schools";
-    this.shiftWiseSchools.xaxis.categories = [...categories];
+    this.shiftWiseSchools.labels = ['Morning', 'Afternoon', 'Evening', 'General']
+  }
+
+  getLowClassHighClass(lowClassHighClass: any) {
+    this.lowClassHighClass = JSON.parse(JSON.stringify(this.commonPieGraph));
+    this.lowClassHighClass.series = [lowClassHighClass.lowClassCount, lowClassHighClass.highClassCount];
+    this.lowClassHighClass.labels = ['Low class', 'High class']
+  }
+
+  getAllZones(allZones: any) {
+    this.allZones = JSON.parse(JSON.stringify(this.commonTreeMap));
+    for (let i = 0; i < allZones.length; i++) {
+      this.allZones.series[0].data.push({ x: allZones[i].zone, y: allZones[i].count });
+    }
+  }
+
+  getDistrictName() {
+    this.route.queryParams.subscribe((param: any) => {
+      this.districtName = param['districtName'];
+      console.log(this.districtName);
+
+    })
   }
 
 }

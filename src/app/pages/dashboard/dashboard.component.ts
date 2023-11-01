@@ -8,28 +8,28 @@ import { HttpServiceService } from 'src/app/services/http-service.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-  allDistrictData: any =[];
+  allDistrictData: any = [];
 
-  totalCount:any = [];
-  constructor(private httpService: HttpServiceService) {}
+  totalCount: any = [];
+  constructor(private httpService: HttpServiceService) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.getSchoolByDistrict();
     this.allTotalCount();
   }
 
-  getSchoolByDistrict(){
+  getSchoolByDistrict() {
     this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
       if (data) {
-        this.allDistrictData =data;
+        this.allDistrictData = data;
       }
     })
   }
 
-  allTotalCount(){
+  allTotalCount() {
     this.httpService.get('graphs').subscribe((data: any) => {
       if (data) {
-        this.totalCount =data;
+        this.totalCount = data;
       }
     })
   }
