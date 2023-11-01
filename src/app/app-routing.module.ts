@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginPageComponent } from './login-page/login-page.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: '', component: LoginPageComponent },
+  { path: 'dashboard', loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule) },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

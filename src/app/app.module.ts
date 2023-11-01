@@ -7,17 +7,23 @@ import { ChartModule } from '@syncfusion/ej2-angular-charts';
 import { PagesModule } from './pages/pages.module';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginPageComponent } from './login-page/login-page.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoginPageComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     ChartModule,
-    PagesModule
+    ReactiveFormsModule,
+    PagesModule,
+    NgxSpinnerModule
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]

@@ -8,6 +8,7 @@ import { HttpServiceService } from 'src/app/services/http-service.service';
 export class TeacherComponent { 
   commonBarGraph: any;
   commonPieGraph: any;
+  commonPieChart: any;
 
   teacherGenderRatio: any;
   studentsGenderRatio: any;
@@ -103,6 +104,28 @@ export class TeacherComponent {
           return val + " - " + opts.w.globals.series[opts.seriesIndex];
         }
       },
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: "bottom"
+            }
+          }
+        }
+      ]
+    };
+
+    this.commonPieChart = {
+      series: [55, 44, 13],
+      chart: {
+        width: 380,
+        type: "pie"
+      },
+      labels: ["Boys", "Girls", "Other"],
       responsive: [
         {
           breakpoint: 480,
