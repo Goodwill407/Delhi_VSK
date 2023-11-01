@@ -1,22 +1,39 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+</ngx-spinner>
+<div class="d-flex mb-3">
+    <h6 class="mt-2">District: </h6>
+    <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
+        <option value="" disabled>Select District</option>
+        <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
+            {{district.districtName}}
+        </option>
+    </select>
+</div>
 <div class="container1">
-    <div class="column">
+    <div class="column text-center">
         <h5 class="bg-light p-2 m-2">Central District</h5>
-        <div class="d-flex">
-            <div>
+        <div class="d-flex justify-content-around pt-4">
+            <div class="pt-4">
                 <h1 class="fw-bold">{{totalSchools}}</h1>
                 <h3>Total schools</h3>
             </div>
             <div class="vr"></div>
-            <div></div>
+            <div>
+                <h3 class="fw-bold">{{averageTeacherOfSchool}}</h3>
+                <h5>Average Teachers</h5>
+
+                <h3 class="fw-bold mt-3">{{averageStudentOfSchool}}</h3>
+                <h5>Average Students</h5>
+            </div>
         </div>
     </div>
     <div class="column text-center">
-        <h5 class="mb-0">Teachers per Students Ratio</h5>
+        <h5 class="bg-light p-2 m-2">Teachers per Students Ratio</h5>
         <img class="img-fluid mt-4" width="150" src="../../../assets/images/pngegg.png">
         <h5 class="mt-3 fw-bold">1 Teacher per {{teachersRatio}} Students</h5>
     </div>
     <div class="column">
-        <h5 class="mb-0">Students Gender Ratio</h5>
+        <h5 class="bg-light p-2 m-2">Students Gender Ratio</h5>
         <apx-chart [series]="studentsGenderRatio?.series" [chart]="studentsGenderRatio?.chart"
             [dataLabels]="studentsGenderRatio?.dataLabels" [plotOptions]="studentsGenderRatio?.plotOptions"
             [yaxis]="studentsGenderRatio?.yaxis" [xaxis]="studentsGenderRatio?.xaxis"
@@ -24,7 +41,7 @@
             [grid]="studentsGenderRatio?.grid"></apx-chart>
     </div>
     <div class="column">
-        <h5 class="mb-0">Teachers Gender Ratio</h5>
+        <h5 class="bg-light p-2 m-2">Teachers Gender Ratio</h5>
         <apx-chart [series]="teacherGenderRatio?.series" [chart]="teacherGenderRatio?.chart"
             [dataLabels]="teacherGenderRatio?.dataLabels" [plotOptions]="teacherGenderRatio?.plotOptions"
             [yaxis]="teacherGenderRatio?.yaxis" [xaxis]="teacherGenderRatio?.xaxis"
@@ -32,16 +49,27 @@
             [grid]="teacherGenderRatio?.grid"></apx-chart>
     </div>
     <div class="column">
-        <h5 class="mb-0">Types of Schools</h5>
-        <apx-chart [series]="typesOfSchools?.series" [chart]="typesOfSchools?.chart" [labels]="typesOfSchools?.labels"
-            [fill]="typesOfSchools?.fill" [dataLabels]="typesOfSchools?.dataLabels"
-            [plotOptions]="typesOfSchools?.plotOptions" [responsive]="typesOfSchools?.responsive"></apx-chart>
+        <h5 class="bg-light p-2 m-2">Schools By Management</h5>
+        <apx-chart [series]="schoolsByManagement?.series" [chart]="schoolsByManagement?.chart"
+            [labels]="schoolsByManagement?.labels" [fill]="schoolsByManagement?.fill"
+            [dataLabels]="schoolsByManagement?.dataLabels" [plotOptions]="schoolsByManagement?.plotOptions"
+            [responsive]="schoolsByManagement?.responsive"></apx-chart>
     </div>
     <div class="column">
-        <h5 class="mb-0">Shift wise Schools</h5>
+        <h5 class="bg-light p-2 m-2">Shift wise Schools</h5>
         <apx-chart [series]="shiftWiseSchools?.series" [chart]="shiftWiseSchools?.chart"
-            [dataLabels]="shiftWiseSchools?.dataLabels" [plotOptions]="shiftWiseSchools?.plotOptions"
-            [yaxis]="shiftWiseSchools?.yaxis" [xaxis]="shiftWiseSchools?.xaxis" [legend]="shiftWiseSchools?.legend"
-            [colors]="shiftWiseSchools?.colors" [grid]="shiftWiseSchools?.grid"></apx-chart>
+            [labels]="shiftWiseSchools?.labels" [fill]="shiftWiseSchools?.fill" [stroke]="shiftWiseSchools?.stroke"
+            [responsive]="shiftWiseSchools?.responsive"></apx-chart>
+    </div>
+    <div class="column">
+        <h5 class="bg-light p-2 m-2">High & Low class Schools</h5>
+        <apx-chart [series]="lowClassHighClass?.series" [chart]="lowClassHighClass?.chart"
+            [labels]="lowClassHighClass?.labels" [fill]="lowClassHighClass?.fill"
+            [dataLabels]="lowClassHighClass?.dataLabels" [plotOptions]="lowClassHighClass?.plotOptions"
+            [responsive]="lowClassHighClass?.responsive"></apx-chart>
+    </div>
+    <div class="column">
+        <apx-chart [series]="allZones?.series" [chart]="allZones?.chart" [dataLabels]="allZones?.dataLabels"
+            [plotOptions]="allZones?.plotOptions" [title]="allZones?.title" [legend]="allZones?.legend" #chart (click)="onChartClick()"></apx-chart>
     </div>
 </div>

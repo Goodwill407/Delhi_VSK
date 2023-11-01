@@ -6,6 +6,8 @@ import { SchoolComponent } from './school/school.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -17,7 +19,10 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule,
     PagesRoutingModule,
     HttpClientModule,
-    NgApexchartsModule
+    FormsModule,
+    ReactiveFormsModule,
+    NgApexchartsModule,
+    NgxSpinnerModule
   ]
 })
 export class PagesModule { }
