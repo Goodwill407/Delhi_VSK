@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ActivatedRoute } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 
 @Component({
@@ -32,8 +33,9 @@ export class SchoolComponent {
   averageStudentOfSchool: any;
   allDistricts: any;
   districtModel: any = "";
+  districtName: any;
 
-  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService) {
+  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute) {
     this.commonBarGraph = {
       series: [],
       chart: {
@@ -181,6 +183,7 @@ export class SchoolComponent {
     this.getAllData();
     this.getAllSchoolGraph();
     this.getAllDistricts();
+    this.getDistrictName();
   }
 
   getAllDistricts() {
@@ -326,5 +329,12 @@ export class SchoolComponent {
     }
   }
 
+  getDistrictName() {
+    this.route.queryParams.subscribe((param: any) => {
+      this.districtName = param['districtName'];
+      console.log(this.districtName);
+
+    })
+  }
 
 }

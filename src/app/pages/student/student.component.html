@@ -1,0 +1,42 @@
+<div class="container1">
+    <div class="column">
+        <h5 class="bg-light p-2 m-2">Central District</h5>
+         <div class="d-flex mt-4 ">
+            <div class="me-5 ms-2 text-center">
+              <h3 class="fw-bold">{{totalStudent}}</h3>
+                <h4>Total Students</h4>
+            </div>
+            <div class="vr"></div>
+            <div class="ms-3 text-center">
+                <h3 class="fw-bold">{{averageStudentOfSchool.toFixed(2)}}</h3> 
+                <h4>Average Of Student School</h4>
+            </div>
+            
+            
+        </div>
+    </div>
+    <div class="column">
+        <h5 class="bg-light p-2 m-2">Central District</h5>
+        <div class="text-center">
+        <h3 class="mt-3 fs-2 fw-bold">{{teacherStudentRatio.toFixed(2)}} </h3>
+        <h4>Teacher Student Ratio</h4>
+    </div>
+    </div>
+    
+    <div class="column">
+        <h5 class="bg-light p-2 m-2">Central District</h5>
+        <apx-chart [series]="studentsGenderRatio?.series" [chart]="studentsGenderRatio?.chart"
+            [dataLabels]="studentsGenderRatio?.dataLabels" [plotOptions]="studentsGenderRatio?.plotOptions"
+            [yaxis]="studentsGenderRatio?.yaxis" [xaxis]="studentsGenderRatio?.xaxis"
+            [legend]="studentsGenderRatio?.legend" [colors]="studentsGenderRatio?.colors"
+            [grid]="studentsGenderRatio?.grid"></apx-chart>
+    </div>
+       <!-- <div class="column">
+        <h5 class="bg-light p-2 m-2">Student Info</h5>
+       
+    </div>
+    <div class="column">
+        <h5 class="bg-light p-2 m-2">Central District</h5>
+       
+    </div> -->
+</div>

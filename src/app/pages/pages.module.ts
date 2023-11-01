@@ -8,12 +8,16 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { StudentComponent } from './student/student.component';
+import { TeacherComponent } from './teacher/teacher.component';
 
 
 @NgModule({
   declarations: [
     SchoolComponent,
-    DashboardComponent
+    DashboardComponent,
+    StudentComponent,
+    TeacherComponent
   ],
   imports: [
     CommonModule,
