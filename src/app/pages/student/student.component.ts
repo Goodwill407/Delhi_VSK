@@ -12,11 +12,17 @@ export class StudentComponent {
   totalGirls: any;
   commonBarGraph: any
   commonPieGraph: any
+  commonHorizontalBarGraph: any;
   studentsGenderRatio: any
   averageStudentOfSchool: any
   teacherStudentRatio: any
-  student_info: any
-  studentresult: any
+  EnrollMentBySchoolcategories: any
+  catogoryWiseStudentCount: any
+  commonHorizontalBarGraph2:any
+
+
+  chartOption: any
+
 
 
   constructor(private httpService: HttpServiceService) {
@@ -116,12 +122,120 @@ export class StudentComponent {
         }
       ]
     };
+
+    this.commonHorizontalBarGraph = {
+      series: [
+        {
+          name: 'basic',
+          data: [],
+        },
+      ],
+      chart: {
+        type: 'bar',
+        height: 350,
+      },
+      colors: [
+        '#d4526e',
+        '#13d8aa',
+        '#A5978B',
+        '#2b908f',
+        '#f9a3a4',
+        '#90ee7e',
+        '#f48024',
+        '#69d2e7',
+      ],
+      plotOptions: {
+        bar: {
+          horizontal: true,
+          distributed: true,
+        },
+      },
+      dataLabels: {
+        enabled: true,
+      },
+      xaxis: {
+        categories: [
+          'Sarvodaya Sr. Secondary Schools',
+      'Sarvodaya Middle Schools',
+      'Virtual School',
+      'School of Specialized Excellence(SOSE)',
+      'Secondary Schools',
+      'Sarvodaya Secondary Schools',
+      'Primary',
+      'Partibha Vikas Vidhyalya',
+      'Middle Schools',
+        ],
+      },
+    };
+
+  //   this.commonHorizontalBarGraph2={
+  //     series: [{
+  //     name: 'Male',
+  //     data: [44, 55, 41, 67, 22, 43]
+  //   }, {
+  //     name: 'Female',
+  //     data: [13, 23, 20, 8, 13, 27]
+  //   }, {
+  //     name: 'Transgender',
+  //     data: [11, 17, 15, 15, 21, 14]
+  //   }],
+  //     chart: {
+  //     type: 'bar',
+  //     height: 250,
+  //     stacked: true,
+  //     toolbar: {
+  //       show: true
+  //     },
+  //     zoom: {
+  //       enabled: true
+  //     }
+  //   },
+  //   responsive: [{
+  //     breakpoint: 480,
+  //     options: {
+  //       legend: {
+  //         position: 'bottom',
+  //         offsetX: -10,
+  //         offsetY: 0
+  //       }
+  //     }
+  //   }],
+  //   plotOptions: {
+  //     bar: {
+  //       horizontal: false,
+  //       borderRadius: 10,
+  //       dataLabels: {
+  //         total: {
+  //           enabled: true,
+  //           style: {
+  //             fontSize: '13px',
+  //             fontWeight: 900
+  //           }
+  //         }
+  //       }
+  //     },
+  //   },
+  //   xaxis: {
+  //     type: 'datetime',
+  //     categories: ['01/01/2011 GMT', '01/02/2011 GMT', '01/03/2011 GMT', '01/04/2011 GMT',
+  //       '01/05/2011 GMT', '01/06/2011 GMT'
+  //     ],
+  //   },
+  //   legend: {
+  //     position: 'right',
+  //     offsetY: 40
+  //   },
+  //   fill: {
+  //     opacity: 1
+  //   }
+  //   };
   }
 
   ngOnInit() {
     this.getAllData()
-    this.studentInfo()
-    this.getStuentResult()
+    this.getEnrollmentBySchoolCatogory()
+
+
   }
 
   getAllData() {
@@ -130,12 +244,14 @@ export class StudentComponent {
         this.totalStudent = data.totalStudents;
         this.totalBoys = data.totalBoys
         this.totalGirls = data.totalGirls
-        this.averageStudentOfSchool=data.averageStudentOfSchool
-        this.teacherStudentRatio=data.teacherStudentRatio
+        this.averageStudentOfSchool = data.averageStudentOfSchool
+        this.teacherStudentRatio = data.teacherStudentRatio
+
+        const persentage = this.totalStudent / 100
 
         const studentsGender = {
-          totalBoys: data.totalBoys,
-          totalGirls: data.totalGirls
+          totalBoys: data.totalBoys / persentage,
+          totalGirls: data.totalGirls / persentage
         }
         this.getStudentsGenderRatio(studentsGender);
 
@@ -146,8 +262,8 @@ export class StudentComponent {
 
   getStudentsGenderRatio(studentsGender: any) {
     const series = [{
-      name: "Graphical",
-      data: [studentsGender.totalBoys, studentsGender.totalGirls]
+      name: "Ratio",
+      data: [studentsGender.totalBoys.toFixed(2), studentsGender.totalGirls.toFixed(2)]
     }];
     const categories = [
       "Boys", "Girls"
@@ -159,91 +275,53 @@ export class StudentComponent {
     this.studentsGenderRatio.xaxis.categories = [...categories];
   }
 
- 
-  
+  getEnrollmentBySchoolCatogory() {
+    this.httpService.get('graphs/student-enrollment').subscribe((data: any) => {
+      if (data) {
+        const catogoryWiseStudentCount = data.enrollmentBySchoolCatogory
+        // this.genderWiseEnrollmentPerSchCategory=data.genderWiseEnrollmentPerSchCategory
 
-  studentInfo() {
-    this.student_info = {
-      series: [{
-        data: [44, 55, 41, 64, 22, 43, 21]
-      }, {
-        data: [53, 32, 33, 52, 13, 44, 32]
-      }],
-      chart: {
-        type: 'bar',
-        height: 250
-      },
-      plotOptions: {
-        bar: {
-          horizontal: true,
-          dataLabels: {
-            position: 'top',
-          },
-        }
-      },
-      dataLabels: {
-        enabled: true,
-        offsetX: -6,
-        style: {
-          fontSize: '12px',
-          colors: ['#fff']
-        }
-      },
-      stroke: {
-        show: true,
-        width: 1,
-        colors: ['#fff']
-      },
-      tooltip: {
-        shared: true,
-        intersect: false
-      },
-      xaxis: {
-        categories: [2001, 2002, 2003, 2004, 2005, 2006, 2007],
-      },
-    };
+        this.getStudentCatogoryWise(catogoryWiseStudentCount)
+
+
+
+
+
+      }
+    })
   }
 
-  getStuentResult() {
-    this.studentresult = {
-      series: [
-        {
-          name: "series1",
-          data: [31, 40, 28, 51, 42, 109, 100]
-        },
-        {
-          name: "series2",
-          data: [11, 32, 45, 32, 34, 52, 41]
-        }
-      ],
-      chart: {
-        height: 250,
-        type: "area"
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: "smooth"
-      },
-      xaxis: {
-        type: "datetime",
-        categories: [
-          "2018-09-19T00:00:00.000Z",
-          "2018-09-19T01:30:00.000Z",
-          "2018-09-19T02:30:00.000Z",
-          "2018-09-19T03:30:00.000Z",
-          "2018-09-19T04:30:00.000Z",
-          "2018-09-19T05:30:00.000Z",
-          "2018-09-19T06:30:00.000Z"
-        ]
-      },
-      tooltip: {
-        x: {
-          format: "dd/MM/yy HH:mm"
-        }
-      }
-    };
+  getStudentCatogoryWise(catogoryWiseStudentCount: any) {
+
+    const StudentCount = catogoryWiseStudentCount.map((item: any) => item.studentCount);
+    const series = [{
+      name: "Ratio",
+      data: StudentCount
+    }];
+    const categories = [
+      'Sarvodaya Sr. Secondary Schools',
+      'Sarvodaya Middle Schools',
+      'Virtual School',
+      'School of Specialized Excellence(SOSE)',
+      'Secondary Schools',
+      'Sarvodaya Secondary Schools',
+      'Primary',
+      'Partibha Vikas Vidhyalya',
+      'Middle Schools',
+    ]
+
+    this.EnrollMentBySchoolcategories = JSON.parse(JSON.stringify(this.commonHorizontalBarGraph));
+    this.EnrollMentBySchoolcategories.series = [...series];
+    this.EnrollMentBySchoolcategories.xaxis.title.text = "Students Gender";
+    this.EnrollMentBySchoolcategories.yaxis.title.text = "Total Students";
+    this.EnrollMentBySchoolcategories.xaxis.categories = [...categories];
+
   }
 
 }
+
+
+
+
+
+
