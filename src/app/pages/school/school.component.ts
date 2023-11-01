@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 
 @Component({
@@ -10,6 +11,7 @@ export class SchoolComponent {
 
   commonBarGraph: any;
   commonPieGraph: any;
+  districtName: any;
 
   teacherGenderRatio: any;
   studentsGenderRatio: any;
@@ -19,7 +21,7 @@ export class SchoolComponent {
   teachersRatio: any;
   totalSchools: any;
 
-  constructor(private httpService: HttpServiceService) {
+  constructor(private httpService: HttpServiceService, private route:ActivatedRoute) {
     this.commonBarGraph = {
       series: [],
       chart: {
@@ -121,6 +123,7 @@ export class SchoolComponent {
   ngOnInit() {
     this.getAllData();
     this.getAllSchoolGraph();
+    this.getDistrictName();
   }
 
   getAllData() {
@@ -203,6 +206,14 @@ export class SchoolComponent {
     this.shiftWiseSchools.xaxis.title.text = "Shifts";
     this.shiftWiseSchools.yaxis.title.text = "Total Schools";
     this.shiftWiseSchools.xaxis.categories = [...categories];
+  }
+
+  getDistrictName(){
+    this.route.queryParams.subscribe((param:any)=>{
+      this.districtName = param['districtName'];
+      console.log(this.districtName);
+      
+    })
   }
 
 }
