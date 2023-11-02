@@ -69,7 +69,20 @@
             [responsive]="lowClassHighClass?.responsive"></apx-chart>
     </div>
     <div class="column">
+        <apx-chart
+          [series]="allZones?.series"
+          [chart]="allZones?.chart"
+          [dataLabels]="allZones?.dataLabels"
+          [plotOptions]="allZones?.plotOptions"
+          [title]="allZones?.title"
+          [legend]="allZones?.legend"
+          #chart
+          (click)="onChartClick($event)"
+        ></apx-chart>
+      </div>
+      
+    <!-- <div class="column">
         <apx-chart [series]="allZones?.series" [chart]="allZones?.chart" [dataLabels]="allZones?.dataLabels"
-            [plotOptions]="allZones?.plotOptions" [title]="allZones?.title" [legend]="allZones?.legend" #chart (click)="onChartClick()"></apx-chart>
-    </div>
+            [plotOptions]="allZones?.plotOptions" [title]="allZones?.title" [legend]="allZones?.legend" #chart (click)="onChartClick($event)"></apx-chart>
+    </div> -->
 </div>

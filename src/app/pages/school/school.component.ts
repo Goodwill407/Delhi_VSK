@@ -160,7 +160,7 @@ export class SchoolComponent {
           data: []
         }
       ],
-
+    
       legend: {
         show: false
       },
@@ -172,20 +172,30 @@ export class SchoolComponent {
         text: "Multi-dimensional Treemap",
         align: "center"
       }
-    }
-  }
+    };
+    
 
-  onChartClick() {
-    this.chartEl?.nativeElement;
   }
-
+  onChartClick(event: any) {
+    // Access the clicked value or data from the event object
+    const clickedValue = event.value; // Modify this based on the charting library
+    console.log("Clicked Value:", clickedValue);
+  }
+  
+  
   ngOnInit() {
     this.getAllData();
     this.getAllSchoolGraph();
     this.getAllDistricts();
     this.getDistrictName();
+  
+    // Assuming chartEl is a reference to your chart element
+    const chartElement = this.chartEl?.nativeElement;
+    
+    if (chartElement) {
+      chartElement.addEventListener('click', (event: any) => this.onChartClick(event));
+    }
   }
-
   getAllDistricts() {
     this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
       if (data && data.length > 0) {
