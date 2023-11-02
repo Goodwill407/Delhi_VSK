@@ -18,12 +18,12 @@ export class StudentComponent {
   teacherStudentRatio: any
   EnrollMentBySchoolcategories: any
   catogoryWiseStudentCount: any
-  commonHorizontalBarGraph2:any
-
-
-  chartOption: any
-
-
+  commonHorizontalBarGraph2: any
+  EnrollMentBySchoolcategoriesGenderWise: any
+  communHorisontal2: any
+  maleCounts:any
+  femaleCount:any
+  otherCount:any
 
   constructor(private httpService: HttpServiceService) {
     this.commonBarGraph = {
@@ -123,39 +123,26 @@ export class StudentComponent {
       ]
     };
 
-    this.commonHorizontalBarGraph = {
-      series: [
-        {
-          name: 'basic',
-          data: [],
-        },
-      ],
+    this.commonHorizontalBarGraph =  {
+      series: [{
+      data: []
+    }],
       chart: {
-        type: 'bar',
-        height: 350,
-      },
-      colors: [
-        '#d4526e',
-        '#13d8aa',
-        '#A5978B',
-        '#2b908f',
-        '#f9a3a4',
-        '#90ee7e',
-        '#f48024',
-        '#69d2e7',
-      ],
-      plotOptions: {
-        bar: {
-          horizontal: true,
-          distributed: true,
-        },
-      },
-      dataLabels: {
-        enabled: true,
-      },
-      xaxis: {
-        categories: [
-          'Sarvodaya Sr. Secondary Schools',
+      type: 'bar',
+      height: 250
+    },
+    plotOptions: {
+      bar: {
+        horizontal: true
+      }
+    },
+    
+    dataLabels: {
+      enabled: false
+    },
+    xaxis: {
+      categories: [
+        'Sarvodaya Sr. Secondary Schools',
       'Sarvodaya Middle Schools',
       'Virtual School',
       'School of Specialized Excellence(SOSE)',
@@ -164,76 +151,80 @@ export class StudentComponent {
       'Primary',
       'Partibha Vikas Vidhyalya',
       'Middle Schools',
-        ],
-      },
+      ],
+    }
+    
     };
 
-  //   this.commonHorizontalBarGraph2={
-  //     series: [{
-  //     name: 'Male',
-  //     data: [44, 55, 41, 67, 22, 43]
-  //   }, {
-  //     name: 'Female',
-  //     data: [13, 23, 20, 8, 13, 27]
-  //   }, {
-  //     name: 'Transgender',
-  //     data: [11, 17, 15, 15, 21, 14]
-  //   }],
-  //     chart: {
-  //     type: 'bar',
-  //     height: 250,
-  //     stacked: true,
-  //     toolbar: {
-  //       show: true
-  //     },
-  //     zoom: {
-  //       enabled: true
-  //     }
-  //   },
-  //   responsive: [{
-  //     breakpoint: 480,
-  //     options: {
-  //       legend: {
-  //         position: 'bottom',
-  //         offsetX: -10,
-  //         offsetY: 0
-  //       }
-  //     }
-  //   }],
-  //   plotOptions: {
-  //     bar: {
-  //       horizontal: false,
-  //       borderRadius: 10,
-  //       dataLabels: {
-  //         total: {
-  //           enabled: true,
-  //           style: {
-  //             fontSize: '13px',
-  //             fontWeight: 900
-  //           }
-  //         }
-  //       }
-  //     },
-  //   },
-  //   xaxis: {
-  //     type: 'datetime',
-  //     categories: ['01/01/2011 GMT', '01/02/2011 GMT', '01/03/2011 GMT', '01/04/2011 GMT',
-  //       '01/05/2011 GMT', '01/06/2011 GMT'
-  //     ],
-  //   },
-  //   legend: {
-  //     position: 'right',
-  //     offsetY: 40
-  //   },
-  //   fill: {
-  //     opacity: 1
-  //   }
-  //   };
+    this.commonHorizontalBarGraph2 = {
+      series: [
+        {
+          name: "Male",
+          data: [] 
+        },
+        {
+          name: "Female",
+          data: []
+        },
+        {
+          name: "Other",
+          data: []
+        },
+        
+      ],
+      chart: {
+        type: "bar",
+        height: 250,
+        stacked: true,
+        toolbar: {
+          show: true
+        },
+        zoom: {
+          enabled: true
+        }
+      },
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            legend: {
+              position: "bottom",
+              offsetX: -10,
+              offsetY: 0
+            }
+          }
+        }
+      ],
+      plotOptions: {
+        bar: {
+          horizontal: false
+        }
+      },
+      xaxis: {
+        type: "category",
+        categories: [
+        
+        ]
+      },
+      legend: {
+        position: "right",
+        offsetY: 40
+      },
+      fill: {
+        opacity: 1
+      }
+    };
+    
+
+
   }
 
   ngOnInit() {
     this.getAllData()
     this.getEnrollmentBySchoolCatogory()
+
+
+
 
 
   }
@@ -279,13 +270,10 @@ export class StudentComponent {
     this.httpService.get('graphs/student-enrollment').subscribe((data: any) => {
       if (data) {
         const catogoryWiseStudentCount = data.enrollmentBySchoolCatogory
-        // this.genderWiseEnrollmentPerSchCategory=data.genderWiseEnrollmentPerSchCategory
+        const StudentGenderwise = data.genderWiseEnrollmentPerSchCategory
 
         this.getStudentCatogoryWise(catogoryWiseStudentCount)
-
-
-
-
+        this.getEnrollMentBySchoolcategoriesGenderWise(StudentGenderwise)
 
       }
     })
@@ -295,7 +283,7 @@ export class StudentComponent {
 
     const StudentCount = catogoryWiseStudentCount.map((item: any) => item.studentCount);
     const series = [{
-      name: "Ratio",
+      name: "Total Student",
       data: StudentCount
     }];
     const categories = [
@@ -312,16 +300,70 @@ export class StudentComponent {
 
     this.EnrollMentBySchoolcategories = JSON.parse(JSON.stringify(this.commonHorizontalBarGraph));
     this.EnrollMentBySchoolcategories.series = [...series];
-    this.EnrollMentBySchoolcategories.xaxis.title.text = "Students Gender";
-    this.EnrollMentBySchoolcategories.yaxis.title.text = "Total Students";
     this.EnrollMentBySchoolcategories.xaxis.categories = [...categories];
 
   }
 
+  getEnrollMentBySchoolcategoriesGenderWise(StudentGenderwise:any) {
+    // const GenderCount = StudentGenderwise.map((item: any) => item.genderCounts);
+
+    this.maleCounts = StudentGenderwise.map((item:any) => {
+      const maleEntry = item.genderCounts.find((entry:any) => entry._id === 'M');
+      return maleEntry ? maleEntry.studentCount : 0;
+    });
+
+    this.femaleCount = StudentGenderwise.map((item:any) => {
+      const maleEntry = item.genderCounts.find((entry:any) => entry._id === 'F');
+      return maleEntry ? maleEntry.studentCount : 0;
+    });
+
+    this.otherCount = StudentGenderwise.map((item:any) => {
+      const maleEntry = item.genderCounts.find((entry:any) => entry._id === 'T');
+      return maleEntry ? maleEntry.studentCount : 0;
+    });
+
+    const series = [
+      {
+      name: "Male",
+      data: this.maleCounts
+    },
+    {
+      name: "Female",
+      data: this.femaleCount
+    },
+    {
+      name: "Other",
+      data: this.otherCount
+    }
+  ];
+    // const categories = [
+      
+    // ]
+
+    this.EnrollMentBySchoolcategoriesGenderWise = JSON.parse(JSON.stringify(this.commonHorizontalBarGraph2));
+    this.EnrollMentBySchoolcategoriesGenderWise.series = [...series];
+    this.EnrollMentBySchoolcategoriesGenderWise.xaxis.title.text = "Students Gender";
+    this.EnrollMentBySchoolcategoriesGenderWise.yaxis.title.text = "Total Students";
+    // this.EnrollMentBySchoolcategoriesGenderWise.xaxis.categories = [...categories];
+
+  }
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
-
-
-
-
-
-
