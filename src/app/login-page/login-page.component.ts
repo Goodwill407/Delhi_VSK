@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -14,10 +14,11 @@ export interface LoginClass {
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent {
-  
+
   loginForm!: FormGroup;
   submitted: boolean = false;
   loginModel!: LoginClass;
+  @Output() loginFlag = new EventEmitter<boolean>();
 
   // portal!: string
   // @Output() loginEvent = new EventEmitter<boolean>();
@@ -31,6 +32,7 @@ export class LoginPageComponent {
       // this.portal = params['portal'];
     });
     this.checkIfAlreadyLogin();
+    this.loginFlag.emit(false);
   }
 
   initializeSaveFormValidations() {
@@ -72,7 +74,9 @@ export class LoginPageComponent {
     this.spinner.show();
     this.httpService.post('auth/login', this.loginForm.value).subscribe((data: any) => {
       if (data) {
-       this.router.navigateByUrl('/dashboard')
+        sessionStorage.setItem('userProfile', JSON.stringify(data.user));
+        this.router.navigateByUrl('/dashboard');
+        this.loginFlag.emit(true)
       }
       this.spinner.hide();
     }, (error) => {

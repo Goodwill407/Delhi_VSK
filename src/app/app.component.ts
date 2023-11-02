@@ -1,4 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, SimpleChanges, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +13,35 @@ export class AppComponent {
 
   status: boolean = true;
   statusLink: boolean = true;
+  isLogIn: boolean = false;
+
+  constructor(private router: Router) {
+    const user: any = JSON.parse(sessionStorage.getItem('userProfile')!);
+    if (!user) {
+      this.isLogIn = false;
+      this.router.navigate(['']);
+    } else {
+      this.isLogIn = true;
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    changes;
+  }
+
+  loginFlagFunc(event: any) {
+    this.isLogIn = event;
+  }
+
+  logout() {
+    sessionStorage.clear();
+    this.isLogIn = false;
+    this.router.navigate(['/']);
+  }
+
   clickEvent() {
     this.status = !this.status;
-  
+
 
     if (this.statusLink) {
       setTimeout(() => {

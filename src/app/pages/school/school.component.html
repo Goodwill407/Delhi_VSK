@@ -1,7 +1,8 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
 </ngx-spinner>
 <div class="d-flex mb-3">
-    <h6 class="mt-2">District: </h6>
+    <h2 class="fw-bold">SCHOOL</h2>
+    <div class="vr mx-3 opacity-100"></div>
     <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
         <option value="" disabled>Select District</option>
         <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
@@ -11,7 +12,8 @@
 </div>
 <div class="container1">
     <div class="column text-center">
-        <h5 class="bg-light p-2 m-2">Central District</h5>
+        <h5 *ngIf="!districtModel" class="bg-light p-2 m-2">Delhi</h5>
+        <h5 *ngIf="districtModel" class="bg-light p-2 m-2">{{districtModel}} District</h5>
         <div class="d-flex justify-content-around pt-4">
             <div class="pt-4">
                 <h1 class="fw-bold">{{totalSchools}}</h1>
@@ -68,21 +70,10 @@
             [dataLabels]="lowClassHighClass?.dataLabels" [plotOptions]="lowClassHighClass?.plotOptions"
             [responsive]="lowClassHighClass?.responsive"></apx-chart>
     </div>
-    <div class="column">
-        <apx-chart
-          [series]="allZones?.series"
-          [chart]="allZones?.chart"
-          [dataLabels]="allZones?.dataLabels"
-          [plotOptions]="allZones?.plotOptions"
-          [title]="allZones?.title"
-          [legend]="allZones?.legend"
-          #chart
-          (click)="onChartClick($event)"
-        ></apx-chart>
-      </div>
+  
       
-    <!-- <div class="column">
+    <div class="column">
         <apx-chart [series]="allZones?.series" [chart]="allZones?.chart" [dataLabels]="allZones?.dataLabels"
-            [plotOptions]="allZones?.plotOptions" [title]="allZones?.title" [legend]="allZones?.legend" #chart (click)="onChartClick($event)"></apx-chart>
-    </div> -->
+            [plotOptions]="allZones?.plotOptions" [title]="allZones?.title" [legend]="allZones?.legend"></apx-chart>
+    </div>
 </div>

@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div class="wrapper" *ngIf="isLogIn">
   <div class="sidebarMenu" [ngClass]="status ? 'darSideBar' : 'genisSideBar'">
 
     <div class="sideBarUst text-center pt-3">
@@ -9,6 +9,12 @@
 
     <div class="sideBarOrta mt-3">
       <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="dashboard" href="#">
+            <span class="navIcon"><i class="bi bi-backpack4-fill"></i></span>
+            <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Dashboard</span>
+          </a>
+        </li>
 
         <li class="nav-item">
           <a class="nav-link active" routerLink="school" href="#">
@@ -27,13 +33,6 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="student" href="#">
             <span class="navIcon"><i class="bi bi-clipboard2-data-fill"></i></span>
-            <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Teacher</span>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" routerLink="attendance" href="#">
-            <span class="navIcon"><i class="bi bi-backpack4-fill"></i></span>
             <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Student</span>
           </a>
         </li>
@@ -57,13 +56,23 @@
         <button type="button" id="sidebarCollapse" class="btn btn-secondary" (click)="clickEvent() ">
           <i class="bi bi-justify"></i>
         </button>
-        <h4 class="text-center">Vidya Samiksha Kendra, Delhi</h4>
+        <h1 class="text-center">Vidya Samiksha Kendra, Delhi</h1>
+        <div class="logo">
+          <img src="../../../assets/images/delhi_board_logo.png">
+          <img src="../../../assets/images/vsk_logo.png">
+          <img src="../../../assets/images/SSA.png">
+          <i class="bi bi-box-arrow-right pt-4 h2 text-danger" (click)="logout()"></i>
+        </div>
       </div>
     </nav>
 
-    <!-- Body content -->
     <router-outlet></router-outlet>
-    <!-- Body content -->
+
 
   </div>
 </div>
+
+<!-- Body content -->
+<!-- <router-outlet *ngIf="!isLogIn"></router-outlet> -->
+<app-login-page *ngIf="!isLogIn" (loginFlag)="loginFlagFunc($event)"></app-login-page>
+<!-- Body content -->
