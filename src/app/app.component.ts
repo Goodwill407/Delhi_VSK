@@ -30,9 +30,7 @@ export class AppComponent {
   }
 
   loginFlagFunc(event: any) {
-    if (event) {
-      this.isLogIn = event;
-    }
+    this.isLogIn = event;
   }
 
   logout() {

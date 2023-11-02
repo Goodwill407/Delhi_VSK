@@ -32,6 +32,7 @@ export class LoginPageComponent {
       // this.portal = params['portal'];
     });
     this.checkIfAlreadyLogin();
+    this.loginFlag.emit(false);
   }
 
   initializeSaveFormValidations() {
