@@ -14,6 +14,8 @@ export class SchoolComponent {
   commonPieGraph: any;
   commonPollarChart: any;
   commonTreeMap: any;
+  commonRadialGraph: any;
+  commonHorizontalBarGraph: any;
 
   // Graphs
   teacherGenderRatio: any;
@@ -23,6 +25,8 @@ export class SchoolComponent {
   schoolsByManagement: any;
   lowClassHighClass: any;
   allZones: any;
+  streamCount: any;
+  minorityCount: any;
 
   // Single data
   teachersRatio: any;
@@ -79,7 +83,6 @@ export class SchoolComponent {
           }
         },
       }
-
     };
 
     this.commonPieGraph = {
@@ -176,10 +179,62 @@ export class SchoolComponent {
         }
       }
     };
+
+    this.commonRadialGraph = {
+      series: [],
+      chart: {
+        height: 350,
+        type: "radialBar"
+      },
+      plotOptions: {
+        radialBar: {
+          dataLabels: {
+            name: {
+              fontSize: "22px"
+            },
+            value: {
+              fontSize: "16px"
+            },
+            total: {
+              show: true,
+              label: "Total",
+              formatter: function (w: any) {
+                return "1249";
+              }
+            }
+          }
+        }
+      },
+      labels: []
+    };
+
+    this.commonHorizontalBarGraph = {
+      series: [
+      ],
+      chart: {
+        type: "bar",
+        height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: true
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      xaxis: {
+        categories: [
+        ],
+        title: {}
+      },
+      yaxis: {
+        title: {}
+      }
+    }
   }
 
   ngOnInit() {
-    this.getAllData();
     this.getAllSchoolGraph();
     this.getAllDistricts();
     this.getDistrictName();
@@ -234,8 +289,8 @@ export class SchoolComponent {
     })
   }
 
-  getAllData() {
-    this.httpService.get('graphs').subscribe((data: any) => {
+  getAllSchoolGraph() {
+    this.httpService.get('graphs/school-teacher-student-graph').subscribe((data: any) => {
       if (data) {
         this.teachersRatio = data.teacherStudentRatio?.toFixed(2);
         this.totalSchools = data.totalSchools;
@@ -253,13 +308,6 @@ export class SchoolComponent {
           totalFemaleTeachers: data.totalFemaleTeachers
         }
         this.getTeachersGenderRatio(teachersGender);
-      }
-    })
-  }
-
-  getAllSchoolGraph() {
-    this.httpService.get('graphs/school-graph').subscribe((data: any) => {
-      if (data) {
         this.getShiftWiseSchools(data.shiftWiseCount);
         this.getSchoolsByManagement(data.schoolManagementWise);
         const lowClassHighClass = {
@@ -268,6 +316,9 @@ export class SchoolComponent {
         }
         this.getLowClassHighClass(lowClassHighClass);
         this.getAllZones(data.zoneWiseCounts);
+        this.getTypesOfSchools(data.typeOfSchoolCounts);
+        this.getStreamCount(data.streamCounts);
+        this.getMinorityCount(data.minorityCounts);
       }
     })
   }
@@ -319,6 +370,33 @@ export class SchoolComponent {
     this.lowClassHighClass = JSON.parse(JSON.stringify(this.commonPieGraph));
     this.lowClassHighClass.series = [lowClassHighClass.lowClassCount, lowClassHighClass.highClassCount];
     this.lowClassHighClass.labels = ['Low class', 'High class']
+  }
+
+  getTypesOfSchools(typesOfSchools: any) {
+    this.typesOfSchools = JSON.parse(JSON.stringify(this.commonPollarChart));
+    this.typesOfSchools.series = [typesOfSchools[0].count, typesOfSchools[1].count, typesOfSchools[2].count];
+    this.typesOfSchools.labels = ["Boys", "Girls", "Co-ed"]
+  }
+
+  getStreamCount(streamCount: any) {
+    this.streamCount = JSON.parse(JSON.stringify(this.commonHorizontalBarGraph));
+    const series: any = [{
+      name: "Count",
+      data: []
+    }];
+    for (let i = 0; i < streamCount.length; i++) {
+      series[0].data.push(streamCount[i].count);
+      this.streamCount.xaxis.categories.push(streamCount[i].stream);
+    }
+    this.streamCount.series = [...series];
+    this.streamCount.xaxis.title.text = "Total Count";
+    this.streamCount.yaxis.title.text = "Streams";
+  }
+
+  getMinorityCount(minorityCount: any) {
+    this.minorityCount = JSON.parse(JSON.stringify(this.commonPieGraph));
+    this.minorityCount.series = [minorityCount[0].count, minorityCount[1].count];
+    this.minorityCount.labels = [minorityCount[0].minority, minorityCount[1].minority]
   }
 
   getAllZones(allZones: any) {
