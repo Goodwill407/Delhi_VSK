@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 
 @Component({
@@ -11,7 +12,7 @@ export class StudentComponent {
   totalBoys: any;
   totalGirls: any;
   commonBarGraph: any
-  commonBarGraph2:any
+  commonBarGraph2: any
   commonHorizontalBarGraph: any;
   studentsGenderRatio: any
   averageStudentOfSchool: any
@@ -22,23 +23,26 @@ export class StudentComponent {
   EnrollMentBySchoolcategoriesGenderWise: any
   communHorisontal2: any
   commonPollarChart: any
-  commonPieDonut:any
+  commonPieDonut: any
   maleCounts: any
   femaleCount: any
   otherCount: any
-  StreamWiseStudent:any;
-  AffiliationWiseStudent:any
-  TypeOfStudSchool:any
-  MinorityWiseStudCount:any;
-  StudentShiftWiseCounts:any
-  StudentManagementWiseCounts:any
-  
-
+  StreamWiseStudent: any;
+  AffiliationWiseStudent: any
+  TypeOfStudSchool: any
+  MinorityWiseStudCount: any;
+  StudentShiftWiseCounts: any
+  StudentManagementWiseCounts: any
   chartOptions: any
 
+  allDistricts: any
+  districtModel: any = ""
 
 
-  constructor(private httpService: HttpServiceService) {
+
+
+
+  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService) {
     this.commonBarGraph = {
       series: [],
       chart: {
@@ -130,8 +134,8 @@ export class StudentComponent {
       series: [],
       chart: {
         type: "polarArea",
-        height:'300px'
-       },
+        height: '300px'
+      },
       stroke: {
         colors: ["#fff"]
       },
@@ -167,7 +171,7 @@ export class StudentComponent {
         type: "gradient"
       },
       legend: {
-          formatter: function(val:any, opts:any) {
+        formatter: function (val: any, opts: any) {
           return val + " - " + opts.w.globals.series[opts.seriesIndex];
         },
         position: "bottom"
@@ -185,9 +189,9 @@ export class StudentComponent {
           }
         }
       ]
-      
+
     };
-    
+
     this.commonBarGraph2 = {
       series: [
         {
@@ -199,7 +203,7 @@ export class StudentComponent {
         height: 250,
         type: "bar",
         events: {
-          click: function(chart:any, w:any, e:any) {
+          click: function (chart: any, w: any, e: any) {
             // console.log(chart, w, e)
           }
         }
@@ -229,9 +233,9 @@ export class StudentComponent {
       grid: {
         show: true
       },
-      
-        labels:[]
-      
+
+      labels: []
+
     };
 
 
@@ -242,10 +246,60 @@ export class StudentComponent {
 
   ngOnInit() {
     this.getAllData()
-    this.getEnrollmentBySchoolCatogory()
-    this.getStreanWiseCount()
+    // this.getEnrollmentBySchoolCatogory()
+    this.getStudentGraphData() 
+    this.getAllDistricts()
 
   }
+  getAllDistricts() {
+    this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
+      if (data && data.length > 0) {
+        this.allDistricts = data;
+      }
+    })
+  }
+
+  getGraphsByDistrictName() {
+    this.spinner.show();
+    const district = {
+      districtName: this.districtModel
+    }
+    this.httpService.post('graphs/school-student-teacher-graph-districtname', district).subscribe((data: any) => {
+      if (data) {
+        this.totalStudent = data.totalSchools;
+        // this.averageTeacherOfSchool = data.averageTeacherOfSchool?.toFixed(2);
+        // this.averageStudentOfSchool = data.averageStudentOfSchool?.toFixed(2);
+        // this.teachersRatio = data.teacherStudentRatio?.toFixed(2);
+
+        //
+        //   const studentsGender = {
+        //     totalBoys: data.totalBoys,
+        //     totalGirls: data.totalGirls
+        //   }
+        //   this.getStudentsGenderRatio(studentsGender);
+
+        //   const teachersGender = {
+        //     totalMaleTeachers: data.totalMaleTeachers,
+        //     totalFemaleTeachers: data.totalFemaleTeachers
+        //   }
+        //   this.getTeachersGenderRatio(teachersGender);
+
+        //   //
+        //   this.getShiftWiseSchools(data.shiftWiseCount);
+        //   this.getSchoolsByManagement(data.schoolManagementWise);
+        //   const lowClassHighClass = {
+        //     lowClassCount: data.lowClassCount,
+        //     highClassCount: data.highClassCount
+        //   }
+        //   this.getLowClassHighClass(lowClassHighClass);
+        //   this.spinner.hide();
+        //   this.getAllZones(data.zoneWiseCounts);
+      }
+    }, (error) => {
+      this.spinner.hide();
+    })
+  }
+
 
   getAllData() {
     this.httpService.get('graphs').subscribe((data: any) => {
@@ -284,14 +338,26 @@ export class StudentComponent {
     this.studentsGenderRatio.xaxis.categories = [...categories];
   }
 
-  getEnrollmentBySchoolCatogory() {
-    this.httpService.get('graphs/student-enrollment').subscribe((data: any) => {
+  getStudentGraphData() {
+    this.httpService.get('studentgraph/student-graph-count').subscribe((data: any) => {
       if (data) {
-        const catogoryWiseStudentCount = data.enrollmentBySchoolCatogory
-        const StudentGenderwise = data.genderWiseEnrollmentPerSchCategory
+        const catogoryWiseStudentCount = data.studentCounts
+        // const StudentGenderwise = data.genderWiseEnrollmentPerSchCategory
+        const StreanWiseCount = data.streanWiseCount
+        const AffiliationWiseCount = data.affiliationWiseCount
+        const TypeOfStudSchool = data.typeOfSchoolSchoolCount
+        const MinorityWiseStudCount = data.minorityWiseCount
+        const StudentShiftWiseCounts = data.studentShiftWiseCounts
+        const StudentManagementWiseCounts = data.studentManagementWiseCounts
 
         this.getStudentCatogoryWise(catogoryWiseStudentCount)
-        this.getEnrollMentBySchoolcategoriesGenderWise(StudentGenderwise)
+        //       this.getEnrollMentBySchoolcategoriesGenderWise(StudentGenderwise)
+        this.getStreamWiseStudent(StreanWiseCount)
+        this.getAffiliationWiseCount(AffiliationWiseCount)
+        this.getTypeOfStudSchool(TypeOfStudSchool)
+        this.getMinorityWiseCount(MinorityWiseStudCount)
+        this.getStudentShiftWiseCounts(StudentShiftWiseCounts)
+        this.getStudentManagementWiseCounts(StudentManagementWiseCounts)
 
       }
     })
@@ -299,7 +365,7 @@ export class StudentComponent {
 
   getStudentCatogoryWise(catogoryWiseStudentCount: any) {
 
-    const StudentCount = catogoryWiseStudentCount.map((item: any) => item.studentCount);
+    const StudentCount = catogoryWiseStudentCount.map((item: any) => item.count);
     const SchCategory = catogoryWiseStudentCount.map((item: any) => item.SchCategory);
     this.chartOptions = {
       series: [
@@ -330,69 +396,49 @@ export class StudentComponent {
 
   }
 
-  getEnrollMentBySchoolcategoriesGenderWise(StudentGenderwise: any) {
-    // const GenderCount = StudentGenderwise.map((item: any) => item.genderCounts);
-    const SchCategory = StudentGenderwise.map((item: any) => item.SchCategory);
+  // getEnrollMentBySchoolcategoriesGenderWise(StudentGenderwise: any) {
+  //   // const GenderCount = StudentGenderwise.map((item: any) => item.genderCounts);
+  //   const SchCategory = StudentGenderwise.map((item: any) => item.SchCategory);
 
-    this.maleCounts = StudentGenderwise.map((item: any) => {
-      const maleEntry = item.genderCounts.find((entry: any) => entry._id === 'M');
-      return maleEntry ? maleEntry.studentCount : 0;
-    });
+  //   this.maleCounts = StudentGenderwise.map((item: any) => {
+  //     const maleEntry = item.genderCounts.find((entry: any) => entry._id === 'M');
+  //     return maleEntry ? maleEntry.studentCount : 0;
+  //   });
 
-    this.femaleCount = StudentGenderwise.map((item: any) => {
-      const maleEntry = item.genderCounts.find((entry: any) => entry._id === 'F');
-      return maleEntry ? maleEntry.studentCount : 0;
-    });
+  //   this.femaleCount = StudentGenderwise.map((item: any) => {
+  //     const maleEntry = item.genderCounts.find((entry: any) => entry._id === 'F');
+  //     return maleEntry ? maleEntry.studentCount : 0;
+  //   });
 
-    this.otherCount = StudentGenderwise.map((item: any) => {
-      const maleEntry = item.genderCounts.find((entry: any) => entry._id === 'T');
-      return maleEntry ? maleEntry.studentCount : 0;
-    });
+  //   this.otherCount = StudentGenderwise.map((item: any) => {
+  //     const maleEntry = item.genderCounts.find((entry: any) => entry._id === 'T');
+  //     return maleEntry ? maleEntry.studentCount : 0;
+  //   });
 
-    const series = [
-      {
-        name: "Male",
-        data: this.maleCounts
-      },
-      {
-        name: "Female",
-        data: this.femaleCount
-      },
-      {
-        name: "Other",
-        data: this.otherCount
-      }
-    ];
-    const categories: any = SchCategory
+  //   const series = [
+  //     {
+  //       name: "Male",
+  //       data: this.maleCounts
+  //     },
+  //     {
+  //       name: "Female",
+  //       data: this.femaleCount
+  //     },
+  //     {
+  //       name: "Other",
+  //       data: this.otherCount
+  //     }
+  //   ];
+  //   const categories: any = SchCategory
 
-    this.EnrollMentBySchoolcategoriesGenderWise = JSON.parse(JSON.stringify(this.commonHorizontalBarGraph2));
-    this.EnrollMentBySchoolcategoriesGenderWise.series = [...series];
-    this.EnrollMentBySchoolcategoriesGenderWise.xaxis.categories = [...categories];
+  //   this.EnrollMentBySchoolcategoriesGenderWise = JSON.parse(JSON.stringify(this.commonHorizontalBarGraph2));
+  //   this.EnrollMentBySchoolcategoriesGenderWise.series = [...series];
+  //   this.EnrollMentBySchoolcategoriesGenderWise.xaxis.categories = [...categories];
 
-  }
+  // }
 
-  getStreanWiseCount() {
-    this.httpService.get('studentgraph/student-graph-count').subscribe((data: any) => {
-      if (data) {
-        const StreanWiseCount=data.streanWiseCount
-        const AffiliationWiseCount=data.affiliationWiseCount
-        const TypeOfStudSchool=data.typeOfSchoolSchoolCount
-        const MinorityWiseStudCount=data.minorityWiseCount
-        const StudentShiftWiseCounts=data.studentShiftWiseCounts
-        const StudentManagementWiseCounts=data.studentManagementWiseCounts
-        
-        this.getStreamWiseStudent(StreanWiseCount)
-        this.getAffiliationWiseCount(AffiliationWiseCount)
-        this.getTypeOfStudSchool(TypeOfStudSchool)
-        this.getMinorityWiseCount(MinorityWiseStudCount)
-        this.getStudentShiftWiseCounts(StudentShiftWiseCounts)
-        this.getStudentManagementWiseCounts(StudentManagementWiseCounts)
-
-      }
-    })
-  }
-
-  getStreamWiseStudent(StreanWiseCount:any){
+ 
+  getStreamWiseStudent(StreanWiseCount: any) {
     const Stream = StreanWiseCount.map((item: any) => item.stream);
     const StreamWiseStudCount = StreanWiseCount.map((item: any) => item.count);
 
@@ -406,24 +452,24 @@ export class StudentComponent {
     this.StreamWiseStudent.labels = [...labels]
   }
 
-  getAffiliationWiseCount(affiliationWiseCount:any){
-    const Affiliation = affiliationWiseCount.map((item:any)=>item.affiliation)
-    const affiliationWiseStud= affiliationWiseCount.map((item:any)=>item.count)
-   
+  getAffiliationWiseCount(affiliationWiseCount: any) {
+    const Affiliation = affiliationWiseCount.map((item: any) => item.affiliation)
+    const affiliationWiseStud = affiliationWiseCount.map((item: any) => item.count)
+
     this.AffiliationWiseStudent = JSON.parse(JSON.stringify(this.commonPieDonut));
-    const series=affiliationWiseStud;
+    const series = affiliationWiseStud;
     const labels = Affiliation
     this.AffiliationWiseStudent.series = [...series];
     this.AffiliationWiseStudent.labels = [...labels]
 
   }
 
-  getTypeOfStudSchool(TypeOfStudSchool:any){
-    const TypeOfSchool = TypeOfStudSchool.map((item:any)=>item.typeOfSchool)
-    const TypeOfStudCount= TypeOfStudSchool.map((item:any)=>item.count)
-   
+  getTypeOfStudSchool(TypeOfStudSchool: any) {
+    const TypeOfSchool = TypeOfStudSchool.map((item: any) => item.typeOfSchool)
+    const TypeOfStudCount = TypeOfStudSchool.map((item: any) => item.count)
+
     this.TypeOfStudSchool = JSON.parse(JSON.stringify(this.commonPieDonut));
-    const series=TypeOfStudCount;
+    const series = TypeOfStudCount;
     const labels = TypeOfSchool
     this.TypeOfStudSchool.series = [...series];
     this.TypeOfStudSchool.labels = [...labels]
@@ -431,43 +477,43 @@ export class StudentComponent {
 
   }
 
-  getMinorityWiseCount(minorityWiseStudCount:any){
-    const Minority = minorityWiseStudCount.map((item:any)=>item.minority)
-    const StudCount= minorityWiseStudCount.map((item:any)=>item.count)
+  getMinorityWiseCount(minorityWiseStudCount: any) {
+    const Minority = minorityWiseStudCount.map((item: any) => item.minority)
+    const StudCount = minorityWiseStudCount.map((item: any) => item.count)
 
     this.MinorityWiseStudCount = JSON.parse(JSON.stringify(this.commonPieDonut));
-    const series=StudCount;
+    const series = StudCount;
     const labels = Minority
     this.MinorityWiseStudCount.series = [...series];
     this.MinorityWiseStudCount.labels = [...labels]
     this.MinorityWiseStudCount.chart.type = "pie";
-   }
+  }
 
-   getStudentShiftWiseCounts(StudentShiftWiseCounts:any){
-    const shift = StudentShiftWiseCounts.map((item:any)=>item.shift)
-    const StudCount= StudentShiftWiseCounts.map((item:any)=>item.count)
+  getStudentShiftWiseCounts(StudentShiftWiseCounts: any) {
+    const shift = StudentShiftWiseCounts.map((item: any) => item.shift)
+    const StudCount = StudentShiftWiseCounts.map((item: any) => item.count)
 
     this.StudentShiftWiseCounts = JSON.parse(JSON.stringify(this.commonPollarChart));
-    const series=StudCount;
+    const series = StudCount;
     const labels = shift
     this.StudentShiftWiseCounts.series = [...series];
     this.StudentShiftWiseCounts.labels = [...labels]
-    
-   }
 
-   getStudentManagementWiseCounts(StudentManagementWiseCounts:any){
-    const SchManagement = StudentManagementWiseCounts.map((item:any)=>item.SchManagement)
-    const StudCount= StudentManagementWiseCounts.map((item:any)=>item.count)
+  }
+
+  getStudentManagementWiseCounts(StudentManagementWiseCounts: any) {
+    const SchManagement = StudentManagementWiseCounts.map((item: any) => item.SchManagement)
+    const StudCount = StudentManagementWiseCounts.map((item: any) => item.count)
 
     this.StudentManagementWiseCounts = JSON.parse(JSON.stringify(this.commonPieDonut));
-    const series=StudCount;
+    const series = StudCount;
     const labels = SchManagement
     this.StudentManagementWiseCounts.series = [...series];
     this.StudentManagementWiseCounts.labels = [...labels]
-   }
-
-
-  
   }
+
+
+
+}
 
 
