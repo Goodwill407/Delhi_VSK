@@ -6,14 +6,38 @@
     display: grid;
     width: 100%;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    /* display: grid;
+    grid-gap: 5px;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 2fr));
+    grid-auto-rows: 270px;
+    grid-auto-flow: dense;
+    position: relative; */
+}
+
+.container1 .large {
+    /* grid-column: span 2;
+    grid-row: span 2; */
+}
+
+.container1 .tall {
+    /* grid-row: span 2; */
+}
+
+.container1 .wide {
+    /* grid-column: span 2; */
 }
 
 .column {
-    box-sizing: border-box;
     font-size: 18px;
     cursor: pointer;
     margin: 10px;
+    /* height: 350px; */
+    position: relative;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+apx-chart .apexcharts-toolbar {
+    display: none;
 }
 
 .column h5 {
