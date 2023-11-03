@@ -10,8 +10,6 @@ import { HttpServiceService } from 'src/app/services/http-service.service';
 })
 export class SchoolComponent {
 
-  @ViewChild('chart') chartEl: ElementRef | undefined;
-
   commonBarGraph: any;
   commonPieGraph: any;
   commonPollarChart: any;
@@ -160,7 +158,7 @@ export class SchoolComponent {
           data: []
         }
       ],
-
+    
       legend: {
         show: false
       },
@@ -171,21 +169,27 @@ export class SchoolComponent {
       title: {
         text: "Multi-dimensional Treemap",
         align: "center"
+      },
+      events: {
+        click: (event: any, chartContext: any, config: any) => {
+          alert();
+        }
       }
-    }
+    };
   }
-
-  onChartClick() {
-    this.chartEl?.nativeElement;
+  onChartClick(event: any) {
+    // Access the clicked value or data from the event object
+    const clickedValue = event.value; // Modify this based on the charting library
+    console.log("Clicked Value:", clickedValue);
   }
-
+  
+  
   ngOnInit() {
     this.getAllData();
     this.getAllSchoolGraph();
     this.getAllDistricts();
     this.getDistrictName();
   }
-
   getAllDistricts() {
     this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
       if (data && data.length > 0) {
@@ -202,9 +206,9 @@ export class SchoolComponent {
     this.httpService.post('graphs/school-student-teacher-graph-districtname', district).subscribe((data: any) => {
       if (data) {
         this.totalSchools = data.totalSchools;
-        this.averageTeacherOfSchool = data.averageTeacherOfSchool.toFixed(2);
-        this.averageStudentOfSchool = data.averageStudentOfSchool.toFixed(2);
-        this.teachersRatio = data.teacherStudentRatio.toFixed(2);
+        this.averageTeacherOfSchool = data.averageTeacherOfSchool?.toFixed(2);
+        this.averageStudentOfSchool = data.averageStudentOfSchool?.toFixed(2);
+        this.teachersRatio = data.teacherStudentRatio?.toFixed(2);
 
         //
         const studentsGender = {
@@ -238,10 +242,10 @@ export class SchoolComponent {
   getAllData() {
     this.httpService.get('graphs').subscribe((data: any) => {
       if (data) {
-        this.teachersRatio = data.teacherStudentRatio.toFixed(2);
+        this.teachersRatio = data.teacherStudentRatio?.toFixed(2);
         this.totalSchools = data.totalSchools;
-        this.averageStudentOfSchool = data.averageStudentOfSchool.toFixed(2);;
-        this.averageTeacherOfSchool = data.averageTeacherOfSchool.toFixed(2);;
+        this.averageStudentOfSchool = data.averageStudentOfSchool?.toFixed(2);;
+        this.averageTeacherOfSchool = data.averageTeacherOfSchool?.toFixed(2);;
 
         const studentsGender = {
           totalBoys: data.totalBoys,
@@ -332,8 +336,10 @@ export class SchoolComponent {
   getDistrictName() {
     this.route.queryParams.subscribe((param: any) => {
       this.districtName = param['districtName'];
-      console.log(this.districtName);
-
+      if (this.districtName) {
+        this.districtModel = this.districtName;
+        this.getGraphsByDistrictName();
+      }
     })
   }
 

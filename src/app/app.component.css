@@ -280,18 +280,6 @@ a.article:hover {
     transition: .40s;
 }
 
-
-.logo {
-    display: inline-block;
-    font-weight: bold;
-    font-size: 16px;
-    color: #fff;
-    border: 2px solid #fff;
-    border-radius: 4px;
-    line-height: normal;
-    padding: 4px 8px;
-}
-
 .userFoto {
     display: inline-flex;
     justify-content: center;
@@ -377,4 +365,9 @@ a.article:hover {
     display: block;
     font-size: 1.8em;
     margin-bottom: 5px;
+}
+
+.logo img {
+    width: 70px;
+    margin: 0 20px;
 }

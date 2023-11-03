@@ -1,3 +1,7 @@
+<div class="d-flex mb-3">
+    <h2 class="fw-bold">STUDENT</h2>
+    <div class="vr mx-3 opacity-100"></div>
+</div>
 <div class="container1">
     <div class="column text-center">
         <h5 class="bg-light p-2 m-2">Central District</h5>
@@ -15,10 +19,10 @@
     </div>
     <div class="column text-center">
         <h5 class="bg-light p-2 m-2">Teacher Student Ratio</h5>
-        <img class="img-fluid mt-4" width="180" src="../../../assets/images/Dashboard img/lady Teacher.png">
+        <img class="img-fluid mt-4" width="150" src="../../../assets/images/pngegg.png">
         <h5 class="mt-3 fw-bold">Teacher Student Ratio {{teacherStudentRatio?.toFixed(2)}} School</h5>
     </div>
-    
+
     <div class="column">
         <h5 class="bg-light p-2 m-2">Student Gender Ratio</h5>
         <apx-chart [series]="studentsGenderRatio?.series" [chart]="studentsGenderRatio?.chart"
@@ -28,33 +32,101 @@
             [grid]="studentsGenderRatio?.grid"></apx-chart>
     </div>
     <div class="column">
-        <h5 class="bg-light p-2 m-2">Categories wise student</h5>
+        <h5 class="bg-light p-2 m-2">Enrollment By School Catogory</h5>
         <apx-chart
-    [series]="EnrollMentBySchoolcategories?.series"
-    [chart]="EnrollMentBySchoolcategories?.chart"
-    [dataLabels]="EnrollMentBySchoolcategories?.dataLabels"
-    [plotOptions]="EnrollMentBySchoolcategories?.plotOptions"
-    [xaxis]="EnrollMentBySchoolcategories?.xaxis"
+        [series]="chartOptions?.series"
+        [chart]="chartOptions?.chart"
+        [dataLabels]="chartOptions?.dataLabels"
+        [plotOptions]="chartOptions?.plotOptions"
+        [xaxis]="chartOptions?.xaxis"
+        [colors]="chartOptions.colors"
+
+        ></apx-chart>
+    </div>
+
+    <div class="column">
+        <h5 class="bg-light p-2 m-2">School Catogory Gender Wise </h5>
+        <apx-chart [series]="EnrollMentBySchoolcategoriesGenderWise?.series" [chart]="EnrollMentBySchoolcategoriesGenderWise?.chart" [dataLabels]="EnrollMentBySchoolcategoriesGenderWise?.dataLabels"
+            [plotOptions]="EnrollMentBySchoolcategoriesGenderWise?.plotOptions" [xaxis]="EnrollMentBySchoolcategoriesGenderWise?.xaxis" [stroke]="EnrollMentBySchoolcategoriesGenderWise?.stroke"
+            [fill]="EnrollMentBySchoolcategoriesGenderWise?.fill"  [tooltip]="EnrollMentBySchoolcategoriesGenderWise?.tooltip"
+            [legend]="EnrollMentBySchoolcategoriesGenderWise?.legend"></apx-chart>
+    </div>
+
+    <div class="column">
+        <h5 class="bg-light p-2 m-2">Streem Wise Student</h5>
+        <apx-chart
+        [series]="StreamWiseStudent?.series"
+        [chart]="StreamWiseStudent?.chart"
+        [dataLabels]="StreamWiseStudent?.dataLabels"
+        [plotOptions]="StreamWiseStudent?.plotOptions"
+        [yaxis]="StreamWiseStudent?.yaxis"
+        [labels]="StreamWiseStudent?.labels"
+        [legend]="StreamWiseStudent?.legend"
+        [colors]="StreamWiseStudent?.colors"
+        [grid]="StreamWiseStudent?.grid"
+      ></apx-chart>
+   </div>
+
+   <div class="column">
+    <h5 class="bg-light p-2 m-2">Affiliation Wise Student</h5>
+    <apx-chart
+    [series]="AffiliationWiseStudent?.series"
+    [chart]="AffiliationWiseStudent?.chart"
+    [labels]="AffiliationWiseStudent?.labels"
+    [fill]="AffiliationWiseStudent?.fill"
+    [dataLabels]="AffiliationWiseStudent?.dataLabels"
+    [responsive]="AffiliationWiseStudent?.responsive"
+    [legend]="AffiliationWiseStudent?.legend"
   ></apx-chart>
 </div>
 
 <div class="column">
-    <h5 class="bg-light p-2 m-2">Central District</h5>
+    <h5 class="bg-light p-2 m-2">Type Of School School Count</h5>
     <apx-chart
-    [series]="EnrollMentBySchoolcategoriesGenderWise?.series"
-    [chart]="EnrollMentBySchoolcategoriesGenderWise?.chart"
-    [dataLabels]="EnrollMentBySchoolcategoriesGenderWise?.dataLabels"
-    [plotOptions]="EnrollMentBySchoolcategoriesGenderWise?.plotOptions"
-    [responsive]="EnrollMentBySchoolcategoriesGenderWise?.responsive"
-    [xaxis]="EnrollMentBySchoolcategoriesGenderWise?.xaxis"
-    [fill]="EnrollMentBySchoolcategoriesGenderWise?.fill"
-    
+    [series]="TypeOfStudSchool?.series"
+    [chart]="TypeOfStudSchool?.chart"
+    [labels]="TypeOfStudSchool?.labels"
+    [responsive]="TypeOfStudSchool?.responsive"
+    [legend]="TypeOfStudSchool?.legend"
   ></apx-chart>
 </div>
 
+<div class="column">
+    <h5 class="bg-light p-2 m-2">Minority School Count</h5>
+    <apx-chart
+    [series]="MinorityWiseStudCount?.series"
+    [chart]="MinorityWiseStudCount?.chart"
+    [labels]="MinorityWiseStudCount?.labels"
+    [responsive]="MinorityWiseStudCount?.responsive"
+    [legend]="MinorityWiseStudCount?.legend"
+  ></apx-chart>
+</div>
 
-    
-   
+<div class="column">
+    <h5 class="bg-light p-2 m-2">Shift Wise Student Count</h5>
+    <apx-chart
+    [series]="StudentShiftWiseCounts?.series"
+    [chart]="StudentShiftWiseCounts?.chart"
+    [labels]="StudentShiftWiseCounts?.labels"
+    [fill]="StudentShiftWiseCounts?.fill"
+    [stroke]="StudentShiftWiseCounts?.stroke"
+    [responsive]="StudentShiftWiseCounts?.responsive"
+    [legend]="MinorityWiseStudCount?.legend"
+  ></apx-chart>
+</div>
 
-    
+<div class="column">
+    <h5 class="bg-light p-2 m-2">Student Management Wise Counts</h5>
+    <apx-chart [series]="StudentManagementWiseCounts?.series" [chart]="StudentManagementWiseCounts?.chart"
+        [labels]="StudentManagementWiseCounts?.labels" [fill]="StudentManagementWiseCounts?.fill" [stroke]="StudentManagementWiseCounts?.stroke"
+        [responsive]="StudentManagementWiseCounts?.responsive"
+        [legend]="StudentManagementWiseCounts?.legend"></apx-chart>
+</div>
+
+
+
+
+
+
+
 </div>
