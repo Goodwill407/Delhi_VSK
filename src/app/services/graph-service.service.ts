@@ -23,7 +23,13 @@ export class GraphService {
                 }
             },
             dataLabels: {
-                enabled: false
+                enabled: true,
+                formatter: function (val: any, opt: any) {
+                  return val;
+                },
+                dropShadow: {
+                  enabled: true
+                },
             },
             legend: {
                 show: false
@@ -56,7 +62,7 @@ export class GraphService {
         return graphData;
     }
 
-    PieGraph(chartType: any, totalType: any) {
+    PieGraph(chartType: any, totalType?: any) {
         const graphData = {
             series: [],
             chart: {

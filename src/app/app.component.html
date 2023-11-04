@@ -10,14 +10,14 @@
     <div class="sideBarOrta mt-3">
       <ul class="nav flex-column">
         <li class="nav-item">
-          <a class="nav-link" routerLink="dashboard" href="#">
-            <span class="navIcon"><i class="bi bi-backpack4-fill"></i></span>
-            <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Dashboard</span>
+          <a class="nav-link d-flex" routerLink="dashboard" href="#">
+            <span class="navIcon"><img src="../assets/images/dashboard.png" alt=""></span>&nbsp;
+            <span  [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Dashboard</span>
           </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link active" routerLink="school" href="#">
+          <a class="nav-link active d-flex" routerLink="school" href="#">
             <span class="navIcon"><i class="bi bi-house-add-fill"></i></span>
             <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">School</span>
           </a>
