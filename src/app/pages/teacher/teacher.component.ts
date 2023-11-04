@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { GraphService } from 'src/app/services/graph-service.service';
 
 @Component({
   selector: 'app-teacher',
@@ -37,7 +38,7 @@ export class TeacherComponent {
   streamWiseTeacher: any;
   minorityWiseTeacher: any;
 
-  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService) {
+  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService) {
     this.commonBarGraph = {
       series: [
         {
@@ -321,15 +322,31 @@ export class TeacherComponent {
   }
 
   getCategoryWiseTeacher(data: any) {
-    let teacherCount = [];
-    let teacherCategory = [];
+    // let teacherCount = [{
+    //   name: "Count",
+    //   data: []
+    // }];
+    // let teacherCategory = [];
+    // const series: any = [];
+    // for (let i = 0; i < data.length; i++) {
+    //   teacherCount.push(data[i].teacherCount);
+    //   teacherCategory.push(data[i].SchCategory);
+    // }
+    // this.teacherCategory = this.graphService.VerticleBarGraph();
+    // this.teacherCategory.series[0].data = teacherCount;
+    // this.teacherCategory.xaxis.categories = teacherCategory;
+
+    this.teacherCategory = this.graphService.VerticleBarGraph();;
+    const series: any = [{
+      name: "Count",
+      data: []
+    }];
     for (let i = 0; i < data.length; i++) {
-      teacherCount.push(data[i].teacherCount);
-      teacherCategory.push(data[i].SchCategory);
+      series[0].data.push(data[i].teacherCount);
+      this.teacherCategory.xaxis.categories.push(data[i].SchCategory);
     }
-    this.teacherCategory = JSON.parse(JSON.stringify(this.chartOptions1));
-    this.teacherCategory.series[0].data = teacherCount;
-    this.teacherCategory.xaxis.categories = teacherCategory;
+    this.teacherCategory.series = [...series];
+
 
   }
 

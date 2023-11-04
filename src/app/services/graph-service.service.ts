@@ -23,7 +23,13 @@ export class GraphService {
                 }
             },
             dataLabels: {
-                enabled: false
+                enabled: true,
+                formatter: function (val: any, opt: any) {
+                    return val;
+                },
+                dropShadow: {
+                    enabled: true
+                },
             },
             legend: {
                 show: false
