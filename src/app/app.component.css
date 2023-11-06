@@ -299,13 +299,13 @@ a.article:hover {
 .navIcon {
     display: inline-flex;
     justify-content: center;
+    height: 60px;
+    width: 45px;
     align-items: center;
-    width: 26px;
-    height: 26px;
     font-weight: bold;
     background-color: #e8dbb7;
     color: #3b26e9de;
-    margin-right: 6px;
+    margin-right: 3px;
     border-radius: 4px;
 }
 

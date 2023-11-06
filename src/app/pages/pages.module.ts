@@ -10,6 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { StudentComponent } from './student/student.component';
 import { TeacherComponent } from './teacher/teacher.component';
+import { NcertComponent } from './ncert/ncert.component';
+import { CQubeComponent } from './c-qube/c-qube.component';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { TeacherComponent } from './teacher/teacher.component';
     SchoolComponent,
     DashboardComponent,
     StudentComponent,
-    TeacherComponent
+    TeacherComponent,
+    NcertComponent,
+    CQubeComponent
   ],
   imports: [
     CommonModule,

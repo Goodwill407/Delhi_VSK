@@ -95,6 +95,7 @@ export class SchoolComponent {
     this.httpService.post('zonegraph/school-student-teacher-graph-zonename', zone).subscribe((data: any) => {
       if (data) {
         this.setAllGraphs(data);
+        this.districtModel = this.zoneModel;
         this.spinner.hide();
       }
     }, (error) => {

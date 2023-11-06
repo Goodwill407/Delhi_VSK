@@ -19,7 +19,7 @@
 <div class="container1">
     <div class="column">
         <h5 *ngIf="!districtModel" class="bg-light p-2 m-2">Delhi</h5>
-        <h5 *ngIf="districtModel" class="bg-light p-2 m-2">{{districtModel}} District</h5>
+        <h5 *ngIf="districtModel" class="bg-light p-2 m-2">{{districtModel}}</h5>
         <div class="d-flex justify-content-around mt-4">
             <img class="ms-2" src="../../../assets/images/Dashboard img/school1.png" style="height: 100px;" alt="">
             <div class="d-block ms-1 text-center">
@@ -82,13 +82,6 @@
             [responsive]="lowClassHighClass?.responsive" [legend]="lowClassHighClass?.legend"></apx-chart>
     </div>
 
-
-    <!-- <div class="column wide">
-        <h5 class="bg-light p-2 m-2">Schools by zone</h5>
-        <apx-chart [series]="allZones?.series" [chart]="allZones?.chart" [dataLabels]="allZones?.dataLabels"
-            [plotOptions]="allZones?.plotOptions" [title]="allZones?.title" [legend]="allZones?.legend"
-            (click)="handleChartClick($event, this, 'asd')"></apx-chart>
-    </div> -->
     <div class="column">
         <h5 class="bg-light p-2 m-2">Types of schools</h5>
         <apx-chart [series]="typesOfSchools?.series" [chart]="typesOfSchools?.chart" [labels]="typesOfSchools?.labels"
