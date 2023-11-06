@@ -1,21 +1,23 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+</ngx-spinner>
 <div class="d-flex mb-3">
     <h2 class="fw-bold">Student</h2>
     <div class="vr mx-3 opacity-100"></div>
-    <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()" >
+    <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" (change)=" getGraphsByDistrictName()" >
         <option value="" disabled>Select District</option>
         <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
             {{district.districtName}}
         </option>
     </select>
-    <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" >
+    <select class="form-select w-25 ms-2" [(ngModel)]="ZoneModel" (change)="getGraphsByZone()" >
         <option value="" disabled>Select Zone</option>
-        <option *ngFor="let district of allDistricts" value="">
-            
+        <option *ngFor="let zone of allZones" value="{{zone}}">
+            {{zone}}
         </option>
     </select>
-    <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" >
+    <select class="form-select w-25 ms-2"   >
         <option value="" disabled>Select School</option>
-        <option *ngFor="let district of allDistricts" value="">
+        <option *ngFor="let zone of allZones" value="">
             
         </option>
     </select>
@@ -43,11 +45,13 @@
 
     <div class="column">
         <h5 class="bg-light p-2 m-2">Student Gender Ratio</h5>
-        <apx-chart [series]="studentsGenderRatio?.series" [chart]="studentsGenderRatio?.chart"
-            [dataLabels]="studentsGenderRatio?.dataLabels" [plotOptions]="studentsGenderRatio?.plotOptions"
-            [yaxis]="studentsGenderRatio?.yaxis" [xaxis]="studentsGenderRatio?.xaxis"
-            [legend]="studentsGenderRatio?.legend" [colors]="studentsGenderRatio?.colors"
-            [grid]="studentsGenderRatio?.grid"></apx-chart>
+        <apx-chart
+        [series]="studentsGenderRatio?.series"
+        [chart]="studentsGenderRatio?.chart"
+        [labels]="studentsGenderRatio?.labels"
+        [responsive]="studentsGenderRatio?.responsive"
+        [legend]="studentsGenderRatio?.legend"
+      ></apx-chart>
     </div>
 
     <div class="column">
@@ -89,22 +93,17 @@
    <div class="column">
     <h5 class="bg-light p-2 m-2">Student Management Wise Counts</h5>
     <apx-chart [series]="StudentManagementWiseCounts?.series" [chart]="StudentManagementWiseCounts?.chart"
-        [labels]="StudentManagementWiseCounts?.labels" [fill]="StudentManagementWiseCounts?.fill" [stroke]="StudentManagementWiseCounts?.stroke"
-        [responsive]="StudentManagementWiseCounts?.responsive"
-        [legend]="StudentManagementWiseCounts?.legend"></apx-chart>
+    [labels]="StudentManagementWiseCounts?.labels" [fill]="StudentManagementWiseCounts?.fill"
+    [dataLabels]="StudentManagementWiseCounts?.dataLabels" [plotOptions]="StudentManagementWiseCounts?.plotOptions"
+    [responsive]="StudentManagementWiseCounts?.responsive" [legend]="StudentManagementWiseCounts?.legend"></apx-chart>
 </div>
 
    <div class="column">
     <h5 class="bg-light p-2 m-2">Affiliation Wise Student</h5>
-    <apx-chart
-    [series]="AffiliationWiseStudent?.series"
-    [chart]="AffiliationWiseStudent?.chart"
-    [labels]="AffiliationWiseStudent?.labels"
-    [fill]="AffiliationWiseStudent?.fill"
-    [dataLabels]="AffiliationWiseStudent?.dataLabels"
-    [responsive]="AffiliationWiseStudent?.responsive"
-    [legend]="AffiliationWiseStudent?.legend"
-  ></apx-chart>
+    <apx-chart [series]="AffiliationWiseStudent?.series" [chart]="AffiliationWiseStudent?.chart"
+    [labels]="AffiliationWiseStudent?.labels" [fill]="AffiliationWiseStudent?.fill"
+    [dataLabels]="AffiliationWiseStudent?.dataLabels" [plotOptions]="AffiliationWiseStudent?.plotOptions"
+    [responsive]="AffiliationWiseStudent?.responsive" [legend]="AffiliationWiseStudent?.legend"></apx-chart>
 </div>
 
 <div class="column">
@@ -119,15 +118,9 @@
 </div>
 <div class="column">
     <h5 class="bg-light p-2 m-2">Enrollment By School Catogory</h5>
-    <apx-chart
-    [series]="chartOptions?.series"
-    [chart]="chartOptions?.chart"
-    [dataLabels]="chartOptions?.dataLabels"
-    [plotOptions]="chartOptions?.plotOptions"
-    [xaxis]="chartOptions?.xaxis"
-    [colors]="chartOptions.colors"
-
-    ></apx-chart>
+    <apx-chart [series]="chartOptions?.series" [chart]="chartOptions?.chart" [dataLabels]="chartOptions?.dataLabels"
+    [plotOptions]="chartOptions?.plotOptions" [xaxis]="chartOptions?.xaxis" [labels]="chartOptions?.labels"
+    [yaxis]="chartOptions?.yaxis" [legend]="StreamWiseStudent?.legend"></apx-chart>
 </div>
 
 <div class="column">
