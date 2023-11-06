@@ -6,6 +6,7 @@ import { StudentComponent } from './student/student.component';
 import { TeacherComponent } from './teacher/teacher.component'
 import { NcertComponent } from './ncert/ncert.component';
 import { CQubeComponent } from './c-qube/c-qube.component';
+import { AttendanceComponent } from './attendance/attendance.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'teacher', component: TeacherComponent },
   { path: 'ncert', component: NcertComponent },
   { path: 'cquib', component: CQubeComponent },
+  { path: 'attendance', component: AttendanceComponent },
 ];
 
 @NgModule({
