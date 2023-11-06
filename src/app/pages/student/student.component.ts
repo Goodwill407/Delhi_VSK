@@ -41,6 +41,7 @@ export class StudentComponent {
   allZones:any;
   districtModel: any = ""
   ZoneModel :any = ""
+  AllSchool :any
 
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService) { }
@@ -49,6 +50,7 @@ export class StudentComponent {
     this.getStudentGraphData()
     this.getAllDistricts()
     this.getAllZone()
+   
 
   }
   getAllDistricts() {
@@ -103,6 +105,7 @@ export class StudentComponent {
     this.httpService.post('zonegraph/school-student-teacher-graph-zonename', zone).subscribe((data: any) => {
       if (data) {
         this.setAllGraphData(data);
+        this.getSchoolByZone()
         this.spinner.hide();
       }
     }, (error) => {
@@ -132,6 +135,8 @@ export class StudentComponent {
     this.getMinorityWiseCount(MinorityWiseStudCount)
     this.getStudentShiftWiseCounts(StudentShiftWiseCounts)
     this.getStudentManagementWiseCounts(StudentManagementWiseCounts)
+    this.getSchoolsByDistrict()
+    this.getSchoolsByDistrict()
 
   }
 
@@ -240,6 +245,35 @@ export class StudentComponent {
     const labels = SchManagement
     this.StudentManagementWiseCounts.series = [...series];
     this.StudentManagementWiseCounts.labels = [...labels]
+  }
+
+  
+  getSchoolsByDistrict() {
+    const district = {
+      District_name: this.districtModel
+    };
+    this.httpService.post('school/getDistrictSchool', district)
+      .subscribe((data: any) => {
+        if (data) {
+          this.AllSchool = data.districtSchools;
+          console.log(data.districtSchools);
+          console.log(this.AllSchool);
+        }
+      });
+  }
+
+  getSchoolByZone() {
+    const Zone = {
+      Zone_Name: this.ZoneModel
+    };
+    this.httpService.post('school/getZoneSchool', Zone)
+      .subscribe((data: any) => {
+        if (data) {
+          this.AllSchool = data.districtSchools;
+          console.log(data.districtSchools);
+          console.log(this.AllSchool);
+        }
+      });
   }
 
 
