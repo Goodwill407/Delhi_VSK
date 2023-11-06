@@ -1,27 +1,33 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
 </ngx-spinner>
-<div class="d-flex mb-3">
+<div class="d-flex mt-3 filter-box">
     <h2 class="fw-bold">SCHOOL</h2>
     <div class="vr mx-3 opacity-100"></div>
     <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
-        <option value="" disabled>Select District</option>
+        <option value="">Select District</option>
         <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
             {{district.districtName}}
         </option>
     </select>
     <select class="form-select w-25 ms-2" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
-        <option value="" disabled>Select Zone</option>
+        <option value="">Select Zone</option>
         <option *ngFor="let zone of allZones?.series[0]?.data" value="{{zone.x}}">
             {{zone.x}}
+        </option>
+    </select>
+    <select class="form-select w-25 ms-2" [(ngModel)]="schoolModel">
+        <option value="">Select School</option>
+        <option *ngFor="let school of allSchools" value="{{school}}">
+            {{school}}
         </option>
     </select>
 </div>
 <div class="container1">
     <div class="column">
-        <h5 *ngIf="!districtModel" class="bg-light p-2 m-2">Delhi</h5>
-        <h5 *ngIf="districtModel" class="bg-light p-2 m-2">{{districtModel}}</h5>
+        <h5 *ngIf="!districtModel" class="header-bg p-2 m-2">Delhi</h5>
+        <h5 *ngIf="districtModel" class="header-bg p-2 m-2">{{districtModel}}</h5>
         <div class="d-flex justify-content-around mt-4">
-            <img class="ms-2" src="../../../assets/images/Dashboard img/school1.png" style="height: 100px;" alt="">
+            <img class="ms-2" src="../../../assets/images/Dashboard/school1.png" style="height: 100px;" alt="">
             <div class="d-block ms-1 text-center">
                 <h1 class="fw-bold">{{totalSchools}}</h1>
                 <h3>Total schools</h3>
@@ -40,7 +46,7 @@
         </div>
     </div>
     <div class="column text-center">
-        <h5 class="bg-light p-2 m-2">Teachers per Students Ratio</h5>
+        <h5 class="header-bg p-2 m-2">Teachers per Students Ratio</h5>
         <img class="img-fluid mt-4" width="180" src="../../../assets/images/pngegg.png">
         <h5 class="mt-3" style="position: absolute;
         bottom: 10px;
@@ -48,34 +54,34 @@
     </div>
 
     <div class="column">
-        <h5 class="bg-light p-2 m-2">Students Gender Ratio</h5>
+        <h5 class="header-bg p-2 m-2">Students Gender Ratio</h5>
         <apx-chart [series]="studentsGenderRatio?.series" [chart]="studentsGenderRatio?.chart"
             [labels]="studentsGenderRatio?.labels" [fill]="studentsGenderRatio?.fill"
             [dataLabels]="studentsGenderRatio?.dataLabels" [plotOptions]="studentsGenderRatio?.plotOptions"
             [responsive]="studentsGenderRatio?.responsive" [legend]="studentsGenderRatio?.legend"></apx-chart>
     </div>
     <div class="column">
-        <h5 class="bg-light p-2 m-2">Teachers Gender Ratio</h5>
+        <h5 class="header-bg p-2 m-2">Teachers Gender Ratio</h5>
         <apx-chart [series]="teacherGenderRatio?.series" [chart]="teacherGenderRatio?.chart"
             [labels]="teacherGenderRatio?.labels" [fill]="teacherGenderRatio?.fill"
             [dataLabels]="teacherGenderRatio?.dataLabels" [plotOptions]="teacherGenderRatio?.plotOptions"
             [responsive]="teacherGenderRatio?.responsive" [legend]="teacherGenderRatio?.legend"></apx-chart>
     </div>
     <div class="column">
-        <h5 class="bg-light p-2 m-2">Schools By Management</h5>
+        <h5 class="header-bg p-2 m-2">Schools By Management</h5>
         <apx-chart [series]="schoolsByManagement?.series" [chart]="schoolsByManagement?.chart"
             [labels]="schoolsByManagement?.labels" [fill]="schoolsByManagement?.fill"
             [dataLabels]="schoolsByManagement?.dataLabels" [plotOptions]="schoolsByManagement?.plotOptions"
             [responsive]="schoolsByManagement?.responsive" [legend]="schoolsByManagement?.legend"></apx-chart>
     </div>
     <div class="column">
-        <h5 class="bg-light p-2 m-2">Shift wise Schools</h5>
+        <h5 class="header-bg p-2 m-2">Shift wise Schools</h5>
         <apx-chart [series]="shiftWiseSchools?.series" [chart]="shiftWiseSchools?.chart"
             [labels]="shiftWiseSchools?.labels" [fill]="shiftWiseSchools?.fill" [stroke]="shiftWiseSchools?.stroke"
             [responsive]="shiftWiseSchools?.responsive" [legend]="shiftWiseSchools?.legend"></apx-chart>
     </div>
     <div class="column">
-        <h5 class="bg-light p-2 m-2">High & Low class Schools</h5>
+        <h5 class="header-bg p-2 m-2">High & Low class Schools</h5>
         <apx-chart [series]="lowClassHighClass?.series" [chart]="lowClassHighClass?.chart"
             [labels]="lowClassHighClass?.labels" [fill]="lowClassHighClass?.fill"
             [dataLabels]="lowClassHighClass?.dataLabels" [plotOptions]="lowClassHighClass?.plotOptions"
@@ -83,20 +89,20 @@
     </div>
 
     <div class="column">
-        <h5 class="bg-light p-2 m-2">Types of schools</h5>
+        <h5 class="header-bg p-2 m-2">Types of schools</h5>
         <apx-chart [series]="typesOfSchools?.series" [chart]="typesOfSchools?.chart" [labels]="typesOfSchools?.labels"
             [fill]="typesOfSchools?.fill" [stroke]="typesOfSchools?.stroke" [responsive]="typesOfSchools?.responsive"
             [legend]="typesOfSchools?.legend"></apx-chart>
     </div>
     <div class="column">
-        <h5 class="bg-light p-2 m-2">Schools by minority</h5>
+        <h5 class="header-bg p-2 m-2">Schools by minority</h5>
         <apx-chart [series]="minorityCount?.series" [chart]="minorityCount?.chart" [labels]="minorityCount?.labels"
             [fill]="minorityCount?.fill" [dataLabels]="minorityCount?.dataLabels"
             [plotOptions]="minorityCount?.plotOptions" [responsive]="minorityCount?.responsive"
             [legend]="minorityCount?.legend"></apx-chart>
     </div>
-    <div class="column tall" style="height: auto;">
-        <h5 class="bg-light p-2 m-2">Schools by stream</h5>
+    <div class="column" style="height: auto;">
+        <h5 class="header-bg p-2 m-2">Schools by stream</h5>
         <apx-chart [series]="streamCount?.series" [chart]="streamCount?.chart" [dataLabels]="streamCount?.dataLabels"
             [plotOptions]="streamCount?.plotOptions" [xaxis]="streamCount?.xaxis"
             [yaxis]="streamCount?.yaxis"></apx-chart>

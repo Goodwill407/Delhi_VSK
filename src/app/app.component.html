@@ -10,95 +10,124 @@
     <div class="sideBarOrta mt-3">
       <ul class="nav flex-column">
         <li class="nav-item">
-          <a class="nav-link d-flex" routerLink="dashboard" href="#">
-            <span class="navIcon"><img src="../assets/images/dashboard.png" alt=""></span>&nbsp;
-            <span  [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Dashboard</span>
+          <a class="nav-link active" routerLink="dashboard" href="#">
+            <span class="image-icon">
+              <img src="../assets/images/dashboard.png" alt="">
+            </span>
+            <span class="ms-2"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Dashboard</span>
           </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link active d-flex" routerLink="school" href="#">
-            <span class="navIcon"><i class="bi bi-house-add-fill"></i></span>
-            <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">School</span>
+          <a class="nav-link" routerLink="school" href="#">
+            <span class="image-icon text-center">
+              <img src="../assets/images/Dashboard/school1.png" alt="">
+            </span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">School</span>
           </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link active" routerLink="teacher" href="#">
-            <span class="navIcon"><i class="bi bi-house-add-fill"></i></span>
-            <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Teacher</span>
+          <a class="nav-link" routerLink="teacher" href="#">
+            <span class="image-icon text-center justify-content-center">
+              <i class="bi bi-house-add-fill"></i>
+            </span>
+            <span class="ms-2"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Teacher</span>
           </a>
         </li>
 
         <li class="nav-item">
           <a class="nav-link" routerLink="student" href="#">
-            <span class="navIcon"><i class="bi bi-clipboard2-data-fill"></i></span>
-            <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Student</span>
+            <span class="image-icon text-center justify-content-center">
+              <i class="bi bi-clipboard2-data-fill"></i>
+            </span>
+            <span class="ms-2"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Student</span>
           </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link d-flex" routerLink="cquib" [queryParams]="{tabName : 'NISHTHA'}" href="#">
-            <span class="navIcon"><img src="../assets/images/NISHTHA-01-01.png" style="width: 50px; height: 60px;" alt=""></span>&nbsp;&nbsp; 
-            <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">NISHTHA</span>
+          <a class="nav-link" routerLink="cquib" [queryParams]="{tabName : 'NISHTHA'}" href="#">
+            <span class="image-icon">
+              <img src="../assets/images/NISHTHA-01-01.png" alt="">
+            </span>
+            <span class="ms-2"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">NISHTHA</span>
           </a>
         </li>
 
         <li class="nav-item mt-2">
-          <a class="nav-link d-flex" routerLink="cquib" [queryParams]="{tabName : 'DIKSHA-ETB'}" href="#">
-            <span class="navIcon mt-2"><img src="../assets/images/ETB & E-Content.png" style="width: 50px; height: 60px;" alt=""></span>&nbsp;&nbsp; 
-            <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">DIKSHA-ETB</span>
+          <a class="nav-link" routerLink="cquib" [queryParams]="{tabName : 'DIKSHA-ETB'}" href="#">
+            <span class="image-icon">
+              <img src="../assets/images/ETB & E-Content.png" alt="">
+            </span>
+            <span class="ms-2"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">DIKSHA-ETB</span>
           </a>
         </li>
 
         <li class="nav-item mt-2">
-          <a class="nav-link d-flex" routerLink="cquib" [queryParams]="{tabName : 'Micro-Improvements'}" href="#">
-            <span class="navIcon mt-2"><img src="../assets/images/ETB & E-Content.png" style="width: 50px; height: 60px;" alt=""></span>&nbsp;&nbsp; 
-            <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Micro-Improvements</span>
+          <a class="nav-link" routerLink="cquib" [queryParams]="{tabName : 'Micro-Improvements'}" href="#">
+            <span class="image-icon">
+              <img src="../assets/images/ETB & E-Content.png" alt="">
+            </span>
+            <span class="ms-2"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Micro-Improvements</span>
           </a>
         </li>
 
         <li class="nav-item mt-2">
-          <a class="nav-link d-flex" routerLink="cquib" [queryParams]="{tabName : 'PM POSHAN'}" href="#">
-            <span class="navIcon mt-2"><img src="../assets/images/PM Poshan.png" style="width: 50px; height: 45px;" alt=""></span>&nbsp;&nbsp; 
-            <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">PM POSHAN</span>
+          <a class="nav-link" routerLink="cquib" [queryParams]="{tabName : 'PM POSHAN'}" href="#">
+            <span class="image-icon">
+              <img src="../assets/images/PM Poshan.png" alt="">
+            </span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">PM
+              POSHAN</span>
           </a>
         </li>
 
         <li class="nav-item mt-2">
-          <a class="nav-link d-flex" routerLink="cquib" [queryParams]="{tabName : 'National Achievement Survey (NAS)'}" href="#">
-            <span class="navIcon mt-2"><img src="../assets/images/NAS.png" style="width: 50px; height: 45px;" alt=""></span>&nbsp;&nbsp; 
-            <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'"> NAS</span>
+          <a class="nav-link" routerLink="cquib" [queryParams]="{tabName : 'National Achievement Survey (NAS)'}"
+            href="#">
+            <span class="image-icon">
+              <img src="../assets/images/NAS.png" alt="">
+            </span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'"> NAS</span>
           </a>
         </li>
 
         <li class="nav-item mt-2">
-          <a class="nav-link d-flex" routerLink="cquib" [queryParams]="{tabName : 'UDISE+'}" href="#">
-            <span class="navIcon mt-2"><img src="../assets/images/UDISE.png" style="width: 50px; height: 50px;" alt=""></span>&nbsp;&nbsp; 
-            <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'"> UDISE+</span>
+          <a class="nav-link" routerLink="cquib" [queryParams]="{tabName : 'UDISE+'}" href="#">
+            <span class="image-icon">
+              <img src="../assets/images/UDISE.png" alt="">
+            </span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">
+              UDISE+</span>
           </a>
         </li>
 
         <li class="nav-item mt-2">
-          <a class="nav-link d-flex" routerLink="cquib" [queryParams]="{tabName : 'NIPUN Bharat'}" href="#">
-            <span class="navIcon mt-2"><img src="../assets/images/Nipun Bharat Logo-01.png" style="width: 50px; height: 50px;" alt=""></span>&nbsp;&nbsp; 
-            <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'"> NIPUN Bharat</span>
+          <a class="nav-link" routerLink="cquib" [queryParams]="{tabName : 'NIPUN Bharat'}" href="#">
+            <span class="image-icon">
+              <img src="../assets/images/Nipun Bharat Logo-01.png" alt="">
+            </span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'"> NIPUN
+              Bharat</span>
           </a>
         </li>
 
-       
-
-
-
-
-        <li class="nav-item my-2">
+        <li class="nav-item mt-2">
           <a class="nav-link active d-flex" href="https://ncert.delhivsk.org/#/login">
-            <span class="navIcon"><img  src="../assets/images/Dashboard img/cQube_logo.jpg" style="width: 44px;" alt=""></span>&nbsp;&nbsp; 
-            <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">NCERT</span>
+            <span class="image-icon">
+              <img src="../assets/images/Dashboard img/cQube_logo.jpg" alt="">
+            </span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">NCERT</span>
           </a>
         </li>
 
-       
+
 
       </ul>
     </div>

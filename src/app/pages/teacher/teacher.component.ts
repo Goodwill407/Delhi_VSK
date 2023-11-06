@@ -156,19 +156,19 @@ export class TeacherComponent {
 
   getAllSchools() {
     this.allSchools = [
-      {schname:'Bhola Nath Nagar-SBV (Babu Ram)'},
-      {schname:'Kanti Nagar-GGSSS'},
-      {schname:'Vivek Vihar,Phase-II-GGSSS'},
-      {schname:'Surajmal Vihar-SKV'},
-      {schname:'Surajmal Vihar-RPVV'},
-      {schname:'Jhilmil Colony-SBV'},
+      { schname: 'Bhola Nath Nagar-SBV (Babu Ram)' },
+      { schname: 'Kanti Nagar-GGSSS' },
+      { schname: 'Vivek Vihar,Phase-II-GGSSS' },
+      { schname: 'Surajmal Vihar-SKV' },
+      { schname: 'Surajmal Vihar-RPVV' },
+      { schname: 'Jhilmil Colony-SBV' },
     ]
   }
 
   getTeachersGenderRatio(teachersGender: any) {
     const series = [teachersGender.totalMaleTeachers, teachersGender.totalFemaleTeachers];
     const categories = ["Male", "Female"];
-    this.teacherGenderRatio = this.graphService.PieGraph('donut','');
+    this.teacherGenderRatio = this.graphService.PieGraph('donut', '');
     this.teacherGenderRatio.series = [...series];
     this.teacherGenderRatio.chart.type = "pie";
     this.teacherGenderRatio.labels = [...categories];
@@ -198,7 +198,7 @@ export class TeacherComponent {
 
 
   getschoolsManagementWiseTeacher(schoolManagementWise: any) {
-    this.schoolsManagementWiseTeacher = this.graphService.PieGraph('donut','')
+    this.schoolsManagementWiseTeacher = this.graphService.PieGraph('donut', '')
     for (let i = 0; i < schoolManagementWise.length; i++) {
       if (schoolManagementWise[i].shift == "Government") { var govCount = schoolManagementWise[i].teacherManagmentWiseCount }
       if (schoolManagementWise[i].shift == "Aided") { var aidedCount = schoolManagementWise[i].teacherManagmentWiseCount }
@@ -229,14 +229,13 @@ export class TeacherComponent {
     }];
     series[0].data = [data.under5Years, data.fiveTo10Years, data.tenTo15Years, data.fifteenTo20Years, data.twentyTo25Years, data.over25Years];
     this.experienceWiseTeacher.series = [...series]
-    this.experienceWiseTeacher.colors= ["#F44F5E"];
+    this.experienceWiseTeacher.colors = ["#F44F5E"];
     this.experienceWiseTeacher.xaxis.categories = ['0-5 Years', '5-10 Years', '10-15 Years', '15-20 Years', '20-25 Years', '25 + Years'];
 
   }
 
   getDesignation(post: any) {
-    // this.designation = this.graphService.VerticleBarGraph();
-    this.designation = JSON.parse(JSON.stringify(this.commonBarGraph));
+    this.designation = this.graphService.HorizontalBarGraph();
     const series: any = [{
       name: "Teacher Count",
       data: []
@@ -247,7 +246,7 @@ export class TeacherComponent {
       categories.push(post[i]._id);
     }
     this.designation.series = [...series];
-    this.designation.dataLabels = {enabled: false};
+    this.designation.dataLabels = { enabled: false };
     this.designation.xaxis.categories = categories;
   }
 
@@ -259,13 +258,13 @@ export class TeacherComponent {
   }
 
   getStreamWiseCount(data: any) {
-    this.streamWiseTeacher = this.graphService.PieGraph('pie','');
+    this.streamWiseTeacher = this.graphService.PieGraph('pie', '');
     this.streamWiseTeacher.series = [90, 150, 200, 320, 12];
     this.streamWiseTeacher.labels = ['Art', 'Science', 'Commerce', 'Vocational', 'Other']
   }
 
   getMinorityWiseCount(data: any) {
-    this.minorityWiseTeacher = this.graphService.PieGraph('donut','')
+    this.minorityWiseTeacher = this.graphService.PieGraph('donut', '')
     this.minorityWiseTeacher.series = [280, 200];
     this.minorityWiseTeacher.labels = ['YES', 'NO']
   }
