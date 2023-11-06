@@ -29,7 +29,7 @@ a:focus {
     background: #fff;
     border: none;
     border-radius: 0;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
@@ -352,14 +352,16 @@ a.article:hover {
 }
 
 .sidebarMenu ul li a:hover {
-    background: #4d6ce7;
-    border-bottom: 2px solid black;
+    background: silver;
+    /* border-bottom: 2px solid black; */
 }
+
 .sidebarMenu.active-tab ul li a {
     padding: 20px 7px;
     text-align: center;
     font-size: 0.85em;
 }
+
 .sidebarMenu.active-tab ul li a i {
     margin-right: 0;
     display: block;
@@ -370,4 +372,48 @@ a.article:hover {
 .logo img {
     width: 70px;
     margin: 0 20px;
+}
+
+.nav-link {
+    /* background-color: #fff; */
+    /* border-radius: 20px; */
+    display: flex;
+    align-items: center;
+    padding: 0px;
+}
+
+.nav-link .ms-2 {
+    /* vertical-align: middle; */
+}
+
+.image-icon img {
+    width: 40px;
+    border-radius: 50px;
+}
+
+.image-icon .bi {
+    color: rgb(70, 69, 69);
+    font-size: 25px;
+}
+
+.image-icon {
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.nav-item {
+    padding: 5px;
+}
+
+.image-icon {
+    background-color: #fff;
+    border-radius: 50px;
+}
+
+#content {
+    background-image: url("../../src/assets/images/Dashboard/cQube_logo.jpg");
+    background-size: 100% 100%;
 }

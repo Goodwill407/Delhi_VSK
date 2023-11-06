@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { GraphService } from 'src/app/services/graph-service.service';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 
 @Component({
@@ -11,7 +14,7 @@ export class StudentComponent {
   totalBoys: any;
   totalGirls: any;
   commonBarGraph: any
-  commonBarGraph2:any
+  commonBarGraph2: any
   commonHorizontalBarGraph: any;
   studentsGenderRatio: any
   averageStudentOfSchool: any
@@ -22,377 +25,149 @@ export class StudentComponent {
   EnrollMentBySchoolcategoriesGenderWise: any
   communHorisontal2: any
   commonPollarChart: any
-  commonPieDonut:any
+  commonPieDonut: any
   maleCounts: any
   femaleCount: any
   otherCount: any
-  StreamWiseStudent:any;
-  AffiliationWiseStudent:any
-  TypeOfStudSchool:any
-  MinorityWiseStudCount:any;
-  StudentShiftWiseCounts:any
-  StudentManagementWiseCounts:any
-  
-
+  StreamWiseStudent: any;
+  AffiliationWiseStudent: any
+  TypeOfStudSchool: any
+  MinorityWiseStudCount: any;
+  StudentShiftWiseCounts: any
+  StudentManagementWiseCounts: any
   chartOptions: any
 
+  allDistricts: any
+  allZones:any;
+  districtModel: any = ""
+  ZoneModel :any = ""
 
 
-  constructor(private httpService: HttpServiceService) {
-    this.commonBarGraph = {
-      series: [],
-      chart: {
-        type: "bar",
-        events: {
-          click: function (chart: any, w: any, e: any) {
-          }
-        }
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: "45%",
-          distributed: true
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      legend: {
-        show: false
-      },
-      grid: {
-        show: false
-      },
-      xaxis: {
-        categories: [],
-        title: {
-          text: "",
-          style: {
-            fontSize: "14px",
-            color: "#6d7fcc",
-            fontWeight: "600"
-          }
-        }
-      },
-      yaxis: {
-        title: {
-          text: "",
-          style: {
-            fontSize: "14px",
-            color: "#6d7fcc",
-            fontWeight: "600"
-          }
-        },
-      }
-
-    };
-
-
-    this.commonHorizontalBarGraph2 = {
-      series: [],
-      chart: {
-        type: "bar",
-        height: 250,
-        stacked: true,
-        stackType: "100%"
-      },
-      plotOptions: {
-        bar: {
-          horizontal: true
-        }
-      },
-      stroke: {
-        width: 1,
-        colors: ["#fff"]
-      },
-
-      xaxis: {
-        categories: []
-      },
-      tooltip: {
-        y: {
-          formatter: function (val: any) {
-            return val + "K";
-          }
-        }
-      },
-      fill: {
-        opacity: 1
-      },
-      legend: {
-        position: "top",
-        horizontalAlign: "left",
-        offsetX: 40
-      }
-    };
-
-    this.commonPollarChart = {
-      series: [],
-      chart: {
-        type: "polarArea",
-        height:'300px'
-       },
-      stroke: {
-        colors: ["#fff"]
-      },
-      fill: {
-        opacity: 0.8
-      },
-      legend: {
-        position: "bottom"
-      },
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            legend: {
-              position: "bottom"
-            }
-          }
-        }
-      ],
-      labels: []
-    };
-
-    this.commonPieDonut = {
-      series: [],
-      chart: {
-        width: 380,
-        type: "donut"
-      },
-      dataLabels: {
-        enabled: false
-      },
-      fill: {
-        type: "gradient"
-      },
-      legend: {
-          formatter: function(val:any, opts:any) {
-          return val + " - " + opts.w.globals.series[opts.seriesIndex];
-        },
-        position: "bottom"
-      },
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200
-            },
-            legend: {
-              position: "bottom"
-            }
-          }
-        }
-      ]
-      
-    };
-    
-    this.commonBarGraph2 = {
-      series: [
-        {
-          name: "",
-          data: []
-        }
-      ],
-      chart: {
-        height: 250,
-        type: "bar",
-        events: {
-          click: function(chart:any, w:any, e:any) {
-            // console.log(chart, w, e)
-          }
-        }
-      },
-      colors: [
-        "#008FFB",
-        "#00E396",
-        "#FEB019",
-        "#FF4560",
-        "#775DD0",
-        "#546E7A",
-        "#26a69a",
-        "#D10CE8"
-      ],
-      plotOptions: {
-        bar: {
-          columnWidth: "50%",
-          distributed: true
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      legend: {
-        show: false
-      },
-      grid: {
-        show: true
-      },
-      
-        labels:[]
-      
-    };
-
-
-
-
-
-  }
+  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService) { }
 
   ngOnInit() {
-    this.getAllData()
-    this.getEnrollmentBySchoolCatogory()
-    this.getStreanWiseCount()
+    this.getStudentGraphData()
+    this.getAllDistricts()
+    this.getAllZone()
 
   }
-
-  getAllData() {
-    this.httpService.get('graphs').subscribe((data: any) => {
+  getAllDistricts() {
+    this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
+      if (data && data.length > 0) {
+        this.allDistricts = data;
+      }
+    })
+  }
+  getAllZone() {
+    this.httpService.get('school/zonename').subscribe((data: any) => {
       if (data) {
-        this.totalStudent = data.totalStudents;
-        this.totalBoys = data.totalBoys
-        this.totalGirls = data.totalGirls
-        this.averageStudentOfSchool = data.averageStudentOfSchool
-        this.teacherStudentRatio = data.teacherStudentRatio
+        this.allZones = data.ZoneNames
+       
+      }
+    })
+  }
 
-        const persentage = this.totalStudent / 100
+  getGraphsByDistrictName() {
+    this.spinner.show();
+    const district = {
+      districtName: this.districtModel
+    }
 
-        const studentsGender = {
-          totalBoys: data.totalBoys / persentage,
-          totalGirls: data.totalGirls / persentage
-        }
-        this.getStudentsGenderRatio(studentsGender);
+    this.httpService.post('studentgraph/student-graph-count-districtname', district).subscribe((data: any) => {
+      if (data) {
+        this.setAllGraphData(data);
+        this.spinner.hide();
+      }
+    }, (error) => {
+      this.spinner.hide();
+    })
+  }
+
+
+  getStudentGraphData() {
+    this.httpService.get('studentgraph/student-graph-count').subscribe((data: any) => {
+      if (data) {
+        this.setAllGraphData(data)
 
       }
     })
   }
 
+
+
+  getGraphsByZone() {
+    this.spinner.show();
+    const zone = {
+      zoneName: this.ZoneModel
+    }
+    this.httpService.post('zonegraph/school-student-teacher-graph-zonename', zone).subscribe((data: any) => {
+      if (data) {
+        this.setAllGraphData(data);
+        this.spinner.hide();
+      }
+    }, (error) => {
+      this.spinner.hide();
+    })
+  }
+
+  setAllGraphData(data: any) {
+    this.totalStudent = data.totalStudents;
+    this.teacherStudentRatio = data.averageTeacherOfSchool;
+    this.averageStudentOfSchool = data.averageStudentOfSchool;
+    const StudentGenderWise = data.studentGenderCounts
+
+    const catogoryWiseStudentCount = data.studentStats[0].SchCategory
+    const StreanWiseCount = data.studentStats[1].stream
+    const AffiliationWiseCount = data.studentStats[3].affiliation
+    const TypeOfStudSchool = data.studentStats[4].typeOfSchool
+    const MinorityWiseStudCount = data.studentStats[2].minority
+    const StudentShiftWiseCounts = data.studentStats[5].shift
+    const StudentManagementWiseCounts = data.studentStats[6].SchManagement
+
+    this.getStudentsGenderRatio(StudentGenderWise)
+    this.getStudentCatogoryWise(catogoryWiseStudentCount)
+    this.getStreamWiseStudent(StreanWiseCount)
+    this.getAffiliationWiseCount(AffiliationWiseCount)
+    this.getTypeOfStudSchool(TypeOfStudSchool)
+    this.getMinorityWiseCount(MinorityWiseStudCount)
+    this.getStudentShiftWiseCounts(StudentShiftWiseCounts)
+    this.getStudentManagementWiseCounts(StudentManagementWiseCounts)
+
+  }
 
   getStudentsGenderRatio(studentsGender: any) {
-    const series = [{
-      name: ["Female"],
-      data: [studentsGender.totalBoys.toFixed(2), studentsGender.totalGirls.toFixed(2)]
-    }];
-    const categories = [
-      "Boys", "Girls"
+
+    const Male_Count = studentsGender.find((item: any) => item._id === "M").count;
+    const Female_Count = studentsGender.find((item: any) => item._id === "F").count;
+    const Other_Count = studentsGender.find((item: any) => item._id === "T").count;
+
+    const series = [Male_Count, Female_Count, Other_Count]
+
+    const labels = [
+      "Boys", "Girls", 'Other'
     ]
-    this.studentsGenderRatio = JSON.parse(JSON.stringify(this.commonBarGraph));
+    this.studentsGenderRatio = this.graphService.PieGraph('donut', ' student')
     this.studentsGenderRatio.series = [...series];
-    this.studentsGenderRatio.xaxis.title.text = "Students Gender";
-    this.studentsGenderRatio.yaxis.title.text = "Total Students";
-    this.studentsGenderRatio.xaxis.categories = [...categories];
-  }
-
-  getEnrollmentBySchoolCatogory() {
-    this.httpService.get('graphs/student-enrollment').subscribe((data: any) => {
-      if (data) {
-        const catogoryWiseStudentCount = data.enrollmentBySchoolCatogory
-        const StudentGenderwise = data.genderWiseEnrollmentPerSchCategory
-
-        this.getStudentCatogoryWise(catogoryWiseStudentCount)
-        this.getEnrollMentBySchoolcategoriesGenderWise(StudentGenderwise)
-
-      }
-    })
+    this.studentsGenderRatio.labels = [...labels];
   }
 
   getStudentCatogoryWise(catogoryWiseStudentCount: any) {
 
-    const StudentCount = catogoryWiseStudentCount.map((item: any) => item.studentCount);
+    const StudentCount = catogoryWiseStudentCount.map((item: any) => item.count);
     const SchCategory = catogoryWiseStudentCount.map((item: any) => item.SchCategory);
-    this.chartOptions = {
-      series: [
-        {
-          name: "basic",
-          data: StudentCount
-        }
-      ],
-      chart: {
-        type: "bar",
-        height: 250
-      },
-      color: ["#546E7A"],
+    this.chartOptions = this.graphService.VerticleBarGraph()
+    const series: any = [{
+      name: "Count",
+      data: StudentCount
+    }];
+    const labels = SchCategory;
+    this.chartOptions.series = [...series]
+    this.chartOptions.labels = [...labels]
+    this.chartOptions.plotOptions.bar.horizontal = true
 
+  };
 
-      plotOptions: {
-        bar: {
-          horizontal: true
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      xaxis: {
-        categories: SchCategory
-      }
-    };
-
-  }
-
-  getEnrollMentBySchoolcategoriesGenderWise(StudentGenderwise: any) {
-    // const GenderCount = StudentGenderwise.map((item: any) => item.genderCounts);
-    const SchCategory = StudentGenderwise.map((item: any) => item.SchCategory);
-
-    this.maleCounts = StudentGenderwise.map((item: any) => {
-      const maleEntry = item.genderCounts.find((entry: any) => entry._id === 'M');
-      return maleEntry ? maleEntry.studentCount : 0;
-    });
-
-    this.femaleCount = StudentGenderwise.map((item: any) => {
-      const maleEntry = item.genderCounts.find((entry: any) => entry._id === 'F');
-      return maleEntry ? maleEntry.studentCount : 0;
-    });
-
-    this.otherCount = StudentGenderwise.map((item: any) => {
-      const maleEntry = item.genderCounts.find((entry: any) => entry._id === 'T');
-      return maleEntry ? maleEntry.studentCount : 0;
-    });
-
-    const series = [
-      {
-        name: "Male",
-        data: this.maleCounts
-      },
-      {
-        name: "Female",
-        data: this.femaleCount
-      },
-      {
-        name: "Other",
-        data: this.otherCount
-      }
-    ];
-    const categories: any = SchCategory
-
-    this.EnrollMentBySchoolcategoriesGenderWise = JSON.parse(JSON.stringify(this.commonHorizontalBarGraph2));
-    this.EnrollMentBySchoolcategoriesGenderWise.series = [...series];
-    this.EnrollMentBySchoolcategoriesGenderWise.xaxis.categories = [...categories];
-
-  }
-
-  getStreanWiseCount() {
-    this.httpService.get('studentgraph/student-graph-count').subscribe((data: any) => {
-      if (data) {
-        const StreanWiseCount=data.streanWiseCount
-        const AffiliationWiseCount=data.affiliationWiseCount
-        const TypeOfStudSchool=data.typeOfSchoolSchoolCount
-        const MinorityWiseStudCount=data.minorityWiseCount
-        const StudentShiftWiseCounts=data.studentShiftWiseCounts
-        const StudentManagementWiseCounts=data.studentManagementWiseCounts
-        
-        this.getStreamWiseStudent(StreanWiseCount)
-        this.getAffiliationWiseCount(AffiliationWiseCount)
-        this.getTypeOfStudSchool(TypeOfStudSchool)
-        this.getMinorityWiseCount(MinorityWiseStudCount)
-        this.getStudentShiftWiseCounts(StudentShiftWiseCounts)
-        this.getStudentManagementWiseCounts(StudentManagementWiseCounts)
-
-      }
-    })
-  }
-
-  getStreamWiseStudent(StreanWiseCount:any){
+  getStreamWiseStudent(StreanWiseCount: any) {
     const Stream = StreanWiseCount.map((item: any) => item.stream);
     const StreamWiseStudCount = StreanWiseCount.map((item: any) => item.count);
 
@@ -401,29 +176,30 @@ export class StudentComponent {
       data: StreamWiseStudCount
     }];
     const labels = Stream
-    this.StreamWiseStudent = JSON.parse(JSON.stringify(this.commonBarGraph2));
+    this.StreamWiseStudent = this.graphService.VerticleBarGraph();
     this.StreamWiseStudent.series = [...series];
-    this.StreamWiseStudent.labels = [...labels]
+    this.StreamWiseStudent.labels = [...labels];
+    this.StreamWiseStudent.plotOptions.bar.horizontal = false
   }
 
-  getAffiliationWiseCount(affiliationWiseCount:any){
-    const Affiliation = affiliationWiseCount.map((item:any)=>item.affiliation)
-    const affiliationWiseStud= affiliationWiseCount.map((item:any)=>item.count)
-   
-    this.AffiliationWiseStudent = JSON.parse(JSON.stringify(this.commonPieDonut));
-    const series=affiliationWiseStud;
+  getAffiliationWiseCount(affiliationWiseCount: any) {
+    const Affiliation = affiliationWiseCount.map((item: any) => item.affiliation)
+    const affiliationWiseStud = affiliationWiseCount.map((item: any) => item.count)
+
+    this.AffiliationWiseStudent = this.graphService.PieGraph('donut', ' student');
+    const series = affiliationWiseStud;
     const labels = Affiliation
     this.AffiliationWiseStudent.series = [...series];
     this.AffiliationWiseStudent.labels = [...labels]
 
   }
 
-  getTypeOfStudSchool(TypeOfStudSchool:any){
-    const TypeOfSchool = TypeOfStudSchool.map((item:any)=>item.typeOfSchool)
-    const TypeOfStudCount= TypeOfStudSchool.map((item:any)=>item.count)
-   
-    this.TypeOfStudSchool = JSON.parse(JSON.stringify(this.commonPieDonut));
-    const series=TypeOfStudCount;
+  getTypeOfStudSchool(TypeOfStudSchool: any) {
+    const TypeOfSchool = TypeOfStudSchool.map((item: any) => item.typeOfSchool)
+    const TypeOfStudCount = TypeOfStudSchool.map((item: any) => item.count)
+
+    this.TypeOfStudSchool = this.graphService.PieGraph('pie', ' student');
+    const series = TypeOfStudCount;
     const labels = TypeOfSchool
     this.TypeOfStudSchool.series = [...series];
     this.TypeOfStudSchool.labels = [...labels]
@@ -431,43 +207,43 @@ export class StudentComponent {
 
   }
 
-  getMinorityWiseCount(minorityWiseStudCount:any){
-    const Minority = minorityWiseStudCount.map((item:any)=>item.minority)
-    const StudCount= minorityWiseStudCount.map((item:any)=>item.count)
+  getMinorityWiseCount(minorityWiseStudCount: any) {
+    const Minority = minorityWiseStudCount.map((item: any) => item.minority)
+    const StudCount = minorityWiseStudCount.map((item: any) => item.count)
 
-    this.MinorityWiseStudCount = JSON.parse(JSON.stringify(this.commonPieDonut));
-    const series=StudCount;
+    this.MinorityWiseStudCount = this.graphService.PieGraph('pie', ' student');
+    const series = StudCount;
     const labels = Minority
     this.MinorityWiseStudCount.series = [...series];
     this.MinorityWiseStudCount.labels = [...labels]
     this.MinorityWiseStudCount.chart.type = "pie";
-   }
+  }
 
-   getStudentShiftWiseCounts(StudentShiftWiseCounts:any){
-    const shift = StudentShiftWiseCounts.map((item:any)=>item.shift)
-    const StudCount= StudentShiftWiseCounts.map((item:any)=>item.count)
+  getStudentShiftWiseCounts(StudentShiftWiseCounts: any) {
+    const shift = StudentShiftWiseCounts.map((item: any) => item.shift)
+    const StudCount = StudentShiftWiseCounts.map((item: any) => item.count)
 
-    this.StudentShiftWiseCounts = JSON.parse(JSON.stringify(this.commonPollarChart));
-    const series=StudCount;
+    this.StudentShiftWiseCounts = this.graphService.PolarGraph();
+    const series = StudCount;
     const labels = shift
     this.StudentShiftWiseCounts.series = [...series];
     this.StudentShiftWiseCounts.labels = [...labels]
-    
-   }
 
-   getStudentManagementWiseCounts(StudentManagementWiseCounts:any){
-    const SchManagement = StudentManagementWiseCounts.map((item:any)=>item.SchManagement)
-    const StudCount= StudentManagementWiseCounts.map((item:any)=>item.count)
+  }
 
-    this.StudentManagementWiseCounts = JSON.parse(JSON.stringify(this.commonPieDonut));
-    const series=StudCount;
+  getStudentManagementWiseCounts(StudentManagementWiseCounts: any) {
+    const SchManagement = StudentManagementWiseCounts.map((item: any) => item.SchManagement)
+    const StudCount = StudentManagementWiseCounts.map((item: any) => item.count)
+
+    this.StudentManagementWiseCounts = this.graphService.PieGraph('donut', ' student');
+    const series = StudCount;
     const labels = SchManagement
     this.StudentManagementWiseCounts.series = [...series];
     this.StudentManagementWiseCounts.labels = [...labels]
-   }
-
-
-  
   }
+
+
+
+}
 
 

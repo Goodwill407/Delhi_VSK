@@ -30,7 +30,9 @@ export class SchoolComponent {
   allDistricts: any;
   districtModel: any = "";
   zoneModel: any = "";
+  schoolModel: any = "";
   districtName: any;
+  allSchools: any;
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService) {
   }
@@ -47,6 +49,32 @@ export class SchoolComponent {
         this.allDistricts = data;
       }
     })
+  }
+
+  getSchoolDataByDistrict() {
+    const district = {
+      District_name: this.districtModel
+    }
+    this.httpService.post('school/getDistrictSchool', district).subscribe((data: any) => {
+      if (data && data.districtSchools) {
+        this.allSchools = data.districtSchools;
+      } else {
+        this.allSchools = [];
+      }
+    });
+  }
+
+  getSchoolDataByZone() {
+    const zone = {
+      Zone_Name: this.zoneModel
+    }
+    this.httpService.post('school/getZoneSchool', zone).subscribe((data: any) => {
+      if (data && data.ZoneSchool) {
+        this.allSchools = data.ZoneSchool;
+      } else {
+        this.allSchools = [];
+      }
+    });
   }
 
   setAllGraphs(data: any) {
@@ -83,6 +111,7 @@ export class SchoolComponent {
     this.httpService.get('graphs/school-teacher-student-graph').subscribe((data: any) => {
       if (data) {
         this.setAllGraphs(data);
+        this.spinner.hide();
       }
     })
   }
@@ -92,10 +121,10 @@ export class SchoolComponent {
     const zone = {
       zoneName: this.zoneModel
     }
+    this.getSchoolDataByZone();
     this.httpService.post('zonegraph/school-student-teacher-graph-zonename', zone).subscribe((data: any) => {
       if (data) {
         this.setAllGraphs(data);
-        this.districtModel = this.zoneModel;
         this.spinner.hide();
       }
     }, (error) => {
@@ -105,17 +134,22 @@ export class SchoolComponent {
 
   getGraphsByDistrictName() {
     this.spinner.show();
-    const district = {
-      districtName: this.districtModel
-    }
-    this.httpService.post('zonegraph/school-student-teacher-graph-district', district).subscribe((data: any) => {
-      if (data) {
-        this.setAllGraphs(data);
-        this.spinner.hide();
+    if (this.districtModel) {
+      const district = {
+        districtName: this.districtModel
       }
-    }, (error) => {
-      this.spinner.hide();
-    })
+      this.getSchoolDataByDistrict();
+      this.httpService.post('zonegraph/school-student-teacher-graph-district', district).subscribe((data: any) => {
+        if (data) {
+          this.setAllGraphs(data);
+          this.spinner.hide();
+        }
+      }, (error) => {
+        this.spinner.hide();
+      })
+    } else {
+      this.getAllSchoolGraph();
+    }
   }
 
   getStudentsGenderRatio(studentsGender: any) {
@@ -156,7 +190,7 @@ export class SchoolComponent {
   }
 
   getStreamCount(streamCount: any) {
-    this.streamCount = this.graphService.VerticleBarGraph();;
+    this.streamCount = this.graphService.VerticleBarGraph();
     const series: any = [{
       name: "Count",
       data: []

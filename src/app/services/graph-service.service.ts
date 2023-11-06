@@ -10,6 +10,7 @@ export class GraphService {
             series: [],
             chart: {
                 type: "bar",
+                height: "300px",
                 events: {
                     click: function (chart: any, w: any, e: any) {
                     }
@@ -25,10 +26,10 @@ export class GraphService {
             dataLabels: {
                 enabled: true,
                 formatter: function (val: any, opt: any) {
-                  return val;
+                    return val;
                 },
                 dropShadow: {
-                  enabled: true
+                    enabled: true
                 },
             },
             legend: {
@@ -57,6 +58,40 @@ export class GraphService {
                         fontWeight: "600"
                     }
                 },
+            }
+        }
+        return graphData;
+    }
+
+    HorizontalBarGraph() {
+        const graphData = {
+            series: [
+            ],
+            chart: {
+                height: 300,
+                type: "line",
+                zoom: {
+                    enabled: false
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: "straight"
+            },
+            title: {
+                text: "Product Trends by Month",
+                align: "left"
+            },
+            grid: {
+                row: {
+                    colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+                    opacity: 0.5
+                }
+            },
+            xaxis: {
+                categories: []
             }
         }
         return graphData;

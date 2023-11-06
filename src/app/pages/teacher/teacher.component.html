@@ -1,26 +1,32 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
 </ngx-spinner>
-<div class="d-flex mb-3">
-  <h2 class="fw-bold">TEACHER</h2>
+<div class="d-flex mt-3 filter-box">
+  <h2 class="fw-bold">Teacher</h2>
   <div class="vr mx-3 opacity-100"></div>
   <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
-    <option value="" disabled>Select District</option>
-    <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
-      {{district.districtName}}
-    </option>
+      <option value="">Select District</option>
+      <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
+          {{district.districtName}}
+      </option>
   </select>
-  <select class="form-select w-25 ms-2" [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
-    <option value="" disabled>Select School</option>
-    <option *ngFor="let school of allSchools" value="{{school.schname}}">
-      {{school.schname}}
-    </option>
+  <select class="form-select w-25 ms-2" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
+      <option value="">Select Zone</option>
+      <option *ngFor="let zone of allZones" value="{{zone}}">
+          {{zone}}
+      </option>
+  </select>
+  <select class="form-select w-25 ms-2" [(ngModel)]="schoolModel">
+      <option value="">Select School</option>
+      <option *ngFor="let school of allSchools" value="{{school}}">
+          {{school}}
+      </option>
   </select>
 </div>
 <div class="container1">
   <div class="column text-center">
     <h5 class="bg-light p-2 m-2">Total Teacher</h5>
     <div class="d-flex justify-content-around mt-4">
-      <img class="ms-2" src="../../../assets/images/Dashboard img/lady Teacher.png" style="height: 120px;" alt="">
+      <img class="ms-2" src="../../../assets/images/Dashboard/lady Teacher.png" style="height: 120px;" alt="">
       <div class="d-block ms-1 text-center">
         <h1 class="fw-bold">{{allData?.totalTeachers}}</h1>
           <h3>Total Teacher</h3>
@@ -114,8 +120,9 @@
   </div>
 
   <!--  -->
-  <div class="column" style="overflow: auto;">
+  <div class="column wide">
+    <h5 class="bg-light p-2 m-2">Designation wise Teacher</h5>
     <apx-chart  [series]="designation?.series" [chart]="designation?.chart" [dataLabels]="designation?.dataLabels"
-      [plotOptions]="designation?.plotOptions" [xaxis]="designation?.xaxis"></apx-chart>
+      [plotOptions]="designation?.plotOptions" [xaxis]="designation?.xaxis" [legend]="designation?.legend"></apx-chart>
   </div>
 </div>

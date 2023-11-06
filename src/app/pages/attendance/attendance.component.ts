@@ -11,7 +11,7 @@ import { HttpServiceService } from 'src/app/services/http-service.service';
   styleUrls: ['./attendance.component.css']
 })
 export class AttendanceComponent {
-  
+
   // Graphs
   teacherGenderRatio: any;
   studentsGenderRatio: any;
@@ -33,7 +33,7 @@ export class AttendanceComponent {
   genderWisePresent: any;
   genderWiseAbsent: any;
 
-  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService , public datepipe: DatePipe) {
+  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, public datepipe: DatePipe) {
   }
 
   ngOnInit() {
@@ -100,25 +100,32 @@ export class AttendanceComponent {
   }
 
 
-  getGraphsByDate(){
-    
-    this.dateModel= this.datepipe.transform(this.dateModel, 'dd/MM/yyyy');
+  getGraphsByDate() {
 
-   let date = { "date": this.dateModel };
-   this.httpService.post('attendance/date-wise',date).subscribe((data)=>{
-    this.setAllGraphs(data);
-   })
+    this.dateModel = this.datepipe.transform(this.dateModel, 'dd/MM/yyyy');
+    if (this.districtModel) {
+      this.getGraphsByDistrictName();
+    }
+    if (this.zoneModel) {
+      this.getGraphsByZone();
+    }
+    else {
+      let date = { "date": this.dateModel };
+      this.httpService.post('attendance/date-wise', date).subscribe((data) => {
+        this.setAllGraphs(data);
+      });
+    }
   }
 
   getGenderWisePresent(data: any) {
-    this.genderWisePresent = this.graphService.PieGraph('pie','');
-    this.genderWisePresent.series = [data.malePresentCount,data.femalePresentCount,data.otherPresentCount];
+    this.genderWisePresent = this.graphService.PieGraph('pie', '');
+    this.genderWisePresent.series = [data.malePresentCount, data.femalePresentCount, data.otherPresentCount];
     this.genderWisePresent.labels = ['Male', 'Female', 'Others']
   }
 
   getGenderWiseAbsent(data: any) {
-    this.genderWiseAbsent = this.graphService.PieGraph('pie','');
-    this.genderWiseAbsent.series = [data.maleAbsentCount,data.femaleAbsentCount,data.otherAbsentCount];
+    this.genderWiseAbsent = this.graphService.PieGraph('pie', '');
+    this.genderWiseAbsent.series = [data.maleAbsentCount, data.femaleAbsentCount, data.otherAbsentCount];
     this.genderWiseAbsent.labels = ['Male', 'Female', 'Others']
   }
 
