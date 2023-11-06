@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { PagesRoutingModule } from './pages-routing.module';
 import { SchoolComponent } from './school/school.component';
@@ -12,6 +12,7 @@ import { StudentComponent } from './student/student.component';
 import { TeacherComponent } from './teacher/teacher.component';
 import { NcertComponent } from './ncert/ncert.component';
 import { CQubeComponent } from './c-qube/c-qube.component';
+import { AttendanceComponent } from './attendance/attendance.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { CQubeComponent } from './c-qube/c-qube.component';
     StudentComponent,
     TeacherComponent,
     NcertComponent,
-    CQubeComponent
+    CQubeComponent,
+    AttendanceComponent
   ],
   imports: [
     CommonModule,
@@ -31,6 +33,7 @@ import { CQubeComponent } from './c-qube/c-qube.component';
     ReactiveFormsModule,
     NgApexchartsModule,
     NgxSpinnerModule
-  ]
+  ],
+  providers:[DatePipe]
 })
 export class PagesModule { }

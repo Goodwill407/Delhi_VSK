@@ -101,9 +101,9 @@ export class TeacherComponent {
         this.getCategoryWiseTeacher(newData);
         this.getDesignation(data.postdescWiseTeacherCounts);
         this.getExperianceOfTeachers(data.experianceOfTeachers);
-        this.getSchoolTypeWiseCount(data);
+        this.getSchoolTypeWiseCount(data.teacherTypeOfSchoolWiseCounts);
         this.getStreamWiseCount(data);
-        this.getMinorityWiseCount(data);
+        this.getMinorityWiseCount(data.teacherMinorityWiseCounts);
 
         this.spinner.hide();
       }
@@ -123,9 +123,9 @@ export class TeacherComponent {
         this.getCategoryWiseTeacher(newData);
         this.getDesignation(data.postdescWiseTeacherCounts);
         this.getExperianceOfTeachers(data.experianceOfTeachers);
-        this.getSchoolTypeWiseCount(data);
+        this.getSchoolTypeWiseCount(data.teacherTypeOfSchoolWiseCounts);
         this.getStreamWiseCount(data);
-        this.getMinorityWiseCount(data);
+        this.getMinorityWiseCount(data.teacherMinorityWiseCounts);
         this.spinner.hide();
       }
       this.spinner.hide();
@@ -145,9 +145,9 @@ export class TeacherComponent {
         this.getCategoryWiseTeacher(newData);
         this.getDesignation(data.postdescWiseTeacherCounts);
         this.getExperianceOfTeachers(data.experianceOfTeachers);
-        this.getSchoolTypeWiseCount(data);
+        this.getSchoolTypeWiseCount(data.teacherTypeOfSchoolWiseCounts);
         this.getStreamWiseCount(data);
-        this.getMinorityWiseCount(data);
+        this.getMinorityWiseCount(data.teacherMinorityWiseCounts);
         this.spinner.hide();
       }
       this.spinner.hide();
@@ -253,9 +253,10 @@ export class TeacherComponent {
 
   getSchoolTypeWiseCount(data: any) {
     this.schoolTypeWiseCount = this.graphService.PolarGraph();
-
-    this.schoolTypeWiseCount.series = [170, 150, 90];
-    this.schoolTypeWiseCount.labels = ['Girls', 'Boys', 'Co-edu']
+    for (let i = 0; i < data.length; i++) {
+      this.schoolTypeWiseCount.series.push(data[i].teacherTypeOfSchoolWiseCount);
+      this.schoolTypeWiseCount.labels.push(data[i].typeOfSchool);
+    }
   }
 
   getStreamWiseCount(data: any) {
@@ -265,8 +266,10 @@ export class TeacherComponent {
   }
 
   getMinorityWiseCount(data: any) {
-    this.minorityWiseTeacher = this.graphService.PieGraph('donut','')
-    this.minorityWiseTeacher.series = [280, 200];
-    this.minorityWiseTeacher.labels = ['YES', 'NO']
+    this.minorityWiseTeacher = this.graphService.PieGraph('donut','');
+    for (let i = 0; i < data.length; i++) {
+      this.minorityWiseTeacher.series.push(data[i].teacherMinorityWiseCount);
+      this.minorityWiseTeacher.labels.push(data[i].minority);
+    }
   }
 }
