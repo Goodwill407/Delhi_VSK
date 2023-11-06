@@ -1,0 +1,111 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+</ngx-spinner>
+
+<div class="d-flex mb-3">
+    <h2 class="fw-bold">Attendance </h2>
+    <div class="vr mx-3 opacity-100"></div>
+    <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
+        <option value="" disabled>Select District</option>
+        <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
+            {{district.districtName}}
+        </option>
+    </select>
+    <select class="form-select w-25 ms-2" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
+        <option value="" disabled>Select Zone</option>
+        <option *ngFor="let zone of allZones?.series[0]?.data" value="{{zone.x}}">
+            {{zone.x}}
+        </option>
+    </select>
+    <input type="date" class="form-control w-25 ms-2" [(ngModel)]="dateModel" onfocus="(this.type='date')" (change)="getGraphsByDate()"
+    placeholder="Select Date">
+</div>
+{{dateModel}}
+<div class="container1">
+
+    <div class="column">
+        <h5 *ngIf="!districtModel" class="bg-light p-2 m-2">Delhi</h5>
+        <h5 *ngIf="districtModel" class="bg-light p-2 m-2">{{districtModel}}</h5>
+        <div class="d-flex justify-content-around mt-4">
+            <img class="ms-2" src="../../../assets/images/Dashboard img/student.png" style="height: 100px;" alt="">
+            <div class="d-block ms-1 text-center">
+                <h1 class="fw-bold">{{allData?.totalStudentCount}}</h1>
+                <h3>Total Student</h3>
+            </div>
+        </div>
+        <!-- <div class="d-flex justify-content-around text-center" style="position: absolute; bottom: 25px;left: 25px;">
+            <div>
+                <h3 class="fw-bold">{{averageTeacherOfSchool}}</h3>
+                <h5></h5>
+            </div>
+            <div class="vr mx-3"></div>
+            <div>
+                <h3 class="fw-bold">{{averageStudentOfSchool}}</h3>
+                <h5>Average Students</h5>
+            </div>
+        </div> -->
+    </div>
+
+    <div class="column text-center">
+        <h5 class="bg-light p-2 m-2">Teachers per Students Ratio</h5>
+        <img class="img-fluid" width="280" src="../../../assets/images/present__absent.png">
+       <div class="d-flex justify-content-around text-center mt-5"  >
+            <div>
+                <h3 class="fw-bold">{{(allData?.totalStudentCount - allData?.presentStudentCount)}}</h3>
+                <h5>Total Absent</h5>
+            </div>
+            <div class="vr mx-3"></div>
+            <div>
+                <h3 class="fw-bold">{{allData?.presentStudentCount}}</h3>
+                <h5>Total Present</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="column">
+        <h5 class="bg-light p-2 m-2">Gender Wise Present</h5>
+        <apx-chart [series]="genderWisePresent?.series" [chart]="genderWisePresent?.chart"
+      [labels]="genderWisePresent?.labels" [fill]="genderWisePresent?.fill"
+      [dataLabels]="genderWisePresent?.dataLabels" [plotOptions]="genderWisePresent?.plotOptions"
+      [responsive]="genderWisePresent?.responsive" [legend]="genderWisePresent?.legend"></apx-chart>
+      </div>
+   
+      <div class="column">
+        <h5 class="bg-light p-2 m-2">Gender Wise Absent</h5>
+        <apx-chart [series]="genderWiseAbsent?.series" [chart]="genderWiseAbsent?.chart"
+      [labels]="genderWiseAbsent?.labels" [fill]="genderWiseAbsent?.fill"
+      [dataLabels]="genderWiseAbsent?.dataLabels" [plotOptions]="genderWiseAbsent?.plotOptions"
+      [responsive]="genderWiseAbsent?.responsive" [legend]="genderWiseAbsent?.legend"></apx-chart>
+      </div>
+
+    <div class="column">
+        <h5 class="bg-light p-2 m-2">Teachers Gender Ratio</h5>
+        <apx-chart [series]="teacherGenderRatio?.series" [chart]="teacherGenderRatio?.chart"
+            [labels]="teacherGenderRatio?.labels" [fill]="teacherGenderRatio?.fill"
+            [dataLabels]="teacherGenderRatio?.dataLabels" [plotOptions]="teacherGenderRatio?.plotOptions"
+            [responsive]="teacherGenderRatio?.responsive" [legend]="teacherGenderRatio?.legend"></apx-chart>
+    </div>
+
+    <div class="column">
+        <h5 class="bg-light p-2 m-2">Schools By Management</h5>
+        <apx-chart [series]="schoolsByManagement?.series" [chart]="schoolsByManagement?.chart"
+            [labels]="schoolsByManagement?.labels" [fill]="schoolsByManagement?.fill"
+            [dataLabels]="schoolsByManagement?.dataLabels" [plotOptions]="schoolsByManagement?.plotOptions"
+            [responsive]="schoolsByManagement?.responsive" [legend]="schoolsByManagement?.legend"></apx-chart>
+    </div>
+
+    <div class="column">
+        <h5 class="bg-light p-2 m-2">Shift wise Schools</h5>
+        <apx-chart [series]="shiftWiseSchools?.series" [chart]="shiftWiseSchools?.chart"
+            [labels]="shiftWiseSchools?.labels" [fill]="shiftWiseSchools?.fill" [stroke]="shiftWiseSchools?.stroke"
+            [responsive]="shiftWiseSchools?.responsive" [legend]="shiftWiseSchools?.legend"></apx-chart>
+    </div>
+
+    <div class="column">
+        <h5 class="bg-light p-2 m-2">High & Low class Schools</h5>
+        <apx-chart [series]="lowClassHighClass?.series" [chart]="lowClassHighClass?.chart"
+            [labels]="lowClassHighClass?.labels" [fill]="lowClassHighClass?.fill"
+            [dataLabels]="lowClassHighClass?.dataLabels" [plotOptions]="lowClassHighClass?.plotOptions"
+            [responsive]="lowClassHighClass?.responsive" [legend]="lowClassHighClass?.legend"></apx-chart>
+    </div>
+
+</div>

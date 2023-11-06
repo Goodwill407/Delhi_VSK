@@ -26,6 +26,8 @@ export class TeacherComponent {
   allSchools: any;
   districtModel: any = "";
   schoolModel: any = "";
+  zoneModel: any = "";
+  allZones:any;
   districtName: any;
   schoolName: any;
   designation: any;
@@ -34,37 +36,12 @@ export class TeacherComponent {
   minorityWiseTeacher: any;
   allData: any;
 
-  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService) {
-    this.commonBarGraph = {
-      series: [
-        {
-          name: "basic",
-          data: []
-        }
-      ],
-      chart: {
-        type: "bar",
-        height: '600px'
-      },
-      plotOptions: {
-        bar: {
-          horizontal: true
-        }
-      },
-      dataLabels: {
-        enabled: true
-      },
-      xaxis: {
-        categories: [
-        ]
-      }
-    };
-  }
+  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService) {}
 
   ngOnInit() {
     this.getAllData();
     this.getAllDistricts();
-    this.getAllSchools();
+    this.getAllZones();
   }
 
   getAllDistricts() {
@@ -95,19 +72,23 @@ export class TeacherComponent {
     this.spinner.show();
     this.httpService.get('teacher-graph/school-category-wise').subscribe((data: any) => {
       if (data) {
-        this.getschoolsManagementWiseTeacher(data.teacherManagmentWiseCounts);
-        this.getShiftWiseSchools(data.teacherShiftWiseCounts);
-        let newData = data.teacherCounts.sort((a: any, b: any) => a.teacherCount - b.teacherCount);
-        this.getCategoryWiseTeacher(newData);
-        this.getDesignation(data.postdescWiseTeacherCounts);
-        this.getExperianceOfTeachers(data.experianceOfTeachers);
-        this.getSchoolTypeWiseCount(data);
-        this.getStreamWiseCount(data);
-        this.getMinorityWiseCount(data);
-
+        this.setAllGraphs(data);
         this.spinner.hide();
       }
     })
+  }
+
+  setAllGraphs(data:any){
+    this.getschoolsManagementWiseTeacher(data.teacherManagmentWiseCounts);
+    this.getShiftWiseSchools(data.teacherShiftWiseCounts);
+    let newData = data.teacherCounts.sort((a: any, b: any) => a.teacherCount - b.teacherCount);
+    this.getCategoryWiseTeacher(newData);
+    this.getDesignation(data.postdescWiseTeacherCounts);
+    this.getExperianceOfTeachers(data.experianceOfTeachers);
+    this.getSchoolTypeWiseCount(data.teacherTypeOfSchoolWiseCounts);
+    this.getStreamWiseCount(data.teacherStreamWiseCounts);
+    this.getMinorityWiseCount(data.teacherMinorityWiseCounts);
+    this.spinner.hide();
   }
 
   getGraphsByDistrictName() {
@@ -117,19 +98,43 @@ export class TeacherComponent {
     this.spinner.show();
     this.httpService.post('teacher-graph/school-category-wise/district', district).subscribe((data: any) => {
       if (data) {
-        this.getschoolsManagementWiseTeacher(data.teacherManagmentWiseCounts);
-        this.getShiftWiseSchools(data.teacherShiftWiseCounts);
-        let newData = data.teacherCounts.sort((a: any, b: any) => a.teacherCount - b.teacherCount);
-        this.getCategoryWiseTeacher(newData);
-        this.getDesignation(data.postdescWiseTeacherCounts);
-        this.getExperianceOfTeachers(data.experianceOfTeachers);
-        this.getSchoolTypeWiseCount(data);
-        this.getStreamWiseCount(data);
-        this.getMinorityWiseCount(data);
+       this.setAllGraphs(data); 
+      }
+    })
+  }
+
+  getAllZones(){
+    this.httpService.get('school/zonename').subscribe((res:any)=>{
+      this.allZones = res.ZoneNames;
+    })
+  }
+  getGraphsByZone() {
+    this.spinner.show();
+    const zone = {
+      zoneName: this.zoneModel
+    }
+    this.getSchoolDataByZone();
+    this.httpService.post('zonegraph/school-student-teacher-graph-zonename', zone).subscribe((data: any) => {
+      if (data) {
+        this.setAllGraphs(data);
         this.spinner.hide();
       }
+    }, (error) => {
       this.spinner.hide();
     })
+  }
+
+  getSchoolDataByZone() {
+    const zone = {
+      Zone_Name: this.zoneModel
+    }
+    this.httpService.post('school/getZoneSchool', zone).subscribe((data: any) => {
+      if (data && data.ZoneSchool) {
+        this.allSchools = data.ZoneSchool;
+      } else {
+        this.allSchools = [];
+      }
+    });
   }
 
   getGraphsBySchoolName() {
@@ -145,25 +150,15 @@ export class TeacherComponent {
         this.getCategoryWiseTeacher(newData);
         this.getDesignation(data.postdescWiseTeacherCounts);
         this.getExperianceOfTeachers(data.experianceOfTeachers);
-        this.getSchoolTypeWiseCount(data);
-        this.getStreamWiseCount(data);
-        this.getMinorityWiseCount(data);
+        this.getSchoolTypeWiseCount(data.teacherTypeOfSchoolWiseCounts);
+        this.getStreamWiseCount(data.teacherStreamWiseCounts);
+        this.getMinorityWiseCount(data.teacherMinorityWiseCounts);
         this.spinner.hide();
       }
       this.spinner.hide();
     })
   }
 
-  getAllSchools() {
-    this.allSchools = [
-      { schname: 'Bhola Nath Nagar-SBV (Babu Ram)' },
-      { schname: 'Kanti Nagar-GGSSS' },
-      { schname: 'Vivek Vihar,Phase-II-GGSSS' },
-      { schname: 'Surajmal Vihar-SKV' },
-      { schname: 'Surajmal Vihar-RPVV' },
-      { schname: 'Jhilmil Colony-SBV' },
-    ]
-  }
 
   getTeachersGenderRatio(teachersGender: any) {
     const series = [teachersGender.totalMaleTeachers, teachersGender.totalFemaleTeachers];
@@ -252,20 +247,25 @@ export class TeacherComponent {
 
   getSchoolTypeWiseCount(data: any) {
     this.schoolTypeWiseCount = this.graphService.PolarGraph();
-
-    this.schoolTypeWiseCount.series = [170, 150, 90];
-    this.schoolTypeWiseCount.labels = ['Girls', 'Boys', 'Co-edu']
+    for (let i = 0; i < data.length; i++) {
+      this.schoolTypeWiseCount.series.push(data[i].teacherTypeOfSchoolWiseCount);
+      this.schoolTypeWiseCount.labels.push(data[i].typeOfSchool);
+    }
   }
 
   getStreamWiseCount(data: any) {
     this.streamWiseTeacher = this.graphService.PieGraph('pie', '');
-    this.streamWiseTeacher.series = [90, 150, 200, 320, 12];
-    this.streamWiseTeacher.labels = ['Art', 'Science', 'Commerce', 'Vocational', 'Other']
+     for (let i = 0; i < data.length; i++) {
+      this.streamWiseTeacher.series.push(data[i].teacherStreamWiseCount);
+      this.streamWiseTeacher.labels.push(data[i].stream);
+    }
   }
 
   getMinorityWiseCount(data: any) {
-    this.minorityWiseTeacher = this.graphService.PieGraph('donut', '')
-    this.minorityWiseTeacher.series = [280, 200];
-    this.minorityWiseTeacher.labels = ['YES', 'NO']
+    this.minorityWiseTeacher = this.graphService.PieGraph('donut','');
+    for (let i = 0; i < data.length; i++) {
+      this.minorityWiseTeacher.series.push(data[i].teacherMinorityWiseCount);
+      this.minorityWiseTeacher.labels.push(data[i].minority);
+    }
   }
 }
