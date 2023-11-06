@@ -190,7 +190,7 @@ export class SchoolComponent {
   }
 
   getStreamCount(streamCount: any) {
-    this.streamCount = this.graphService.VerticleBarGraph();;
+    this.streamCount = this.graphService.VerticleBarGraph();
     const series: any = [{
       name: "Count",
       data: []
