@@ -20,7 +20,7 @@
   <div class="column text-center">
     <h5 class="bg-light p-2 m-2">Total Teacher</h5>
     <div class="d-flex justify-content-around mt-4">
-      <img class="ms-2" src="../../../assets/images/Dashboard img/lady Teacher.png" style="height: 120px;" alt="">
+      <img class="ms-2" src="../../../assets/images/Dashboard/lady Teacher.png" style="height: 120px;" alt="">
       <div class="d-block ms-1 text-center">
         <h1 class="fw-bold">{{allData?.totalTeachers}}</h1>
           <h3>Total Teacher</h3>
@@ -114,8 +114,9 @@
   </div>
 
   <!--  -->
-  <div class="column" style="overflow: auto;">
+  <div class="column wide">
+    <h5 class="bg-light p-2 m-2">Designation wise Teacher</h5>
     <apx-chart  [series]="designation?.series" [chart]="designation?.chart" [dataLabels]="designation?.dataLabels"
-      [plotOptions]="designation?.plotOptions" [xaxis]="designation?.xaxis"></apx-chart>
+      [plotOptions]="designation?.plotOptions" [xaxis]="designation?.xaxis" [legend]="designation?.legend"></apx-chart>
   </div>
 </div>
