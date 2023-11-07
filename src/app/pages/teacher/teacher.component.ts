@@ -39,34 +39,19 @@ export class TeacherComponent {
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService) {}
 
   ngOnInit() {
-    this.getAllData();
+    this.getAllTeacherData();
     this.getAllDistricts();
     this.getAllZones();
   }
 
   getAllDistricts() {
-    this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
-      if (data && data.length > 0) {
-        this.allDistricts = data;
+    this.httpService.get('school/districtNames').subscribe((data: any) => {
+      if (data && data.districtNames.length > 0) {
+        this.allDistricts = data.districtNames;
       }
     })
   }
 
-  getAllData() {
-    this.httpService.get('graphs').subscribe((data: any) => {
-      if (data) {
-        this.allData = data;
-        this.averageTeacherOfSchool = data.averageTeacherOfSchool;
-
-        const teachersGender = {
-          totalMaleTeachers: data.totalMaleTeachers,
-          totalFemaleTeachers: data.totalFemaleTeachers
-        }
-        this.getTeachersGenderRatio(teachersGender);
-        this.getAllTeacherData();
-      }
-    })
-  }
 
   getAllTeacherData() {
     this.spinner.show();
@@ -79,6 +64,12 @@ export class TeacherComponent {
   }
 
   setAllGraphs(data:any){
+    this.allData = data;
+    const teachersGender = {
+      totalMaleTeachers: data.totalMaleTeachers,
+      totalFemaleTeachers: data.totalFemaleTeachers
+    }
+    this.getTeachersGenderRatio(teachersGender);
     this.getschoolsManagementWiseTeacher(data.teacherManagmentWiseCounts);
     this.getShiftWiseSchools(data.teacherShiftWiseCounts);
     let newData = data.teacherCounts.sort((a: any, b: any) => a.teacherCount - b.teacherCount);
@@ -101,40 +92,65 @@ export class TeacherComponent {
        this.setAllGraphs(data); 
       }
     })
+    this.zoneModel = '';
+    this.schoolModel = '';
+    this.getAllZones();
+    this.getAllSchools();
   }
 
   getAllZones(){
+    if(this.districtModel){
+      const district = { "District_name": this.districtModel };
+      this.httpService.post('school/getDistrictZone',district).subscribe((res:any)=>{
+        this.allZones = res.ZoneSchool;
+      })
+    }else{
     this.httpService.get('school/zonename').subscribe((res:any)=>{
       this.allZones = res.ZoneNames;
-    })
+    })}
   }
+
   getGraphsByZone() {
     this.spinner.show();
     const zone = {
       zoneName: this.zoneModel
     }
-    this.getSchoolDataByZone();
-    this.httpService.post('zonegraph/school-student-teacher-graph-zonename', zone).subscribe((data: any) => {
+    this.httpService.post('teacher-graph/school-category-wise/zone', zone).subscribe((data: any) => {
       if (data) {
         this.setAllGraphs(data);
         this.spinner.hide();
       }
     }, (error) => {
       this.spinner.hide();
-    })
+    });
+    this.getAllSchools();
   }
 
-  getSchoolDataByZone() {
-    const zone = {
-      Zone_Name: this.zoneModel
-    }
-    this.httpService.post('school/getZoneSchool', zone).subscribe((data: any) => {
-      if (data && data.ZoneSchool) {
-        this.allSchools = data.ZoneSchool;
-      } else {
-        this.allSchools = [];
+  getAllSchools() {
+    if(this.districtModel){
+      const district = {
+        District_name: this.districtModel
       }
-    });
+      this.httpService.post('school/getDistrictSchool', district).subscribe((data: any) => {
+        if (data && data.districtSchools) {
+          this.allSchools = data.districtSchools;
+        } else {
+          this.allSchools = [];
+        }
+      });
+    }
+    else{
+      const zone = {
+        Zone_Name: this.zoneModel
+      }
+      this.httpService.post('school/getZoneSchool', zone).subscribe((data: any) => {
+        if (data && data.ZoneSchool) {
+          this.allSchools = data.ZoneSchool;
+        } else {
+          this.allSchools = [];
+        }
+      });
+    }
   }
 
   getGraphsBySchoolName() {
@@ -144,15 +160,7 @@ export class TeacherComponent {
     this.spinner.show();
     this.httpService.post('teacher-graph/school-category-wise/school', school).subscribe((data: any) => {
       if (data) {
-        this.getschoolsManagementWiseTeacher(data.teacherManagmentWiseCounts);
-        this.getShiftWiseSchools(data.teacherShiftWiseCounts);
-        let newData = data.teacherCounts.sort((a: any, b: any) => a.teacherCount - b.teacherCount);
-        this.getCategoryWiseTeacher(newData);
-        this.getDesignation(data.postdescWiseTeacherCounts);
-        this.getExperianceOfTeachers(data.experianceOfTeachers);
-        this.getSchoolTypeWiseCount(data.teacherTypeOfSchoolWiseCounts);
-        this.getStreamWiseCount(data.teacherStreamWiseCounts);
-        this.getMinorityWiseCount(data.teacherMinorityWiseCounts);
+        this.setAllGraphs(data);
         this.spinner.hide();
       }
       this.spinner.hide();

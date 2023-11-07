@@ -49,6 +49,15 @@
         </li>
 
         <li class="nav-item">
+          <a class="nav-link" routerLink="attendance" href="#">
+            <span class="image-icon text-center justify-content-center">
+              <i class="bi bi-bar-chart-fill"></i>   </span>
+            <span class="ms-2"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Attendance</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
           <a class="nav-link" routerLink="cquib" [queryParams]="{tabName : 'NISHTHA'}" href="#">
             <span class="image-icon">
               <img src="../assets/images/NISHTHA-01-01.png" alt="">

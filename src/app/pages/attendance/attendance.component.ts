@@ -46,9 +46,9 @@ export class AttendanceComponent {
   }
 
   getAllDistricts() {
-    this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
-      if (data && data.length > 0) {
-        this.allDistricts = data;
+    this.httpService.get('school/districtNames').subscribe((data: any) => {
+      if (data && data.districtNames.length > 0) {
+        this.allDistricts = data.districtNames;
       }
     })
   }
