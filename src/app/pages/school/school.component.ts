@@ -3,6 +3,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { GraphService } from 'src/app/services/graph-service.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-school',
@@ -34,7 +35,7 @@ export class SchoolComponent {
   districtName: any;
   allSchools: any;
 
-  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService) {
+  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -77,7 +78,7 @@ export class SchoolComponent {
     });
   }
 
-  setAllGraphs(data: any) {
+  setAllGraphs(data: any, zone: any) {
     this.teachersRatio = data.teacherStudentRatio?.toFixed(2);
     this.totalSchools = data.totalSchools;
     this.averageStudentOfSchool = data.averageStudentOfSchool?.toFixed(2);
@@ -104,15 +105,20 @@ export class SchoolComponent {
     this.getTypesOfSchools(data.typeOfSchoolCounts);
     this.getStreamCount(data.streamCounts);
     this.getMinorityCount(data.minorityCounts);
-    this.getAllZones(data.zoneWiseCounts);
+    if (zone) {
+      this.getAllZones(data.zoneWiseCounts);
+    }
   }
 
   getAllSchoolGraph() {
+    this.spinner.show();
     this.httpService.get('graphs/school-teacher-student-graph').subscribe((data: any) => {
       if (data) {
-        this.setAllGraphs(data);
+        this.setAllGraphs(data, true);
         this.spinner.hide();
       }
+    }, (error) => {
+      this.toastr.error('', 'Something went wrong !');
     })
   }
 
@@ -124,11 +130,11 @@ export class SchoolComponent {
     this.getSchoolDataByZone();
     this.httpService.post('zonegraph/school-student-teacher-graph-zonename', zone).subscribe((data: any) => {
       if (data) {
-        this.setAllGraphs(data);
+        this.setAllGraphs(data, false);
         this.spinner.hide();
       }
     }, (error) => {
-      this.spinner.hide();
+      this.toastr.error('', 'Something went wrong !');
     })
   }
 
@@ -138,18 +144,19 @@ export class SchoolComponent {
       const district = {
         districtName: this.districtModel
       }
-      this.getSchoolDataByDistrict();
       this.httpService.post('zonegraph/school-student-teacher-graph-district', district).subscribe((data: any) => {
         if (data) {
-          this.setAllGraphs(data);
+          this.setAllGraphs(data, true);
+          this.getSchoolDataByDistrict();
           this.spinner.hide();
         }
       }, (error) => {
-        this.spinner.hide();
+        this.toastr.error('', 'Something went wrong !');
       })
     } else {
       this.getAllSchoolGraph();
     }
+    this.zoneModel = "";
   }
 
   getStudentsGenderRatio(studentsGender: any) {
