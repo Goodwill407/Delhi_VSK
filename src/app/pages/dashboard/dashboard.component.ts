@@ -27,7 +27,7 @@ export class DashboardComponent {
   }
 
   allTotalCount() {
-    this.httpService.get('graphs').subscribe((data: any) => {
+    this.httpService.get('graphs/school-teacher-student-graph').subscribe((data: any) => {
       if (data) {
         this.totalCount = data;
       }
