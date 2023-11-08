@@ -15,8 +15,8 @@
             {{zone.x}}
         </option>
     </select>
-    <select class="form-select w-25 ms-2" [(ngModel)]="schoolModel">
-        <option value="">All Schools</option>
+    <select class="form-select w-25 ms-2" [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
+        <option value="" disabled>Select Schools</option>
         <option *ngFor="let school of allSchools" value="{{school}}">
             {{school}}
         </option>
@@ -25,7 +25,8 @@
 <div class="d-flex justify-content-center filter-box mt-2" *ngIf="districtModel || zoneModel || schoolModel">
     <h3 class="text-center mb-0" *ngIf="districtModel">{{districtModel}}&nbsp; </h3>
     <h3 class="text-center mb-0" *ngIf="zoneModel"> <span *ngIf="districtModel">|</span> {{zoneModel}}&nbsp; </h3>
-    <h3 class="text-center mb-0" *ngIf="schoolModel"> <span *ngIf="zoneModel">|</span> {{schoolModel}}</h3>
+    <h3 class="text-center mb-0" *ngIf="schoolModel"> <span *ngIf="zoneModel || districtModel">|</span> {{schoolModel}}
+    </h3>
 </div>
 <div class="container1">
     <div class="column">
@@ -85,14 +86,6 @@
             [labels]="shiftWiseSchools?.labels" [fill]="shiftWiseSchools?.fill" [stroke]="shiftWiseSchools?.stroke"
             [responsive]="shiftWiseSchools?.responsive" [legend]="shiftWiseSchools?.legend"></apx-chart>
     </div>
-    <div class="column">
-        <h5 class="header-bg p-2 m-2">High & Low class Schools</h5>
-        <apx-chart [series]="lowClassHighClass?.series" [chart]="lowClassHighClass?.chart"
-            [labels]="lowClassHighClass?.labels" [fill]="lowClassHighClass?.fill"
-            [dataLabels]="lowClassHighClass?.dataLabels" [plotOptions]="lowClassHighClass?.plotOptions"
-            [responsive]="lowClassHighClass?.responsive" [legend]="lowClassHighClass?.legend"></apx-chart>
-    </div>
-
     <div class="column">
         <h5 class="header-bg p-2 m-2">Types of schools</h5>
         <apx-chart [series]="typesOfSchools?.series" [chart]="typesOfSchools?.chart" [labels]="typesOfSchools?.labels"

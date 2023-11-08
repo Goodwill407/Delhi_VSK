@@ -48,7 +48,7 @@ export class StudentComponent {
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService) { }
 
   ngOnInit() {
-    this.getStudentGraphData()
+    this.getAllStudentGraphData()
     this.getAllDistricts()
     this.getAllZone()
     this.getSchoolByZone()
@@ -129,7 +129,7 @@ export class StudentComponent {
   }
 
 
-  getStudentGraphData() {
+  getAllStudentGraphData() {
     this.httpService.get('studentgraph/student-graph-count').subscribe((data: any) => {
       if (data) {
         this.setAllGraphData(data)
@@ -155,22 +155,21 @@ export class StudentComponent {
   }
 
   setAllGraphData(data: any) {
-    this.totalStudent = data.totalStudents;
+    this.totalStudent = data.totalStudentCount.map((item: any) => item.count)
     this.teacherStudentRatio = data.averageTeacherOfSchool;
     this.averageStudentOfSchool = data.averageStudentOfSchool;
     const StudentGenderWise = data.studentGenderCounts
+    const catogoryWiseStudentCount = data.studentStats
+    const StreamWiseCount = data.streanWiseCount.map((item: any) => item.count)
+    const AffiliationWiseCount = data.studentStats
+    const TypeOfStudSchool = data.studentStats
+    const MinorityWiseStudCount = data.studentStats
+    const StudentShiftWiseCounts = data.studentStats
+    const StudentManagementWiseCounts = data.studentStats
 
-    const catogoryWiseStudentCount = data.studentStats[0].SchCategory
-    const StreanWiseCount = data.studentStats[1].stream
-    const AffiliationWiseCount = data.studentStats[3].affiliation
-    const TypeOfStudSchool = data.studentStats[4].typeOfSchool
-    const MinorityWiseStudCount = data.studentStats[2].minority
-    const StudentShiftWiseCounts = data.studentStats[5].shift
-    const StudentManagementWiseCounts = data.studentStats[6].SchManagement
-
-    this.getStudentsGenderRatio(StudentGenderWise)
-    this.getStudentCatogoryWise(catogoryWiseStudentCount)
-    this.getStreamWiseStudent(StreanWiseCount)
+    // this.getStudentsGenderRatio(StudentGenderWise)
+    // this.getStudentCatogoryWise(catogoryWiseStudentCount)
+    this.getStreamWiseStudent(StreamWiseCount)
     this.getAffiliationWiseCount(AffiliationWiseCount)
     this.getTypeOfStudSchool(TypeOfStudSchool)
     this.getMinorityWiseCount(MinorityWiseStudCount)
@@ -178,7 +177,6 @@ export class StudentComponent {
     this.getStudentManagementWiseCounts(StudentManagementWiseCounts)
     this.getSchoolsByDistrict()
     this.getSchoolsByDistrict()
-
   }
 
   getStudentsGenderRatio(studentsGender: any) {
