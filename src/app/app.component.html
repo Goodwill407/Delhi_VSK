@@ -49,6 +49,16 @@
         </li>
 
         <li class="nav-item">
+          <a class="nav-link" routerLink="attendance" routerLinkActive="active" href="#">
+            <span class="image-icon text-center justify-content-center">
+              <img src="../assets/images/icons/attendance.png" alt="">
+            </span>
+            <span class="ms-2"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Attendance</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
           <a class="nav-link" routerLink="nishtha" routerLinkActive="active" href="#">
             <span class="image-icon">
               <img src="../assets/images/NISHTHA-01-01.png" alt="">
@@ -58,27 +68,25 @@
           </a>
         </li>
 
-        <!-- <li class="nav-item mt-2">
-          <a class="nav-link" routerLink="cquib" [queryParams]="{tabName : 'DIKSHA-ETB'}" href="#">
+        <li class="nav-item mt-2">
+          <a class="nav-link" routerLink="pgi" routerLinkActive="active">
             <span class="image-icon">
               <img src="../assets/images/ETB & E-Content.png" alt="">
             </span>
-            <span class="ms-2"
-              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">DIKSHA-ETB</span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">PGI</span>
           </a>
         </li>
 
         <li class="nav-item mt-2">
-          <a class="nav-link" routerLink="cquib" [queryParams]="{tabName : 'Micro-Improvements'}" href="#">
+          <a class="nav-link" routerLink="udise" routerLinkActive="active">
             <span class="image-icon">
               <img src="../assets/images/ETB & E-Content.png" alt="">
             </span>
-            <span class="ms-2"
-              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Micro-Improvements</span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">UDISE</span>
           </a>
         </li>
 
-        <li class="nav-item mt-2">
+        <!--<li class="nav-item mt-2">
           <a class="nav-link" routerLink="cquib" [queryParams]="{tabName : 'PM POSHAN'}" href="#">
             <span class="image-icon">
               <img src="../assets/images/PM Poshan.png" alt="">

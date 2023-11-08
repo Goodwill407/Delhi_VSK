@@ -8,6 +8,8 @@ import { NcertComponent } from './ncert/ncert.component';
 import { CQubeComponent } from './c-qube/c-qube.component';
 import { AttendanceComponent } from './attendance/attendance.component';
 import { NishthaComponent } from './nishtha/nishtha.component';
+import { PgiComponent } from './pgi/pgi.component';
+import { UdiseComponent } from './udise/udise.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -18,6 +20,8 @@ const routes: Routes = [
   { path: 'cquib', component: CQubeComponent },
   { path: 'attendance', component: AttendanceComponent },
   { path: 'nishtha', component: NishthaComponent },
+  { path: 'pgi', component: PgiComponent },
+  { path: 'udise', component: UdiseComponent },
 ];
 
 @NgModule({
