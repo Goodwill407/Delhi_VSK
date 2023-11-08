@@ -111,7 +111,17 @@ export class StudentComponent {
         }
       });
   }
- 
+   
+  getStudentGraphData() {
+    this.spinner.show();
+    this.httpService.get('studentgraph/student-graph-count').subscribe((data: any) => {
+      if (data) {
+        this.setAllGraphData(data)
+        this.spinner.hide();
+      }
+    })
+  }
+
   getGraphsByDistrictName() {
     this.spinner.show();
     const district = {
@@ -126,16 +136,8 @@ export class StudentComponent {
     }, (error) => {
       this.spinner.hide();
     })
-  }
-
-
-  getStudentGraphData() {
-    this.httpService.get('studentgraph/student-graph-count').subscribe((data: any) => {
-      if (data) {
-        this.setAllGraphData(data)
-
-      }
-    })
+    this.ZoneModel = '';
+    this.schoolModel = '';
   }
 
   getGraphsByZone() {
