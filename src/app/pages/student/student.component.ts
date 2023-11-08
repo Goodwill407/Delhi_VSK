@@ -41,6 +41,8 @@ export class StudentComponent {
   allZones:any;
   districtModel: any = ""
   ZoneModel :any = ""
+  AllSchool :any
+  schoolModel:any=""
 
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService) { }
@@ -49,6 +51,9 @@ export class StudentComponent {
     this.getStudentGraphData()
     this.getAllDistricts()
     this.getAllZone()
+    this.getSchoolByZone()
+    
+   
 
   }
   getAllDistricts() {
@@ -67,15 +72,55 @@ export class StudentComponent {
     })
   }
 
+  getZoneDistricWise(){
+    const district = {
+      District_name: 'East'
+    };
+    this.httpService.post('school/getDistrictZone', district)
+      .subscribe((data: any) => {
+        if (data) {
+          this.allZones = data.ZoneSchool;
+          
+        }
+      });
+
+  }
+  
+  getSchoolsByDistrict() {
+    const district = {
+      District_name: this.districtModel
+    };
+    this.httpService.post('school/getDistrictSchool', district)
+      .subscribe((data: any) => {
+        if (data) {
+          this.AllSchool = data.districtSchools;
+         
+        }
+      });
+  }
+
+  getSchoolByZone() {
+    const Zone = {
+      Zone_Name: this.ZoneModel
+    };
+    this.httpService.post('school/getZoneSchool', Zone)
+      .subscribe((data: any) => {
+        if (data) {
+          this.AllSchool = data.districtSchools;
+          
+        }
+      });
+  }
+ 
   getGraphsByDistrictName() {
     this.spinner.show();
     const district = {
       districtName: this.districtModel
     }
-
     this.httpService.post('studentgraph/student-graph-count-districtname', district).subscribe((data: any) => {
       if (data) {
         this.setAllGraphData(data);
+       this. getZoneDistricWise()
         this.spinner.hide();
       }
     }, (error) => {
@@ -93,8 +138,6 @@ export class StudentComponent {
     })
   }
 
-
-
   getGraphsByZone() {
     this.spinner.show();
     const zone = {
@@ -103,6 +146,7 @@ export class StudentComponent {
     this.httpService.post('zonegraph/school-student-teacher-graph-zonename', zone).subscribe((data: any) => {
       if (data) {
         this.setAllGraphData(data);
+        this.getSchoolByZone()
         this.spinner.hide();
       }
     }, (error) => {
@@ -132,17 +176,16 @@ export class StudentComponent {
     this.getMinorityWiseCount(MinorityWiseStudCount)
     this.getStudentShiftWiseCounts(StudentShiftWiseCounts)
     this.getStudentManagementWiseCounts(StudentManagementWiseCounts)
+    this.getSchoolsByDistrict()
+    this.getSchoolsByDistrict()
 
   }
 
   getStudentsGenderRatio(studentsGender: any) {
-
     const Male_Count = studentsGender.find((item: any) => item._id === "M").count;
     const Female_Count = studentsGender.find((item: any) => item._id === "F").count;
     const Other_Count = studentsGender.find((item: any) => item._id === "T").count;
-
     const series = [Male_Count, Female_Count, Other_Count]
-
     const labels = [
       "Boys", "Girls", 'Other'
     ]
@@ -152,7 +195,6 @@ export class StudentComponent {
   }
 
   getStudentCatogoryWise(catogoryWiseStudentCount: any) {
-
     const StudentCount = catogoryWiseStudentCount.map((item: any) => item.count);
     const SchCategory = catogoryWiseStudentCount.map((item: any) => item.SchCategory);
     this.chartOptions = this.graphService.VerticleBarGraph()
@@ -164,13 +206,11 @@ export class StudentComponent {
     this.chartOptions.series = [...series]
     this.chartOptions.labels = [...labels]
     this.chartOptions.plotOptions.bar.horizontal = true
-
   };
 
   getStreamWiseStudent(StreanWiseCount: any) {
     const Stream = StreanWiseCount.map((item: any) => item.stream);
     const StreamWiseStudCount = StreanWiseCount.map((item: any) => item.count);
-
     const series = [{
       name: [""],
       data: StreamWiseStudCount
@@ -185,32 +225,27 @@ export class StudentComponent {
   getAffiliationWiseCount(affiliationWiseCount: any) {
     const Affiliation = affiliationWiseCount.map((item: any) => item.affiliation)
     const affiliationWiseStud = affiliationWiseCount.map((item: any) => item.count)
-
     this.AffiliationWiseStudent = this.graphService.PieGraph('donut', ' student');
     const series = affiliationWiseStud;
     const labels = Affiliation
     this.AffiliationWiseStudent.series = [...series];
     this.AffiliationWiseStudent.labels = [...labels]
-
   }
 
   getTypeOfStudSchool(TypeOfStudSchool: any) {
     const TypeOfSchool = TypeOfStudSchool.map((item: any) => item.typeOfSchool)
     const TypeOfStudCount = TypeOfStudSchool.map((item: any) => item.count)
-
     this.TypeOfStudSchool = this.graphService.PieGraph('pie', ' student');
     const series = TypeOfStudCount;
     const labels = TypeOfSchool
     this.TypeOfStudSchool.series = [...series];
     this.TypeOfStudSchool.labels = [...labels]
     this.TypeOfStudSchool.chart.type = "pie";
-
   }
 
   getMinorityWiseCount(minorityWiseStudCount: any) {
     const Minority = minorityWiseStudCount.map((item: any) => item.minority)
     const StudCount = minorityWiseStudCount.map((item: any) => item.count)
-
     this.MinorityWiseStudCount = this.graphService.PieGraph('pie', ' student');
     const series = StudCount;
     const labels = Minority
@@ -222,26 +257,22 @@ export class StudentComponent {
   getStudentShiftWiseCounts(StudentShiftWiseCounts: any) {
     const shift = StudentShiftWiseCounts.map((item: any) => item.shift)
     const StudCount = StudentShiftWiseCounts.map((item: any) => item.count)
-
     this.StudentShiftWiseCounts = this.graphService.PolarGraph();
     const series = StudCount;
     const labels = shift
     this.StudentShiftWiseCounts.series = [...series];
     this.StudentShiftWiseCounts.labels = [...labels]
-
   }
 
   getStudentManagementWiseCounts(StudentManagementWiseCounts: any) {
     const SchManagement = StudentManagementWiseCounts.map((item: any) => item.SchManagement)
     const StudCount = StudentManagementWiseCounts.map((item: any) => item.count)
-
     this.StudentManagementWiseCounts = this.graphService.PieGraph('donut', ' student');
     const series = StudCount;
     const labels = SchManagement
     this.StudentManagementWiseCounts.series = [...series];
     this.StudentManagementWiseCounts.labels = [...labels]
   }
-
 
 
 }

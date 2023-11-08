@@ -110,12 +110,28 @@
   </div>
 
   <!--  -->
-  <div class="column">
+  <!-- <div class="column">
     <h5 class="bg-light p-2 m-2">Stream wise Teacher</h5>
     <apx-chart [series]="streamWiseTeacher?.series" [chart]="streamWiseTeacher?.chart"
       [labels]="streamWiseTeacher?.labels" [fill]="streamWiseTeacher?.fill" [stroke]="streamWiseTeacher?.stroke"
       [responsive]="streamWiseTeacher?.responsive" [legend]="streamWiseTeacher?.legend"></apx-chart>
-  </div>
+  </div> -->
+
+  <div class="column">
+    <h5 class="bg-light p-2 m-2">Streem Wise Student</h5>
+    <apx-chart
+    [series]="streamWiseTeacher?.series"
+    [chart]="streamWiseTeacher?.chart"
+    [dataLabels]="streamWiseTeacher?.dataLabels"
+    [plotOptions]="streamWiseTeacher?.plotOptions"
+    [xaxis]="streamWiseTeacher?.xaxis"
+    [yaxis]="streamWiseTeacher?.yaxis"
+    [labels]="streamWiseTeacher?.labels"
+    [legend]="streamWiseTeacher?.legend"
+    [colors]="streamWiseTeacher?.colors"
+    [grid]="streamWiseTeacher?.grid"
+  ></apx-chart>
+</div>
 
   <!--  -->
   <div class="column">

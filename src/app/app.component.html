@@ -31,7 +31,7 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="teacher" href="#">
             <span class="image-icon text-center justify-content-center">
-              <i class="bi bi-house-add-fill"></i>
+              <img src="../assets/images/Dashboard/lady Teacher.png" alt="">
             </span>
             <span class="ms-2"
               [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Teacher</span>
@@ -41,7 +41,7 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="student" href="#">
             <span class="image-icon text-center justify-content-center">
-              <i class="bi bi-clipboard2-data-fill"></i>
+              <img src="../assets/images/Dashboard/student.png" alt="">
             </span>
             <span class="ms-2"
               [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Student</span>
@@ -49,16 +49,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" routerLink="attendance" href="#">
-            <span class="image-icon text-center justify-content-center">
-              <i class="bi bi-bar-chart-fill"></i>   </span>
-            <span class="ms-2"
-              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Attendance</span>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" routerLink="cquib" [queryParams]="{tabName : 'NISHTHA'}" href="#">
+          <a class="nav-link" routerLink="nishtha" href="#">
             <span class="image-icon">
               <img src="../assets/images/NISHTHA-01-01.png" alt="">
             </span>
@@ -130,7 +121,7 @@
         <li class="nav-item mt-2">
           <a class="nav-link active d-flex" href="https://ncert.delhivsk.org/#/login">
             <span class="image-icon">
-              <img src="../assets/images/Dashboard img/cQube_logo.jpg" alt="">
+              <img src="../assets/images/Dashboard/cQube_logo.jpg" alt="">
             </span>
             <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">NCERT</span>
           </a>

@@ -25,10 +25,6 @@ export class AppComponent {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    changes;
-  }
-
   loginFlagFunc(event: any) {
     this.isLogIn = event;
   }

@@ -25,6 +25,7 @@
     "jquery": "^3.7.1",
     "ng-apexcharts": "^1.8.0",
     "ngx-spinner": "^16.0.2",
+    "ngx-toastr": "^17.0.2",
     "powerbi-client": "^2.22.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

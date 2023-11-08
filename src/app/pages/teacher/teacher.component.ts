@@ -262,11 +262,19 @@ export class TeacherComponent {
   }
 
   getStreamWiseCount(data: any) {
-    this.streamWiseTeacher = this.graphService.PieGraph('pie', '');
-     for (let i = 0; i < data.length; i++) {
-      this.streamWiseTeacher.series.push(data[i].teacherStreamWiseCount);
-      this.streamWiseTeacher.labels.push(data[i].stream);
+    let series:any = [{
+      name: ["Teacher"],
+      data: []
+    }];
+    this.streamWiseTeacher = this.graphService.VerticleBarGraph();
+    for (let i = 0; i < data.length; i++) {
+      series[0].data.push(data[i].teacherStreamWiseCount);
+      this.streamWiseTeacher.xaxis.categories.push(data[i].stream);
     }
+    this.streamWiseTeacher.series = [...series];
+    this.streamWiseTeacher.plotOptions.bar.horizontal = false;
+    this.streamWiseTeacher.xaxis.title.text = "Stream"
+    this.streamWiseTeacher.yaxis.title.text = "Teacher Count"
   }
 
   getMinorityWiseCount(data: any) {

@@ -46,9 +46,13 @@ export class AttendanceComponent {
   }
 
   getAllDistricts() {
-    this.httpService.get('school/districtNames').subscribe((data: any) => {
-      if (data && data.districtNames.length > 0) {
-        this.allDistricts = data.districtNames;
+    this.dateModel = this.datepipe.transform(this.dateModel, 'dd/MM/yyyy');
+   const data = {
+      "date": this.dateModel
+    }
+    this.httpService.post('attendance/district/present-student/per',data).subscribe((data: any) => {
+      if (data) {
+        this.allDistricts = data;
       }
     })
   }

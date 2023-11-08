@@ -351,8 +351,13 @@ a.article:hover {
     width: 60px;
 }
 
+.sidebarMenu ul li a {
+    transition: transform .2s;
+}
+
 .sidebarMenu ul li a:hover {
-    background: silver;
+    /* background: silver; */
+    transform: scale(1.1);
     /* border-bottom: 2px solid black; */
 }
 
@@ -414,6 +419,6 @@ a.article:hover {
 }
 
 #content {
-    background-image: url("../../src/assets/images/Dashboard/cQube_logo.jpg");
-    background-size: 100% 100%;
+    background-image: url("../../src/assets/images/Dashboard/bg.png");
+    background-size: cover;
 }

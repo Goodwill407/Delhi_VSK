@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpServiceService } from '../services/http-service.service';
+import { ToastrService } from 'ngx-toastr';
 
 export interface LoginClass {
   email: string,
@@ -20,11 +21,12 @@ export class LoginPageComponent {
   loginModel!: LoginClass;
   @Output() loginFlag = new EventEmitter<boolean>();
 
-  // portal!: string
-  // @Output() loginEvent = new EventEmitter<boolean>();
-  // @ViewChild('closeAddExpenseModal') closeAddExpenseModal: ElementRef | undefined;
-
-  constructor(private fb: FormBuilder, private httpService: HttpServiceService, private route: ActivatedRoute, private router: Router, private spinner: NgxSpinnerService) { }
+  constructor(private fb: FormBuilder, private httpService: HttpServiceService, private route: ActivatedRoute, private router: Router, private spinner: NgxSpinnerService, private toastr: ToastrService) {
+    const user: any = JSON.parse(sessionStorage.getItem('userProfile')!);
+    if (user) {
+      this.router.navigateByUrl('/dashboard');
+    }
+  }
 
   ngOnInit() {
     this.initializeSaveFormValidations();
@@ -74,12 +76,14 @@ export class LoginPageComponent {
     this.spinner.show();
     this.httpService.post('auth/login', this.loginForm.value).subscribe((data: any) => {
       if (data) {
+        this.toastr.success('', 'Logged in succesfully!');
         sessionStorage.setItem('userProfile', JSON.stringify(data.user));
         this.router.navigateByUrl('/dashboard');
         this.loginFlag.emit(true)
       }
       this.spinner.hide();
     }, (error) => {
+      this.toastr.error('', 'Email Username or Password !');
       this.spinner.hide();
     })
   }

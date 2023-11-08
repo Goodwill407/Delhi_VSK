@@ -13,6 +13,7 @@ import { TeacherComponent } from './teacher/teacher.component';
 import { NcertComponent } from './ncert/ncert.component';
 import { CQubeComponent } from './c-qube/c-qube.component';
 import { AttendanceComponent } from './attendance/attendance.component';
+import { NishthaComponent } from './nishtha/nishtha.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { AttendanceComponent } from './attendance/attendance.component';
     TeacherComponent,
     NcertComponent,
     CQubeComponent,
-    AttendanceComponent
+    AttendanceComponent,
+    NishthaComponent
   ],
   imports: [
     CommonModule,
