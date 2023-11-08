@@ -99,6 +99,13 @@
             [plotOptions]="minorityCount?.plotOptions" [responsive]="minorityCount?.responsive"
             [legend]="minorityCount?.legend"></apx-chart>
     </div>
+    <div class="column">
+        <h5 class="header-bg p-2 m-2">Schools by Affiliation</h5>
+        <apx-chart [series]="affiliationCount?.series" [chart]="affiliationCount?.chart"
+            [labels]="affiliationCount?.labels" [fill]="affiliationCount?.fill"
+            [dataLabels]="affiliationCount?.dataLabels" [plotOptions]="affiliationCount?.plotOptions"
+            [responsive]="affiliationCount?.responsive" [legend]="affiliationCount?.legend"></apx-chart>
+    </div>
     <div class="column" style="height: auto;">
         <h5 class="header-bg p-2 m-2">Schools by stream</h5>
         <apx-chart [series]="streamCount?.series" [chart]="streamCount?.chart" [dataLabels]="streamCount?.dataLabels"

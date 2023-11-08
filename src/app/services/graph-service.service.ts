@@ -215,4 +215,51 @@ export class GraphService {
         return graphData;
     }
 
+    LineGraph() {
+        const graphData = {
+            series: [],
+            chart: {
+                height: 350,
+                type: "line",
+                zoom: {
+                    enabled: false
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: "straight"
+            },
+            grid: {
+                row: {
+                    colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+                    opacity: 0.5
+                }
+            },
+            xaxis: {
+                categories: [],
+                title: {
+                    text: "",
+                    style: {
+                        fontSize: "14px",
+                        color: "#6d7fcc",
+                        fontWeight: "600"
+                    }
+                }
+            },
+            yaxis: {
+                title: {
+                    text: "",
+                    style: {
+                        fontSize: "14px",
+                        color: "#6d7fcc",
+                        fontWeight: "600"
+                    }
+                },
+            }
+        }
+        return graphData;
+    }
+
 }

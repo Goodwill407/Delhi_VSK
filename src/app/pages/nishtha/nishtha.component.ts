@@ -19,6 +19,7 @@ export class NishthaComponent {
   totalEnrollments: any;
   totalCompletion: any;
   totalCertifications: any;
+  totalCertificationsPercentage: any;
 
   //Amol
   allDashboardData: any
@@ -27,6 +28,9 @@ export class NishthaComponent {
   Total_Courses: any
   Total_Doe: any;
   Total_Local_body: any
+  Total_CoursesGraph:any
+  Total_MediumGraph:any
+
 
   constructor(private httpService: HttpServiceService, private graphService: GraphService, private spinner: NgxSpinnerService) {
   }
@@ -34,6 +38,26 @@ export class NishthaComponent {
   ngOnInit() {
     this.getAllDistrictsData();
     this.getAllData();
+    this.getCourse_MediumData()
+  }
+
+  getAllDistrictsData() {
+    this.httpService.get('learningsession/consumptionbydistrict?limit=10&page=1').subscribe((data: any) => {
+      if (data && data.results.length > 0) {
+        this.allDistrictsData = data.results;
+        let allDistrictsName = [];
+        for (let i = 0; i < this.allDistrictsData.length; i++) {
+          allDistrictsName.push(this.allDistrictsData[i].district_name);
+        }
+        this.allDistrictsName = allDistrictsName.filter((value, index, self) => self.indexOf(value) === index);
+        const event = {
+          target: {
+            value: this.allDistrictsName[0]
+          }
+        }
+        this.getGraphsByDistrictName(event);
+      }
+    })
   }
 
   getGraphsByDistrictName(event: any) {
@@ -53,6 +77,7 @@ export class NishthaComponent {
     this.getTotalEnrollments();
     this.getTotalCompletion();
     this.getTotalCertifications();
+    this.getTotalCertificationsPercentage();
   }
 
   getTotalEnrollments() {
@@ -82,17 +107,13 @@ export class NishthaComponent {
     }
   }
 
-  getAllDistrictsData() {
-    this.httpService.get('learningsession/consumptionbydistrict?limit=10&page=1').subscribe((data: any) => {
-      if (data && data.results.length > 0) {
-        this.allDistrictsData = data.results;
-        let allDistrictsName = [];
-        for (let i = 0; i < this.allDistrictsData.length; i++) {
-          allDistrictsName.push(this.allDistrictsData[i].district_name);
-        }
-        this.allDistrictsName = allDistrictsName.filter((value, index, self) => self.indexOf(value) === index);
-      }
-    })
+  getTotalCertificationsPercentage() {
+    this.totalCertificationsPercentage = {};
+    this.totalCertificationsPercentage = this.graphService.PieGraph('donut', '');
+    for (let i = 0; i < this.districtWiseData.length; i++) {
+      this.totalCertificationsPercentage.series.push(Number(this.districtWiseData[i].certification));
+      this.totalCertificationsPercentage.labels.push(this.districtWiseData[i].program);
+    }
   }
 
   // ===== Amol =====
@@ -100,11 +121,8 @@ export class NishthaComponent {
 
   getAllData() {
     this.httpService.get('alldashboard').subscribe((data: any) => {
-      console.log(data)
       if (data) {
         const allDashboardData = data.results;
-
-
         this.getTotal_completions(allDashboardData)
         this.getTotal_Certificate_issued(allDashboardData)
         this.getTotal_Courses(allDashboardData)
@@ -170,12 +188,49 @@ export class NishthaComponent {
   getTotal_Local_Body(allDashboardData: any) {
     const total_Local_body = allDashboardData.map((item: any) => item.local_body)
     const program = allDashboardData.map((item: any) => item.program)
-    this.Total_Local_body = this.graphService.PieGraph('pie');
+    this.Total_Local_body = this.graphService.PieGraph('donut');
     const series = total_Local_body.map((str: any) => Number(str));
     const labels = program
     this.Total_Local_body.series = [...series];
     this.Total_Local_body.labels = [...labels]
     //  this.Total_Completions.chart.type = "pie";
+  }
+
+  // amol2
+
+  getCourse_MediumData(){
+   this.httpService.get('alldashboard/coursemedium').subscribe((data:any)=>{
+    if(data){
+      const TotalData=data.results
+      
+      this.getCoursesGraphData(TotalData)
+    this.getMediumGraphData(TotalData)
+     }
+   })
+  }
+
+ 
+
+  getCoursesGraphData(TotalData:any){
+    const TotalCourses=TotalData.map((item: any) => item.total_courses)
+    const TotalProgram=TotalData.map((item: any) => item.program_name)
+    this.Total_CoursesGraph = this.graphService.PolarGraph();
+    const series =  TotalCourses
+    const labels = TotalProgram
+    this.Total_CoursesGraph.series = [...series];
+   this.Total_CoursesGraph.labels = [...labels];
+  }
+
+  getMediumGraphData(TotalData:any){
+    const Total_medium=TotalData.map((item: any) => item.total_medium)
+    const TotalProgram=TotalData.map((item: any) => item.program_name)
+    this.Total_MediumGraph = this.graphService.PolarGraph();
+    const series = Total_medium
+    const labels = TotalProgram
+    this.Total_MediumGraph.series = [...series];
+    this.Total_MediumGraph.labels = [...labels]
+    //  this.Total_Completions.chart.type = "pie";
+
   }
 
 }
