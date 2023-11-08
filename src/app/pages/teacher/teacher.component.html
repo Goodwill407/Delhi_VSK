@@ -4,24 +4,31 @@
   <h2 class="fw-bold">Teacher</h2>
   <div class="vr mx-3 opacity-100"></div>
   <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
-      <option value="">Select District</option>
-      <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
-          {{district.districtName}}
+      <option value="">All Districts</option>
+      <option *ngFor="let district of allDistricts" value="{{district}}">
+          {{district}}
       </option>
   </select>
   <select class="form-select w-25 ms-2" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
-      <option value="">Select Zone</option>
+      <option value="">All Zones</option>
       <option *ngFor="let zone of allZones" value="{{zone}}">
           {{zone}}
       </option>
   </select>
   <select class="form-select w-25 ms-2" [(ngModel)]="schoolModel">
-      <option value="">Select School</option>
+      <option value="">All School</option>
       <option *ngFor="let school of allSchools" value="{{school}}">
           {{school}}
       </option>
   </select>
 </div>
+
+<div class="d-flex justify-content-center filter-box mt-2" *ngIf="districtModel || zoneModel || schoolModel">
+  <h3 class="text-center mb-0" *ngIf="districtModel">{{districtModel}}&nbsp; </h3>
+  <h3 class="text-center mb-0" *ngIf="zoneModel"> <span *ngIf="districtModel">|</span> {{zoneModel}}&nbsp; </h3>
+  <h3 class="text-center mb-0" *ngIf="schoolModel"> <span *ngIf="zoneModel">|</span> {{schoolModel}}</h3>
+</div>
+
 <div class="container1">
   <div class="column text-center">
     <h5 class="bg-light p-2 m-2">Total Teacher</h5>
@@ -39,20 +46,20 @@
       </div>
       <div class="vr"></div>
       <div class="teacher-info">
-        <h1 class="fw-bold">{{averageTeacherOfSchool?.toFixed(1)}}</h1>
+        <h1 class="fw-bold">{{allData?.averageTeachers?.toFixed(1)}}</h1>
         <h5>Average Teacher</h5>
       </div>
     </div>
   </div>
 
 
-  <div class="column text-center">
+  <!-- <div class="column text-center">
     <h5 class="bg-light p-2 m-2">Teachers per Students Ratio</h5>
     <img class="img-fluid mt-4" width="180" src="../../../assets/images/pngegg.png">
     <h5 class="mt-3" style="position: absolute;
     bottom: 10px;
-    left: 60px;">1 Teacher per {{allData?.teacherStudentRatio.toFixed(1)}} Students</h5>
-</div>
+    left: 60px;">1 Teacher per {{allData?.teacherStudentRatio?.toFixed(1)}} Students</h5>
+</div> -->
   <div class="column">
     <h5 class="bg-light p-2 m-2">Teachers Gender Ratio</h5>
     <apx-chart [series]="teacherGenderRatio?.series" [chart]="teacherGenderRatio?.chart"
@@ -103,12 +110,28 @@
   </div>
 
   <!--  -->
-  <div class="column">
+  <!-- <div class="column">
     <h5 class="bg-light p-2 m-2">Stream wise Teacher</h5>
     <apx-chart [series]="streamWiseTeacher?.series" [chart]="streamWiseTeacher?.chart"
       [labels]="streamWiseTeacher?.labels" [fill]="streamWiseTeacher?.fill" [stroke]="streamWiseTeacher?.stroke"
       [responsive]="streamWiseTeacher?.responsive" [legend]="streamWiseTeacher?.legend"></apx-chart>
-  </div>
+  </div> -->
+
+  <div class="column">
+    <h5 class="bg-light p-2 m-2">Streem Wise Student</h5>
+    <apx-chart
+    [series]="streamWiseTeacher?.series"
+    [chart]="streamWiseTeacher?.chart"
+    [dataLabels]="streamWiseTeacher?.dataLabels"
+    [plotOptions]="streamWiseTeacher?.plotOptions"
+    [xaxis]="streamWiseTeacher?.xaxis"
+    [yaxis]="streamWiseTeacher?.yaxis"
+    [labels]="streamWiseTeacher?.labels"
+    [legend]="streamWiseTeacher?.legend"
+    [colors]="streamWiseTeacher?.colors"
+    [grid]="streamWiseTeacher?.grid"
+  ></apx-chart>
+</div>
 
   <!--  -->
   <div class="column">

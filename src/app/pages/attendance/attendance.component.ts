@@ -46,8 +46,12 @@ export class AttendanceComponent {
   }
 
   getAllDistricts() {
-    this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
-      if (data && data.length > 0) {
+    this.dateModel = this.datepipe.transform(this.dateModel, 'dd/MM/yyyy');
+   const data = {
+      "date": this.dateModel
+    }
+    this.httpService.post('attendance/district/present-student/per',data).subscribe((data: any) => {
+      if (data) {
         this.allDistricts = data;
       }
     })
