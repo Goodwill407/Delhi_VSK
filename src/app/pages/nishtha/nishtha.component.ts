@@ -19,6 +19,7 @@ export class NishthaComponent {
   totalEnrollments: any;
   totalCompletion: any;
   totalCertifications: any;
+  totalCertificationsPercentage: any;
 
   //Amol
   allDashboardData: any
@@ -40,6 +41,25 @@ export class NishthaComponent {
     this.getCourse_MediumData()
   }
 
+  getAllDistrictsData() {
+    this.httpService.get('learningsession/consumptionbydistrict?limit=10&page=1').subscribe((data: any) => {
+      if (data && data.results.length > 0) {
+        this.allDistrictsData = data.results;
+        let allDistrictsName = [];
+        for (let i = 0; i < this.allDistrictsData.length; i++) {
+          allDistrictsName.push(this.allDistrictsData[i].district_name);
+        }
+        this.allDistrictsName = allDistrictsName.filter((value, index, self) => self.indexOf(value) === index);
+        const event = {
+          target: {
+            value: this.allDistrictsName[0]
+          }
+        }
+        this.getGraphsByDistrictName(event);
+      }
+    })
+  }
+
   getGraphsByDistrictName(event: any) {
     if (event && event.target) {
       this.districtWiseData = [];
@@ -57,6 +77,7 @@ export class NishthaComponent {
     this.getTotalEnrollments();
     this.getTotalCompletion();
     this.getTotalCertifications();
+    this.getTotalCertificationsPercentage();
   }
 
   getTotalEnrollments() {
@@ -86,17 +107,13 @@ export class NishthaComponent {
     }
   }
 
-  getAllDistrictsData() {
-    this.httpService.get('learningsession/consumptionbydistrict?limit=10&page=1').subscribe((data: any) => {
-      if (data && data.results.length > 0) {
-        this.allDistrictsData = data.results;
-        let allDistrictsName = [];
-        for (let i = 0; i < this.allDistrictsData.length; i++) {
-          allDistrictsName.push(this.allDistrictsData[i].district_name);
-        }
-        this.allDistrictsName = allDistrictsName.filter((value, index, self) => self.indexOf(value) === index);
-      }
-    })
+  getTotalCertificationsPercentage() {
+    this.totalCertificationsPercentage = {};
+    this.totalCertificationsPercentage = this.graphService.PieGraph('donut', '');
+    for (let i = 0; i < this.districtWiseData.length; i++) {
+      this.totalCertificationsPercentage.series.push(Number(this.districtWiseData[i].certification));
+      this.totalCertificationsPercentage.labels.push(this.districtWiseData[i].program);
+    }
   }
 
   // ===== Amol =====
@@ -106,8 +123,6 @@ export class NishthaComponent {
     this.httpService.get('alldashboard').subscribe((data: any) => {
       if (data) {
         const allDashboardData = data.results;
-
-
         this.getTotal_completions(allDashboardData)
         this.getTotal_Certificate_issued(allDashboardData)
         this.getTotal_Courses(allDashboardData)
@@ -173,7 +188,7 @@ export class NishthaComponent {
   getTotal_Local_Body(allDashboardData: any) {
     const total_Local_body = allDashboardData.map((item: any) => item.local_body)
     const program = allDashboardData.map((item: any) => item.program)
-    this.Total_Local_body = this.graphService.PieGraph('pie');
+    this.Total_Local_body = this.graphService.PieGraph('donut');
     const series = total_Local_body.map((str: any) => Number(str));
     const labels = program
     this.Total_Local_body.series = [...series];

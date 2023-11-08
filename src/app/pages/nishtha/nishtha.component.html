@@ -17,51 +17,49 @@
 
     <!-- == 1 == -->
     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-        <div class="d-flex mt-3 filter-box">
-            <h2 class="fw-bold">Nishtha</h2>
-            <!-- <div class="vr mx-3 opacity-100"></div> -->
-        </div>
-
         <div class="container1">
             <div class="column">
-                <h5 class="bg-light p-2 m-2">Total completions Count </h5>
+                <h5 class="header-bg p-2 m-2">Total completions Count </h5>
                 <apx-chart [series]="Total_Completions?.series" [chart]="Total_Completions?.chart"
-                    [labels]="Total_Completions?.labels" [responsive]="Total_Completions?.responsive"
-                    [legend]="Total_Completions?.legend"></apx-chart>
+                    [labels]="Total_Completions?.labels" [fill]="Total_Completions?.fill"
+                    [responsive]="Total_Completions?.responsive" [legend]="Total_Completions?.legend"
+                    [dataLabels]="Total_Completions?.dataLabels"
+                    [plotOptions]="Total_Completions?.plotOptions"></apx-chart>
             </div>
 
             <div class="column">
-                <h5 class="bg-light p-2 m-2">Doe </h5>
+                <h5 class="header-bg p-2 m-2">Directorate of Education (DoE) </h5>
                 <apx-chart [series]="Total_Doe?.series" [chart]="Total_Doe?.chart" [dataLabels]="Total_Doe?.dataLabels"
                     [plotOptions]="Total_Doe?.plotOptions" [yaxis]="Total_Doe?.yaxis" [labels]="Total_Doe?.labels"
                     [legend]="Total_Doe?.legend" [colors]="Total_Doe?.colors" [grid]="Total_Doe?.grid"></apx-chart>
             </div>
 
             <div class="column">
-                <h5 class="bg-light p-2 m-2">Total Courses </h5>
+                <h5 class="header-bg p-2 m-2">Total Courses </h5>
                 <apx-chart [series]="Total_Courses?.series" [chart]="Total_Courses?.chart"
                     [labels]="Total_Courses?.labels" [responsive]="Total_Courses?.responsive"
                     [legend]="Total_Courses?.legend"></apx-chart>
             </div>
 
             <div class="column">
-                <h5 class="bg-light p-2 m-2">Total Certificates </h5>
+                <h5 class="header-bg p-2 m-2">Total Certificates </h5>
                 <apx-chart [series]="Total_certificates?.series" [chart]="Total_certificates?.chart"
                     [labels]="Total_certificates?.labels" [responsive]="Total_certificates?.responsive"
-                    [legend]="Total_certificates?.legend"></apx-chart>
+                    [legend]="Total_certificates?.legend" [fill]="Total_certificates?.fill"></apx-chart>
             </div>
 
             <div class="column">
-                <h5 class="bg-light p-2 m-2">Local Body </h5>
+                <h5 class="header-bg p-2 m-2">Local Body </h5>
                 <apx-chart [series]="Total_Local_body?.series" [chart]="Total_Local_body?.chart"
                     [labels]="Total_Local_body?.labels" [responsive]="Total_Local_body?.responsive"
-                    [legend]="Total_Local_body?.legend"></apx-chart>
+                    [legend]="Total_Local_body?.legend" [fill]="Total_Local_body?.fill"></apx-chart>
             </div>
         </div>
     </div>
 
     <!-- == 2 == -->
     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+        <h6 class="ms-2">Select District</h6>
         <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName($event)">
             <option value="" disabled>Select District</option>
             <option *ngFor="let district of allDistrictsName" value="{{district}}">
@@ -69,7 +67,7 @@
             </option>
         </select>
 
-        <div class="container1" *ngIf="districtModel">
+        <div class="container1">
             <div class="column">
                 <h5 class="header-bg p-2 m-2">Enrollments</h5>
                 <apx-chart [series]="totalEnrollments?.series" [chart]="totalEnrollments?.chart"
@@ -93,34 +91,40 @@
                     [dataLabels]="totalCertifications?.dataLabels" [plotOptions]="totalCertifications?.plotOptions"
                     [responsive]="totalCertifications?.responsive" [legend]="totalCertifications?.legend"></apx-chart>
             </div>
+
+            <div class="column">
+                <h5 class="header-bg p-2 m-2">Certifications Percentage</h5>
+                <apx-chart [series]="totalCertificationsPercentage?.series"
+                    [chart]="totalCertificationsPercentage?.chart" [labels]="totalCertificationsPercentage?.labels"
+                    [fill]="totalCertificationsPercentage?.fill"
+                    [dataLabels]="totalCertificationsPercentage?.dataLabels"
+                    [plotOptions]="totalCertificationsPercentage?.plotOptions"
+                    [responsive]="totalCertificationsPercentage?.responsive"
+                    [legend]="totalCertificationsPercentage?.legend"></apx-chart>
+            </div>
         </div>
     </div>
 
     <!-- == 3 == -->
     <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-        <div class="d-flex mt-3 filter-box">
-            <h2 class="fw-bold">Nishtha</h2>
-            <!-- <div class="vr mx-3 opacity-100"></div> -->
-        </div>
-
         <div class="container1">
             <div class="column">
-                <h5 class="bg-light p-2 m-2">Total Courses </h5>
+                <h5 class="header-bg p-2 m-2">Total Courses </h5>
                 <apx-chart [series]="Total_CoursesGraph?.series" [chart]="Total_CoursesGraph?.chart"
                     [labels]="Total_CoursesGraph?.labels" [responsive]="Total_CoursesGraph?.responsive"
-                    [legend]="Total_CoursesGraph?.legend"  ></apx-chart>
+                    [legend]="Total_CoursesGraph?.legend"></apx-chart>
             </div>
-            
-                
+
+
             <div class="column">
-                <h5 class="bg-light p-2 m-2">Total Medium </h5>
+                <h5 class="header-bg p-2 m-2">Total Medium </h5>
                 <apx-chart [series]="Total_MediumGraph?.series" [chart]="Total_MediumGraph?.chart"
                     [labels]="Total_MediumGraph?.labels" [responsive]="Total_MediumGraph?.responsive"
-                    [legend]="Total_MediumGraph?.legend"  ></apx-chart>
+                    [legend]="Total_MediumGraph?.legend"></apx-chart>
             </div>
         </div>
 
-        
+
     </div>
 
 </div>

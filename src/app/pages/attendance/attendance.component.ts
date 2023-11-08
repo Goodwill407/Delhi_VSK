@@ -28,10 +28,13 @@ export class AttendanceComponent {
   allDistricts: any;
   districtModel: any = "";
   zoneModel: any = "";
-  dateModel: any = "11/04/2023";
+  shiftModel: any = "";
+  dateModel: any = '11-04-2023';
   districtName: any;
   genderWisePresent: any;
   genderWiseAbsent: any;
+  designation: any;
+  allShift: any = ['Morning', 'General', 'Evening'];
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, public datepipe: DatePipe) {
   }
@@ -39,28 +42,28 @@ export class AttendanceComponent {
   ngOnInit() {
     this.getAllDistricts();
     this.getAllSchoolGraph();
-    this.getDistrictName();
     // this.dateModel = new Date();
     // this.dateModel.setDate(this.dateModel.getDate() - 1);
     this.getGraphsByDate();
+    this.getAllZones();
+  }
+
+  getDate(date: any) {
+    let Mdate: any;
+    return Mdate = this.datepipe.transform(date, 'dd/MM/yyyy');
   }
 
   getAllDistricts() {
-    this.dateModel = this.datepipe.transform(this.dateModel, 'dd/MM/yyyy');
-   const data = {
-      "date": this.dateModel
+    // this.dateModel = this.datepipe.transform(this.dateModel, 'dd/MM/yyyy');
+    const data = {
+      "date": this.getDate(this.dateModel)
     }
-    this.httpService.post('attendance/district/present-student/per',data).subscribe((data: any) => {
+    this.httpService.post('attendance/district/present-student/per', data).subscribe((data: any) => {
       if (data) {
         this.allDistricts = data;
+        this.getDesignation(data);
       }
     })
-  }
-
-  setAllGraphs(data: any) {
-    this.allData = data;
-    this.getGenderWisePresent(data);
-    this.getGenderWiseAbsent(data);
   }
 
   getAllSchoolGraph() {
@@ -71,16 +74,30 @@ export class AttendanceComponent {
     })
   }
 
+  getAllZones() {
+    if (this.districtModel) {
+      const district = { "District_name": this.districtModel };
+      this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
+        this.allZones = res.ZoneSchool;
+      })
+    } else {
+      this.httpService.get('school/zonename').subscribe((res: any) => {
+        this.allZones = res.ZoneNames;
+      })
+    }
+  }
+
   getGraphsByZone() {
     this.spinner.show();
     const zone = {
+      date: this.getDate(this.dateModel),
       zoneName: this.zoneModel
     }
     this.httpService.post('attendance/zone/date-wise', zone).subscribe((data: any) => {
       if (data) {
         this.setAllGraphs(data);
-        this.districtModel = this.zoneModel;
         this.spinner.hide();
+        this.shiftModel = '';
       }
     }, (error) => {
       this.spinner.hide();
@@ -88,25 +105,30 @@ export class AttendanceComponent {
   }
 
   getGraphsByDistrictName() {
-    this.spinner.show();
-    const district = {
-      "date": this.dateModel,
-      "districtName": this.districtModel
-    }
-    this.httpService.post('attendance/district-wise/date-wise', district).subscribe((data: any) => {
-      if (data) {
-        this.setAllGraphs(data);
-        this.spinner.hide();
+    if (this.districtModel) {
+      this.spinner.show();
+      const district = {
+        "date": this.getDate(this.dateModel),
+        "districtName": this.districtModel
       }
-    }, (error) => {
-      this.spinner.hide();
-    })
+      this.httpService.post('attendance/district-wise/date-wise', district).subscribe((data: any) => {
+        if (data) {
+          this.setAllGraphs(data);
+          this.getAllZones();
+          this.spinner.hide();
+          this.zoneModel = '';
+          this.shiftModel = '';
+        }
+      }, (error) => {
+        this.spinner.hide();
+      });
+    } else {
+      this.getGraphsByDate();
+    }
   }
 
 
   getGraphsByDate() {
-
-    this.dateModel = this.datepipe.transform(this.dateModel, 'dd/MM/yyyy');
     if (this.districtModel) {
       this.getGraphsByDistrictName();
     }
@@ -114,11 +136,40 @@ export class AttendanceComponent {
       this.getGraphsByZone();
     }
     else {
-      let date = { "date": this.dateModel };
+      let date = { "date": this.getDate(this.dateModel) };
       this.httpService.post('attendance/date-wise', date).subscribe((data) => {
         this.setAllGraphs(data);
+        this.getAllDistricts();
+        this.shiftModel = '';
       });
     }
+  }
+
+  getGraphsBySfhit() {
+    if (this.shiftModel) {
+      this.spinner.show();
+      const shift = {
+        "shift": this.shiftModel,
+        "date": this.getDate(this.dateModel)
+      }
+      this.httpService.post('attendance/zone/shift/wise', shift).subscribe((data: any) => {
+        if (data) {
+          this.setAllGraphs(data);
+          this.districtModel = '';
+          this.zoneModel = '';
+          this.spinner.hide();
+        }
+      }, (error) => {
+        this.spinner.hide();
+      });
+    }
+  }
+
+
+  setAllGraphs(data: any) {
+    this.allData = data;
+    this.getGenderWisePresent(data);
+    this.getGenderWiseAbsent(data);
   }
 
   getGenderWisePresent(data: any) {
@@ -133,75 +184,21 @@ export class AttendanceComponent {
     this.genderWiseAbsent.labels = ['Male', 'Female', 'Others']
   }
 
-  getTeachersGenderRatio(teachersGender: any) {
-    this.teacherGenderRatio = this.graphService.PieGraph('donut', ' Teachers');
-    this.teacherGenderRatio.series = [teachersGender.totalMaleTeachers, teachersGender.totalFemaleTeachers];
-    this.teacherGenderRatio.labels = ["Male", "Female"];
-  }
-
-  getSchoolsByManagement(schoolManagementWise: any) {
-    this.schoolsByManagement = this.graphService.PieGraph('donut', ' Schools');
-    this.schoolsByManagement.series = [schoolManagementWise.Government, schoolManagementWise.Aided];
-    this.schoolsByManagement.labels = ['Government', 'Aided']
-  }
-
-  getShiftWiseSchools(shiftWiseCount: any) {
-    const series = [shiftWiseCount.Morning, shiftWiseCount.Afternoon, shiftWiseCount.Evening, shiftWiseCount.General]
-    this.shiftWiseSchools = this.graphService.PolarGraph();
-    this.shiftWiseSchools.series = [...series];
-    this.shiftWiseSchools.labels = ['Morning', 'Afternoon', 'Evening', 'General']
-  }
-
-  getLowClassHighClass(lowClassHighClass: any) {
-    this.lowClassHighClass = this.graphService.PieGraph('donut', ' Schools');
-    this.lowClassHighClass.series = [lowClassHighClass.lowClassCount, lowClassHighClass.highClassCount];
-    this.lowClassHighClass.labels = ['Low class', 'High class']
-  }
-
-  getTypesOfSchools(typesOfSchools: any) {
-    this.typesOfSchools = this.graphService.PolarGraph();
-    this.typesOfSchools.series = [typesOfSchools[0].count, typesOfSchools[1].count, typesOfSchools[2].count];
-    this.typesOfSchools.labels = ["Boys", "Girls", "Co-ed"]
-  }
-
-  getStreamCount(streamCount: any) {
-    this.streamCount = this.graphService.VerticleBarGraph();;
-    const series: any = [{
-      name: "Count",
+  getDesignation(data: any) {
+    let series: any = [{
+      name: ["District"],
       data: []
     }];
-    for (let i = 0; i < streamCount.length; i++) {
-      series[0].data.push(streamCount[i].count);
-      this.streamCount.xaxis.categories.push(streamCount[i].stream);
+    this.designation = this.graphService.VerticleBarGraph();
+    for (let i = 0; i < data.length; i++) {
+      series[0].data.push(data[i].presentPercentage.toFixed(1));
+      this.designation.xaxis.categories.push(data[i]._id);
     }
-    this.streamCount.series = [...series];
-    this.streamCount.xaxis.title.text = "Total Count";
-    this.streamCount.yaxis.title.text = "Streams";
+    this.designation.series = [...series];
+    this.designation.plotOptions.bar.horizontal = false;
+    this.designation.xaxis.title.text = "District"
+    this.designation.yaxis.title.text = "Present in %"
   }
 
-  getMinorityCount(minorityCount: any) {
-    this.minorityCount = this.graphService.PieGraph('donut', ' Schools');
-    for (let i = 0; i < minorityCount.length; i++) {
-      this.minorityCount.series.push(minorityCount[i].count);
-      this.minorityCount.labels.push(minorityCount[i].minority);
-    }
-  }
-
-  getAllZones(allZones: any) {
-    this.allZones = this.graphService.TreeGraph();
-    for (let i = 0; i < allZones.length; i++) {
-      this.allZones.series[0].data.push({ x: allZones[i].zone, y: allZones[i].count });
-    }
-  }
-
-  getDistrictName() {
-    this.route.queryParams.subscribe((param: any) => {
-      this.districtName = param['districtName'];
-      if (this.districtName) {
-        this.districtModel = this.districtName;
-        this.getGraphsByDistrictName();
-      }
-    })
-  }
 
 }

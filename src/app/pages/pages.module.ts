@@ -14,6 +14,8 @@ import { NcertComponent } from './ncert/ncert.component';
 import { CQubeComponent } from './c-qube/c-qube.component';
 import { AttendanceComponent } from './attendance/attendance.component';
 import { NishthaComponent } from './nishtha/nishtha.component';
+import { PgiComponent } from './pgi/pgi.component';
+import { UdiseComponent } from './udise/udise.component';
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import { NishthaComponent } from './nishtha/nishtha.component';
     NcertComponent,
     CQubeComponent,
     AttendanceComponent,
-    NishthaComponent
+    NishthaComponent,
+    PgiComponent,
+    UdiseComponent
   ],
   imports: [
     CommonModule,

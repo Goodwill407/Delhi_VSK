@@ -361,6 +361,12 @@ a.article:hover {
     /* border-bottom: 2px solid black; */
 }
 
+.nav-item .active {
+    transform: scale(1.1);
+    border-radius: 50px;
+    border: 1px solid #000;
+}
+
 .sidebarMenu.active-tab ul li a {
     padding: 20px 7px;
     text-align: center;
@@ -377,6 +383,10 @@ a.article:hover {
 .logo img {
     width: 70px;
     margin: 0 20px;
+}
+
+.logo {
+    align-items: center;
 }
 
 .nav-link {

@@ -22,6 +22,7 @@ export class SchoolComponent {
   allZones: any;
   streamCount: any;
   minorityCount: any;
+  affiliationCount: any;
 
   // Single data
   teachersRatio: any;
@@ -105,6 +106,7 @@ export class SchoolComponent {
     this.getTypesOfSchools(data.typeOfSchoolCounts);
     this.getStreamCount(data.streamCounts);
     this.getMinorityCount(data.minorityCounts);
+    this.getAffiliationCount(data.afiliationCounts);
     if (zone) {
       this.getAllZones(data.zoneWiseCounts);
     }
@@ -239,6 +241,14 @@ export class SchoolComponent {
     for (let i = 0; i < minorityCount.length; i++) {
       this.minorityCount.series.push(minorityCount[i].count);
       this.minorityCount.labels.push(minorityCount[i].minority);
+    }
+  }
+
+  getAffiliationCount(afiliationCounts: any) {
+    this.affiliationCount = this.graphService.PieGraph('pie', ' Affiliation');
+    for (let i = 0; i < afiliationCounts.length; i++) {
+      this.affiliationCount.series.push(afiliationCounts[i].count);
+      this.affiliationCount.labels.push(afiliationCounts[i].afiliation);
     }
   }
 
