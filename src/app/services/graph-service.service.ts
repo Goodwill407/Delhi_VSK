@@ -91,7 +91,25 @@ export class GraphService {
                 }
             },
             xaxis: {
-                categories: []
+                categories: [],
+                title: {
+                    text: "",
+                    style: {
+                        fontSize: "14px",
+                        color: "#6d7fcc",
+                        fontWeight: "600"
+                    }
+                }
+            },
+            yaxis: {
+                title: {
+                    text: "",
+                    style: {
+                        fontSize: "14px",
+                        color: "#6d7fcc",
+                        fontWeight: "600"
+                    }
+                },
             }
         }
         return graphData;
