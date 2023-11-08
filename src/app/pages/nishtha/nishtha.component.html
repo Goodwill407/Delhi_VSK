@@ -13,7 +13,63 @@
     </li>
 </ul>
 <div class="tab-content" id="pills-tabContent">
-    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">...</div>
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+        <div class="d-flex mt-3 filter-box">
+            <h2 class="fw-bold">Nishtha</h2>
+            <!-- <div class="vr mx-3 opacity-100"></div> -->
+        </div>
+
+        <div class="container1">
+            <div class="column">
+                <h5 class="bg-light p-2 m-2">Total completions Count </h5>
+                <apx-chart [series]="Total_Completions?.series" [chart]="Total_Completions?.chart"
+                    [labels]="Total_Completions?.labels" [responsive]="Total_Completions?.responsive"
+                    [legend]="Total_Completions?.legend"></apx-chart>
+            </div>
+
+            <div class="column">
+                <h5 class="bg-light p-2 m-2">Doe </h5>
+                <apx-chart
+        [series]="Total_Doe?.series"
+        [chart]="Total_Doe?.chart"
+        [dataLabels]="Total_Doe?.dataLabels"
+        [plotOptions]="Total_Doe?.plotOptions"
+        [yaxis]="Total_Doe?.yaxis"
+        [labels]="Total_Doe?.labels"
+        [legend]="Total_Doe?.legend"
+        [colors]="Total_Doe?.colors"
+        [grid]="Total_Doe?.grid"
+      ></apx-chart>
+            </div>
+
+            <div class="column">
+                <h5 class="bg-light p-2 m-2">Total Courses </h5>
+                <apx-chart [series]="Total_Courses?.series" [chart]="Total_Courses?.chart"
+                    [labels]="Total_Courses?.labels" [responsive]="Total_Courses?.responsive"
+                    [legend]="Total_Courses?.legend"></apx-chart>
+            </div>
+
+            <div class="column">
+                <h5 class="bg-light p-2 m-2">Total Certificates </h5>
+                <apx-chart [series]="Total_certificates?.series" [chart]="Total_certificates?.chart"
+                    [labels]="Total_certificates?.labels" [responsive]="Total_certificates?.responsive"
+                    [legend]="Total_certificates?.legend"></apx-chart>
+            </div>
+
+            <div class="column">
+                <h5 class="bg-light p-2 m-2">Local Body </h5>
+                <apx-chart [series]="Total_Local_body?.series" [chart]="Total_Local_body?.chart" [labels]="Total_Local_body?.labels"
+                    [responsive]="Total_Local_body?.responsive" [legend]="Total_Local_body?.legend"></apx-chart>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+
     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
     <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
 </div>
