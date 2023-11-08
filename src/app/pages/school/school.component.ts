@@ -85,14 +85,14 @@ export class SchoolComponent {
     this.averageTeacherOfSchool = data.averageTeacherOfSchool?.toFixed(2);
 
     const studentsGender = {
-      totalBoys: data.totalBoys,
-      totalGirls: data.totalGirls
+      totalBoys: data.totalBoys ? data.totalBoys : 0,
+      totalGirls: data.totalGirls ? data.totalGirls : 0
     }
     this.getStudentsGenderRatio(studentsGender);
 
     const teachersGender = {
-      totalMaleTeachers: data.totalMaleTeachers,
-      totalFemaleTeachers: data.totalFemaleTeachers
+      totalMaleTeachers: data.totalMaleTeachers ? data.totalMaleTeachers : 0,
+      totalFemaleTeachers: data.totalFemaleTeachers ? data.totalFemaleTeachers : 0
     }
     this.getTeachersGenderRatio(teachersGender);
     this.getShiftWiseSchools(data.shiftWiseCount);
@@ -157,6 +157,22 @@ export class SchoolComponent {
       this.getAllSchoolGraph();
     }
     this.zoneModel = "";
+    this.schoolModel = "";
+  }
+
+  getGraphsBySchoolName() {
+    this.spinner.show();
+    const school = {
+      schoolName: this.schoolModel
+    }
+    this.httpService.post('zonegraph/school-student-teacher-graph-schoolname', school).subscribe((data: any) => {
+      if (data) {
+        this.setAllGraphs(data, false);
+        this.spinner.hide();
+      }
+    }, (error) => {
+      this.toastr.error('', 'Something went wrong !');
+    })
   }
 
   getStudentsGenderRatio(studentsGender: any) {
@@ -173,27 +189,34 @@ export class SchoolComponent {
 
   getSchoolsByManagement(schoolManagementWise: any) {
     this.schoolsByManagement = this.graphService.PieGraph('donut', ' Schools');
-    this.schoolsByManagement.series = [schoolManagementWise.Government, schoolManagementWise.Aided];
-    this.schoolsByManagement.labels = ['Government', 'Aided']
+    const entries = Object.entries(schoolManagementWise);
+    entries.forEach(([key, value]) => {
+      this.schoolsByManagement.series.push(value);
+      this.schoolsByManagement.labels.push(key);
+    });
   }
 
   getShiftWiseSchools(shiftWiseCount: any) {
-    const series = [shiftWiseCount.Morning, shiftWiseCount.Afternoon, shiftWiseCount.Evening, shiftWiseCount.General]
     this.shiftWiseSchools = this.graphService.PolarGraph();
-    this.shiftWiseSchools.series = [...series];
-    this.shiftWiseSchools.labels = ['Morning', 'Afternoon', 'Evening', 'General']
+    const entries = Object.entries(shiftWiseCount);
+    entries.forEach(([key, value]) => {
+      this.shiftWiseSchools.series.push(value);
+      this.shiftWiseSchools.labels.push(key);
+    });
   }
 
   getLowClassHighClass(lowClassHighClass: any) {
-    this.lowClassHighClass = this.graphService.PieGraph('donut', ' Schools');
-    this.lowClassHighClass.series = [lowClassHighClass.lowClassCount, lowClassHighClass.highClassCount];
-    this.lowClassHighClass.labels = ['Low class', 'High class']
+    // this.lowClassHighClass = this.graphService.PieGraph('donut', ' Schools');
+    // this.lowClassHighClass.series = [lowClassHighClass.lowClassCount, lowClassHighClass.highClassCount];
+    // this.lowClassHighClass.labels = ['Low class', 'High class']
   }
 
   getTypesOfSchools(typesOfSchools: any) {
     this.typesOfSchools = this.graphService.PolarGraph();
-    this.typesOfSchools.series = [typesOfSchools[0].count, typesOfSchools[1].count, typesOfSchools[2].count];
-    this.typesOfSchools.labels = ["Boys", "Girls", "Co-ed"]
+    for (let i = 0; i < typesOfSchools.length; i++) {
+      this.typesOfSchools.series.push(typesOfSchools[i].count);
+      this.typesOfSchools.labels.push(typesOfSchools[i].typeOfSchool);
+    }
   }
 
   getStreamCount(streamCount: any) {

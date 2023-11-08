@@ -1,19 +1,53 @@
-<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+<ul class="nav nav-pills mb-3 filter-box px-3 mt-3" id="pills-tab" role="tablist">
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
             type="button" role="tab" aria-controls="pills-home" aria-selected="true">Home</button>
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-            type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</button>
+            type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Consumption by
+            Districts</button>
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"
             type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</button>
     </li>
 </ul>
-<div class="tab-content" id="pills-tabContent">
-    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">...</div>
-    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
+<div class="tab-content filter-box" id="pills-tabContent">
+    <div class="tab-pane fade" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">...</div>
+    <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+        <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName($event)">
+            <option value="" disabled>Select District</option>
+            <option *ngFor="let district of allDistrictsName" value="{{district}}">
+                {{district}}
+            </option>
+        </select>
+
+        <div class="container1" *ngIf="districtModel">
+            <div class="column">
+                <h5 class="header-bg p-2 m-2">Enrollments</h5>
+                <apx-chart [series]="totalEnrollments?.series" [chart]="totalEnrollments?.chart"
+                    [labels]="totalEnrollments?.labels" [fill]="totalEnrollments?.fill"
+                    [dataLabels]="totalEnrollments?.dataLabels" [plotOptions]="totalEnrollments?.plotOptions"
+                    [responsive]="totalEnrollments?.responsive" [legend]="totalEnrollments?.legend"></apx-chart>
+            </div>
+
+            <div class="column">
+                <h5 class="header-bg p-2 m-2">Completions</h5>
+                <apx-chart [series]="totalCompletion?.series" [chart]="totalCompletion?.chart"
+                    [labels]="totalCompletion?.labels" [fill]="totalCompletion?.fill"
+                    [dataLabels]="totalCompletion?.dataLabels" [plotOptions]="totalCompletion?.plotOptions"
+                    [responsive]="totalCompletion?.responsive" [legend]="totalCompletion?.legend"></apx-chart>
+            </div>
+
+            <div class="column">
+                <h5 class="header-bg p-2 m-2">Certifications</h5>
+                <apx-chart [series]="totalCertifications?.series" [chart]="totalCertifications?.chart"
+                    [labels]="totalCertifications?.labels" [fill]="totalCertifications?.fill"
+                    [dataLabels]="totalCertifications?.dataLabels" [plotOptions]="totalCertifications?.plotOptions"
+                    [responsive]="totalCertifications?.responsive" [legend]="totalCertifications?.legend"></apx-chart>
+            </div>
+        </div>
+    </div>
     <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
 </div>
