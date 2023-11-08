@@ -27,6 +27,9 @@ export class NishthaComponent {
   Total_Courses: any
   Total_Doe: any;
   Total_Local_body: any
+  Total_CoursesGraph:any
+  Total_MediumGraph:any
+
 
   constructor(private httpService: HttpServiceService, private graphService: GraphService, private spinner: NgxSpinnerService) {
   }
@@ -34,6 +37,7 @@ export class NishthaComponent {
   ngOnInit() {
     this.getAllDistrictsData();
     this.getAllData();
+    this.getCourse_MediumData()
   }
 
   getGraphsByDistrictName(event: any) {
@@ -100,7 +104,6 @@ export class NishthaComponent {
 
   getAllData() {
     this.httpService.get('alldashboard').subscribe((data: any) => {
-      console.log(data)
       if (data) {
         const allDashboardData = data.results;
 
@@ -176,6 +179,43 @@ export class NishthaComponent {
     this.Total_Local_body.series = [...series];
     this.Total_Local_body.labels = [...labels]
     //  this.Total_Completions.chart.type = "pie";
+  }
+
+  // amol2
+
+  getCourse_MediumData(){
+   this.httpService.get('alldashboard/coursemedium').subscribe((data:any)=>{
+    if(data){
+      const TotalData=data.results
+      
+      this.getCoursesGraphData(TotalData)
+    this.getMediumGraphData(TotalData)
+     }
+   })
+  }
+
+ 
+
+  getCoursesGraphData(TotalData:any){
+    const TotalCourses=TotalData.map((item: any) => item.total_courses)
+    const TotalProgram=TotalData.map((item: any) => item.program_name)
+    this.Total_CoursesGraph = this.graphService.PolarGraph();
+    const series =  TotalCourses
+    const labels = TotalProgram
+    this.Total_CoursesGraph.series = [...series];
+   this.Total_CoursesGraph.labels = [...labels];
+  }
+
+  getMediumGraphData(TotalData:any){
+    const Total_medium=TotalData.map((item: any) => item.total_medium)
+    const TotalProgram=TotalData.map((item: any) => item.program_name)
+    this.Total_MediumGraph = this.graphService.PolarGraph();
+    const series = Total_medium
+    const labels = TotalProgram
+    this.Total_MediumGraph.series = [...series];
+    this.Total_MediumGraph.labels = [...labels]
+    //  this.Total_Completions.chart.type = "pie";
+
   }
 
 }

@@ -10,7 +10,7 @@
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"
-            type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</button>
+            type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Course Medium</button>
     </li>
 </ul>
 <div class="tab-content filter-box" id="pills-tabContent">
@@ -98,7 +98,29 @@
 
     <!-- == 3 == -->
     <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-        Work
+        <div class="d-flex mt-3 filter-box">
+            <h2 class="fw-bold">Nishtha</h2>
+            <!-- <div class="vr mx-3 opacity-100"></div> -->
+        </div>
+
+        <div class="container1">
+            <div class="column">
+                <h5 class="bg-light p-2 m-2">Total Courses </h5>
+                <apx-chart [series]="Total_CoursesGraph?.series" [chart]="Total_CoursesGraph?.chart"
+                    [labels]="Total_CoursesGraph?.labels" [responsive]="Total_CoursesGraph?.responsive"
+                    [legend]="Total_CoursesGraph?.legend"  ></apx-chart>
+            </div>
+            
+                
+            <div class="column">
+                <h5 class="bg-light p-2 m-2">Total Medium </h5>
+                <apx-chart [series]="Total_MediumGraph?.series" [chart]="Total_MediumGraph?.chart"
+                    [labels]="Total_MediumGraph?.labels" [responsive]="Total_MediumGraph?.responsive"
+                    [legend]="Total_MediumGraph?.legend"  ></apx-chart>
+            </div>
+        </div>
+
+        
     </div>
 
 </div>
