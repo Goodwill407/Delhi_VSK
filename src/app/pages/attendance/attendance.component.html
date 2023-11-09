@@ -30,8 +30,8 @@
     <input type="date" class="form-control  ms-2" [(ngModel)]="dateModel" (change)="getGraphsByDate()">
 </div>
 
-<div class="d-flex justify-content-center filter-box mt-2" *ngIf="districtModel || zoneModel || shiftModel">
-    <h3 class="text-center mb-0" *ngIf="dateModel">{{dateModel | date : "dd-MM-yyyy"}}&nbsp; </h3>
+<div class="d-flex justify-content-center filter-box mt-2" *ngIf="districtModel || zoneModel || shiftModel || dateModel">
+    <h3 class="text-center mb-0" *ngIf="dateModel">{{dateModel | date : "dd MMM yyyy"}}&nbsp; </h3>
     <h3 class="text-center mb-0" *ngIf="districtModel && !shiftModel"> <span>|</span> &nbsp;{{districtModel}}&nbsp;
     </h3>
     <h3 class="text-center mb-0" *ngIf="zoneModel && !shiftModel"> <span *ngIf="districtModel">|</span>
