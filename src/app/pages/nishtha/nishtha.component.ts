@@ -42,9 +42,9 @@ export class NishthaComponent {
   }
 
   getAllDistrictsData() {
-    this.httpService.get('learningsession/consumptionbydistrict?limit=10&page=1').subscribe((data: any) => {
-      if (data && data.results.length > 0) {
-        this.allDistrictsData = data.results;
+    this.httpService.get('learningsession/consumptionbydistrict').subscribe((data: any) => {
+      if (data && data.length > 0) {
+        this.allDistrictsData = data;
         let allDistrictsName = [];
         for (let i = 0; i < this.allDistrictsData.length; i++) {
           allDistrictsName.push(this.allDistrictsData[i].district_name);
@@ -122,7 +122,7 @@ export class NishthaComponent {
   getAllData() {
     this.httpService.get('alldashboard').subscribe((data: any) => {
       if (data) {
-        const allDashboardData = data.results;
+        const allDashboardData = data;
         this.getTotal_completions(allDashboardData)
         this.getTotal_Certificate_issued(allDashboardData)
         this.getTotal_Courses(allDashboardData)
@@ -201,7 +201,7 @@ export class NishthaComponent {
   getCourse_MediumData(){
    this.httpService.get('alldashboard/coursemedium').subscribe((data:any)=>{
     if(data){
-      const TotalData=data.results
+      const TotalData=data;
       
       this.getCoursesGraphData(TotalData)
     this.getMediumGraphData(TotalData)
