@@ -16,6 +16,8 @@ import { AttendanceComponent } from './attendance/attendance.component';
 import { NishthaComponent } from './nishtha/nishtha.component';
 import { PgiComponent } from './pgi/pgi.component';
 import { UdiseComponent } from './udise/udise.component';
+import { UdiseDataComponent } from './udise-data/udise-data.component';
+import { UdiseSchoolComponent } from './udise-school/udise-school.component';
 import { NasComponent } from './nas/nas.component';
 
 
@@ -31,6 +33,8 @@ import { NasComponent } from './nas/nas.component';
     NishthaComponent,
     PgiComponent,
     UdiseComponent,
+    UdiseDataComponent,
+    UdiseSchoolComponent,
     NasComponent
   ],
   imports: [
