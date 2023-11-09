@@ -26,7 +26,7 @@
     <div class="column text-center">
         <h5 class="header-bg p-2 m-2">Delhi</h5>
         <div>
-            <img class="img-fluid mt-4" width="180" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMWEMLJELdahobYDH7sqnFeQ0wvFRYCuFf1w&usqp=CAU">
+            <img class="img-fluid mt-2" width="160" src="../../../assets/images/icons/student 3.png">
         </div>
         <div class="d-flex justify-content-around pt-3">
             <div class="pt-4 pe-4 ps-4">
@@ -42,19 +42,16 @@
     </div>
     <div class="column text-center">
         <h5 class="header-bg p-2 m-2">Teacher per Student Ratio</h5>
-        <img class="img-fluid mt-4" width="180" src="../../../assets/images/pngegg.png">
-        <h5 class="mt-3 " style="position: absolute;bottom: 10px;left: 60px;">1 Teacher Per {{teacherStudentRatio?.toFixed(2)}} Student</h5>
+        <img class="img-fluid mt-3" width="180" src="../../../assets/images/pngegg.png">
+        <h5 class="mt-3 " style="position: absolute;bottom: 15px;left: 60px;">1 Teacher Per {{teacherStudentRatio?.toFixed(2)}} Student</h5>
     </div>
 
     <div class="column">
         <h5 class="header-bg p-2 m-2">Student Gender Ratio</h5>
-        <apx-chart
-        [series]="studentsGenderRatio?.series"
-        [chart]="studentsGenderRatio?.chart"
-        [labels]="studentsGenderRatio?.labels"
-        [responsive]="studentsGenderRatio?.responsive"
-        [legend]="studentsGenderRatio?.legend"
-      ></apx-chart>
+        <apx-chart [series]="studentsGenderRatio?.series" [chart]="studentsGenderRatio?.chart"
+    [labels]="studentsGenderRatio?.labels" [fill]="studentsGenderRatio?.fill"
+    [dataLabels]="studentsGenderRatio?.dataLabels" [plotOptions]="studentsGenderRatio?.plotOptions"
+    [responsive]="studentsGenderRatio?.responsive" [legend]="studentsGenderRatio?.legend"></apx-chart>
     </div>
 
     <div class="column">
@@ -131,4 +128,5 @@
 </div>
 
 </div>
+
 
