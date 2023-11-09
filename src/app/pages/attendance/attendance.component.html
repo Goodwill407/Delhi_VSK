@@ -1,7 +1,7 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
 </ngx-spinner>
-<marquee class="mt-3 p-2 bg-primary filter-box" behavior="scroll" direction="left"   >
-    <span class="mx-4 text-white" *ngFor="let district of allDistricts" >
+<marquee class="mt-3 p-2 bg-primary filter-box" behavior="scroll" direction="left">
+    <span class="mx-4 text-white" *ngFor="let district of allDistricts">
         {{district._id}} - {{district.presentPercentage | number:'1.0-0'}}%
     </span>
 </marquee>
@@ -27,16 +27,17 @@
             {{shift}}
         </option>
     </select>
-    <input type="date" class="form-control  ms-2" [(ngModel)]="dateModel" (change)="getGraphsByDate()"
-    >
+    <input type="date" class="form-control  ms-2" [(ngModel)]="dateModel" (change)="getGraphsByDate()">
 </div>
 
 <div class="d-flex justify-content-center filter-box mt-2" *ngIf="districtModel || zoneModel || shiftModel">
     <h3 class="text-center mb-0" *ngIf="dateModel">{{dateModel | date : "dd-MM-yyyy"}}&nbsp; </h3>
-    <h3 class="text-center mb-0" *ngIf="districtModel && !shiftModel"> <span>|</span> &nbsp;{{districtModel}}&nbsp; </h3>
-    <h3 class="text-center mb-0" *ngIf="zoneModel && !shiftModel"> <span *ngIf="districtModel">|</span> {{zoneModel}}&nbsp; </h3>
+    <h3 class="text-center mb-0" *ngIf="districtModel && !shiftModel"> <span>|</span> &nbsp;{{districtModel}}&nbsp;
+    </h3>
+    <h3 class="text-center mb-0" *ngIf="zoneModel && !shiftModel"> <span *ngIf="districtModel">|</span>
+        {{zoneModel}}&nbsp; </h3>
     <h3 class="text-center mb-0" *ngIf="shiftModel"> <span>|</span> {{shiftModel}}</h3>
-  </div>
+</div>
 
 
 <div class="container1">
@@ -51,22 +52,22 @@
                 <h3>Total Student</h3>
             </div>
         </div>
-    <div class="mt-5">
-        <div class="d-flex justify-content-around text-center mt-5"  >
-            <div class="mt-5">
-                <h3>Total Schools</h3>
+        <div class="mt-5">
+            <div class="d-flex justify-content-around text-center mt-5">
+                <div class="mt-5">
+                    <h3>Total Schools</h3>
+                </div>
+                <div class="mt-5">
+                    <h2 class="fw-bold">{{allData?.countofSchoool}}</h2>
+                </div>
             </div>
-            <div class="mt-5">
-                <h2 class="fw-bold">{{allData?.countofSchoool}}</h2>
-            </div>
-        </div>
         </div>
     </div>
 
     <div class="column text-center">
         <h5 class="bg-light p-2 m-2">Teachers per Students Ratio</h5>
         <img class="img-fluid" width="280" src="../../../assets/images/present__absent.png">
-       <div class="d-flex justify-content-around text-center mt-5"  >
+        <div class="d-flex justify-content-around text-center mt-5">
             <div>
                 <h3 class="fw-bold">{{(allData?.totalStudentCount - allData?.presentStudentCount)}}</h3>
                 <h5>Total Absent</h5>
@@ -82,33 +83,26 @@
     <div class="column">
         <h5 class="bg-light p-2 m-2">Gender Wise Present</h5>
         <apx-chart [series]="genderWisePresent?.series" [chart]="genderWisePresent?.chart"
-      [labels]="genderWisePresent?.labels" [fill]="genderWisePresent?.fill"
-      [dataLabels]="genderWisePresent?.dataLabels" [plotOptions]="genderWisePresent?.plotOptions"
-      [responsive]="genderWisePresent?.responsive" [legend]="genderWisePresent?.legend"></apx-chart>
-      </div>
-   
-      <div class="column">
+            [labels]="genderWisePresent?.labels" [fill]="genderWisePresent?.fill"
+            [dataLabels]="genderWisePresent?.dataLabels" [plotOptions]="genderWisePresent?.plotOptions"
+            [responsive]="genderWisePresent?.responsive" [legend]="genderWisePresent?.legend"></apx-chart>
+    </div>
+
+    <div class="column">
         <h5 class="bg-light p-2 m-2">Gender Wise Absent</h5>
         <apx-chart [series]="genderWiseAbsent?.series" [chart]="genderWiseAbsent?.chart"
-      [labels]="genderWiseAbsent?.labels" [fill]="genderWiseAbsent?.fill"
-      [dataLabels]="genderWiseAbsent?.dataLabels" [plotOptions]="genderWiseAbsent?.plotOptions"
-      [responsive]="genderWiseAbsent?.responsive" [legend]="genderWiseAbsent?.legend"></apx-chart>
-      </div>
+            [labels]="genderWiseAbsent?.labels" [fill]="genderWiseAbsent?.fill"
+            [dataLabels]="genderWiseAbsent?.dataLabels" [plotOptions]="genderWiseAbsent?.plotOptions"
+            [responsive]="genderWiseAbsent?.responsive" [legend]="genderWiseAbsent?.legend"></apx-chart>
+    </div>
 
-      <div class="column wide">
+    <div class="column wide">
         <h5 class="bg-light p-2 m-2">Attendance Bar</h5>
-        <apx-chart
-    [series]="designation?.series"
-    [chart]="designation?.chart"
-    [dataLabels]="designation?.dataLabels"
-    [plotOptions]="designation?.plotOptions"
-    [xaxis]="designation?.xaxis"
-    [yaxis]="designation?.yaxis"
-    [labels]="designation?.labels"
-    [legend]="designation?.legend"
-    [colors]="designation?.colors"
-    [grid]="designation?.grid"
-  ></apx-chart>
-      </div>
+        <apx-chart [series]="districtWiseGraph?.series" [chart]="districtWiseGraph?.chart"
+            [dataLabels]="districtWiseGraph?.dataLabels" [plotOptions]="districtWiseGraph?.plotOptions"
+            [responsive]="districtWiseGraph?.responsive" [xaxis]="districtWiseGraph?.xaxis"
+            [legend]="districtWiseGraph?.legend" [fill]="districtWiseGraph?.fill"></apx-chart>
+    </div>
+
 
 </div>

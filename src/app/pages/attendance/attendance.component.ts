@@ -15,9 +15,7 @@ export class AttendanceComponent {
   // Graphs
   teacherGenderRatio: any;
   studentsGenderRatio: any;
-  typesOfSchools: any;
-  shiftWiseSchools: any;
-  schoolsByManagement: any;
+  districtWiseGraph: any;
   lowClassHighClass: any;
   allZones: any;
   streamCount: any;
@@ -33,10 +31,10 @@ export class AttendanceComponent {
   districtName: any;
   genderWisePresent: any;
   genderWiseAbsent: any;
-  designation: any;
   allShift: any = ['Morning', 'General', 'Evening'];
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, public datepipe: DatePipe) {
+    
   }
 
   ngOnInit() {
@@ -61,7 +59,7 @@ export class AttendanceComponent {
     this.httpService.post('attendance/district/present-student/per', data).subscribe((data: any) => {
       if (data) {
         this.allDistricts = data;
-        this.getDesignation(data);
+        this.getdistrictWiseGraph(data);
       }
     })
   }
@@ -139,7 +137,7 @@ export class AttendanceComponent {
       let date = { "date": this.getDate(this.dateModel) };
       this.httpService.post('attendance/date-wise', date).subscribe((data) => {
         this.setAllGraphs(data);
-        this.getAllDistricts();
+        // this.getAllDistricts();
         this.shiftModel = '';
       });
     }
@@ -184,20 +182,34 @@ export class AttendanceComponent {
     this.genderWiseAbsent.labels = ['Male', 'Female', 'Others']
   }
 
-  getDesignation(data: any) {
-    let series: any = [{
-      name: ["District"],
-      data: []
-    }];
-    this.designation = this.graphService.VerticleBarGraph();
+  getdistrictWiseGraph(data: any) {
+    // let series: any = [
+    //   {
+    //     name: ["Present"],
+    //     data: []
+    //   },
+    //   {
+    //     name: ["Absent"],
+    //     data: []
+    //   }
+    // ];
+    this.districtWiseGraph = this.graphService.districtWiseGraph();
+    // this.districtWiseGraph = 
     for (let i = 0; i < data.length; i++) {
-      series[0].data.push(data[i].presentPercentage.toFixed(1));
-      this.designation.xaxis.categories.push(data[i]._id);
+      this.districtWiseGraph.series[0].data.push(Number(data[i].presentPercentage.toFixed(0)));
+      this.districtWiseGraph.series[1].data.push(Number((100 - data[i].presentPercentage).toFixed(0)));
+      this.districtWiseGraph.xaxis.categories.push(data[i]._id);
     }
-    this.designation.series = [...series];
-    this.designation.plotOptions.bar.horizontal = false;
-    this.designation.xaxis.title.text = "District"
-    this.designation.yaxis.title.text = "Present in %"
+    // this.districtWiseGraph.series = [...series];
+    // this.districtWiseGraph.plotOptions.bar.horizontal = false;
+    // this.districtWiseGraph.xaxis.title.text = "District"
+    // this.districtWiseGraph.yaxis.title.text = "Present in %";
+    // this.districtWiseGraph.chart = {
+    //   type: "bar",
+    //   height: 350,
+    //   stacked: true,
+    //   stackType: "100%"
+    // }
   }
 
 
