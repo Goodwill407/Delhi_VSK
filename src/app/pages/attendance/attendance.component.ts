@@ -27,7 +27,7 @@ export class AttendanceComponent {
   districtModel: any = "";
   zoneModel: any = "";
   shiftModel: any = "";
-  dateModel: any = '11-04-2023';
+  dateModel: any ;
   districtName: any;
   genderWisePresent: any;
   genderWiseAbsent: any;
@@ -38,11 +38,11 @@ export class AttendanceComponent {
   }
 
   ngOnInit() {
-    this.getAllDistricts();
+    this.dateModel = new Date();
+    this.dateModel.setDate(this.dateModel.getDate() - 1);
     this.getAllSchoolGraph();
-    // this.dateModel = new Date();
-    // this.dateModel.setDate(this.dateModel.getDate() - 1);
     this.getGraphsByDate();
+    this.getAllDistricts();
     this.getAllZones();
   }
 

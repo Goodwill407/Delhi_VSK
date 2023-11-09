@@ -4,21 +4,21 @@
 <div class="d-flex mt-2 mt-4 filter-box">
     <h2 class="fw-bold"> National Achievement Survey (NAS) </h2>
 </div>
-<div class="d-flex mt-2 mt-4 filter-box">
-    <div class="vr mx-3 opacity-100"></div>
-    <select class="form-select  ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
+<div class="d-flex mt-2 filter-box">
+    <!-- <div class="vr mx-3 opacity-100"></div> -->
+    <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
         <option value="">All District</option>
         <option *ngFor="let district of allDistricts" value="{{district._id}}">
             {{district._id}}
         </option>
     </select>
-    <select class="form-select ms-2" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
+    <select class="form-select w-25 ms-2" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
         <option value="">All Zones</option>
         <option *ngFor="let zone of allZones" value="{{zone}}">
             {{zone}}
         </option>
     </select>
-    <select class="form-select  ms-2" [(ngModel)]="shiftModel" (change)="getGraphsBySfhit()">
+    <select class="form-select w-25 ms-2" [(ngModel)]="shiftModel" (change)="getGraphsBySfhit()">
         <option value="" disabled>Select Shift</option>
         <option *ngFor="let shift of allShift" value="{{shift}}">
             {{shift}}
@@ -27,7 +27,6 @@
 </div>
 
 <div class="d-flex justify-content-center filter-box mt-2" *ngIf="districtModel || zoneModel || shiftModel">
-    <h3 class="text-center mb-0" *ngIf="dateModel">{{dateModel | date : "dd-MM-yyyy"}}&nbsp; </h3>
     <h3 class="text-center mb-0" *ngIf="districtModel && !shiftModel"> <span>|</span> &nbsp;{{districtModel}}&nbsp;
     </h3>
     <h3 class="text-center mb-0" *ngIf="zoneModel && !shiftModel"> <span *ngIf="districtModel">|</span>
