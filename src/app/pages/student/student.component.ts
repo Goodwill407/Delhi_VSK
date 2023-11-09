@@ -194,7 +194,7 @@ export class StudentComponent {
     this.studentsGenderRatio = this.graphService.PieGraph('donut', ' student')
     this.studentsGenderRatio.series = [...series];
     this.studentsGenderRatio.labels = [...labels];
-  }
+     }
 
   getStudentCatogoryWise(catogoryWiseStudentCount: any) {
     const StudentCount = catogoryWiseStudentCount.map((item: any) => item.count);

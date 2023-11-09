@@ -133,8 +133,6 @@ export class NishthaComponent {
     })
   }
 
-
-
   getTotal_completions(allDashboardData: any) {
     const Total_Completions = allDashboardData.map((item: any) => item.total_completions)
     const program = allDashboardData.map((item: any) => item.program)
@@ -184,7 +182,6 @@ export class NishthaComponent {
     this.Total_Doe.plotOptions.bar.horizontal = false
   }
 
-
   getTotal_Local_Body(allDashboardData: any) {
     const total_Local_body = allDashboardData.map((item: any) => item.local_body)
     const program = allDashboardData.map((item: any) => item.program)
@@ -209,8 +206,6 @@ export class NishthaComponent {
    })
   }
 
- 
-
   getCoursesGraphData(TotalData:any){
     const TotalCourses=TotalData.map((item: any) => item.total_courses)
     const TotalProgram=TotalData.map((item: any) => item.program_name)
@@ -220,9 +215,7 @@ export class NishthaComponent {
     this.Total_CoursesGraph.series = [...series];
    this.Total_CoursesGraph.labels = [...labels];
    this.Total_CoursesGraph.legend.formatter= function(val:any){return val;}
-    
-
-    }
+  }
 
   getMediumGraphData(TotalData:any){
     const Total_medium=TotalData.map((item: any) => item.total_medium)
