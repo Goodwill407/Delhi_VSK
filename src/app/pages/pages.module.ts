@@ -18,6 +18,7 @@ import { PgiComponent } from './pgi/pgi.component';
 import { UdiseComponent } from './udise/udise.component';
 import { UdiseDataComponent } from './udise-data/udise-data.component';
 import { UdiseSchoolComponent } from './udise-school/udise-school.component';
+import { NasComponent } from './nas/nas.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { UdiseSchoolComponent } from './udise-school/udise-school.component';
     PgiComponent,
     UdiseComponent,
     UdiseDataComponent,
-    UdiseSchoolComponent
+    UdiseSchoolComponent,
+    NasComponent
   ],
   imports: [
     CommonModule,

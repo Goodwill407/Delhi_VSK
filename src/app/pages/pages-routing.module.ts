@@ -10,6 +10,7 @@ import { AttendanceComponent } from './attendance/attendance.component';
 import { NishthaComponent } from './nishtha/nishtha.component';
 import { PgiComponent } from './pgi/pgi.component';
 import { UdiseComponent } from './udise/udise.component';
+import { NasComponent } from './nas/nas.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'attendance', component: AttendanceComponent },
   { path: 'nishtha', component: NishthaComponent },
   { path: 'pgi', component: PgiComponent },
+  { path: 'nas', component: NasComponent },
   { path: 'udise', component: UdiseComponent },
 ];
 
