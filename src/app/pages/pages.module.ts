@@ -16,6 +16,7 @@ import { AttendanceComponent } from './attendance/attendance.component';
 import { NishthaComponent } from './nishtha/nishtha.component';
 import { PgiComponent } from './pgi/pgi.component';
 import { UdiseComponent } from './udise/udise.component';
+import { NasComponent } from './nas/nas.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { UdiseComponent } from './udise/udise.component';
     AttendanceComponent,
     NishthaComponent,
     PgiComponent,
-    UdiseComponent
+    UdiseComponent,
+    NasComponent
   ],
   imports: [
     CommonModule,

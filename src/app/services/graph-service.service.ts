@@ -19,7 +19,7 @@ export class GraphService {
             ],
             chart: {
               type: "bar",
-              height: 350,
+              height: 300,
               stacked: true,
               stackType: "100%"
             },

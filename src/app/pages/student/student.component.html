@@ -24,7 +24,7 @@
 </div>
 <div class="container1">
     <div class="column text-center">
-        <h5 class="bg-light p-2 m-2">Delhi</h5>
+        <h5 class="header-bg p-2 m-2">Delhi</h5>
         <div>
             <img class="img-fluid mt-4" width="180" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMWEMLJELdahobYDH7sqnFeQ0wvFRYCuFf1w&usqp=CAU">
         </div>
@@ -41,13 +41,13 @@
         </div>
     </div>
     <div class="column text-center">
-        <h5 class="bg-light p-2 m-2">Teacher per Student Ratio</h5>
+        <h5 class="header-bg p-2 m-2">Teacher per Student Ratio</h5>
         <img class="img-fluid mt-4" width="180" src="../../../assets/images/pngegg.png">
         <h5 class="mt-3 " style="position: absolute;bottom: 10px;left: 60px;">1 Teacher Per {{teacherStudentRatio?.toFixed(2)}} Student</h5>
     </div>
 
     <div class="column">
-        <h5 class="bg-light p-2 m-2">Student Gender Ratio</h5>
+        <h5 class="header-bg p-2 m-2">Student Gender Ratio</h5>
         <apx-chart
         [series]="studentsGenderRatio?.series"
         [chart]="studentsGenderRatio?.chart"
@@ -58,7 +58,7 @@
     </div>
 
     <div class="column">
-        <h5 class="bg-light p-2 m-2">Shift Wise Student </h5>
+        <h5 class="header-bg p-2 m-2">Shift Wise Student </h5>
         <apx-chart
         [series]="StudentShiftWiseCounts?.series"
         [chart]="StudentShiftWiseCounts?.chart"
@@ -71,7 +71,7 @@
     </div>
         
     <div class="column">
-        <h5 class="bg-light p-2 m-2">Stream Wise Student</h5>
+        <h5 class="header-bg p-2 m-2">Stream Wise Student</h5>
         <apx-chart
         [series]="StreamWiseStudent?.series"
         [chart]="StreamWiseStudent?.chart"
@@ -86,7 +86,7 @@
    </div>
 
    <div class="column">
-    <h5 class="bg-light p-2 m-2">Student By Management Wise </h5>
+    <h5 class="header-bg p-2 m-2">Student By Management Wise </h5>
     <apx-chart [series]="StudentManagementWiseCounts?.series" [chart]="StudentManagementWiseCounts?.chart"
     [labels]="StudentManagementWiseCounts?.labels" [fill]="StudentManagementWiseCounts?.fill"
     [dataLabels]="StudentManagementWiseCounts?.dataLabels" [plotOptions]="StudentManagementWiseCounts?.plotOptions"
@@ -94,7 +94,7 @@
 </div>
 
    <div class="column">
-    <h5 class="bg-light p-2 m-2">Affiliation Wise Student</h5>
+    <h5 class="header-bg p-2 m-2">Affiliation Wise Student</h5>
     <apx-chart [series]="AffiliationWiseStudent?.series" [chart]="AffiliationWiseStudent?.chart"
     [labels]="AffiliationWiseStudent?.labels" [fill]="AffiliationWiseStudent?.fill"
     [dataLabels]="AffiliationWiseStudent?.dataLabels" [plotOptions]="AffiliationWiseStudent?.plotOptions"
@@ -102,7 +102,7 @@
 </div>
 
 <div class="column">
-    <h5 class="bg-light p-2 m-2">Student By Type Wise</h5>
+    <h5 class="header-bg p-2 m-2">Student By Type Wise</h5>
     <apx-chart
     [series]="TypeOfStudSchool?.series"
     [chart]="TypeOfStudSchool?.chart"
@@ -113,7 +113,7 @@
 </div>
 
 <div class="column">
-    <h5 class="bg-light p-2 m-2">Student By minority Wise</h5>
+    <h5 class="header-bg p-2 m-2">Student By minority Wise</h5>
     <apx-chart
     [series]="MinorityWiseStudCount?.series"
     [chart]="MinorityWiseStudCount?.chart"
@@ -124,7 +124,7 @@
 </div>
 
 <div class="column">
-    <h5 class="bg-light p-2 m-2">Student By School Catogory</h5>
+    <h5 class="header-bg p-2 m-2">Student By School Catogory</h5>
     <apx-chart [series]="chartOptions?.series" [chart]="chartOptions?.chart" [dataLabels]="chartOptions?.dataLabels"
     [plotOptions]="chartOptions?.plotOptions" [xaxis]="chartOptions?.xaxis" [labels]="chartOptions?.labels"
     [yaxis]="chartOptions?.yaxis" [legend]="StreamWiseStudent?.legend"></apx-chart>

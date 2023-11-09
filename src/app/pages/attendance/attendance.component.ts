@@ -52,7 +52,6 @@ export class AttendanceComponent {
   }
 
   getAllDistricts() {
-    // this.dateModel = this.datepipe.transform(this.dateModel, 'dd/MM/yyyy');
     const data = {
       "date": this.getDate(this.dateModel)
     }
@@ -137,7 +136,6 @@ export class AttendanceComponent {
       let date = { "date": this.getDate(this.dateModel) };
       this.httpService.post('attendance/date-wise', date).subscribe((data) => {
         this.setAllGraphs(data);
-        // this.getAllDistricts();
         this.shiftModel = '';
       });
     }
@@ -183,33 +181,12 @@ export class AttendanceComponent {
   }
 
   getdistrictWiseGraph(data: any) {
-    // let series: any = [
-    //   {
-    //     name: ["Present"],
-    //     data: []
-    //   },
-    //   {
-    //     name: ["Absent"],
-    //     data: []
-    //   }
-    // ];
     this.districtWiseGraph = this.graphService.districtWiseGraph();
-    // this.districtWiseGraph = 
     for (let i = 0; i < data.length; i++) {
       this.districtWiseGraph.series[0].data.push(Number(data[i].presentPercentage.toFixed(0)));
       this.districtWiseGraph.series[1].data.push(Number((100 - data[i].presentPercentage).toFixed(0)));
       this.districtWiseGraph.xaxis.categories.push(data[i]._id);
-    }
-    // this.districtWiseGraph.series = [...series];
-    // this.districtWiseGraph.plotOptions.bar.horizontal = false;
-    // this.districtWiseGraph.xaxis.title.text = "District"
-    // this.districtWiseGraph.yaxis.title.text = "Present in %";
-    // this.districtWiseGraph.chart = {
-    //   type: "bar",
-    //   height: 350,
-    //   stacked: true,
-    //   stackType: "100%"
-    // }
+    }   
   }
 
 
