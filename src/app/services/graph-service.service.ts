@@ -5,6 +5,52 @@ import { Injectable } from "@angular/core";
 })
 export class GraphService {
 
+    districtWiseGraph() {
+        const graphData = {
+            series: [
+              {
+                name: "PRESENT",
+                data: []
+              },
+              {
+                name: "ABSENT",
+                data: []
+              }
+            ],
+            chart: {
+              type: "bar",
+              height: 300,
+              stacked: true,
+              stackType: "100%"
+            },
+            responsive: [
+              {
+                breakpoint: 480,
+                options: {
+                  legend: {
+                    position: "bottom",
+                    offsetX: -10,
+                    offsetY: 0
+                  }
+                }
+              }
+            ],
+            xaxis: {
+              categories: []
+            },
+            fill: {
+              opacity: 1
+            },
+            legend: {
+              position: "right",
+              offsetX: 0,
+              offsetY: 50
+            
+          }
+        }
+        return graphData;
+    }
+
     VerticleBarGraph() {
         const graphData = {
             series: [],

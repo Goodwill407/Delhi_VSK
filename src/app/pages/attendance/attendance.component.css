@@ -1,6 +1,11 @@
-.marquee {
-    background-color: #ddd;
-    width: 500px;
+.marquee{
+  background-color: #6d7fcc;
+}
+.marquee:hover span {
+  animation-play-state: paused;
+}
+/* .marquee {
+    background-color: #6610f2 !important;
     margin: 0 auto;
     overflow: hidden;
     white-space: nowrap;
@@ -10,7 +15,7 @@
     font-size: 20px;
     position: relative;
     left: 100%;
-    animation: marquee 8s linear infinite;
+    animation: marquee 12s linear infinite;
   }
   .marquee:hover span {
     animation-play-state: paused;
@@ -35,4 +40,4 @@
   @keyframes marquee {
     0%   { left: 100%; }
     100% { left: -100%; }
-  }
+  } */
