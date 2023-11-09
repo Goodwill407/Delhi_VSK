@@ -16,6 +16,8 @@ import { AttendanceComponent } from './attendance/attendance.component';
 import { NishthaComponent } from './nishtha/nishtha.component';
 import { PgiComponent } from './pgi/pgi.component';
 import { UdiseComponent } from './udise/udise.component';
+import { UdiseDataComponent } from './udise-data/udise-data.component';
+import { UdiseSchoolComponent } from './udise-school/udise-school.component';
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import { UdiseComponent } from './udise/udise.component';
     AttendanceComponent,
     NishthaComponent,
     PgiComponent,
-    UdiseComponent
+    UdiseComponent,
+    UdiseDataComponent,
+    UdiseSchoolComponent
   ],
   imports: [
     CommonModule,
