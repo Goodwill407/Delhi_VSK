@@ -97,6 +97,7 @@ export class StudentComponent {
       if (data) {
         this.setAllGraphData(data);
        this. getAllZones()
+       this.getAllSchools()
         this.spinner.hide();
       }
     }, (error) => {
@@ -120,8 +121,10 @@ export class StudentComponent {
     }, (error) => {
       this.spinner.hide();
     });
+    this.schoolModel = '';
     this.getAllSchools();
     this.spinner.hide();
+    
   }
 
   getGraphsBySchoolName() {
