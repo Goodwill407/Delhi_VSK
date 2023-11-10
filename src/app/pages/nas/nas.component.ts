@@ -18,8 +18,11 @@ export class NasComponent {
   allZones: any;
 
   // Single data
-  allData: any;
+  allData: any[] = [];
   allTableData: any[] = [];
+  performanceArray: any[] = [];
+  allDistrictsName: any[] = [];
+  mostData: any = [];
   allDistricts: any;
   gradeModel: any = "";
   subjectModel: any = "";
@@ -34,24 +37,7 @@ export class NasComponent {
   }
 
   ngOnInit() {
-    this.getAllDistricts();
-    this.getAllZones();
     this.getAllDataOfNAS();
-  }
-
-  getDate(date: any) {
-    let Mdate: any;
-    return Mdate = this.datepipe.transform(date, 'dd/MM/yyyy');
-  }
-
-  removeDuplicates(arr: Array<{ key: string, value: any }>): Array<{ key: string, value: any }> {
-    const uniqueMap = new Map<string, { key: string, value: any }>();
-
-    for (const obj of arr) {
-      uniqueMap.set(obj.key, obj);
-    }
-
-    return Array.from(uniqueMap.values());
   }
 
   getAllDataOfNAS() {
@@ -62,43 +48,41 @@ export class NasComponent {
     this.httpService.post('alldashboard/dashboard', sub).subscribe((res: any) => {
       this.allData = res.data;
       this.allTableData = this.allData;
+      let allTableData: any[] = [];
 
-      this.allTableData = this.allTableData.filter((value, index, self) =>
+      for (let i = 0; i < this.allTableData.length; i++) {
+        allTableData.push(this.allTableData[i].district_name);
+      }
+      allTableData = allTableData.filter((value, index, self) => self.indexOf(value) === index);
+
+      for (let j = 0; j < allTableData.length; j++) {
+        for (let i = 0; i < this.allTableData.length; i++) {
+          if (allTableData[j] == this.allTableData[i].district_name) {
+            if (!this.mostData[allTableData[j]]) {
+              this.mostData[allTableData[j]] = [];
+            }
+            this.mostData[allTableData[j]].push(this.allTableData[i]);
+            this.mostData[allTableData[j]] = this.mostData[allTableData[j]].filter((value: any, index: any, self: any) =>
+              index === self.findIndex((t: any) => (
+                t.learning_outcome_code === value.learning_outcome_code
+              ))
+            )
+          }
+        }
+      }
+
+      this.allDistricts = this.allTableData.filter((value, index, self) =>
         index === self.findIndex((t) => (
           t.district_name === value.district_name
         ))
       )
-      // this.allTableData = this.removeDuplicates(data);
-      console.log(this.allTableData);
 
+      this.allData = this.allData.filter((value, index, self) =>
+        index === self.findIndex((t) => (
+          t.learning_outcome_code === value.learning_outcome_code
+        ))
+      )
     })
   }
-
-  getAllDistricts() {
-  
-  }
-
-  getAllSchoolGraph() {
-    this.httpService.get('attendance/date-wise').subscribe((data: any) => {
-      if (data) {
-        
-      }
-    })
-  }
-
-  getAllZones() {
-    if (this.gradeModel) {
-      const district = { "District_name": this.gradeModel };
-      this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
-        this.allZones = res.ZoneSchool;
-      })
-    } else {
-      this.httpService.get('school/zonename').subscribe((res: any) => {
-        this.allZones = res.ZoneNames;
-      })
-    }
-  }
-
- 
 
 }
