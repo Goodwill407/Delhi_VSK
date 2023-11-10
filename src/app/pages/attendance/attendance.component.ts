@@ -153,6 +153,7 @@ export class AttendanceComponent {
           this.setAllGraphs(data);
           this.districtModel = '';
           this.zoneModel = '';
+          this.getAllZones();
           this.spinner.hide();
         }
       }, (error) => {

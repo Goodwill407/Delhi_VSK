@@ -16,7 +16,7 @@
         </option>
     </select>
     <select class="form-select ms-2" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
-        <option value="">All Zones</option>
+        <option value="" disabled>All Zones</option>
         <option *ngFor="let zone of allZones" value="{{zone}}">
             {{zone}}
         </option>
@@ -65,7 +65,7 @@
     </div>
 
     <div class="column text-center">
-        <h5 class="header-bg p-2 m-2">Teachers per Students Ratio</h5>
+        <h5 class="header-bg p-2 m-2">Total presents</h5>
         <img class="img-fluid" width="150" src="../../../assets/images/icons/available.png">
         <div class="d-flex justify-content-around text-center mt-5">
             <div>

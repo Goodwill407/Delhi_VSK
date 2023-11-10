@@ -92,6 +92,7 @@ export class NishthaComponent {
             value: this.allConsumptionsByCourse[0].program
           }
         }
+        this.courseModel = this.allConsumptionsByCourse[0].program;
         this.getConsumptionByCourseName(event);
       }
     });

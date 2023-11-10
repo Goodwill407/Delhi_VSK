@@ -27,7 +27,7 @@ export class TeacherComponent {
   districtModel: any = "";
   schoolModel: any = "";
   zoneModel: any = "";
-  allZones:any;
+  allZones: any;
   districtName: any;
   schoolName: any;
   designation: any;
@@ -36,7 +36,7 @@ export class TeacherComponent {
   minorityWiseTeacher: any;
   allData: any;
 
-  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService) {}
+  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService) { }
 
   ngOnInit() {
     this.getAllTeacherData();
@@ -63,7 +63,7 @@ export class TeacherComponent {
     })
   }
 
-  setAllGraphs(data:any){
+  setAllGraphs(data: any) {
     this.allData = data;
     const teachersGender = {
       totalMaleTeachers: data.totalMaleTeachers,
@@ -83,31 +83,41 @@ export class TeacherComponent {
   }
 
   getGraphsByDistrictName() {
-    const district = {
-      DistrictName: this.districtModel
-    }
-    this.spinner.show();
-    this.httpService.post('teacher-graph/school-category-wise/district', district).subscribe((data: any) => {
-      if (data) {
-       this.setAllGraphs(data); 
+    if (this.districtModel) {
+      const district = {
+        DistrictName: this.districtModel
       }
-    })
-    this.zoneModel = '';
-    this.schoolModel = '';
-    this.getAllZones();
-    this.getAllSchools();
+      this.spinner.show();
+      this.httpService.post('teacher-graph/school-category-wise/district', district).subscribe((data: any) => {
+        if (data) {
+          this.setAllGraphs(data);
+          this.getAllZones();
+          this.getAllSchools();
+          this.zoneModel = '';
+          this.schoolModel = '';
+        }
+      })
+    } else {
+      this.getAllTeacherData();
+      this.getAllZones();
+      this.allSchools = [];
+      this.zoneModel = '';
+      this.schoolModel = '';
+    }
+
   }
 
-  getAllZones(){
-    if(this.districtModel){
+  getAllZones() {
+    if (this.districtModel) {
       const district = { "District_name": this.districtModel };
-      this.httpService.post('school/getDistrictZone',district).subscribe((res:any)=>{
+      this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
         this.allZones = res.ZoneSchool;
       })
-    }else{
-    this.httpService.get('school/zonename').subscribe((res:any)=>{
-      this.allZones = res.ZoneNames;
-    })}
+    } else {
+      this.httpService.get('school/zonename').subscribe((res: any) => {
+        this.allZones = res.ZoneNames;
+      })
+    }
   }
 
   getGraphsByZone() {
@@ -127,7 +137,7 @@ export class TeacherComponent {
   }
 
   getAllSchools() {
-    if(this.districtModel){
+    if (this.districtModel) {
       const district = {
         District_name: this.districtModel
       }
@@ -139,7 +149,7 @@ export class TeacherComponent {
         }
       });
     }
-    else{
+    else {
       const zone = {
         Zone_Name: this.zoneModel
       }
@@ -262,7 +272,7 @@ export class TeacherComponent {
   }
 
   getStreamWiseCount(data: any) {
-    let series:any = [{
+    let series: any = [{
       name: ["Teacher"],
       data: []
     }];
@@ -278,7 +288,7 @@ export class TeacherComponent {
   }
 
   getMinorityWiseCount(data: any) {
-    this.minorityWiseTeacher = this.graphService.PieGraph('donut','');
+    this.minorityWiseTeacher = this.graphService.PieGraph('donut', '');
     for (let i = 0; i < data.length; i++) {
       this.minorityWiseTeacher.series.push(data[i].teacherMinorityWiseCount);
       this.minorityWiseTeacher.labels.push(data[i].minority);
