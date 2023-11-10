@@ -19,6 +19,7 @@ import { UdiseComponent } from './udise/udise.component';
 import { UdiseDataComponent } from './udise-data/udise-data.component';
 import { UdiseSchoolComponent } from './udise-school/udise-school.component';
 import { NasComponent } from './nas/nas.component';
+import { DikshaComponent } from './diksha/diksha.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { NasComponent } from './nas/nas.component';
     UdiseComponent,
     UdiseDataComponent,
     UdiseSchoolComponent,
-    NasComponent
+    NasComponent,
+    DikshaComponent
   ],
   imports: [
     CommonModule,

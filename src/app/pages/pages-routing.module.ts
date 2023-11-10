@@ -11,6 +11,7 @@ import { NishthaComponent } from './nishtha/nishtha.component';
 import { PgiComponent } from './pgi/pgi.component';
 import { UdiseComponent } from './udise/udise.component';
 import { NasComponent } from './nas/nas.component';
+import { DikshaComponent } from './diksha/diksha.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'pgi', component: PgiComponent },
   { path: 'nas', component: NasComponent },
   { path: 'udise', component: UdiseComponent },
+  { path: 'diksha', component: DikshaComponent },
 ];
 
 @NgModule({
