@@ -30,7 +30,9 @@ export class NasComponent {
   districtName: any;
   genderWisePresent: any;
   genderWiseAbsent: any;
-  allShift: any = ['Morning', 'General', 'Evening'];
+  allSubject: any = ["Math", 'Sst', 'Sci',"Evs","Language","Eng","Mil"];
+  allGrade: any = ["Grade 3","Grade 5","Grade 8","Grade 10"];
+  filterData:any;
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, public datepipe: DatePipe) {
 
@@ -38,15 +40,61 @@ export class NasComponent {
 
   ngOnInit() {
     this.getAllDataOfNAS();
+    // this.getDataByfilter();
+  }
+
+
+  getDataByfilter(){
+    this.allData = [];
+    this.allTableData = [];
+    this.mostData = [];
+  if(this.subjectModel && this.gradeModel){
+    this.filterData = {
+      "subject": this.subjectModel,
+      "grade": this.gradeModel
+    }
+  }
+  else if(this.subjectModel){
+    this.filterData = {
+      "subject": this.subjectModel
+    }
+  }
+  else if(this.gradeModel){
+    this.filterData = {
+      "grade": this.gradeModel
+    }
+  }
+    this.httpService.post('alldashboard/dashboard', this.filterData).subscribe((res: any) => {
+     this.allData = res.data;
+      this.allTableData = this.allData;
+      let allTableData: any[] = [];
+
+      for (let i = 0; i < this.allTableData.length; i++) {
+        allTableData.push(this.allTableData[i].district_name);
+      }
+      allTableData = allTableData.filter((value, index, self) => self.indexOf(value) === index);
+
+      for (let j = 0; j < allTableData.length; j++) {
+        for (let i = 0; i < this.allTableData.length; i++) {
+          if (allTableData[j] == this.allTableData[i].district_name) {
+            if (!this.mostData[allTableData[j]]) {
+              this.mostData[allTableData[j]] = [];
+            }
+            this.mostData[allTableData[j]].push(this.allTableData[i]);
+            this.mostData[allTableData[j]] = this.mostData[allTableData[j]].filter((value: any, index: any, self: any) =>
+              index === self.findIndex((t: any) => (
+                t.learning_outcome_code === value.learning_outcome_code
+              ))
+            )
+          }
+        }
+      }
+    })
   }
 
   getAllDataOfNAS() {
-    const sub = {
-      "subject": "Sst",
-      "grade": "Grade 10"
-    }
-    this.httpService.post('alldashboard/dashboard', sub).subscribe((res: any) => {
-      this.allData = res.data;
+    this.httpService.get('alldashboard/nas-alldashboard').subscribe((res:any)=>{
+      this.allData = res;
       this.allTableData = this.allData;
       let allTableData: any[] = [];
 

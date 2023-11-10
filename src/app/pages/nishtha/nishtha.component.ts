@@ -223,7 +223,7 @@ export class NishthaComponent {
   getTotal_completions(allDashboardData: any) {
     const Total_Completions = allDashboardData.map((item: any) => item.total_completions)
     const program = allDashboardData.map((item: any) => item.program)
-    this.Total_Completions = this.graphService.PieGraph('donut', ' Students');;
+    this.Total_Completions = this.graphService.PieGraph('donut', '');;
     const series = Total_Completions.map((str: any) => Number(str));
     const labels = program
     this.Total_Completions.series = [...series];
