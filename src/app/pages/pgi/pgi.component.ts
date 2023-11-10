@@ -29,9 +29,9 @@ export class PgiComponent {
   }
 
   getAllGraphData() {
-    this.httpService.get('alldashboard2/pgi-alldashboard?limit=10&page=1').subscribe((data: any) => {
-      if (data && data.results.length > 0) {
-        this.allGraphData = data.results;
+    this.httpService.get('alldashboard2/pgi-alldashboard').subscribe((data: any) => {
+      if (data && data.length > 0) {
+        this.allGraphData = data;
         this.setGraphData();
       }
     });

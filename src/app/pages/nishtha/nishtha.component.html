@@ -9,6 +9,11 @@
             Districts</button>
     </li>
     <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-course-tab" data-bs-toggle="pill" data-bs-target="#pills-course"
+            type="button" role="tab" aria-controls="pills-course" aria-selected="false">Consumption by
+            Course</button>
+    </li>
+    <li class="nav-item" role="presentation">
         <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"
             type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Course Medium</button>
     </li>
@@ -106,6 +111,41 @@
     </div>
 
     <!-- == 3 == -->
+    <div class="tab-pane fade" id="pills-course" role="tabpanel" aria-labelledby="pills-course-tab">
+        <h6 class="ms-2">Select Program</h6>
+        <select class="form-select w-25 ms-2" [(ngModel)]="courseModel" (change)="getConsumptionByCourseName($event)">
+            <option value="" disabled>Select Program</option>
+            <option value="NISHTHA 1.0">NISHTHA 1.0</option>
+            <option value="NISHTHA 2.0">NISHTHA 2.0</option>
+            <option value="NISHTHA 3.0">NISHTHA 3.0</option>
+        </select>
+
+        <div class="container1">
+            <div class="column">
+                <h5 class="header-bg p-2 m-2">Certification wise graph</h5>
+                <apx-chart [series]="certificationRangesGraph?.series" [chart]="certificationRangesGraph?.chart"
+                    [dataLabels]="certificationRangesGraph?.dataLabels"
+                    [plotOptions]="certificationRangesGraph?.plotOptions" [xaxis]="certificationRangesGraph?.xaxis"
+                    [legend]="certificationRangesGraph?.legend"></apx-chart>
+            </div>
+
+            <div class="column">
+                <h5 class="header-bg p-2 m-2">Completion wise graph</h5>
+                <apx-chart [series]="completionRangesGraph?.series" [chart]="completionRangesGraph?.chart"
+                    [dataLabels]="completionRangesGraph?.dataLabels" [plotOptions]="completionRangesGraph?.plotOptions"
+                    [xaxis]="completionRangesGraph?.xaxis" [legend]="completionRangesGraph?.legend"></apx-chart>
+            </div>
+
+            <div class="column">
+                <h5 class="header-bg p-2 m-2">Enrollnment wise graph</h5>
+                <apx-chart [series]="enrollmentRangesGraph?.series" [chart]="enrollmentRangesGraph?.chart"
+                    [dataLabels]="enrollmentRangesGraph?.dataLabels" [plotOptions]="enrollmentRangesGraph?.plotOptions"
+                    [xaxis]="enrollmentRangesGraph?.xaxis" [legend]="enrollmentRangesGraph?.legend"></apx-chart>
+            </div>
+        </div>
+    </div>
+
+    <!-- == 4 == -->
     <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
         <div class="container1">
             <div class="column">

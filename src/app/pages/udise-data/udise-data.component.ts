@@ -26,9 +26,9 @@ export class UdiseDataComponent {
   }
 
   getAllUdiseData() {
-    this.httpService.get('alldashboard2/udise-alldashboard?limit=10&page=1').subscribe((data: any) => {
-      if (data && data.results.length > 0) {
-        this.allUdiseData = data.results;
+    this.httpService.get('alldashboard2/udise-alldashboard').subscribe((data: any) => {
+      if (data && data.length > 0) {
+        this.allUdiseData = data;
         this.setGraphData('totalSchoolsToilet');
         this.graphType = "Number of Toilets";
       }

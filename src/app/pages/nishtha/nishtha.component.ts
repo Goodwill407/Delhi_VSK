@@ -11,15 +11,24 @@ import { HttpServiceService } from 'src/app/services/http-service.service';
 export class NishthaComponent {
 
   districtModel: any = "";
+  courseModel: any = "";
   allDistrictsData: any;
   allDistrictsName: any;
   districtWiseData: any = [];
+  allConsumptionsByCourse: any = [];
 
   //Graph
   totalEnrollments: any;
   totalCompletion: any;
   totalCertifications: any;
   totalCertificationsPercentage: any;
+
+  certificationRangesGraph: any;
+  completionRangesGraph: any;
+  enrollmentRangesGraph: any;
+
+  completionRanges: any;
+  enrollmentRanges: any;
 
   //Amol
   allDashboardData: any
@@ -28,8 +37,8 @@ export class NishthaComponent {
   Total_Courses: any
   Total_Doe: any;
   Total_Local_body: any
-  Total_CoursesGraph:any
-  Total_MediumGraph:any
+  Total_CoursesGraph: any
+  Total_MediumGraph: any
 
 
   constructor(private httpService: HttpServiceService, private graphService: GraphService, private spinner: NgxSpinnerService) {
@@ -38,13 +47,14 @@ export class NishthaComponent {
   ngOnInit() {
     this.getAllDistrictsData();
     this.getAllData();
-    this.getCourse_MediumData()
+    this.getCourse_MediumData();
+    this.getAllConsumptionsByCourse();
   }
 
   getAllDistrictsData() {
-    this.httpService.get('learningsession/consumptionbydistrict?limit=10&page=1').subscribe((data: any) => {
-      if (data && data.results.length > 0) {
-        this.allDistrictsData = data.results;
+    this.httpService.get('learningsession/consumptionbydistrict').subscribe((data: any) => {
+      if (data && data.length > 0) {
+        this.allDistrictsData = data;
         let allDistrictsName = [];
         for (let i = 0; i < this.allDistrictsData.length; i++) {
           allDistrictsName.push(this.allDistrictsData[i].district_name);
@@ -71,6 +81,82 @@ export class NishthaComponent {
       }
       this.setGraphData();
     }
+  }
+
+  getAllConsumptionsByCourse() {
+    this.httpService.get('learningsession/consumptionbydistrict').subscribe((data: any) => {
+      if (data) {
+        this.allConsumptionsByCourse = data;
+        const event = {
+          target: {
+            value: this.allConsumptionsByCourse[0].program
+          }
+        }
+        this.getConsumptionByCourseName(event);
+      }
+    });
+  }
+
+  getConsumptionByCourseName(event: any) {
+    if (event && event.target) {
+      const course = {
+        program: event.target.value
+      }
+      this.httpService.post('learningsession/data/counts', course).subscribe((data: any) => {
+        this.allConsumptionsByCourse = data;
+        this.setCertificationRangesGraph();
+        this.setCompletionRangesGraph();
+        this.setEnrollmentRangesGraph();
+      })
+    }
+  }
+
+  setCertificationRangesGraph() {
+    this.certificationRangesGraph = {};
+    this.certificationRangesGraph = this.graphService.VerticleBarGraph();
+    const series: any = [{
+      name: "Count",
+      data: []
+    }];
+    for (let i = 0; i < this.allConsumptionsByCourse.certificationRanges.length; i++) {
+      series[0].data.push(Number(this.allConsumptionsByCourse.certificationRanges[i].count));
+      this.certificationRangesGraph.xaxis.categories.push(this.allConsumptionsByCourse.certificationRanges[i].range);
+    }
+    this.certificationRangesGraph.series = [...series];
+    this.certificationRangesGraph.plotOptions.bar.horizontal = false;
+    this.certificationRangesGraph.dataLabels = { enabled: false };
+  }
+
+  setCompletionRangesGraph() {
+    this.completionRangesGraph = {};
+    this.completionRangesGraph = this.graphService.VerticleBarGraph();
+    const series: any = [{
+      name: "Count",
+      data: []
+    }];
+    for (let i = 0; i < this.allConsumptionsByCourse.completionRanges.length; i++) {
+      series[0].data.push(Number(this.allConsumptionsByCourse.completionRanges[i].count));
+      this.completionRangesGraph.xaxis.categories.push(this.allConsumptionsByCourse.completionRanges[i].range);
+    }
+    this.completionRangesGraph.series = [...series];
+    this.completionRangesGraph.plotOptions.bar.horizontal = false;
+    this.completionRangesGraph.dataLabels = { enabled: false };
+  }
+
+  setEnrollmentRangesGraph() {
+    this.enrollmentRangesGraph = {};
+    this.enrollmentRangesGraph = this.graphService.VerticleBarGraph();
+    const series: any = [{
+      name: "Count",
+      data: []
+    }];
+    for (let i = 0; i < this.allConsumptionsByCourse.enrollmentRanges.length; i++) {
+      series[0].data.push(Number(this.allConsumptionsByCourse.enrollmentRanges[i].count));
+      this.enrollmentRangesGraph.xaxis.categories.push(this.allConsumptionsByCourse.enrollmentRanges[i].range);
+    }
+    this.enrollmentRangesGraph.series = [...series];
+    this.enrollmentRangesGraph.plotOptions.bar.horizontal = false;
+    this.enrollmentRangesGraph.dataLabels = { enabled: false };
   }
 
   setGraphData() {
@@ -122,7 +208,7 @@ export class NishthaComponent {
   getAllData() {
     this.httpService.get('alldashboard').subscribe((data: any) => {
       if (data) {
-        const allDashboardData = data.results;
+        const allDashboardData = data;
         this.getTotal_completions(allDashboardData)
         this.getTotal_Certificate_issued(allDashboardData)
         this.getTotal_Courses(allDashboardData)
@@ -132,8 +218,6 @@ export class NishthaComponent {
 
     })
   }
-
-
 
   getTotal_completions(allDashboardData: any) {
     const Total_Completions = allDashboardData.map((item: any) => item.total_completions)
@@ -184,7 +268,6 @@ export class NishthaComponent {
     this.Total_Doe.plotOptions.bar.horizontal = false
   }
 
-
   getTotal_Local_Body(allDashboardData: any) {
     const total_Local_body = allDashboardData.map((item: any) => item.local_body)
     const program = allDashboardData.map((item: any) => item.program)
@@ -198,37 +281,33 @@ export class NishthaComponent {
 
   // amol2
 
-  getCourse_MediumData(){
-   this.httpService.get('alldashboard/coursemedium').subscribe((data:any)=>{
-    if(data){
-      const TotalData=data.results
-      
-      this.getCoursesGraphData(TotalData)
-    this.getMediumGraphData(TotalData)
-     }
-   })
+  getCourse_MediumData() {
+    this.httpService.get('alldashboard/coursemedium').subscribe((data: any) => {
+      if (data) {
+        const TotalData = data;
+
+        this.getCoursesGraphData(TotalData)
+        this.getMediumGraphData(TotalData)
+      }
+    })
   }
 
- 
-
-  getCoursesGraphData(TotalData:any){
-    const TotalCourses=TotalData.map((item: any) => item.total_courses)
-    const TotalProgram=TotalData.map((item: any) => item.program_name)
+  getCoursesGraphData(TotalData: any) {
+    const TotalCourses = TotalData.map((item: any) => item.total_courses)
+    const TotalProgram = TotalData.map((item: any) => item.program_name)
     this.Total_CoursesGraph = this.graphService.PieGraph('donut');;
-    const series =  TotalCourses.map((str: any) => Number(str));
+    const series = TotalCourses.map((str: any) => Number(str));
     const labels = TotalProgram
     this.Total_CoursesGraph.series = [...series];
-   this.Total_CoursesGraph.labels = [...labels];
-   this.Total_CoursesGraph.legend.formatter= function(val:any){return val;}
-    
+    this.Total_CoursesGraph.labels = [...labels];
+    this.Total_CoursesGraph.legend.formatter = function (val: any) { return val; }
+  }
 
-    }
-
-  getMediumGraphData(TotalData:any){
-    const Total_medium=TotalData.map((item: any) => item.total_medium)
-    const TotalProgram=TotalData.map((item: any) => item.program_name)
+  getMediumGraphData(TotalData: any) {
+    const Total_medium = TotalData.map((item: any) => item.total_medium)
+    const TotalProgram = TotalData.map((item: any) => item.program_name)
     this.Total_MediumGraph = this.graphService.PolarGraph();
-    const series = Total_medium.map((str:any)=>Number(str))
+    const series = Total_medium.map((str: any) => Number(str))
     const labels = TotalProgram
     this.Total_MediumGraph.series = [...series];
     this.Total_MediumGraph.labels = [...labels]

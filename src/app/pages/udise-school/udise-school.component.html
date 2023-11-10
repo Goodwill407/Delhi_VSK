@@ -1,1 +1,52 @@
-<p>udise-school works!</p>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+</ngx-spinner>
+<div class="d-flex mt-3 filter-box">
+    <h2 class="fw-bold">UDISE School</h2>
+</div>
+
+<div class="container1">
+    <div class="column text-center">
+        <h5 class="header-bg p-2 m-2">Udise Total School</h5>
+        <div class="d-flex justify-content-around mt-4">
+            <img class="ms-2" src="../../../assets/images/icons/school.png" style="height: 100px;" alt="">
+            <div class="vr"></div>
+            <div class="d-block ms-1 text-center">
+                <h1 class="fw-bold mt-3">{{TotalSchool}}</h1>
+            </div>
+        </div>
+        <h2 class="mt-5">Total school</h2>
+    </div>
+
+    <div class="column">
+        <h5 class="header-bg p-2 m-2">Rural Urban Count</h5>
+        <apx-chart [series]="RuralUrbanCountsGraph?.series" [chart]="RuralUrbanCountsGraph?.chart"
+            [labels]="RuralUrbanCountsGraph?.labels" [fill]="RuralUrbanCountsGraph?.fill"
+            [dataLabels]="RuralUrbanCountsGraph?.dataLabels" [plotOptions]="RuralUrbanCountsGraph?.plotOptions"
+            [responsive]="RuralUrbanCountsGraph?.responsive" [legend]="RuralUrbanCountsGraph?.legend"></apx-chart>
+    </div>
+
+    <div class="column">
+        <h5 class="header-bg p-2 m-2">School Gender Wise Count</h5>
+        <apx-chart [series]="SchoolGenderCountsGraph?.series" [chart]="SchoolGenderCountsGraph?.chart"
+            [labels]="SchoolGenderCountsGraph?.labels" [fill]="SchoolGenderCountsGraph?.fill"
+            [dataLabels]="SchoolGenderCountsGraph?.dataLabels" [plotOptions]="SchoolGenderCountsGraph?.plotOptions"
+            [responsive]="SchoolGenderCountsGraph?.responsive" [legend]="RuralUrbanCountsGraph?.legend"></apx-chart>
+    </div>
+
+    <div class="column">
+        <h5 class="header-bg p-2 m-2">School Shift Wise Count</h5>
+        <apx-chart [series]="ShiftfSchoolCountsGraph?.series" [chart]="ShiftfSchoolCountsGraph?.chart"
+            [labels]="ShiftfSchoolCountsGraph?.labels" [fill]="ShiftfSchoolCountsGraph?.fill"
+            [dataLabels]="ShiftfSchoolCountsGraph?.dataLabels" [plotOptions]="ShiftfSchoolCountsGraph?.plotOptions"
+            [responsive]="ShiftfSchoolCountsGraph?.responsive" [legend]="RuralUrbanCountsGraph?.legend"></apx-chart>
+    </div>
+
+    <div class="column">
+        <h5 class="header-bg p-2 m-2">School Type Wise Count</h5>
+        <apx-chart [series]="TypeofSchoolCountsGraph?.series" [chart]="TypeofSchoolCountsGraph?.chart"
+            [labels]="TypeofSchoolCountsGraph?.labels" [fill]="TypeofSchoolCountsGraph?.fill"
+            [dataLabels]="TypeofSchoolCountsGraph?.dataLabels" [plotOptions]="TypeofSchoolCountsGraph?.plotOptions"
+            [responsive]="TypeofSchoolCountsGraph?.responsive" [legend]="RuralUrbanCountsGraph?.legend"></apx-chart>
+    </div>
+
+</div>
