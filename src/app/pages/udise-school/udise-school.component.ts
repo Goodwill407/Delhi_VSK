@@ -16,6 +16,8 @@ export class UdiseSchoolComponent {
   // for Graph
   RuralUrbanCountsGraph:any
   SchoolGenderCountsGraph:any
+  ShiftfSchoolCountsGraph:any
+  TypeofSchoolCountsGraph:any
 
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private toastr: ToastrService) {
@@ -26,47 +28,76 @@ export class UdiseSchoolComponent {
   }
 
   GetAllUdiseSchoolData(){
-    this.httpService.get('udise-school/udise-school-stats').subscribe((data:any)=>{
-      if(data){
-        this.TotalSchool =data.totalSchoolCount;
+   
+    this.spinner.show();
+    this.httpService.get('udise-school/udise-school-stats').subscribe((data: any) => {
+      if (data) {
+        this.TotalSchool = data.totalSchoolCount;
         this.setUdiseSchoolGraphs(data)
-                       
-        }
+        this.spinner.hide();
+      }
+    }, (error) => {
+      this.toastr.error('', 'Something went wrong !');
     })
   }
 
   setUdiseSchoolGraphs(data:any){
     const RuralUrbanCounts=data.ruralUrbanCounts
     const School_GenderCounts = data.schoolGenderCounts
+    const ShiftfSchoolCounts =data.shiftofschoolCounts
+    const TypeofschoolCounts=data.typeofschoolCounts
     
      this.getRuralUrbanCountsGraph(RuralUrbanCounts)
      this.getSchoolGenderCounts(School_GenderCounts)
+     this.getShiftWiseCountGraph(ShiftfSchoolCounts)
+     this.getTypeofSchoolCountsGraph(TypeofschoolCounts)
 
   }
 
   getRuralUrbanCountsGraph(RuralUrbanCounts:any){
      const RuralOrUrban = RuralUrbanCounts.map((item: any) => item._id)
     const RuralOrUrbanCount = RuralUrbanCounts.map((item: any) => item.count)
-    this.RuralUrbanCountsGraph = this.graphService.PieGraph('donut', ' student');
+    this.RuralUrbanCountsGraph = this.graphService.PieGraph('donut', '');
     const series = RuralOrUrbanCount;
     const labels = RuralOrUrban
     this.RuralUrbanCountsGraph.series = [...series];
     this.RuralUrbanCountsGraph.labels = [...labels]
    }
 
-   getSchoolGenderCounts(School_GenderCounts: any) {
-    const GenderType = School_GenderCounts.map((item: any) => item._id);
-    const GenderwiseCount = School_GenderCounts.map((item: any) => item.count);
-    const series = [{
-      name: [""],
-      data: GenderwiseCount
-    }];
+   getSchoolGenderCounts(School_GenderCounts:any){
+    const GenderType = School_GenderCounts.map((item: any) => item._id)
+    const GenderWiseCount = School_GenderCounts.map((item: any) => item.count)
+    this.SchoolGenderCountsGraph = this.graphService.PieGraph('pie', '');
+    const series = GenderWiseCount;
     const labels = GenderType
-    this.SchoolGenderCountsGraph = this.graphService.VerticleBarGraph();
     this.SchoolGenderCountsGraph.series = [...series];
-    this.SchoolGenderCountsGraph.labels = [...labels];
-    this.SchoolGenderCountsGraph.plotOptions.bar.horizontal = false
-  }
+    this.SchoolGenderCountsGraph.labels = [...labels]
+
+   }
+
+   getShiftWiseCountGraph(Shift_ofSchoolCounts:any){
+    const TypeOfShift = Shift_ofSchoolCounts.map((item: any) => item._id)
+    const ShiftWiseCount = Shift_ofSchoolCounts.map((item: any) => item.count)
+    this.ShiftfSchoolCountsGraph = this.graphService.PolarGraph();
+    const series = ShiftWiseCount;
+    const labels = TypeOfShift
+    this.ShiftfSchoolCountsGraph.series = [...series];
+    this.ShiftfSchoolCountsGraph.labels = [...labels]
+
+   }
+
+   getTypeofSchoolCountsGraph(Type_Of_School_count:any){
+    const TypeOfSchool = Type_Of_School_count.map((item: any) => item._id)
+    const TypeOfschoolCount = Type_Of_School_count.map((item: any) => item.count)
+    this.TypeofSchoolCountsGraph = this.graphService.PieGraph('donut', '');
+    const series = TypeOfschoolCount;
+    const labels = TypeOfSchool
+    this.TypeofSchoolCountsGraph.series = [...series];
+    this.TypeofSchoolCountsGraph.labels = [...labels]
+
+   }
+
+   
 
 
 

@@ -15,7 +15,7 @@
             {{zone}}
         </option>
     </select>
-    <select class="form-select w-25 ms-2"  [(ngModel)]="schoolModel"  >
+    <select class="form-select w-25 ms-2"  [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()" >
         <option value="" disabled>Select School</option>
         <option *ngFor="let school of AllSchool" value="{{school}}">
             {{school}}
