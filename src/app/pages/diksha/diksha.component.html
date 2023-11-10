@@ -31,7 +31,55 @@
 
     <!-- == 3 == -->
     <div class="tab-pane fade" id="pills-course" role="tabpanel" aria-labelledby="pills-course-tab">
-        3
+
+        <div class="d-flex mt-3 filter-box">
+            <!-- <h2 class="fw-bold">Learningsession</h2> -->
+            <!-- <div class="vr mx-3 opacity-100"></div> -->
+            <select class="form-select w-25 ms-2" [(ngModel)]="subjectModel" >
+                <option value="" disabled>Select Subject</option>
+                <option  value="">
+                    
+                </option>
+            </select>
+            <select class="form-select w-25 ms-2" [(ngModel)]="gradeModel" >
+                <option value="" disabled>Select Grade</option>
+                <option  value="">
+                    
+                </option>
+            </select>
+            <select class="form-select w-25 ms-2"  [(ngModel)]="mediumModel" >
+                <option value="" disabled>Select Medium</option>
+                <option  value="">
+                    
+                </option>
+            </select>
+        </div>
+        
+        <div class="container1">
+            
+            <div class="column">
+                <h5 class="header-bg p-2 m-2">Total Counts</h5>
+                <apx-chart [series]="TotalCountsGraph?.series" [chart]="TotalCountsGraph?.chart"
+            [labels]="TotalCountsGraph?.labels" [fill]="TotalCountsGraph?.fill"
+            [dataLabels]="TotalCountsGraph?.dataLabels" [plotOptions]="TotalCountsGraph?.plotOptions"
+            [responsive]="TotalCountsGraph?.responsive" [legend]="TotalCountsGraph?.legend"></apx-chart>
+            </div>
+
+            <div class="column">
+                <h5 class="header-bg p-2 m-2">Average No. Of Plays</h5>
+                <apx-chart [series]="Average_no_of_playsGraph?.series" [chart]="Average_no_of_playsGraph?.chart"
+            [labels]="Average_no_of_playsGraph?.labels" [fill]="Average_no_of_playsGraph?.fill"
+            [dataLabels]="Average_no_of_playsGraph?.dataLabels" [plotOptions]="Average_no_of_playsGraph?.plotOptions"
+            [responsive]="Average_no_of_playsGraph?.responsive" [legend]="Average_no_of_playsGraph?.legend"></apx-chart>
+            </div>
+
+            <div class="column">
+                <h5 class="header-bg p-2 m-2">Average Play Time</h5>
+                <apx-chart [series]="Average_play_timeGraph?.series" [chart]="Average_play_timeGraph?.chart"
+            [labels]="Average_play_timeGraph?.labels" [fill]="Average_play_timeGraph?.fill"
+            [dataLabels]="Average_play_timeGraph?.dataLabels" [plotOptions]="Average_play_timeGraph?.plotOptions"
+            [responsive]="Average_play_timeGraph?.responsive" [legend]="Average_play_timeGraph?.legend"></apx-chart>
+            </div>
     </div>
 
 </div>
