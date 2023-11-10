@@ -1,5 +1,8 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
 </ngx-spinner>
+<div class="d-flex mt-3 filter-box">
+    <h2 class="fw-bold">Perfomance Grading Index (PGI)</h2>
+</div>
 <div class="container1">
     <div class="column wide">
         <h5 class="header-bg p-2 m-2">Outcome</h5>
@@ -15,7 +18,8 @@
             [dataLabels]="classroomTransaction?.dataLabels" [plotOptions]="classroomTransaction?.plotOptions"
             [xaxis]="classroomTransaction?.xaxis" [yaxis]="classroomTransaction?.yaxis"
             [labels]="classroomTransaction?.labels" [legend]="classroomTransaction?.legend"
-            [colors]="classroomTransaction?.colors" [grid]="classroomTransaction?.grid" [stroke]="classroomTransaction?.stroke"></apx-chart>
+            [colors]="classroomTransaction?.colors" [grid]="classroomTransaction?.grid"
+            [stroke]="classroomTransaction?.stroke"></apx-chart>
     </div>
 
     <div class="column wide">

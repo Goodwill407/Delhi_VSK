@@ -8,7 +8,7 @@
     <!-- <div class="vr mx-3 opacity-100"></div> -->
     <select class="form-select w-25 ms-2" [(ngModel)]="gradeModel" (change)="getDataByfilter()">
         <option value="">All Grade</option>
-        <option *ngFor="let district of allGrade" value="{{district}}" >
+        <option *ngFor="let district of allGrade" value="{{district}}">
             {{district}}
         </option>
     </select>
@@ -38,7 +38,7 @@
 <div>
 
     <div class="table-responsive bg-light mt-4">
-        <table class="table  table-borderliness table-product">
+        <table class="table table-borderliness table-product">
             <thead>
                 <tr>
                     <th>Outcome</th>
@@ -52,17 +52,17 @@
             <tbody>
                 <td>
                     <tr *ngFor="let data of allData;let i = index">
-                        <p *ngIf=" i<mostData['Central'].length" >{{data.learning_outcome_code}}</p>
+                        <p *ngIf=" i<mostData['Central'].length">{{data.learning_outcome_code}}</p>
                     </tr>
                 </td>
                 <td style="width: 100px;">
                     <tr *ngFor="let data of allData;let i = index">
-                       <p *ngIf=" i<mostData['Central'].length" > {{data.grade}}</p>
+                        <p *ngIf=" i<mostData['Central'].length"> {{data.grade}}</p>
                     </tr>
                 </td>
                 <td>
                     <tr *ngFor="let data of allData;let i = index">
-                        <p *ngIf=" i<mostData['Central'].length" >{{data.subject}}</p>
+                        <p *ngIf=" i<mostData['Central'].length">{{data.subject}}</p>
                     </tr>
                 </td>
                 <td>
@@ -72,62 +72,62 @@
                 </td>
                 <td>
                     <tr *ngFor="let data of mostData['South East']">
-                      <p> {{data.performance | number:'1.1-2' }}</p>  
+                        <p> {{data.performance | number:'1.1-2' }}</p>
                     </tr>
                 </td>
                 <td>
                     <tr *ngFor="let data of mostData['New Delhi']">
-                        <p> {{data.performance | number:'1.1-2' }}</p> 
+                        <p> {{data.performance | number:'1.1-2' }}</p>
                     </tr>
                 </td>
                 <td>
                     <tr *ngFor="let data of mostData['South West A']">
-                        <p> {{data.performance | number:'1.1-2' }}</p> 
+                        <p> {{data.performance | number:'1.1-2' }}</p>
                     </tr>
                 </td>
                 <td>
                     <tr *ngFor="let data of mostData['South West B']">
-                        <p> {{data.performance | number:'1.1-2' }}</p> 
+                        <p> {{data.performance | number:'1.1-2' }}</p>
                     </tr>
                 </td>
                 <td>
                     <tr *ngFor="let data of mostData['East']">
-                        <p> {{data.performance | number:'1.1-2' }}</p> 
+                        <p> {{data.performance | number:'1.1-2' }}</p>
                     </tr>
                 </td>
                 <td>
                     <tr *ngFor="let data of mostData['West B']">
-                        <p> {{data.performance | number:'1.1-2' }}</p> 
+                        <p> {{data.performance | number:'1.1-2' }}</p>
                     </tr>
                 </td>
                 <td>
                     <tr *ngFor="let data of mostData['West A']">
-                        <p> {{data.performance | number:'1.1-2' }}</p> 
+                        <p> {{data.performance | number:'1.1-2' }}</p>
                     </tr>
                 </td>
                 <td>
                     <tr *ngFor="let data of mostData['North']">
-                        <p> {{data.performance | number:'1.1-2' }}</p> 
+                        <p> {{data.performance | number:'1.1-2' }}</p>
                     </tr>
                 </td>
                 <td>
                     <tr *ngFor="let data of mostData['Central']">
-                        <p> {{data.performance | number:'1.1-2' }}</p> 
+                        <p> {{data.performance | number:'1.1-2' }}</p>
                     </tr>
                 </td>
                 <td>
                     <tr *ngFor="let data of mostData['North East']">
-                        <p> {{data.performance | number:'1.1-2' }}</p> 
+                        <p> {{data.performance | number:'1.1-2' }}</p>
                     </tr>
                 </td>
                 <td>
                     <tr *ngFor="let data of mostData['North West A']">
-                        <p> {{data.performance | number:'1.1-2' }}</p> 
+                        <p> {{data.performance | number:'1.1-2' }}</p>
                     </tr>
                 </td>
                 <td>
                     <tr *ngFor="let data of mostData['North West B']">
-                        <p> {{data.performance | number:'1.1-2' }}</p> 
+                        <p> {{data.performance | number:'1.1-2' }}</p>
                     </tr>
                 </td>
             </tbody>
