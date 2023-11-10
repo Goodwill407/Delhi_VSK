@@ -85,10 +85,9 @@
             <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">UDISE</span>
           </a>
         </li>
-        
+
         <li class="nav-item mt-2">
-          <a class="nav-link" routerLink="nas" [queryParams]="{tabName : 'National Achievement Survey (NAS)'}"
-            href="#">
+          <a class="nav-link" routerLink="nas" routerLinkActive="active">
             <span class="image-icon">
               <img src="../assets/images/NAS.png" alt="">
             </span>
@@ -96,18 +95,18 @@
           </a>
         </li>
 
-        <!--<li class="nav-item mt-2">
-          <a class="nav-link" routerLink="cquib" [queryParams]="{tabName : 'PM POSHAN'}" href="#">
+        <li class="nav-item mt-2">
+          <a class="nav-link" routerLink="diksha" routerLinkActive="active">
             <span class="image-icon">
-              <img src="../assets/images/PM Poshan.png" alt="">
+              <img src="../assets/images/ETB & E-Content.png" alt="">
             </span>
-            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">PM
-              POSHAN</span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">
+              Diksha</span>
           </a>
         </li>
 
 
-        <li class="nav-item mt-2">
+        <!--<li class="nav-item mt-2">
           <a class="nav-link" routerLink="cquib" [queryParams]="{tabName : 'UDISE+'}" href="#">
             <span class="image-icon">
               <img src="../assets/images/UDISE.png" alt="">
