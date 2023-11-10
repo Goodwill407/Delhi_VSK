@@ -97,6 +97,7 @@ export class StudentComponent {
       if (data) {
         this.setAllGraphData(data);
        this. getAllZones()
+       this.getAllSchools()
         this.spinner.hide();
       }
     }, (error) => {
@@ -115,18 +116,21 @@ export class StudentComponent {
     this.httpService.post('studentgraph/student-graph-count-zonename', zone).subscribe((data: any) => {
       if (data) {
         this.setAllGraphData(data);
-        
+              
       }
     }, (error) => {
       this.spinner.hide();
     });
+    this.schoolModel = '';
+    // this.districtModel='';
     this.getAllSchools();
     this.spinner.hide();
+       
   }
 
   getGraphsBySchoolName() {
     const school = {
-      schname: this.schoolModel
+      schoolName: this.schoolModel
     }
     this.spinner.show();
     this.httpService.post('studentgraph/student-graph-count-schoolName', school).subscribe((data: any) => {
@@ -139,7 +143,7 @@ export class StudentComponent {
   }
 
   getAllSchools() {
-    if(this.districtModel){
+    if(this.districtModel && !this.ZoneModel){
       const district = {
         District_name: this.districtModel
       }
@@ -150,8 +154,7 @@ export class StudentComponent {
           this.AllSchool = [];
         }
       });
-    }
-    else{
+    } else{
       const zone = {
         Zone_Name: this.ZoneModel
       }
