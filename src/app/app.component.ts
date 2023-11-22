@@ -14,10 +14,11 @@ export class AppComponent {
   status: boolean = true;
   statusLink: boolean = true;
   isLogIn: boolean = false;
+  user: any;
 
   constructor(private router: Router) {
-    const user: any = JSON.parse(sessionStorage.getItem('userProfile')!);
-    if (!user) {
+    this.user = JSON.parse(sessionStorage.getItem('userProfile')!);
+    if (!this.user) {
       this.isLogIn = false;
       this.router.navigate(['']);
     } else {
@@ -27,6 +28,7 @@ export class AppComponent {
 
   loginFlagFunc(event: any) {
     this.isLogIn = event;
+    this.user = JSON.parse(sessionStorage.getItem('userProfile')!);
   }
 
   logout() {

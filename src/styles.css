@@ -75,3 +75,26 @@ apx-chart .apexcharts-toolbar {
 }
 
 /* ============================Columns================================ */
+
+.heading h3 {
+    font-weight: 700;
+}
+
+.table-btn-edit {
+    background-color: #6d7fcc;
+    border-radius: 3px;
+    /* width: 30px; */
+    color: #fff;
+    opacity: .9;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border: none;
+}
+
+.table-btn-edit i {
+    font-size: 12px;
+}
+
+.primary-color {
+    background-color: #6d7fcc !important;
+    color: #fff !important;
+}

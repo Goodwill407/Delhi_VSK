@@ -14,7 +14,7 @@ import { NasComponent } from './nas/nas.component';
 import { DikshaComponent } from './diksha/diksha.component';
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent },
+  { path: 'admin-dashboard', component: DashboardComponent },
   { path: 'school', component: SchoolComponent },
   { path: 'student', component: StudentComponent },
   { path: 'teacher', component: TeacherComponent },

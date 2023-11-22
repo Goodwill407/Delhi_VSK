@@ -19,6 +19,7 @@ export class LoginPageComponent {
   loginForm!: FormGroup;
   submitted: boolean = false;
   loginModel!: LoginClass;
+  setLoginType: string = "admin";
   @Output() loginFlag = new EventEmitter<boolean>();
 
   constructor(private fb: FormBuilder, private httpService: HttpServiceService, private route: ActivatedRoute, private router: Router, private spinner: NgxSpinnerService, private toastr: ToastrService) {
@@ -48,7 +49,7 @@ export class LoginPageComponent {
     const user = JSON.parse(sessionStorage.getItem('userProfile') || '{}');
     if (user) {
       if (user.role == "school") {
-        this.router.navigateByUrl('/dashboard/school-dashboard');
+        this.router.navigateByUrl('/content/school-dashboard');
       } else if (user.role == "teacher") {
         this.router.navigateByUrl('/dashboard/teacher-dashboard');
       } else if (user.role == "student") {
@@ -67,9 +68,12 @@ export class LoginPageComponent {
       return;
     }
     else {
-      this.login()
+      if (this.setLoginType == "admin") {
+        this.login();
+      } else if (this.setLoginType == "school") {
+        this.schoolLogin();
+      }
     }
-
   }
 
   login() {
@@ -78,7 +82,7 @@ export class LoginPageComponent {
       if (data) {
         this.toastr.success('', 'Logged in succesfully!');
         sessionStorage.setItem('userProfile', JSON.stringify(data.user));
-        this.router.navigateByUrl('/dashboard');
+        this.router.navigateByUrl('/content/admin-dashboard');
         this.loginFlag.emit(true)
       }
       this.spinner.hide();
@@ -86,5 +90,22 @@ export class LoginPageComponent {
       this.toastr.error('', 'Email Username or Password !');
       this.spinner.hide();
     })
+  }
+
+  schoolLogin() {
+    if (this.loginForm.value.email == 'school@gmail.com' && this.loginForm.value.password == 'School@123') {
+      this.toastr.success('', 'Logged in succesfully!');
+      sessionStorage.setItem('userProfile', JSON.stringify({ name: 'New english', role: 'school' }));
+      this.router.navigateByUrl('/content/school-dashboard');
+      this.loginFlag.emit(true)
+    } else {
+      this.toastr.error('', 'Email Username or Password !');
+    }
+  }
+
+  loginType(event: any) {
+    if (event && event.target) {
+      this.setLoginType = event.target.value;
+    }
   }
 }

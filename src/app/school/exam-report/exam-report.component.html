@@ -1,0 +1,112 @@
+<div class="filter-box mt-4 p-3">
+    <div class="d-flex">
+        <h2 class="fw-bold">Exam report</h2>
+        <div class="vr mx-3 opacity-100"></div>
+        <select class="form-select w-25" [(ngModel)]="classModel" (change)="getAllStudents()">
+            <option value="">Select class</option>
+            <option *ngFor="let class of allClasses" value="{{class}}">
+                {{class}}
+            </option>
+        </select>
+        <select class="form-select w-25 ms-3" [(ngModel)]="sectionModel" (change)="getAllStudents()">
+            <option value="">Select section</option>
+            <option *ngFor="let section of allSections" value="{{section}}">
+                {{section}}
+            </option>
+        </select>
+    </div>
+
+    <hr>
+
+    <div *ngIf="allStudents && allStudents.length == 0">
+        <h5 class="text-center">Please select class and section</h5>
+    </div>
+
+    <ul class="responsive-table px-2" *ngIf="allStudents && allStudents.length > 0">
+        <li class="table-header">
+            <div class="col col-3">Name</div>
+            <div class="col col-1">Date of Birth</div>
+            <div class="col col-1">Father name</div>
+            <div class="col col-1">Gender</div>
+            <div class="col col-1">Status</div>
+            <div class="col col-3">Action</div>
+        </li>
+        <li class="table-row" *ngFor="let student of allStudents">
+            <div class="col col-3" data-label="Job Id">{{student.name}}</div>
+            <div class="col col-1" data-label="Customer Name">{{student.dob}}</div>
+            <div class="col col-1" data-label="Amount">{{student.father}}</div>
+            <div class="col col-1" data-label="Payment Status">{{student.gender}}</div>
+            <div class="col col-1" data-label="Payment Status">{{student.status}}</div>
+            <div class="col col-3" data-label="Payment Status">
+                <button class="table-btn-edit" data-bs-toggle="modal" data-bs-target="#staticBackdrop" title="View"
+                    type="button" (click)="viewProfile(student)">View report<i class="bi bi-eye-fill mx-1"></i></button>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<!-- Reset password -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">{{studentData?.name}}'s exam report</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Sr. No</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Exam name</th>
+                            <th scope="col">Marks</th>
+                            <th scope="col">Out of</th>
+                            <th scope="col">Percentage</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>12/11/2023</td>
+                            <td>Unit test</td>
+                            <td>85</td>
+                            <td>100</td>
+                            <td>85%</td>
+                            <td><button class="table-btn-edit" title="Print" type="button">Print<i
+                                        class="bi bi-printer mx-1"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>05/11/2023</td>
+                            <td>Preliminary test</td>
+                            <td>336</td>
+                            <td>500</td>
+                            <td>67%</td>
+                            <td><button class="table-btn-edit" title="Print" type="button">Print<i
+                                        class="bi bi-printer mx-1"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>15/10/2023</td>
+                            <td>Final test</td>
+                            <td>477</td>
+                            <td>500</td>
+                            <td>94%</td>
+                            <td><button class="table-btn-edit" title="Print" type="button">Print<i
+                                        class="bi bi-printer mx-1"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

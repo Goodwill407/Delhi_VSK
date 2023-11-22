@@ -8,9 +8,83 @@
     </div>
 
     <div class="sideBarOrta mt-3">
-      <ul class="nav flex-column">
+
+      <!-- School -->
+      <ul class="nav flex-column" *ngIf="user.role == 'school'">
         <li class="nav-item">
-          <a class="nav-link" routerLink="dashboard" routerLinkActive="active" href="#">
+          <a class="nav-link" routerLink="content/school-dashboard" routerLinkActive="active" href="#">
+            <span class="image-icon">
+              <img src="../assets/images/dashboard.png" alt="">
+            </span>
+            <span class="ms-2"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Dashboard</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="content/students" routerLinkActive="active" href="#">
+            <span class="image-icon text-center justify-content-center">
+              <img src="../assets/images/icons/graduated-2.png" alt="">
+            </span>
+            <span class="ms-2"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Students</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="content/staff" routerLinkActive="active" href="#">
+            <span class="image-icon text-center justify-content-center">
+              <img src="../assets/images/icons/teacher-2.png" alt="">
+            </span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Staff</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="content/students-attendance" routerLinkActive="active" href="#">
+            <span class="image-icon text-center justify-content-center">
+              <img src="../assets/images/icons/attendance.png" alt="">
+            </span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Students
+              attendance</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="content/teacher-attendance" routerLinkActive="active" href="#">
+            <span class="image-icon text-center justify-content-center">
+              <img src="../assets/images/icons/available.png" alt="">
+            </span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Teacher
+              attendance</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="content/exam-report" routerLinkActive="active" href="#">
+            <span class="image-icon text-center justify-content-center">
+              <img src="../assets/images/icons/seo-report.png" alt="">
+            </span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Exam
+              report</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="content/attendance-report" routerLinkActive="active" href="#">
+            <span class="image-icon text-center justify-content-center">
+              <img src="../assets/images/icons/seo-report.png" alt="">
+            </span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Attendance
+              report</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Admin -->
+      <ul class="nav flex-column" *ngIf="user.role == 'user'">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="content/admin-dashboard" routerLinkActive="active" href="#">
             <span class="image-icon">
               <img src="../assets/images/dashboard.png" alt="">
             </span>
@@ -151,7 +225,7 @@
         </button>
         <h3 class="text-center">Vidya Samiksha Kendra, Delhi</h3>
         <div class="logo d-flex">
-        <!--  <img src="../../../assets/images/delhi_board_logo.png">
+          <!--  <img src="../../../assets/images/delhi_board_logo.png">
           <img src="../../../assets/images/vsk_logo.png">
           <img src="../../../assets/images/SSA.png"> -->
           <i class="bi bi-box-arrow-right h2 text-danger" (click)="logout()"></i>

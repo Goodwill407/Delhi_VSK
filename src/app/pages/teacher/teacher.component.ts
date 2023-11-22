@@ -216,7 +216,7 @@ export class TeacherComponent {
       if (schoolManagementWise[i].shift == "Government") { var govCount = schoolManagementWise[i].teacherManagmentWiseCount }
       if (schoolManagementWise[i].shift == "Aided") { var aidedCount = schoolManagementWise[i].teacherManagmentWiseCount }
     }
-    this.schoolsManagementWiseTeacher.series = [govCount, aidedCount];
+    this.schoolsManagementWiseTeacher.series = [govCount ? govCount : 0, aidedCount ? aidedCount : 0];
     this.schoolsManagementWiseTeacher.labels = ['Government', 'Aided']
   }
 
@@ -248,19 +248,20 @@ export class TeacherComponent {
   }
 
   getDesignation(post: any) {
-    this.designation = this.graphService.HorizontalBarGraph();
+    this.designation = this.graphService.VerticleBarGraph();
     const series: any = [{
-      name: "Teacher Count",
+      name: ["Teacher Count"],
       data: []
     }];
-    let categories = [];
     for (let i = 0; i < post.length; i++) {
       series[0].data.push(post[i].teacherCount);
-      categories.push(post[i]._id);
+      this.designation.xaxis.categories.push(post[i]._id);
     }
     this.designation.series = [...series];
-    this.designation.dataLabels = { enabled: false };
-    this.designation.xaxis.categories = categories;
+    this.designation.plotOptions.bar.horizontal = false;
+    this.designation.xaxis.title.text = "Designation";
+    this.designation.yaxis.title.text = "Teacher Count";
+    this.designation.dataLabels.enabled = false;
   }
 
   getSchoolTypeWiseCount(data: any) {

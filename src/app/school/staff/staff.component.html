@@ -1,0 +1,52 @@
+<div class="filter-box mt-4 p-3">
+    <div class="d-flex">
+        <h2 class="fw-bold">Staff Details</h2>
+    </div>
+
+    <hr>
+
+    <ul class="responsive-table px-2">
+        <li class="table-header">
+            <div class="col col-3">Name</div>
+            <div class="col col-1">Date of Birth</div>
+            <div class="col col-1">Father name</div>
+            <div class="col col-1">Gender</div>
+            <div class="col col-1">Status</div>
+            <div class="col col-3">Action</div>
+        </li>
+        <li class="table-row" *ngFor="let student of allTeachers">
+            <div class="col col-3" data-label="Job Id">{{student.name}}</div>
+            <div class="col col-1" data-label="Customer Name">{{student.dob}}</div>
+            <div class="col col-1" data-label="Amount">{{student.father}}</div>
+            <div class="col col-1" data-label="Payment Status">{{student.gender}}</div>
+            <div class="col col-1" data-label="Payment Status">{{student.status}}</div>
+            <div class="col col-3" data-label="Payment Status">
+                <button class="table-btn-edit" title="View" type="button">View <i
+                        class="bi bi-eye-fill mx-1"></i></button>
+                <button class="table-btn-edit bg-success ms-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                    title="Set password" type="button" (click)="resetPassword(student)">Set password <i
+                        class="bi bi-key-fill mx-1"></i></button>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Reset password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6>{{studentData?.name}}</h6>
+                <input type="text" class="form-control" placeholder="Enter password">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success">Generate</button>
+            </div>
+        </div>
+    </div>
+</div>
