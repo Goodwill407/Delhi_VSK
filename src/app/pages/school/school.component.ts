@@ -104,9 +104,9 @@ export class SchoolComponent {
     }
     this.getLowClassHighClass(lowClassHighClass);
     this.getTypesOfSchools(data.typeOfSchoolCounts);
-    this.getStreamCount(data.streamCounts);
-    this.getMinorityCount(data.minorityCounts);
-    this.getAffiliationCount(data.afiliationCounts);
+    // this.getStreamCount(data.streamCounts);
+    // this.getMinorityCount(data.minorityCounts);
+    // this.getAffiliationCount(data.afiliationCounts);
     if (zone) {
       this.getAllZones(data.zoneWiseCounts);
     }
