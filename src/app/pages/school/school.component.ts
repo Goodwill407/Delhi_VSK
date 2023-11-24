@@ -223,8 +223,14 @@ export class SchoolComponent {
   getTypesOfSchools(typesOfSchools: any) {
     this.typesOfSchools = this.graphService.PolarGraph();
     for (let i = 0; i < typesOfSchools.length; i++) {
+      if (Number(typesOfSchools[i].count) > 0){
       this.typesOfSchools.series.push(typesOfSchools[i].count);
-      this.typesOfSchools.labels.push(typesOfSchools[i].typeOfSchool);
+      this.typesOfSchools.labels.push(typesOfSchools[i].typeOfSchool);}
+    }
+    for (let i = 0; i < this.typesOfSchools.series.length; i++) {
+      if (this.typesOfSchools.series[i] > 0 && this.typesOfSchools.series[i] < 2) {
+        this.typesOfSchools.yaxis.show = false;
+      }
     }
   }
 
