@@ -1,7 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Inject, SimpleChange, ViewChild } from '@angular/core';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { GraphService } from 'src/app/services/graph-service.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-teacher',
@@ -38,6 +39,9 @@ export class TeacherComponent {
   allData: any;
   @ViewChild('openModal') openModal: any;
 
+  itemCount: number | undefined;
+  subscription: Subscription | undefined;
+
   config: any;
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService) { }
 
@@ -45,6 +49,17 @@ export class TeacherComponent {
     this.getAllTeacherData();
     this.getAllDistricts();
     this.getAllZones();
+
+    this.subscription = this.graphService
+      .getItemCountObservable()
+      .subscribe((count) => {
+        this.itemCount = count;
+        if (this.itemCount) {
+          if (this.schoolModel) {
+            this.getTeachersByGender(false);
+          }
+        }
+      });
   }
 
   getAllDistricts() {
@@ -190,28 +205,31 @@ export class TeacherComponent {
     this.teacherGenderRatio.labels = [...categories];
     this.teacherGenderRatio.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
-        console.log(config);
         this.config = config;
         const parameter = {
           "gender": config.dataPointIndex == 0 ? 'Male' : 'Female',
           "schname": this.schoolModel
         }
-        this.getTeachersByGender();
+        this.graphService.addToCart();
       }
     }
   }
 
-  getTeachersByGender() {
+  getTeachersByGender(flash: any) {
     const parameter = {
       "gender": this.config.dataPointIndex == 0 ? 'Male' : 'Female',
       "schname": this.schoolModel
     }
     this.httpService.post('teacher/get-teachers-by-gender', parameter).subscribe((res: any) => {
       this.allTeacherData = res;
-      this.openModal.nativeElement.click();
-      // return;
-      // alert(JSON.stringify(this.allTeacherData))
+      if (!flash) {
+        this.openModal.nativeElement.click();
+      }
     })
+  }
+
+  ngOnChange(change: SimpleChange) {
+    change;
   }
 
   getShiftWiseSchools(shiftWiseCount: any) {

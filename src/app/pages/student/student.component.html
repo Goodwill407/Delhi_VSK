@@ -59,7 +59,8 @@
         <apx-chart [series]="studentsGenderRatio?.series" [chart]="studentsGenderRatio?.chart"
             [labels]="studentsGenderRatio?.labels" [fill]="studentsGenderRatio?.fill"
             [dataLabels]="studentsGenderRatio?.dataLabels" [plotOptions]="studentsGenderRatio?.plotOptions"
-            [responsive]="studentsGenderRatio?.responsive" [legend]="studentsGenderRatio?.legend"></apx-chart>
+            [responsive]="studentsGenderRatio?.responsive" [legend]="studentsGenderRatio?.legend"
+            [colors]="studentsGenderRatio?.colors"></apx-chart>
     </div>
 
     <div class="column">
@@ -67,16 +68,17 @@
         <apx-chart [series]="StudentShiftWiseCounts?.series" [chart]="StudentShiftWiseCounts?.chart"
             [labels]="StudentShiftWiseCounts?.labels" [fill]="StudentShiftWiseCounts?.fill"
             [stroke]="StudentShiftWiseCounts?.stroke" [responsive]="StudentShiftWiseCounts?.responsive"
-            [legend]="MinorityWiseStudCount?.legend"></apx-chart>
+            [legend]="MinorityWiseStudCount?.legend" [colors]="StudentShiftWiseCounts?.colors"></apx-chart>
     </div>
 
-    <div class="column">
+    <!-- <div class="column">
         <h5 class="header-bg p-2 m-2">Stream Wise Student</h5>
         <apx-chart [series]="StreamWiseStudent?.series" [chart]="StreamWiseStudent?.chart"
             [dataLabels]="StreamWiseStudent?.dataLabels" [plotOptions]="StreamWiseStudent?.plotOptions"
             [yaxis]="StreamWiseStudent?.yaxis" [labels]="StreamWiseStudent?.labels" [legend]="StreamWiseStudent?.legend"
-            [colors]="StreamWiseStudent?.colors" [grid]="StreamWiseStudent?.grid"></apx-chart>
-    </div>
+            [colors]="StreamWiseStudent?.colors" [grid]="StreamWiseStudent?.grid"
+            [fill]="StreamWiseStudent?.fill"></apx-chart>
+    </div> -->
 
     <div class="column">
         <h5 class="header-bg p-2 m-2">Student By Management Wise </h5>
@@ -84,17 +86,18 @@
             [labels]="StudentManagementWiseCounts?.labels" [fill]="StudentManagementWiseCounts?.fill"
             [dataLabels]="StudentManagementWiseCounts?.dataLabels"
             [plotOptions]="StudentManagementWiseCounts?.plotOptions"
-            [responsive]="StudentManagementWiseCounts?.responsive"
-            [legend]="StudentManagementWiseCounts?.legend"></apx-chart>
+            [responsive]="StudentManagementWiseCounts?.responsive" [legend]="StudentManagementWiseCounts?.legend"
+            [colors]="StudentManagementWiseCounts?.colors"></apx-chart>
     </div>
 
-    <div class="column">
+    <!-- <div class="column">
         <h5 class="header-bg p-2 m-2">Affiliation Wise Student</h5>
         <apx-chart [series]="AffiliationWiseStudent?.series" [chart]="AffiliationWiseStudent?.chart"
             [labels]="AffiliationWiseStudent?.labels" [fill]="AffiliationWiseStudent?.fill"
             [dataLabels]="AffiliationWiseStudent?.dataLabels" [plotOptions]="AffiliationWiseStudent?.plotOptions"
-            [responsive]="AffiliationWiseStudent?.responsive" [legend]="AffiliationWiseStudent?.legend"></apx-chart>
-    </div>
+            [responsive]="AffiliationWiseStudent?.responsive" [legend]="AffiliationWiseStudent?.legend"
+            [colors]="AffiliationWiseStudent?.colors"></apx-chart>
+    </div> -->
 
     <div class="column">
         <h5 class="header-bg p-2 m-2">Student By Type Wise</h5>
@@ -111,10 +114,11 @@
     </div> -->
 
     <div class="column">
-        <h5 class="header-bg p-2 m-2">Student By School Catogory</h5>
+        <h5 class="header-bg p-2 m-2">Student By School Category</h5>
         <apx-chart [series]="chartOptions?.series" [chart]="chartOptions?.chart" [dataLabels]="chartOptions?.dataLabels"
             [plotOptions]="chartOptions?.plotOptions" [xaxis]="chartOptions?.xaxis" [labels]="chartOptions?.labels"
-            [yaxis]="chartOptions?.yaxis" [legend]="StreamWiseStudent?.legend"></apx-chart>
+            [yaxis]="chartOptions?.yaxis" [legend]="StreamWiseStudent?.legend" [fill]="StreamWiseStudent?.fill"
+            [colors]="StreamWiseStudent?.colors"></apx-chart>
     </div>
 
 </div>

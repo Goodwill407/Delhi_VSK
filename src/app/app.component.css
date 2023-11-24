@@ -40,8 +40,9 @@ a:focus {
 }
 
 .header-font {
-    font-size: 36px;
+    font-size: 46px;
     margin: 0;
+    font-weight: bold;
 }
 
 .line {
