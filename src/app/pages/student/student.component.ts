@@ -38,11 +38,11 @@ export class StudentComponent {
   chartOptions: any
 
   allDistricts: any
-  allZones:any;
+  allZones: any;
   districtModel: any = ""
-  ZoneModel :any = ""
-  AllSchool :any
-  schoolModel:any=""
+  ZoneModel: any = ""
+  AllSchool: any
+  schoolModel: any = ""
 
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService) { }
@@ -52,8 +52,8 @@ export class StudentComponent {
     this.getAllDistricts()
     this.getAllZones()
     this.getAllSchools();
-    
-   
+
+
 
   }
   getAllDistricts() {
@@ -63,21 +63,22 @@ export class StudentComponent {
       }
     })
   }
- 
 
-  getAllZones(){
-    if(this.districtModel){
+
+  getAllZones() {
+    if (this.districtModel) {
       const district = { "District_name": this.districtModel };
-      this.httpService.post('school/getDistrictZone',district).subscribe((res:any)=>{
+      this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
         this.allZones = res.ZoneSchool;
       })
-    }else{
-    this.httpService.get('school/zonename').subscribe((res:any)=>{
-      this.allZones = res.ZoneNames;
-    })}
+    } else {
+      this.httpService.get('school/zonename').subscribe((res: any) => {
+        this.allZones = res.ZoneNames;
+      })
+    }
   }
-  
-    
+
+
   getStudentGraphData() {
     this.spinner.show();
     this.httpService.get('studentgraph/student-graph-count').subscribe((data: any) => {
@@ -96,8 +97,8 @@ export class StudentComponent {
     this.httpService.post('studentgraph/student-graph-count-districtname', district).subscribe((data: any) => {
       if (data) {
         this.setAllGraphData(data);
-       this. getAllZones()
-       this.getAllSchools()
+        this.getAllZones()
+        this.getAllSchools()
         this.spinner.hide();
       }
     }, (error) => {
@@ -116,7 +117,7 @@ export class StudentComponent {
     this.httpService.post('studentgraph/student-graph-count-zonename', zone).subscribe((data: any) => {
       if (data) {
         this.setAllGraphData(data);
-              
+
       }
     }, (error) => {
       this.spinner.hide();
@@ -125,7 +126,7 @@ export class StudentComponent {
     // this.districtModel='';
     this.getAllSchools();
     this.spinner.hide();
-       
+
   }
 
   getGraphsBySchoolName() {
@@ -143,7 +144,7 @@ export class StudentComponent {
   }
 
   getAllSchools() {
-    if(this.districtModel && !this.ZoneModel){
+    if (this.districtModel && !this.ZoneModel) {
       const district = {
         District_name: this.districtModel
       }
@@ -154,7 +155,7 @@ export class StudentComponent {
           this.AllSchool = [];
         }
       });
-    } else{
+    } else {
       const zone = {
         Zone_Name: this.ZoneModel
       }
@@ -190,7 +191,7 @@ export class StudentComponent {
     this.getMinorityWiseCount(MinorityWiseStudCount)
     this.getStudentShiftWiseCounts(StudentShiftWiseCounts)
     this.getStudentManagementWiseCounts(StudentManagementWiseCounts)
-   
+
 
   }
 
@@ -198,14 +199,14 @@ export class StudentComponent {
     const Male_Count = studentsGender.maleStudents
     const Female_Count = studentsGender.femaleStudents
     const Other_Count = studentsGender.otherStudents
-    const series = [Male_Count,Female_Count,Other_Count]
+    const series = [Male_Count, Female_Count, Other_Count]
     const labels = [
       "Boys", "Girls", 'Other'
     ]
     this.studentsGenderRatio = this.graphService.PieGraph('donut', ' student')
     this.studentsGenderRatio.series = [...series];
     this.studentsGenderRatio.labels = [...labels];
-     }
+  }
 
   getStudentCatogoryWise(catogoryWiseStudentCount: any) {
     const StudentCount = catogoryWiseStudentCount.map((item: any) => item.count);

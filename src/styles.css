@@ -81,7 +81,7 @@ apx-chart .apexcharts-toolbar {
 }
 
 .table-btn-edit {
-    background-color: #6d7fcc;
+    background-color: #3d9be9;
     border-radius: 3px;
     /* width: 30px; */
     color: #fff;
@@ -95,6 +95,6 @@ apx-chart .apexcharts-toolbar {
 }
 
 .primary-color {
-    background-color: #6d7fcc !important;
+    background-color: #3d9be9 !important;
     color: #fff !important;
 }

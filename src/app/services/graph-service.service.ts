@@ -90,7 +90,7 @@ export class GraphService {
                     text: "",
                     style: {
                         fontSize: "14px",
-                        color: "#6d7fcc",
+                        color: "#3d9be9",
                         fontWeight: "600"
                     }
                 }
@@ -100,7 +100,7 @@ export class GraphService {
                     text: "",
                     style: {
                         fontSize: "14px",
-                        color: "#6d7fcc",
+                        color: "#3d9be9",
                         fontWeight: "600"
                     }
                 },
@@ -142,7 +142,7 @@ export class GraphService {
                     text: "",
                     style: {
                         fontSize: "14px",
-                        color: "#6d7fcc",
+                        color: "#3d9be9",
                         fontWeight: "600"
                     }
                 }
@@ -152,7 +152,7 @@ export class GraphService {
                     text: "",
                     style: {
                         fontSize: "14px",
-                        color: "#6d7fcc",
+                        color: "#3d9be9",
                         fontWeight: "600"
                     }
                 },
@@ -289,7 +289,7 @@ export class GraphService {
                     text: "",
                     style: {
                         fontSize: "14px",
-                        color: "#6d7fcc",
+                        color: "#3d9be9",
                         fontWeight: "600"
                     }
                 }
@@ -299,7 +299,7 @@ export class GraphService {
                     text: "",
                     style: {
                         fontSize: "14px",
-                        color: "#6d7fcc",
+                        color: "#3d9be9",
                         fontWeight: "600"
                     }
                 },

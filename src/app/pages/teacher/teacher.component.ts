@@ -133,34 +133,33 @@ export class TeacherComponent {
     }, (error) => {
       this.spinner.hide();
     });
-    this.getAllSchools();
+    this.getSchoolDataByZone();
+  }
+
+  getSchoolDataByZone() {
+    const zone = {
+      Zone_Name: this.zoneModel
+    }
+    this.httpService.post('school/getZoneSchool', zone).subscribe((data: any) => {
+      if (data && data.ZoneSchool) {
+        this.allSchools = data.ZoneSchool;
+      } else {
+        this.allSchools = [];
+      }
+    });
   }
 
   getAllSchools() {
-    if (this.districtModel) {
-      const district = {
-        District_name: this.districtModel
-      }
-      this.httpService.post('school/getDistrictSchool', district).subscribe((data: any) => {
-        if (data && data.districtSchools) {
-          this.allSchools = data.districtSchools;
-        } else {
-          this.allSchools = [];
-        }
-      });
+    const district = {
+      District_name: this.districtModel
     }
-    else {
-      const zone = {
-        Zone_Name: this.zoneModel
+    this.httpService.post('school/getDistrictSchool', district).subscribe((data: any) => {
+      if (data && data.districtSchools) {
+        this.allSchools = data.districtSchools;
+      } else {
+        this.allSchools = [];
       }
-      this.httpService.post('school/getZoneSchool', zone).subscribe((data: any) => {
-        if (data && data.ZoneSchool) {
-          this.allSchools = data.ZoneSchool;
-        } else {
-          this.allSchools = [];
-        }
-      });
-    }
+    });
   }
 
   getGraphsBySchoolName() {
