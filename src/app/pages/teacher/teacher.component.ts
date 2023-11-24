@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { GraphService } from 'src/app/services/graph-service.service';
@@ -30,12 +30,15 @@ export class TeacherComponent {
   allZones: any;
   districtName: any;
   schoolName: any;
+  allTeacherData: any;
   designation: any;
   teacherCategory: any;
   streamWiseTeacher: any;
   minorityWiseTeacher: any;
   allData: any;
+  @ViewChild('openModal') openModal: any;
 
+  config: any;
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService) { }
 
   ngOnInit() {
@@ -173,6 +176,7 @@ export class TeacherComponent {
         this.spinner.hide();
       }
       this.spinner.hide();
+      // this.getTeachersByGender();
     })
   }
 
@@ -184,6 +188,30 @@ export class TeacherComponent {
     this.teacherGenderRatio.series = [...series];
     this.teacherGenderRatio.chart.type = "pie";
     this.teacherGenderRatio.labels = [...categories];
+    this.teacherGenderRatio.chart.events = {
+      dataPointSelection: (event: any, chartContext: any, config: any) => {
+        console.log(config);
+        this.config = config;
+        const parameter = {
+          "gender": config.dataPointIndex == 0 ? 'Male' : 'Female',
+          "schname": this.schoolModel
+        }
+        this.getTeachersByGender();
+      }
+    }
+  }
+
+  getTeachersByGender() {
+    const parameter = {
+      "gender": this.config.dataPointIndex == 0 ? 'Male' : 'Female',
+      "schname": this.schoolModel
+    }
+    this.httpService.post('teacher/get-teachers-by-gender', parameter).subscribe((res: any) => {
+      this.allTeacherData = res;
+      this.openModal.nativeElement.click();
+      // return;
+      // alert(JSON.stringify(this.allTeacherData))
+    })
   }
 
   getShiftWiseSchools(shiftWiseCount: any) {
@@ -293,5 +321,8 @@ export class TeacherComponent {
       this.minorityWiseTeacher.series.push(data[i].teacherMinorityWiseCount);
       this.minorityWiseTeacher.labels.push(data[i].minority);
     }
+  }
+
+  openModal1() {
   }
 }
