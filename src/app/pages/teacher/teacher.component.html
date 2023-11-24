@@ -156,20 +156,22 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+  <div class="modal-dialog modal-dialog-scrollable modal-xl">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Teacher Details</h5>
+      <div class="modal-header" style="background-color: #b3d64d;">
+        <h5 class="modal-title" *ngIf="configGender" id="exampleModalLabel" >Teacher Details By Gender: ({{configGender?.dataPointIndex == 0 ? 'Male' : 'Female'}}) </h5>
+        <h5 class="modal-title" *ngIf="configDesignation" id="exampleModalLabel" >Teacher Details By Designation: ({{allData.postdescWiseTeacherCounts[configDesignation]._id}}) </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        {{allTeacherData?.length}}
-        <table>
-          <thead>
-            <tr>
+        
+        <table class="table table-responsive table-hover table-bordered table-striped">
+          <thead class="thead-light">
+            <tr class="table-bordered " >
+              <th>Sr No</th>
               <th>Name</th>
               <th>Emp. Id</th>
-              <th>Joining Date</th>
+              <th style="width: 112px;">Joining Date</th>
               <th>School</th>
               <th>Designation</th>
               <th>Gender</th>
@@ -178,7 +180,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let data of allTeacherData">
+            <tr *ngFor="let data of allTeacherData;let i = index">
+              <td>{{i+1}}</td>
               <td>{{data.Name}}</td>
               <td>{{data.empid}}</td>
               <td>{{data.JoiningDate}}</td>
