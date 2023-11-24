@@ -215,6 +215,9 @@ export class TeacherComponent {
     })
   }
 
+  
+  
+
   getShiftWiseSchools(shiftWiseCount: any) {
     let Morning = 0; let Afternoon = 0; let Evening = 0; let General = 0;
     for (let i = 0; i < shiftWiseCount.length; i++) {
