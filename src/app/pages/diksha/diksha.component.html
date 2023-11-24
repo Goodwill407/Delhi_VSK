@@ -41,14 +41,16 @@
                 <apx-chart [series]="averageLinkedQRCountGraph?.series" [chart]="averageLinkedQRCountGraph?.chart"
                     [dataLabels]="averageLinkedQRCountGraph?.dataLabels"
                     [plotOptions]="averageLinkedQRCountGraph?.plotOptions" [xaxis]="averageLinkedQRCountGraph?.xaxis"
-                    [legend]="averageLinkedQRCountGraph?.legend"></apx-chart>
+                    [legend]="averageLinkedQRCountGraph?.legend" [fill]="averageLinkedQRCountGraph?.fill"
+                    [colors]="averageLinkedQRCountGraph?.colors"></apx-chart>
             </div>
             <div class="column">
                 <h5 class="header-bg p-2 m-2">Average Resource Count</h5>
                 <apx-chart [series]="averageResourceCountGraph?.series" [chart]="averageResourceCountGraph?.chart"
                     [dataLabels]="averageResourceCountGraph?.dataLabels"
                     [plotOptions]="averageResourceCountGraph?.plotOptions" [xaxis]="averageResourceCountGraph?.xaxis"
-                    [legend]="averageResourceCountGraph?.legend"></apx-chart>
+                    [legend]="averageResourceCountGraph?.legend" [fill]="averageResourceCountGraph?.fill"
+                    [colors]="averageResourceCountGraph?.colors"></apx-chart>
             </div>
         </div>
     </div>
@@ -76,21 +78,24 @@
                 <apx-chart [series]="averageQRCodeCoverageGraph?.series" [chart]="averageQRCodeCoverageGraph?.chart"
                     [dataLabels]="averageQRCodeCoverageGraph?.dataLabels"
                     [plotOptions]="averageQRCodeCoverageGraph?.plotOptions" [xaxis]="averageQRCodeCoverageGraph?.xaxis"
-                    [legend]="averageQRCodeCoverageGraph?.legend"></apx-chart>
+                    [legend]="averageQRCodeCoverageGraph?.legend" [fill]="averageQRCodeCoverageGraph?.fill"
+                    [colors]="averageQRCodeCoverageGraph?.colors"></apx-chart>
             </div>
             <div class="column">
                 <h5 class="header-bg p-2 m-2">Average QR Code Linked Content</h5>
                 <apx-chart [series]="averageQRCodeCoverageGraph?.series" [chart]="averageQRCodeCoverageGraph?.chart"
                     [dataLabels]="averageQRCodeCoverageGraph?.dataLabels"
                     [plotOptions]="averageQRCodeCoverageGraph?.plotOptions" [xaxis]="averageQRCodeCoverageGraph?.xaxis"
-                    [legend]="averageQRCodeCoverageGraph?.legend"></apx-chart>
+                    [legend]="averageQRCodeCoverageGraph?.legend" [fill]="averageQRCodeCoverageGraph?.fill"
+                    [colors]="averageQRCodeCoverageGraph?.colors"></apx-chart>
             </div>
             <div class="column">
                 <h5 class="header-bg p-2 m-2">Average Total QR Code</h5>
                 <apx-chart [series]="averageQRCodeCoverageGraph?.series" [chart]="averageQRCodeCoverageGraph?.chart"
                     [dataLabels]="averageQRCodeCoverageGraph?.dataLabels"
                     [plotOptions]="averageQRCodeCoverageGraph?.plotOptions" [xaxis]="averageQRCodeCoverageGraph?.xaxis"
-                    [legend]="averageQRCodeCoverageGraph?.legend"></apx-chart>
+                    [legend]="averageQRCodeCoverageGraph?.legend" [fill]="averageQRCodeCoverageGraph?.fill"
+                    [colors]="averageQRCodeCoverageGraph?.colors"></apx-chart>
             </div>
         </div>
     </div>
@@ -124,15 +129,16 @@
                 <h5 class="header-bg p-2 m-2">Total Counts</h5>
                 <apx-chart [series]="TotalCountsGraph?.series" [chart]="TotalCountsGraph?.chart"
                     [labels]="TotalCountsGraph?.labels" [fill]="TotalCountsGraph?.fill"
-                    [dataLabels]="TotalCountsGraph?.dataLabels" [plotOptions]="TotalCountsGraph?.plotOptions"
-                    [responsive]="TotalCountsGraph?.responsive" [legend]="TotalCountsGraph?.legend"></apx-chart>
+                    [colors]="TotalCountsGraph?.colors" [dataLabels]="TotalCountsGraph?.dataLabels"
+                    [plotOptions]="TotalCountsGraph?.plotOptions" [responsive]="TotalCountsGraph?.responsive"
+                    [legend]="TotalCountsGraph?.legend"></apx-chart>
             </div>
 
             <div class="column">
                 <h5 class="header-bg p-2 m-2">Average No. Of Plays</h5>
                 <apx-chart [series]="Average_no_of_playsGraph?.series" [chart]="Average_no_of_playsGraph?.chart"
                     [labels]="Average_no_of_playsGraph?.labels" [fill]="Average_no_of_playsGraph?.fill"
-                    [dataLabels]="Average_no_of_playsGraph?.dataLabels"
+                    [colors]="Average_no_of_playsGraph?.colors" [dataLabels]="Average_no_of_playsGraph?.dataLabels"
                     [plotOptions]="Average_no_of_playsGraph?.plotOptions"
                     [responsive]="Average_no_of_playsGraph?.responsive"
                     [legend]="Average_no_of_playsGraph?.legend"></apx-chart>
@@ -142,7 +148,7 @@
                 <h5 class="header-bg p-2 m-2">Average Play Time</h5>
                 <apx-chart [series]="Average_play_timeGraph?.series" [chart]="Average_play_timeGraph?.chart"
                     [labels]="Average_play_timeGraph?.labels" [fill]="Average_play_timeGraph?.fill"
-                    [dataLabels]="Average_play_timeGraph?.dataLabels"
+                    [colors]="averageQRCodeCoverageGraph?.colors" [dataLabels]="Average_play_timeGraph?.dataLabels"
                     [plotOptions]="Average_play_timeGraph?.plotOptions"
                     [responsive]="Average_play_timeGraph?.responsive"
                     [legend]="Average_play_timeGraph?.legend"></apx-chart>

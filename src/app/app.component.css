@@ -25,8 +25,8 @@ a:focus {
 }
 
 .navbar {
-    padding: 15px 10px;
-    background: #fff;
+    /* padding: 15px 10px; */
+    background-color: #3d9be9;
     border: none;
     border-radius: 0;
     /* margin-bottom: 20px; */
@@ -37,6 +37,12 @@ a:focus {
     box-shadow: none;
     outline: none !important;
     border: none;
+}
+
+.header-font {
+    font-size: 46px;
+    margin: 0;
+    font-weight: bold;
 }
 
 .line {
@@ -117,7 +123,7 @@ span {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #6d7fcc;
+    background: #3d9be9;
 }
 
 #sidebar .sidebar-header strong {
@@ -149,7 +155,7 @@ span {
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: #fff;
-    background: #6d7fcc;
+    background: #3d9be9;
 }
 
 a[data-toggle="collapse"] {
@@ -167,7 +173,7 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6d7fcc;
+    background: #3d9be9;
 }
 
 ul.CTAs {
@@ -189,7 +195,7 @@ a.download {
 
 a.article,
 a.article:hover {
-    background: #6d7fcc !important;
+    background: #3d9be9 !important;
     color: #fff !important;
 } */
 
@@ -262,7 +268,7 @@ a.article:hover {
         NEW SIDE BAR
 -----------------------------------*/
 .sidebarMenu {
-    background-color: #6d7fcc;
+    background-color: #3d9be9;
     color: #fff;
     width: auto;
     /* height: 100vh; */
@@ -431,4 +437,9 @@ a.article:hover {
 #content {
     background-image: url("../../src/assets/images/Dashboard/bg.png");
     background-size: cover;
+}
+
+#sidebarCollapse {
+    background-color: #b3d64d;
+    color: #fff;
 }

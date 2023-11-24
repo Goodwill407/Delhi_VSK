@@ -73,15 +73,15 @@
     <h5 class="header-bg p-2 m-2">Shift wise Teacher</h5>
     <apx-chart [series]="shiftWiseSchools?.series" [chart]="shiftWiseSchools?.chart" [labels]="shiftWiseSchools?.labels"
       [fill]="shiftWiseSchools?.fill" [stroke]="shiftWiseSchools?.stroke" [responsive]="shiftWiseSchools?.responsive"
-      [legend]="shiftWiseSchools?.legend"></apx-chart>
+      [legend]="shiftWiseSchools?.legend" [colors]="shiftWiseSchools?.colors"></apx-chart>
   </div>
   <!--  -->
   <div class="column">
     <h5 class="header-bg p-2 m-2">Schools Management Wise Teacher</h5>
     <apx-chart [series]="schoolsManagementWiseTeacher?.series" [chart]="schoolsManagementWiseTeacher?.chart"
       [labels]="schoolsManagementWiseTeacher?.labels" [fill]="schoolsManagementWiseTeacher?.fill"
-      [dataLabels]="schoolsManagementWiseTeacher?.dataLabels" [plotOptions]="schoolsManagementWiseTeacher?.plotOptions"
-      [responsive]="schoolsManagementWiseTeacher?.responsive"
+      [colors]="schoolsManagementWiseTeacher?.colors" [dataLabels]="schoolsManagementWiseTeacher?.dataLabels"
+      [plotOptions]="schoolsManagementWiseTeacher?.plotOptions" [responsive]="schoolsManagementWiseTeacher?.responsive"
       [legend]="schoolsManagementWiseTeacher?.legend"></apx-chart>
   </div>
 
@@ -90,7 +90,7 @@
     <apx-chart [series]="teacherCategory?.series" [chart]="teacherCategory?.chart"
       [dataLabels]="teacherCategory?.dataLabels" [plotOptions]="teacherCategory?.plotOptions"
       [xaxis]="teacherCategory?.xaxis" [yaxis]="teacherCategory?.yaxis" [colors]="teacherCategory?.colors"
-      [title]="teacherCategory?.title" [legend]="teacherCategory?.legend"></apx-chart>
+      [title]="teacherCategory?.title" [legend]="teacherCategory?.legend" [fill]="teacherCategory?.fill"></apx-chart>
   </div>
   <!--  -->
   <div class="column">
@@ -99,7 +99,7 @@
       [dataLabels]="experienceWiseTeacher?.dataLabels" [plotOptions]="experienceWiseTeacher?.plotOptions"
       [xaxis]="experienceWiseTeacher?.xaxis" [yaxis]="experienceWiseTeacher?.yaxis"
       [colors]="experienceWiseTeacher?.colors" [title]="experienceWiseTeacher?.title"
-      [legend]="experienceWiseTeacher?.legend"></apx-chart>
+      [legend]="experienceWiseTeacher?.legend" [fill]="experienceWiseTeacher?.fill"></apx-chart>
   </div>
   <!--  -->
   <div class="column">
@@ -107,7 +107,8 @@
     <apx-chart [series]="schoolTypeWiseCount?.series" [chart]="schoolTypeWiseCount?.chart"
       [labels]="schoolTypeWiseCount?.labels" [fill]="schoolTypeWiseCount?.fill"
       [dataLabels]="schoolTypeWiseCount?.dataLabels" [plotOptions]="schoolTypeWiseCount?.plotOptions"
-      [responsive]="schoolTypeWiseCount?.responsive" [legend]="schoolTypeWiseCount?.legend"></apx-chart>
+      [responsive]="schoolTypeWiseCount?.responsive" [legend]="schoolTypeWiseCount?.legend"
+      [colors]="schoolTypeWiseCount?.colors"></apx-chart>
   </div>
 
   <!--  -->
@@ -118,23 +119,23 @@
       [responsive]="streamWiseTeacher?.responsive" [legend]="streamWiseTeacher?.legend"></apx-chart>
   </div> -->
 
-  <div class="column">
-    <h5 class="header-bg p-2 m-2">Stream Wise Student</h5>
+  <!-- <div class="column">
+    <h5 class="header-bg p-2 m-2">Stream Wise Teacher</h5>
     <apx-chart [series]="streamWiseTeacher?.series" [chart]="streamWiseTeacher?.chart"
       [dataLabels]="streamWiseTeacher?.dataLabels" [plotOptions]="streamWiseTeacher?.plotOptions"
       [xaxis]="streamWiseTeacher?.xaxis" [yaxis]="streamWiseTeacher?.yaxis" [labels]="streamWiseTeacher?.labels"
-      [legend]="streamWiseTeacher?.legend" [colors]="streamWiseTeacher?.colors"
-      [grid]="streamWiseTeacher?.grid"></apx-chart>
-  </div>
+      [legend]="streamWiseTeacher?.legend" [colors]="streamWiseTeacher?.colors" [grid]="streamWiseTeacher?.grid"
+      [fill]="streamWiseTeacher?.fill"></apx-chart>
+  </div> -->
 
   <!--  -->
-  <div class="column">
+  <!-- <div class="column">
     <h5 class="header-bg p-2 m-2">Minority wise Teacher</h5>
     <apx-chart [series]="minorityWiseTeacher?.series" [chart]="minorityWiseTeacher?.chart"
       [labels]="minorityWiseTeacher?.labels" [fill]="minorityWiseTeacher?.fill"
       [dataLabels]="minorityWiseTeacher?.dataLabels" [plotOptions]="minorityWiseTeacher?.plotOptions"
       [responsive]="minorityWiseTeacher?.responsive" [legend]="minorityWiseTeacher?.legend"></apx-chart>
-  </div>
+  </div> -->
 
   <!--  -->
   <div class="column wide">
@@ -142,14 +143,14 @@
     <apx-chart [series]="designation?.series" [chart]="designation?.chart" [dataLabels]="designation?.dataLabels"
       [plotOptions]="designation?.plotOptions" [xaxis]="designation?.xaxis" [yaxis]="designation?.yaxis"
       [labels]="designation?.labels" [legend]="designation?.legend" [colors]="designation?.colors"
-      [grid]="designation?.grid"></apx-chart>
+      [grid]="designation?.grid" [fill]="designation?.fill"></apx-chart>
   </div>
 </div>
 
 
 <!--  -->
 <!-- Button trigger modal -->
-<button #openModal data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal">
+<button #openModal data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal" (click)="getTeachersByGender(true)">
 
 </button>
 

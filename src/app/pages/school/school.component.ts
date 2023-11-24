@@ -202,9 +202,16 @@ export class SchoolComponent {
     this.shiftWiseSchools = this.graphService.PolarGraph();
     const entries = Object.entries(shiftWiseCount);
     entries.forEach(([key, value]) => {
-      this.shiftWiseSchools.series.push(value);
-      this.shiftWiseSchools.labels.push(key);
+      if (Number(value) > 0) {
+        this.shiftWiseSchools.series.push(value);
+        this.shiftWiseSchools.labels.push(key);
+      }
     });
+    for (let i = 0; i < this.shiftWiseSchools.series.length; i++) {
+      if (this.shiftWiseSchools.series[i] > 0 && this.shiftWiseSchools.series[i] < 2) {
+        this.shiftWiseSchools.yaxis.show = false;
+      }
+    }
   }
 
   getLowClassHighClass(lowClassHighClass: any) {
@@ -238,6 +245,11 @@ export class SchoolComponent {
 
   getMinorityCount(minorityCount: any) {
     this.minorityCount = this.graphService.PieGraph('donut', ' Schools');
+    let colors = [];
+    for (let i = 0; i < 8; i++) {
+      colors.push(this.getRandomColor())
+    }
+    this.minorityCount.fill.colors = colors;
     for (let i = 0; i < minorityCount.length; i++) {
       this.minorityCount.series.push(minorityCount[i].count);
       this.minorityCount.labels.push(minorityCount[i].minority);
@@ -267,6 +279,15 @@ export class SchoolComponent {
         this.getGraphsByDistrictName();
       }
     })
+  }
+
+  getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
   }
 
 }

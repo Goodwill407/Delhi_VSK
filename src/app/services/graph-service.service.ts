@@ -1,57 +1,63 @@
 import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
 })
 export class GraphService {
+    itemCount: any = 0;
 
     districtWiseGraph() {
         const graphData = {
             series: [
-              {
-                name: "PRESENT",
-                data: []
-              },
-              {
-                name: "ABSENT",
-                data: []
-              }
+                {
+                    name: "PRESENT",
+                    data: []
+                },
+                {
+                    name: "ABSENT",
+                    data: []
+                }
             ],
             chart: {
-              type: "bar",
-              height: 300,
-              stacked: true,
-              stackType: "100%"
+                type: "bar",
+                height: 300,
+                stacked: true,
+                stackType: "100%"
             },
             responsive: [
-              {
-                breakpoint: 480,
-                options: {
-                  legend: {
-                    position: "bottom",
-                    offsetX: -10,
-                    offsetY: 0
-                  }
+                {
+                    breakpoint: 480,
+                    options: {
+                        legend: {
+                            position: "bottom",
+                            offsetX: -10,
+                            offsetY: 0
+                        }
+                    }
                 }
-              }
             ],
             xaxis: {
-              categories: []
+                categories: []
             },
             fill: {
-              opacity: 1
+                opacity: 1
             },
             legend: {
-              position: "right",
-              offsetX: 0,
-              offsetY: 50
-            
-          }
+                position: "right",
+                offsetX: 0,
+                offsetY: 50
+
+            }
         }
         return graphData;
     }
 
     VerticleBarGraph() {
+        let colors = [];
+        for (let i = 0; i < 8; i++) {
+            colors.push(this.getRandomColor())
+        }
         const graphData = {
             series: [],
             chart: {
@@ -62,6 +68,10 @@ export class GraphService {
                     }
                 }
             },
+            fill: {
+                colors: colors
+            },
+            colors: colors,
             plotOptions: {
                 bar: {
                     columnWidth: "45%",
@@ -90,7 +100,7 @@ export class GraphService {
                     text: "",
                     style: {
                         fontSize: "14px",
-                        color: "#6d7fcc",
+                        color: "#3d9be9",
                         fontWeight: "600"
                     }
                 }
@@ -100,7 +110,7 @@ export class GraphService {
                     text: "",
                     style: {
                         fontSize: "14px",
-                        color: "#6d7fcc",
+                        color: "#3d9be9",
                         fontWeight: "600"
                     }
                 },
@@ -142,7 +152,7 @@ export class GraphService {
                     text: "",
                     style: {
                         fontSize: "14px",
-                        color: "#6d7fcc",
+                        color: "#3d9be9",
                         fontWeight: "600"
                     }
                 }
@@ -152,7 +162,7 @@ export class GraphService {
                     text: "",
                     style: {
                         fontSize: "14px",
-                        color: "#6d7fcc",
+                        color: "#3d9be9",
                         fontWeight: "600"
                     }
                 },
@@ -161,7 +171,20 @@ export class GraphService {
         return graphData;
     }
 
+    getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
     PieGraph(chartType: any, totalType?: any) {
+        let colors = [];
+        for (let i = 0; i < 8; i++) {
+            colors.push(this.getRandomColor())
+        }
         const graphData = {
             series: [],
             chart: {
@@ -172,8 +195,9 @@ export class GraphService {
                 enabled: false
             },
             fill: {
-                type: "gradient"
+                colors: colors
             },
+            colors: colors,
             plotOptions: {
                 pie: {
                     donut: {
@@ -213,6 +237,10 @@ export class GraphService {
     }
 
     PolarGraph() {
+        let colors = [];
+        for (let i = 0; i < 8; i++) {
+            colors.push(this.getRandomColor())
+        }
         const graphData = {
             series: [],
             chart: {
@@ -223,10 +251,14 @@ export class GraphService {
                 colors: ["#fff"]
             },
             fill: {
-                opacity: 0.8
+                colors: colors
             },
+            colors: colors,
             legend: {
                 position: 'bottom'
+            },
+            yaxis: {
+                show: true
             },
             responsive: [
                 {
@@ -289,7 +321,7 @@ export class GraphService {
                     text: "",
                     style: {
                         fontSize: "14px",
-                        color: "#6d7fcc",
+                        color: "#3d9be9",
                         fontWeight: "600"
                     }
                 }
@@ -299,13 +331,28 @@ export class GraphService {
                     text: "",
                     style: {
                         fontSize: "14px",
-                        color: "#6d7fcc",
+                        color: "#3d9be9",
                         fontWeight: "600"
                     }
                 },
             }
         }
         return graphData;
+    }
+
+    private itemCountSubject = new BehaviorSubject<number>(0);
+
+    getItemCountObservable() {
+        return this.itemCountSubject.asObservable();
+    }
+
+    private updateItemCount() {
+        this.itemCountSubject.next(this.itemCount);
+    }
+
+    addToCart(): void {
+        this.itemCount++;
+        this.updateItemCount();
     }
 
 }

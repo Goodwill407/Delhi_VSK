@@ -54,8 +54,8 @@ export class LoginPageComponent {
         this.router.navigateByUrl('/dashboard/teacher-dashboard');
       } else if (user.role == "student") {
         this.router.navigateByUrl('/dashboard/attend-quiz');
-      } else if (user.role == "admin") {
-        this.router.navigateByUrl('/dashboard');
+      } else if (user.role == "user") {
+        this.router.navigateByUrl('/content/admin-dashboard');
       }
     }
   }
