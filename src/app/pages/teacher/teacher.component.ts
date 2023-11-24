@@ -63,13 +63,12 @@ export class TeacherComponent {
   }
 
   getAllDistricts() {
-    this.httpService.get('school/districtNames').subscribe((data: any) => {
-      if (data && data.districtNames.length > 0) {
-        this.allDistricts = data.districtNames;
+    this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
+      if (data && data.length > 0) {
+        this.allDistricts = data;
       }
     })
   }
-
 
   getAllTeacherData() {
     this.spinner.show();
@@ -95,8 +94,8 @@ export class TeacherComponent {
     this.getDesignation(data.postdescWiseTeacherCounts);
     this.getExperianceOfTeachers(data.experianceOfTeachers);
     this.getSchoolTypeWiseCount(data.teacherTypeOfSchoolWiseCounts);
-    this.getStreamWiseCount(data.teacherStreamWiseCounts);
-    this.getMinorityWiseCount(data.teacherMinorityWiseCounts);
+    // this.getStreamWiseCount(data.teacherStreamWiseCounts);
+    // this.getMinorityWiseCount(data.teacherMinorityWiseCounts);
     this.spinner.hide();
   }
 
