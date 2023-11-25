@@ -42,7 +42,9 @@ export class TeacherComponent {
   itemCount: number | undefined;
   subscription: Subscription | undefined;
 
-  config: any;
+  configGender: any;
+  commonName: any;
+  configDesignation: any;
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService) { }
 
   ngOnInit() {
@@ -54,10 +56,10 @@ export class TeacherComponent {
       .getItemCountObservable()
       .subscribe((count) => {
         this.itemCount = count;
-        if (this.itemCount) {
-          if (this.schoolModel) {
-            this.getTeachersByGender(false);
-          }
+        if (this.itemCount && this.schoolModel && this.configGender) {
+          this.getTeachersByGender(false);
+        }else if(this.itemCount && this.schoolModel && this.configDesignation){
+          this.getTeachersByDesignation(false);
         }
       });
   }
@@ -160,6 +162,7 @@ export class TeacherComponent {
     this.httpService.post('school/getZoneSchool', zone).subscribe((data: any) => {
       if (data && data.ZoneSchool) {
         this.allSchools = data.ZoneSchool;
+        this.schoolModel = ''
       } else {
         this.allSchools = [];
       }
@@ -190,10 +193,14 @@ export class TeacherComponent {
         this.spinner.hide();
       }
       this.spinner.hide();
-      // this.getTeachersByGender();
     })
   }
 
+  teacherDataClear(){
+    this.configDesignation = null;
+    this.configGender = null;
+    this.allTeacherData = [];
+  }
 
   getTeachersGenderRatio(teachersGender: any) {
     const series = [teachersGender.totalMaleTeachers, teachersGender.totalFemaleTeachers];
@@ -204,7 +211,8 @@ export class TeacherComponent {
     this.teacherGenderRatio.labels = [...categories];
     this.teacherGenderRatio.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
-        this.config = config;
+        this.teacherDataClear();
+        this.configGender = config;
         const parameter = {
           "gender": config.dataPointIndex == 0 ? 'Male' : 'Female',
           "schname": this.schoolModel
@@ -216,7 +224,7 @@ export class TeacherComponent {
 
   getTeachersByGender(flash: any) {
     const parameter = {
-      "gender": this.config.dataPointIndex == 0 ? 'Male' : 'Female',
+      "gender": this.configGender.dataPointIndex == 0 ? 'Male' : 'Female',
       "schname": this.schoolModel
     }
     this.httpService.post('teacher/get-teachers-by-gender', parameter).subscribe((res: any) => {
@@ -275,6 +283,13 @@ export class TeacherComponent {
       this.teacherCategory.xaxis.categories.push(data[i].SchCategory);
     }
     this.teacherCategory.series = [...series];
+    this.teacherCategory.chart.events = {
+      dataPointSelection: (event: any, chartContext: any, config: any) => {
+        this.teacherDataClear();
+        this.commonName = 'Category';
+        this.getTachersBySchoolName();
+      }
+    }
 
   }
 
@@ -306,6 +321,39 @@ export class TeacherComponent {
     this.designation.xaxis.title.text = "Designation";
     this.designation.yaxis.title.text = "Teacher Count";
     this.designation.dataLabels.enabled = false;
+    this.designation.chart.events = {
+      dataPointSelection: (event: any, chartContext: any, config: any) => {
+        this.teacherDataClear();
+        this.configDesignation = config.dataPointIndex;
+        this.graphService.addToCart();
+      }
+    }
+  }
+
+  getTeachersByDesignation(flash: any) {
+    const parameter = {
+      "postdesc":this.allData.postdescWiseTeacherCounts[this.configDesignation]._id,
+      "schname": this.schoolModel
+    }
+    this.httpService.post('teacher-graph/postwisecount', parameter).subscribe((res: any) => {
+      this.allTeacherData = res;
+      if (!flash) {
+        this.openModal.nativeElement.click();
+      }
+    })
+  }
+
+  getTachersBySchoolName(){
+    const parameter = {
+      "schname": this.schoolModel
+    };
+    this.teacherDataClear();
+    this.httpService.post('teacher-graph/teachercount/schoolname', parameter).subscribe((res: any) => {
+      this.allTeacherData = res;
+      if (this.schoolModel) {
+        this.openModal.nativeElement.click();
+      }
+    });
   }
 
   getSchoolTypeWiseCount(data: any) {
@@ -322,7 +370,7 @@ export class TeacherComponent {
       data: []
     }];
     this.streamWiseTeacher = this.graphService.VerticleBarGraph();
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data?.length; i++) {
       series[0].data.push(data[i].teacherStreamWiseCount);
       this.streamWiseTeacher.xaxis.categories.push(data[i].stream);
     }
@@ -334,12 +382,10 @@ export class TeacherComponent {
 
   getMinorityWiseCount(data: any) {
     this.minorityWiseTeacher = this.graphService.PieGraph('donut', '');
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data?.length; i++) {
       this.minorityWiseTeacher.series.push(data[i].teacherMinorityWiseCount);
       this.minorityWiseTeacher.labels.push(data[i].minority);
     }
   }
 
-  openModal1() {
-  }
 }
