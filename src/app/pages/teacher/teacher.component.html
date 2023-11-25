@@ -6,19 +6,19 @@
   <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
     <option value="">All Districts</option>
     <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
-      {{district.D_ID}} - {{district.districtName}}
+        {{district.districtName}}  ({{district.D_ID}})
     </option>
   </select>
   <select class="form-select w-25 ms-2" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
     <option value="" disabled>All Zones</option>
     <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
-      {{zone.Z_ID}} - {{zone.Zone_Name}}
+      {{zone.Zone_Name}}  ({{zone.Z_ID}})
     </option>
   </select>
   <select class="form-select w-25 ms-2" [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
     <option value="" disabled>All School</option>
     <option *ngFor="let school of allSchools" value="{{school.School_Name}}">
-      {{school.Schoolid}} - {{school.School_Name}}
+     {{school.School_Name}} - ({{school.Schoolid}})
     </option>
   </select>
 </div>
@@ -33,7 +33,7 @@
 <div class="container1">
   <div class="column text-center">
     <h5 class="header-bg p-2 m-2">Total Teacher</h5>
-    <div class="d-flex justify-content-around mt-4">
+    <div class="d-flex justify-content-around mt-4" (click)="getTachersBySchoolName()">
       <img class="ms-2" src="../../../assets/images/Dashboard/lady Teacher.png" style="height: 120px;" alt="">
       <div class="d-block ms-1 text-center">
         <h1 class="fw-bold">{{allData?.totalTeachers}}</h1>
@@ -162,6 +162,7 @@
       <div class="modal-header" style="background-color: #b3d64d;">
         <h5 class="modal-title" *ngIf="configGender" id="exampleModalLabel" >Teacher Details By Gender: ({{configGender?.dataPointIndex == 0 ? 'Male' : 'Female'}}) </h5>
         <h5 class="modal-title" *ngIf="configDesignation" id="exampleModalLabel" >Teacher Details By Designation: ({{allData.postdescWiseTeacherCounts[configDesignation]._id}}) </h5>
+        <h5 class="modal-title" *ngIf="commonName" id="exampleModalLabel" >Teacher Details By {{commonName}} </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
