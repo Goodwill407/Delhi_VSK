@@ -222,9 +222,17 @@ export class SchoolComponent {
 
   getTypesOfSchools(typesOfSchools: any) {
     this.typesOfSchools = this.graphService.PolarGraph();
+    const entries = Object.entries(typesOfSchools);
+    entries.forEach(([key, value]) => {
+      if (Number(value) > 0) {
+        this.typesOfSchools.series.push(value);
+        this.typesOfSchools.labels.push(key);
+      }
+    });
     for (let i = 0; i < typesOfSchools.length; i++) {
-      this.typesOfSchools.series.push(typesOfSchools[i].count);
-      this.typesOfSchools.labels.push(typesOfSchools[i].typeOfSchool);
+      if (this.typesOfSchools.series[i] > 0 && this.typesOfSchools.series[i] < 2) {
+        this.typesOfSchools.yaxis.show = false;
+      }
     }
   }
 

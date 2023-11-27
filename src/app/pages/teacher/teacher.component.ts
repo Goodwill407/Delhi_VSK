@@ -134,7 +134,7 @@ export class TeacherComponent {
       })
     } else {
       this.httpService.get('school/zonename').subscribe((res: any) => {
-        this.allZones = res.ZoneNames;
+        this.allZones = res.ZoneInfo;
       })
     }
   }
@@ -182,12 +182,20 @@ export class TeacherComponent {
     });
   }
 
+  getSchoolId(schoolName:any){
+    for(let i = 0;i < this.allSchools.length; i++){
+      if(schoolName == this.allSchools[i].School_Name){
+        return this.allSchools[i].Schoolid;
+      }
+    }
+  }
+
   getGraphsBySchoolName() {
     const school = {
-      schname: this.schoolModel
+      schname: this.schoolModel.Schoolid
     }
     this.spinner.show();
-    this.httpService.post('teacher-graph/school-category-wise/school', school).subscribe((data: any) => {
+    this.httpService.post('teacher-graph/school-category-wise/school',school).subscribe((data: any) => {
       if (data) {
         this.setAllGraphs(data);
         this.spinner.hide();
@@ -199,6 +207,7 @@ export class TeacherComponent {
   teacherDataClear(){
     this.configDesignation = null;
     this.configGender = null;
+    this.commonName = null;
     this.allTeacherData = [];
   }
 
@@ -215,7 +224,7 @@ export class TeacherComponent {
         this.configGender = config;
         const parameter = {
           "gender": config.dataPointIndex == 0 ? 'Male' : 'Female',
-          "schname": this.schoolModel
+          "schname": this.schoolModel.School_Name
         }
         this.graphService.addToCart();
       }
@@ -225,7 +234,7 @@ export class TeacherComponent {
   getTeachersByGender(flash: any) {
     const parameter = {
       "gender": this.configGender.dataPointIndex == 0 ? 'Male' : 'Female',
-      "schname": this.schoolModel
+      "schname": this.schoolModel.Schoolid
     }
     this.httpService.post('teacher/get-teachers-by-gender', parameter).subscribe((res: any) => {
       this.allTeacherData = res;
@@ -258,7 +267,14 @@ export class TeacherComponent {
     const series = [Morning, Afternoon, Evening, General]
     this.shiftWiseSchools = this.graphService.PolarGraph();
     this.shiftWiseSchools.series = [...series];
-    this.shiftWiseSchools.labels = ['Morning', 'Afternoon', 'Evening', 'General']
+    this.shiftWiseSchools.labels = ['Morning', 'Afternoon', 'Evening', 'General'];
+    this.shiftWiseSchools.chart.events = {
+      dataPointSelection: (event: any, chartContext: any, config: any) => {
+        this.teacherDataClear();
+        this.getTachersBySchoolName();
+        this.commonName = `Shift : ( ${shiftWiseCount[0].shift} )`;
+      }
+    }
   }
 
 
@@ -269,7 +285,15 @@ export class TeacherComponent {
       if (schoolManagementWise[i].shift == "Aided") { var aidedCount = schoolManagementWise[i].teacherManagmentWiseCount }
     }
     this.schoolsManagementWiseTeacher.series = [govCount ? govCount : 0, aidedCount ? aidedCount : 0];
-    this.schoolsManagementWiseTeacher.labels = ['Government', 'Aided']
+    this.schoolsManagementWiseTeacher.labels = ['Government', 'Aided'];
+    this.schoolsManagementWiseTeacher.chart.events = {
+      dataPointSelection: (event: any, chartContext: any, config: any) => {
+        this.teacherDataClear();
+        this.getTachersBySchoolName();
+        this.commonName = `Management : ( ${govCount > 0 ? 'Government': 'Aided'} )`;
+      }
+    }
+    
   }
 
   getCategoryWiseTeacher(data: any) {
@@ -286,8 +310,8 @@ export class TeacherComponent {
     this.teacherCategory.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         this.teacherDataClear();
-        this.commonName = 'Category';
         this.getTachersBySchoolName();
+        this.commonName = `Category : ( ${data[0].SchCategory} )`;
       }
     }
 
@@ -333,7 +357,7 @@ export class TeacherComponent {
   getTeachersByDesignation(flash: any) {
     const parameter = {
       "postdesc":this.allData.postdescWiseTeacherCounts[this.configDesignation]._id,
-      "schname": this.schoolModel
+      "schname": this.schoolModel.Schoolid
     }
     this.httpService.post('teacher-graph/postwisecount', parameter).subscribe((res: any) => {
       this.allTeacherData = res;
@@ -345,7 +369,7 @@ export class TeacherComponent {
 
   getTachersBySchoolName(){
     const parameter = {
-      "schname": this.schoolModel
+      "schname": this.schoolModel.Schoolid
     };
     this.teacherDataClear();
     this.httpService.post('teacher-graph/teachercount/schoolname', parameter).subscribe((res: any) => {
@@ -361,6 +385,13 @@ export class TeacherComponent {
     for (let i = 0; i < data.length; i++) {
       this.schoolTypeWiseCount.series.push(data[i].teacherTypeOfSchoolWiseCount);
       this.schoolTypeWiseCount.labels.push(data[i].typeOfSchool);
+    };
+    this.schoolTypeWiseCount.chart.events = {
+      dataPointSelection: (event: any, chartContext: any, config: any) => {
+        this.teacherDataClear();
+        this.getTachersBySchoolName();
+        this.commonName = `School Type : ( ${data[0].typeOfSchool} School )`;
+      }
     }
   }
 
