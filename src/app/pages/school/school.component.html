@@ -63,7 +63,7 @@
             [labels]="studentsGenderRatio?.labels" [fill]="studentsGenderRatio?.fill"
             [dataLabels]="studentsGenderRatio?.dataLabels" [plotOptions]="studentsGenderRatio?.plotOptions"
             [responsive]="studentsGenderRatio?.responsive" [legend]="studentsGenderRatio?.legend"
-            [colors]="studentsGenderRatio?.colors"></apx-chart>
+            [colors]="studentsGenderRatio?.colors" [tooltip]="studentsGenderRatio?.tooltip"></apx-chart>
     </div>
     <div class="column">
         <h5 class="header-bg p-2 m-2">Teachers Gender Ratio</h5>
@@ -71,7 +71,7 @@
             [labels]="teacherGenderRatio?.labels" [fill]="teacherGenderRatio?.fill"
             [dataLabels]="teacherGenderRatio?.dataLabels" [plotOptions]="teacherGenderRatio?.plotOptions"
             [responsive]="teacherGenderRatio?.responsive" [legend]="teacherGenderRatio?.legend"
-            [colors]="teacherGenderRatio?.colors"></apx-chart>
+            [colors]="teacherGenderRatio?.colors" [tooltip]="teacherGenderRatio?.tooltip"></apx-chart>
     </div>
     <div class="column">
         <h5 class="header-bg p-2 m-2">Schools By Management</h5>
@@ -79,21 +79,21 @@
             [labels]="schoolsByManagement?.labels" [fill]="schoolsByManagement?.fill"
             [dataLabels]="schoolsByManagement?.dataLabels" [plotOptions]="schoolsByManagement?.plotOptions"
             [responsive]="schoolsByManagement?.responsive" [legend]="schoolsByManagement?.legend"
-            [colors]="schoolsByManagement?.colors"></apx-chart>
+            [colors]="schoolsByManagement?.colors" [tooltip]="schoolsByManagement?.tooltip"></apx-chart>
     </div>
     <div class="column">
         <h5 class="header-bg p-2 m-2">Shift wise Schools</h5>
         <apx-chart [series]="shiftWiseSchools?.series" [chart]="shiftWiseSchools?.chart"
             [labels]="shiftWiseSchools?.labels" [fill]="shiftWiseSchools?.fill" [stroke]="shiftWiseSchools?.stroke"
             [responsive]="shiftWiseSchools?.responsive" [legend]="shiftWiseSchools?.legend"
-            [colors]="shiftWiseSchools?.colors" [yaxis]="shiftWiseSchools?.yaxis"></apx-chart>
+            [colors]="shiftWiseSchools?.colors" [yaxis]="shiftWiseSchools?.yaxis" [tooltip]="shiftWiseSchools?.tooltip"></apx-chart>
     </div>
     <div class="column">
         <h5 class="header-bg p-2 m-2">Types of schools</h5>
         <apx-chart [series]="typesOfSchools?.series" [chart]="typesOfSchools?.chart" [labels]="typesOfSchools?.labels"
             [fill]="typesOfSchools?.fill" [stroke]="typesOfSchools?.stroke" [responsive]="typesOfSchools?.responsive"
             [colors]="typesOfSchools?.colors" [legend]="typesOfSchools?.legend"
-            [yaxis]="shiftWiseSchools?.yaxis"></apx-chart>
+            [yaxis]="shiftWiseSchools?.yaxis" [tooltip]="typesOfSchools?.tooltip"></apx-chart>
     </div>
     <!-- <div class="column">
         <h5 class="header-bg p-2 m-2">Schools by minority</h5>

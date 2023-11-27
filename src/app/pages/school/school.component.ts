@@ -47,7 +47,7 @@ export class SchoolComponent {
   }
 
   getAllDistricts() {
-    this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
+    this.httpService.get('school/districtNames').subscribe((data: any) => {
       if (data && data.length > 0) {
         this.allDistricts = data;
       }
@@ -200,7 +200,7 @@ export class SchoolComponent {
   }
 
   getShiftWiseSchools(shiftWiseCount: any) {
-    this.shiftWiseSchools = this.graphService.PolarGraph();
+    this.shiftWiseSchools = this.graphService.PolarGraph('Schools');
     const entries = Object.entries(shiftWiseCount);
     entries.forEach(([key, value]) => {
       if (Number(value) > 0) {
@@ -222,7 +222,7 @@ export class SchoolComponent {
   }
 
   getTypesOfSchools(typesOfSchools: any) {
-    this.typesOfSchools = this.graphService.PolarGraph();
+    this.typesOfSchools = this.graphService.PolarGraph('Schools');
     if (typesOfSchools.length > 0) {
       typesOfSchools.forEach((key: any, value: any) => {
         if (Number(key.count) > 0) {

@@ -166,13 +166,13 @@ export class AttendanceComponent {
   }
 
   getGenderWisePresent(data: any) {
-    this.genderWisePresent = this.graphService.PieGraph('pie', '');
+    this.genderWisePresent = this.graphService.PieGraph({ chartType: 'pie', totalType: '' });
     this.genderWisePresent.series = [data.malePresentCount, data.femalePresentCount, data.otherPresentCount];
     this.genderWisePresent.labels = ['Male', 'Female', 'Others']
   }
 
   getGenderWiseAbsent(data: any) {
-    this.genderWiseAbsent = this.graphService.PieGraph('pie', '');
+    this.genderWiseAbsent = this.graphService.PieGraph({ chartType: 'pie', totalType: '' });
     this.genderWiseAbsent.series = [data.maleAbsentCount, data.femaleAbsentCount, data.otherAbsentCount];
     this.genderWiseAbsent.labels = ['Male', 'Female', 'Others']
   }

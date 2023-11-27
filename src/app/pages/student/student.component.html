@@ -49,13 +49,13 @@
     </div>
 
     <div class="column">
-        <h5 class="header-bg p-2 m-2">Student By Status Wise </h5>
+        <h5 class="header-bg p-2 m-2">Student By Status </h5>
         <apx-chart [series]="StudentStatusWiseCounts?.series" [chart]="StudentStatusWiseCounts?.chart"
             [labels]="StudentStatusWiseCounts?.labels" [fill]="StudentStatusWiseCounts?.fill"
             [dataLabels]="StudentStatusWiseCounts?.dataLabels"
             [plotOptions]="StudentStatusWiseCounts?.plotOptions"
             [responsive]="StudentStatusWiseCounts?.responsive" [legend]="StudentStatusWiseCounts?.legend"
-            [colors]="StudentStatusWiseCounts?.colors"></apx-chart>
+            [colors]="StudentStatusWiseCounts?.colors" [tooltip]="StudentStatusWiseCounts?.tooltip"></apx-chart>
     </div>
     
     <div class="column text-center">
@@ -71,7 +71,7 @@
             [labels]="studentsGenderRatio?.labels" [fill]="studentsGenderRatio?.fill"
             [dataLabels]="studentsGenderRatio?.dataLabels" [plotOptions]="studentsGenderRatio?.plotOptions"
             [responsive]="studentsGenderRatio?.responsive" [legend]="studentsGenderRatio?.legend"
-            [colors]="studentsGenderRatio?.colors"></apx-chart>
+            [colors]="studentsGenderRatio?.colors" [tooltip]="studentsGenderRatio?.tooltip"></apx-chart>
     </div>
 
     <div class="column">
@@ -79,7 +79,7 @@
         <apx-chart [series]="StudentShiftWiseCounts?.series" [chart]="StudentShiftWiseCounts?.chart"
             [labels]="StudentShiftWiseCounts?.labels" [fill]="StudentShiftWiseCounts?.fill"
             [stroke]="StudentShiftWiseCounts?.stroke" [responsive]="StudentShiftWiseCounts?.responsive"
-            [legend]="MinorityWiseStudCount?.legend" [colors]="StudentShiftWiseCounts?.colors"></apx-chart>
+            [legend]="MinorityWiseStudCount?.legend" [colors]="StudentShiftWiseCounts?.colors" [tooltip]="StudentShiftWiseCounts?.tooltip"></apx-chart>
     </div>
 
     <!-- <div class="column">
@@ -98,7 +98,7 @@
             [dataLabels]="StudentManagementWiseCounts?.dataLabels"
             [plotOptions]="StudentManagementWiseCounts?.plotOptions"
             [responsive]="StudentManagementWiseCounts?.responsive" [legend]="StudentManagementWiseCounts?.legend"
-            [colors]="StudentManagementWiseCounts?.colors"></apx-chart>
+            [colors]="StudentManagementWiseCounts?.colors" [tooltip]="StudentManagementWiseCounts?.tooltip"></apx-chart>
     </div>
 
     <!-- <div class="column">
@@ -114,7 +114,7 @@
         <h5 class="header-bg p-2 m-2">Student By Type Wise</h5>
         <apx-chart [series]="TypeOfStudSchool?.series" [chart]="TypeOfStudSchool?.chart"
             [labels]="TypeOfStudSchool?.labels" [responsive]="TypeOfStudSchool?.responsive"
-            [legend]="TypeOfStudSchool?.legend"></apx-chart>
+            [legend]="TypeOfStudSchool?.legend" [tooltip]="TypeOfStudSchool?.tooltip"></apx-chart>
     </div>
 
     <!-- <div class="column">
@@ -124,7 +124,7 @@
             [legend]="MinorityWiseStudCount?.legend"></apx-chart>
     </div> -->
 
-    <div class="column">
+    <div class="column wide">
         <h5 class="header-bg p-2 m-2">Student By School Category</h5>
         <apx-chart [series]="StudentCatogoryWiseCount?.series" [chart]="StudentCatogoryWiseCount?.chart"
           [dataLabels]="StudentCatogoryWiseCount?.dataLabels" [plotOptions]="StudentCatogoryWiseCount?.plotOptions"

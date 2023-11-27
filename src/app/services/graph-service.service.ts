@@ -197,6 +197,15 @@ export class GraphService {
             fill: {
                 colors: colors
             },
+            tooltip: {
+                y: {
+                    title: {
+                        formatter: () => {
+                            return totalType + ':'
+                        }
+                    }
+                }
+            },
             colors: colors,
             plotOptions: {
                 pie: {
@@ -236,7 +245,7 @@ export class GraphService {
         return graphData;
     }
 
-    PolarGraph() {
+    PolarGraph(toolTipName?: any) {
         let colors = [];
         for (let i = 0; i < 8; i++) {
             colors.push(this.getRandomColor())
@@ -259,6 +268,15 @@ export class GraphService {
             },
             yaxis: {
                 show: true
+            },
+            tooltip: {
+                y: {
+                    title: {
+                        formatter: () => {
+                            return toolTipName + ':'
+                        }
+                    }
+                }
             },
             responsive: [
                 {

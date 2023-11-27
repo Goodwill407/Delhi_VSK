@@ -58,7 +58,7 @@ export class TeacherComponent {
         this.itemCount = count;
         if (this.itemCount && this.schoolModel && this.configGender) {
           this.getTeachersByGender(false);
-        }else if(this.itemCount && this.schoolModel && this.configDesignation){
+        } else if (this.itemCount && this.schoolModel && this.configDesignation) {
           this.getTeachersByDesignation(false);
         }
       });
@@ -182,9 +182,9 @@ export class TeacherComponent {
     });
   }
 
-  getSchoolId(schoolName:any){
-    for(let i = 0;i < this.allSchools.length; i++){
-      if(schoolName == this.allSchools[i].School_Name){
+  getSchoolId(schoolName: any) {
+    for (let i = 0; i < this.allSchools.length; i++) {
+      if (schoolName == this.allSchools[i].School_Name) {
         return this.allSchools[i].Schoolid;
       }
     }
@@ -192,10 +192,10 @@ export class TeacherComponent {
 
   getGraphsBySchoolName() {
     const school = {
-      schname: this.schoolModel.Schoolid
+      schname: String(this.schoolModel.Schoolid)
     }
     this.spinner.show();
-    this.httpService.post('teacher-graph/school-category-wise/school',school).subscribe((data: any) => {
+    this.httpService.post('teacher-graph/school-category-wise/school', school).subscribe((data: any) => {
       if (data) {
         this.setAllGraphs(data);
         this.spinner.hide();
@@ -204,7 +204,7 @@ export class TeacherComponent {
     })
   }
 
-  teacherDataClear(){
+  teacherDataClear() {
     this.configDesignation = null;
     this.configGender = null;
     this.commonName = null;
@@ -214,7 +214,7 @@ export class TeacherComponent {
   getTeachersGenderRatio(teachersGender: any) {
     const series = [teachersGender.totalMaleTeachers, teachersGender.totalFemaleTeachers];
     const categories = ["Male", "Female"];
-    this.teacherGenderRatio = this.graphService.PieGraph('donut', '');
+    this.teacherGenderRatio = this.graphService.PieGraph('donut', 'Teachers');
     this.teacherGenderRatio.series = [...series];
     this.teacherGenderRatio.chart.type = "pie";
     this.teacherGenderRatio.labels = [...categories];
@@ -265,7 +265,7 @@ export class TeacherComponent {
       }
     }
     const series = [Morning, Afternoon, Evening, General]
-    this.shiftWiseSchools = this.graphService.PolarGraph();
+    this.shiftWiseSchools = this.graphService.PolarGraph('Teachers');
     this.shiftWiseSchools.series = [...series];
     this.shiftWiseSchools.labels = ['Morning', 'Afternoon', 'Evening', 'General'];
     this.shiftWiseSchools.chart.events = {
@@ -279,7 +279,7 @@ export class TeacherComponent {
 
 
   getschoolsManagementWiseTeacher(schoolManagementWise: any) {
-    this.schoolsManagementWiseTeacher = this.graphService.PieGraph('donut', '')
+    this.schoolsManagementWiseTeacher = this.graphService.PieGraph('donut', 'Teachers')
     for (let i = 0; i < schoolManagementWise.length; i++) {
       if (schoolManagementWise[i].shift == "Government") { var govCount = schoolManagementWise[i].teacherManagmentWiseCount }
       if (schoolManagementWise[i].shift == "Aided") { var aidedCount = schoolManagementWise[i].teacherManagmentWiseCount }
@@ -290,16 +290,16 @@ export class TeacherComponent {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         this.teacherDataClear();
         this.getTachersBySchoolName();
-        this.commonName = `Management : ( ${govCount > 0 ? 'Government': 'Aided'} )`;
+        this.commonName = `Management : ( ${govCount > 0 ? 'Government' : 'Aided'} )`;
       }
     }
-    
+
   }
 
   getCategoryWiseTeacher(data: any) {
     this.teacherCategory = this.graphService.VerticleBarGraph();;
     const series: any = [{
-      name: "Count",
+      name: "Teachers",
       data: []
     }];
     for (let i = 0; i < data.length; i++) {
@@ -320,7 +320,7 @@ export class TeacherComponent {
   getExperianceOfTeachers(data: any) {
     this.experienceWiseTeacher = this.graphService.VerticleBarGraph();
     const series: any = [{
-      name: "Count",
+      name: "Teachers",
       data: []
     }];
     series[0].data = [data.under5Years, data.fiveTo10Years, data.tenTo15Years, data.fifteenTo20Years, data.twentyTo25Years, data.over25Years];
@@ -333,7 +333,7 @@ export class TeacherComponent {
   getDesignation(post: any) {
     this.designation = this.graphService.VerticleBarGraph();
     const series: any = [{
-      name: ["Teacher Count"],
+      name: ["Teachers"],
       data: []
     }];
     for (let i = 0; i < post.length; i++) {
@@ -343,7 +343,7 @@ export class TeacherComponent {
     this.designation.series = [...series];
     this.designation.plotOptions.bar.horizontal = false;
     this.designation.xaxis.title.text = "Designation";
-    this.designation.yaxis.title.text = "Teacher Count";
+    this.designation.yaxis.title.text = "Teachers";
     this.designation.dataLabels.enabled = false;
     this.designation.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
@@ -356,7 +356,7 @@ export class TeacherComponent {
 
   getTeachersByDesignation(flash: any) {
     const parameter = {
-      "postdesc":this.allData.postdescWiseTeacherCounts[this.configDesignation]._id,
+      "postdesc": this.allData.postdescWiseTeacherCounts[this.configDesignation]._id,
       "schname": this.schoolModel.Schoolid
     }
     this.httpService.post('teacher-graph/postwisecount', parameter).subscribe((res: any) => {
@@ -367,7 +367,7 @@ export class TeacherComponent {
     })
   }
 
-  getTachersBySchoolName(){
+  getTachersBySchoolName() {
     const parameter = {
       "schname": this.schoolModel.Schoolid
     };
@@ -381,7 +381,7 @@ export class TeacherComponent {
   }
 
   getSchoolTypeWiseCount(data: any) {
-    this.schoolTypeWiseCount = this.graphService.PolarGraph();
+    this.schoolTypeWiseCount = this.graphService.PolarGraph('Teachers');
     for (let i = 0; i < data.length; i++) {
       this.schoolTypeWiseCount.series.push(data[i].teacherTypeOfSchoolWiseCount);
       this.schoolTypeWiseCount.labels.push(data[i].typeOfSchool);
@@ -412,7 +412,7 @@ export class TeacherComponent {
   }
 
   getMinorityWiseCount(data: any) {
-    this.minorityWiseTeacher = this.graphService.PieGraph('donut', '');
+    this.minorityWiseTeacher = this.graphService.PieGraph('donut', 'Teachers');
     for (let i = 0; i < data?.length; i++) {
       this.minorityWiseTeacher.series.push(data[i].teacherMinorityWiseCount);
       this.minorityWiseTeacher.labels.push(data[i].minority);
