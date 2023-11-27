@@ -11,14 +11,14 @@
     <div class="vr mx-3 opacity-100"></div>
     <select class="form-select  ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
         <option value="">All District</option>
-        <option *ngFor="let district of allDistricts" value="{{district._id}}">
-            {{district._id}}
+        <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
+            {{district.districtName}} ({{district.D_ID}})
         </option>
     </select>
     <select class="form-select ms-2" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
         <option value="" disabled>All Zones</option>
-        <option *ngFor="let zone of allZones" value="{{zone}}">
-            {{zone}}
+        <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
+            {{zone.Zone_Name}} ({{zone.Z_ID}})
         </option>
     </select>
     <select class="form-select  ms-2" [(ngModel)]="shiftModel" (change)="getGraphsBySfhit()">

@@ -166,9 +166,9 @@ export class SchoolComponent {
   getGraphsBySchoolName() {
     this.spinner.show();
     const school = {
-      schoolName: this.schoolModel
+      schoolId: this.schoolModel
     }
-    this.httpService.post('zonegraph/school-student-teacher-graph-schoolname', school).subscribe((data: any) => {
+    this.httpService.post('zonegraph/school-student-teacher-graph-schoolid', school).subscribe((data: any) => {
       if (data) {
         this.setAllGraphs(data, false);
         this.spinner.hide();
