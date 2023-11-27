@@ -65,7 +65,7 @@ export class TeacherComponent {
   }
 
   getAllDistricts() {
-    this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
+    this.httpService.get('school/districtNames').subscribe((data: any) => {
       if (data && data.length > 0) {
         this.allDistricts = data;
       }

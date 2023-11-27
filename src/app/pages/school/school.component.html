@@ -122,7 +122,7 @@
 <!--  -->
 <!-- Button trigger modal -->
 <button #openModal data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal"
-  (click)="getTeachersByGender(true)">
+  (click)="getTeachersByGender(true)" (click)="getStudentByGender(true)">
 
 </button>
 
@@ -131,16 +131,16 @@
   <div class="modal-dialog modal-dialog-scrollable modal-xl">
     <div class="modal-content">
       <div class="modal-header" style="background-color: #b3d64d;">
-        <h5 class="modal-title" *ngIf="configGender" id="exampleModalLabel" >Teacher Details By Gender: ({{configGender?.dataPointIndex == 0 ? 'Male' : 'Female'}}) </h5>
-        <!-- <h5 class="modal-title" *ngIf="configDesignation" id="exampleModalLabel" >Teacher Details By Designation: ({{allData.postdescWiseTeacherCounts[configDesignation]._id}}) </h5>
-        <h5 class="modal-title" *ngIf="commonName" id="exampleModalLabel" >Teacher Details By {{commonName}} </h5> -->
+        <h5 class="modal-title" *ngIf="allTeacherData?.length > 0" id="exampleModalLabel" >Teacher Details By Gender: ({{teacherGender?.dataPointIndex == 0 ? 'Male' : 'Female'}}) </h5>
+        <h5 class="modal-title" *ngIf="allStudentData?.length > 0" id="exampleModalLabel" >Student Details By Gender: ({{teacherGender?.dataPointIndex == 0 ? 'Male' : 'Female'}}) </h5>
+        <!-- <h5 class="modal-title" *ngIf="commonName" id="exampleModalLabel" >Teacher Details By {{commonName}} </h5> -->
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         
         <table class="table table-responsive table-hover table-bordered table-striped">
           <thead class="thead-light">
-            <tr class="table-bordered " >
+            <tr class="table-bordered" *ngIf="allTeacherData?.length > 0">
               <th>Sr No</th>
               <th>Name</th>
               <th>Emp. Id</th>
@@ -151,8 +151,18 @@
               <th>DOB</th>
               <th>District</th>
             </tr>
+            <tr class="table-bordered" *ngIf="allStudentData?.length > 0">
+                <th>Sr No</th>
+                <th>Name</th>
+                <th style="width: 112px;">Class</th>
+                <th>School</th>
+                <!-- <th>Designation</th> -->
+                <th>Gender</th>
+                <th>DOB</th>
+                <th>District</th>
+              </tr>
           </thead>
-          <tbody>
+          <tbody *ngIf="allTeacherData?.length > 0">
             <tr *ngFor="let data of allTeacherData;let i = index">
               <td>{{i+1}}</td>
               <td>{{data.Name}}</td>
@@ -164,6 +174,18 @@
               <td>{{data.dob}}</td>
               <td>{{data.districtname}}</td>
             </tr>
+          </tbody>
+          <tbody *ngIf="allStudentData?.length > 0">
+            <tr *ngFor="let data of allStudentData;let i = index">
+                <td>{{i+1}}</td>
+                <td>{{data.Name}}</td>
+                <td>{{data.CLASS}}</td>
+                <td>{{data.SCHOOL_NAME}}</td>
+                <!-- <td>{{data.postdesc}}</td> -->
+                <td>{{data.Gender}}</td>
+                <td>{{data.Dob}}</td>
+                <td>{{data.District}}</td>
+              </tr>
           </tbody>
         </table>
       </div>
