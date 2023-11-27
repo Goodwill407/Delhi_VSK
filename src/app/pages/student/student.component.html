@@ -3,30 +3,30 @@
 <div class="d-flex mt-3 filter-box">
     <h2 class="fw-bold">Student</h2>
     <div class="vr mx-3 opacity-100"></div>
-    <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" (change)=" getGraphsByDistrictName()">
+    <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
         <option value="" disabled>Select District</option>
         <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
-            {{district.districtName}}
+            {{district.districtName}} ({{district.D_ID}})
         </option>
     </select>
     <select class="form-select w-25 ms-2" [(ngModel)]="ZoneModel" (change)="getGraphsByZone()">
         <option value="" disabled>Select Zone</option>
-        <option *ngFor="let zone of allZones" value="{{zone}}">
-            {{zone}}
-        </option>
+        <option *ngFor="let zone of allZones" value="{{zone.name}}">
+            {{zone.name}}  ({{zone.id}})
+          </option>
     </select>
     <select class="form-select w-25 ms-2" [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
         <option value="" disabled>Select School</option>
-        <option *ngFor="let school of AllSchool" value="{{school}}">
-            {{school}}
-        </option>
+        <option *ngFor="let school of AllSchool"  [ngValue]="school">
+            {{school.School_Name}} - ({{school.Schoolid}})
+           </option>
     </select>
 </div>
 
 <div class="d-flex justify-content-center filter-box mt-2" *ngIf="districtModel || ZoneModel || schoolModel">
     <h3 class="text-center mb-0" *ngIf="districtModel">{{districtModel}}&nbsp; </h3>
     <h3 class="text-center mb-0" *ngIf="ZoneModel"> <span *ngIf="districtModel">|</span> {{ZoneModel}}&nbsp; </h3>
-    <h3 class="text-center mb-0" *ngIf="schoolModel"> <span *ngIf="ZoneModel">|</span> {{schoolModel}}</h3>
+    <h3 class="text-center mb-0" *ngIf="schoolModel"> <span *ngIf="ZoneModel">|</span> {{schoolModel.School_Name}}</h3>
 </div>
 
 <div class="container1">
@@ -49,7 +49,7 @@
     </div>
 
     <div class="column">
-        <h5 class="header-bg p-2 m-2">Student By Stetus Wise </h5>
+        <h5 class="header-bg p-2 m-2">Student By Status Wise </h5>
         <apx-chart [series]="StudentStatusWiseCounts?.series" [chart]="StudentStatusWiseCounts?.chart"
             [labels]="StudentStatusWiseCounts?.labels" [fill]="StudentStatusWiseCounts?.fill"
             [dataLabels]="StudentStatusWiseCounts?.dataLabels"
@@ -126,11 +126,62 @@
 
     <div class="column">
         <h5 class="header-bg p-2 m-2">Student By School Category</h5>
-        <apx-chart [series]="chartOptions?.series" [chart]="chartOptions?.chart" [dataLabels]="chartOptions?.dataLabels"
-            [plotOptions]="chartOptions?.plotOptions" [xaxis]="chartOptions?.xaxis" [labels]="chartOptions?.labels"
-            [yaxis]="chartOptions?.yaxis" [legend]="StreamWiseStudent?.legend" [fill]="StreamWiseStudent?.fill"
-            [colors]="StreamWiseStudent?.colors"></apx-chart>
+        <apx-chart [series]="StudentCatogoryWiseCount?.series" [chart]="StudentCatogoryWiseCount?.chart"
+          [dataLabels]="StudentCatogoryWiseCount?.dataLabels" [plotOptions]="StudentCatogoryWiseCount?.plotOptions"
+          [xaxis]="StudentCatogoryWiseCount?.xaxis" [yaxis]="StudentCatogoryWiseCount?.yaxis" [colors]="StudentCatogoryWiseCount?.colors"
+          [title]="StudentCatogoryWiseCount?.title" [legend]="StudentCatogoryWiseCount?.legend" [fill]="StudentCatogoryWiseCount?.fill"></apx-chart>
     </div>
 
     
 </div>
+
+<!-- Button trigger modal -->
+<button #openModal data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal"
+  (click)="getStudentByGender(true)" (click)="getStudentCountBySchoolId(true)" (click)="getStudentByStatusWise(true)"> 
+
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-xl">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #b3d64d;">
+        <h5 class="modal-title" *ngIf="configGender" id="exampleModalLabel" >Student Details By Gender: ({{configGender?.dataPointIndex == 0 ? 'Male' : 'Female'}}) </h5>
+        <h5 class="modal-title" *ngIf="commonName" id="exampleModalLabel" >Student Details By    {{commonName}} </h5>
+        <h5 class="modal-title" *ngIf="statusWise" id="exampleModalLabel" >Student Details By Status: {{allData.studentStatusCounts[this.statusWise]._id}} </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+        <table class="table table-responsive table-hover table-bordered table-striped">
+          <thead class="thead-light">
+            <tr class="table-bordered " >
+              <th>Sr No</th>
+              <th>Name</th>
+              <th style="width: 112px;">Class</th>
+              <th>School</th>
+              <!-- <th>Designation</th> -->
+              <th>Gender</th>
+              <th>DOB</th>
+              <th>District</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of allStudentData;let i = index">
+              <td>{{i+1}}</td>
+              <td>{{data.Name}}</td>
+              <td>{{data.CLASS}}</td>
+              <td>{{data.SCHOOL_NAME}}</td>
+              <!-- <td>{{data.postdesc}}</td> -->
+              <td>{{data.Gender}}</td>
+              <td>{{data.Dob}}</td>
+              <td>{{data.District}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+{{allStudentData?.length}}
