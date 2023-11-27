@@ -429,7 +429,7 @@ export class StudentComponent {
   getStudentByGender(flash: any) {
     this.spinner.show();
     const parameter = {
-      "Gender": this.configGender.dataPointIndex == 0 ? 'M' : (this.configGender.dataPointIndex == 1) ? 'F' : 'T',
+      "Gender": this.configGender?.dataPointIndex == 0 ? 'M' : (this.configGender?.dataPointIndex == 1) ? 'F' : 'T',
       "Schoolid": this.schoolModel.Schoolid,
     }
     this.httpService.post('student/studentcount/schoolname/gender', parameter).subscribe((res: any) => {
