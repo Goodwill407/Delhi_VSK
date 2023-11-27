@@ -119,6 +119,7 @@ export class StudentComponent {
     const district = {
       districtName: this.districtModel
     }
+    this.ZoneModel = '';
     this.httpService.post('all-student-graph/student-graph-count-districtname', district).subscribe((data: any) => {
       if (data) {
         this.setAllGraphData(data);
