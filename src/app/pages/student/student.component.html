@@ -47,6 +47,17 @@
             </div>
         </div>
     </div>
+
+    <div class="column">
+        <h5 class="header-bg p-2 m-2">Student By Stetus Wise </h5>
+        <apx-chart [series]="StudentStatusWiseCounts?.series" [chart]="StudentStatusWiseCounts?.chart"
+            [labels]="StudentStatusWiseCounts?.labels" [fill]="StudentStatusWiseCounts?.fill"
+            [dataLabels]="StudentStatusWiseCounts?.dataLabels"
+            [plotOptions]="StudentStatusWiseCounts?.plotOptions"
+            [responsive]="StudentStatusWiseCounts?.responsive" [legend]="StudentStatusWiseCounts?.legend"
+            [colors]="StudentStatusWiseCounts?.colors"></apx-chart>
+    </div>
+    
     <div class="column text-center">
         <h5 class="header-bg p-2 m-2">Student & Teacher Ratio</h5>
         <img class="img-fluid mt-3" width="180" src="../../../assets/images/pngegg.png">
@@ -121,4 +132,5 @@
             [colors]="StreamWiseStudent?.colors"></apx-chart>
     </div>
 
+    
 </div>

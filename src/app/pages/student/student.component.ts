@@ -35,6 +35,7 @@ export class StudentComponent {
   MinorityWiseStudCount: any;
   StudentShiftWiseCounts: any
   StudentManagementWiseCounts: any
+  StudentStatusWiseCounts:any
   chartOptions: any
 
   allDistricts: any
@@ -81,7 +82,7 @@ export class StudentComponent {
 
   getStudentGraphData() {
     this.spinner.show();
-    this.httpService.get('studentgraph/student-graph-count').subscribe((data: any) => {
+    this.httpService.get('all-student-graph/student-graph-count').subscribe((data: any) => {
       if (data) {
         this.setAllGraphData(data)
         this.spinner.hide();
@@ -170,35 +171,51 @@ export class StudentComponent {
   }
 
   setAllGraphData(data: any) {
-    this.totalStudent = data.studentCount[0].totalStudents;
-    this.teacherStudentRatio = data.averageTeacherOfSchool;
+    this.totalStudent = data.totalStudents;
+    this.teacherStudentRatio = data.teacherStudentRatio;
     this.averageStudentOfSchool = data.averageStudentOfSchool;
-    const StudentGenderWise = data.studentCount[0]
+    const StudentGenderWise = data.studentGenderCounts
 
-    const catogoryWiseStudentCount = data.SchCategoryCount
-    const StreanWiseCount = data.streamWiseCount
-    const AffiliationWiseCount = data.affiliationWiseCount
-    const TypeOfStudSchool = data.typeOfSchoolWiseCounts
-    const MinorityWiseStudCount = data.minortyWiseCount
-    const StudentShiftWiseCounts = data.studentShiftWiseCounts
-    const StudentManagementWiseCounts = data.ManagementWiseCounts
+    const catogoryWiseStudentCount = data.studentStats[0].SchCategory
+    // const StreanWiseCount = data.studentStats[0].
+    // const AffiliationWiseCount = data.affiliationWiseCount
+    const TypeOfStudSchool = data.studentStats[1].typeOfSchool
+    // const MinorityWiseStudCount = data.minortyWiseCount
+    const StudentShiftWiseCounts = data.studentStats[2].shift
+    const StudentManagementWiseCounts = data.studentStats[3].SchManagement
+    const studentManagementWiseCounts = data.studentStatusCounts
 
     this.getStudentsGenderRatio(StudentGenderWise)
     this.getStudentCatogoryWise(catogoryWiseStudentCount)
-    this.getStreamWiseStudent(StreanWiseCount)
-    this.getAffiliationWiseCount(AffiliationWiseCount)
+    // this.getStreamWiseStudent(StreanWiseCount)
+    // this.getAffiliationWiseCount(AffiliationWiseCount)
     this.getTypeOfStudSchool(TypeOfStudSchool)
-    this.getMinorityWiseCount(MinorityWiseStudCount)
+    // this.getMinorityWiseCount(MinorityWiseStudCount)
     this.getStudentShiftWiseCounts(StudentShiftWiseCounts)
     this.getStudentManagementWiseCounts(StudentManagementWiseCounts)
+    this.getStudentStatusWiseCounts(studentManagementWiseCounts)
 
 
   }
 
   getStudentsGenderRatio(studentsGender: any) {
-    const Male_Count = studentsGender.maleStudents
-    const Female_Count = studentsGender.femaleStudents
-    const Other_Count = studentsGender.otherStudents
+let Male_Count = 0;
+let Female_Count = 0;
+let Other_Count = 0;
+studentsGender.forEach((item:any) => {
+  switch (item._id) {
+    case "M":
+      Male_Count = item.count;
+      break;
+    case "F":
+      Female_Count = item.count;
+      break;
+    case "T":
+      Other_Count = item.count;
+      break;
+    
+  }
+})
     const series = [Male_Count, Female_Count, Other_Count]
     const labels = [
       "Boys", "Girls", 'Other'
@@ -209,14 +226,14 @@ export class StudentComponent {
   }
 
   getStudentCatogoryWise(catogoryWiseStudentCount: any) {
-    const StudentCount = catogoryWiseStudentCount.map((item: any) => item.count);
-    const SchCategory = catogoryWiseStudentCount.map((item: any) => item.SchCategory);
+    const categories = catogoryWiseStudentCount.map((category:any) => category.SchCategory);
+    const counts = catogoryWiseStudentCount.map((category:any) => category.count);
     this.chartOptions = this.graphService.VerticleBarGraph()
     const series: any = [{
       name: "Count",
-      data: StudentCount
+      data: counts
     }];
-    const labels = SchCategory;
+    const labels = categories;
     this.chartOptions.series = [...series]
     this.chartOptions.labels = [...labels]
     this.chartOptions.plotOptions.bar.horizontal = true
@@ -286,6 +303,16 @@ export class StudentComponent {
     const labels = SchManagement
     this.StudentManagementWiseCounts.series = [...series];
     this.StudentManagementWiseCounts.labels = [...labels]
+  }
+
+  getStudentStatusWiseCounts(StudentstatusWiseCounts: any) {
+    const StudentStatus = StudentstatusWiseCounts.map((item: any) => item._id)
+    const StudCount = StudentstatusWiseCounts.map((item: any) => item.count)
+    this.StudentStatusWiseCounts = this.graphService.PieGraph('donut', ' student');
+    const series = StudCount;
+    const labels = StudentStatus
+    this.StudentStatusWiseCounts.series = [...series];
+    this.StudentStatusWiseCounts.labels = [...labels]
   }
 
 

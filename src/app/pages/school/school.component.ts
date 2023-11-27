@@ -230,6 +230,14 @@ export class SchoolComponent {
       }
     });
     for (let i = 0; i < typesOfSchools.length; i++) {
+<<<<<<< HEAD
+=======
+      if (Number(typesOfSchools[i].count) > 0){
+      this.typesOfSchools.series.push(typesOfSchools[i].count);
+      this.typesOfSchools.labels.push(typesOfSchools[i].typeOfSchool);}
+    }
+    for (let i = 0; i < this.typesOfSchools.series.length; i++) {
+>>>>>>> 47544f2ecc1805b8b732d01f7c21659440d193c5
       if (this.typesOfSchools.series[i] > 0 && this.typesOfSchools.series[i] < 2) {
         this.typesOfSchools.yaxis.show = false;
       }
