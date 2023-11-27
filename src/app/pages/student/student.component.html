@@ -147,7 +147,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-xl">
     <div class="modal-content">
       <div class="modal-header" style="background-color: #b3d64d;">
-        <h5 class="modal-title" *ngIf="configGender" id="exampleModalLabel" >Student Details By Gender: ({{configGender?.dataPointIndex == 0 ? 'Male' : 'Female'}}) </h5>
+        <h5 class="modal-title" *ngIf="configGender" id="exampleModalLabel" >Student Details By Gender: ({{configGender?.dataPointIndex == 0 ? 'Male' : (this.configGender.dataPointIndex == 1) ? 'Female': 'Other'}}) </h5>
         <h5 class="modal-title" *ngIf="commonName" id="exampleModalLabel" >Student Details By    {{commonName}} </h5>
         <h5 class="modal-title" *ngIf="statusWise" id="exampleModalLabel" >Student Details By Status: {{allData.studentStatusCounts[this.statusWise]._id}} </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
