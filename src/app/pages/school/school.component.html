@@ -17,7 +17,7 @@
     </select>
     <select class="form-select w-25 ms-2" [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
         <option value="" disabled>Select Schools</option>
-        <option *ngFor="let school of allSchools" value="{{school.School_Name}}">
+        <option *ngFor="let school of allSchools" [ngValue]="school">
             {{school.School_Name}} - ({{school.Schoolid}})
         </option>
     </select>
@@ -25,7 +25,7 @@
 <div class="d-flex justify-content-center filter-box mt-2" *ngIf="districtModel || zoneModel || schoolModel">
     <h3 class="text-center mb-0" *ngIf="districtModel">{{districtModel}}&nbsp; </h3>
     <h3 class="text-center mb-0" *ngIf="zoneModel"> <span *ngIf="districtModel">|</span> {{zoneModel}}&nbsp; </h3>
-    <h3 class="text-center mb-0" *ngIf="schoolModel"> <span *ngIf="zoneModel || districtModel">|</span> {{schoolModel}}
+    <h3 class="text-center mb-0" *ngIf="schoolModel"> <span *ngIf="zoneModel || districtModel">|</span> {{schoolModel.School_Name}}
     </h3>
 </div>
 <div class="container1">
@@ -116,4 +116,58 @@
             [plotOptions]="streamCount?.plotOptions" [xaxis]="streamCount?.xaxis" [yaxis]="streamCount?.yaxis"
             [fill]="streamCount?.fill" [colors]="streamCount?.colors"></apx-chart>
     </div> -->
+</div>
+
+
+<!--  -->
+<!-- Button trigger modal -->
+<button #openModal data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal"
+  (click)="getTeachersByGender(true)">
+
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-xl">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #b3d64d;">
+        <h5 class="modal-title" *ngIf="configGender" id="exampleModalLabel" >Teacher Details By Gender: ({{configGender?.dataPointIndex == 0 ? 'Male' : 'Female'}}) </h5>
+        <!-- <h5 class="modal-title" *ngIf="configDesignation" id="exampleModalLabel" >Teacher Details By Designation: ({{allData.postdescWiseTeacherCounts[configDesignation]._id}}) </h5>
+        <h5 class="modal-title" *ngIf="commonName" id="exampleModalLabel" >Teacher Details By {{commonName}} </h5> -->
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+        <table class="table table-responsive table-hover table-bordered table-striped">
+          <thead class="thead-light">
+            <tr class="table-bordered " >
+              <th>Sr No</th>
+              <th>Name</th>
+              <th>Emp. Id</th>
+              <th style="width: 112px;">Joining Date</th>
+              <th>School</th>
+              <th>Designation</th>
+              <th>Gender</th>
+              <th>DOB</th>
+              <th>District</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of allTeacherData;let i = index">
+              <td>{{i+1}}</td>
+              <td>{{data.Name}}</td>
+              <td>{{data.empid}}</td>
+              <td>{{data.JoiningDate}}</td>
+              <td>{{data.schname}}</td>
+              <td>{{data.postdesc}}</td>
+              <td>{{data.gender}}</td>
+              <td>{{data.dob}}</td>
+              <td>{{data.districtname}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
 </div>
