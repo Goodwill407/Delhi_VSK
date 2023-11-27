@@ -6,7 +6,7 @@
     <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
         <option value="" disabled>Select District</option>
         <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
-            {{district.districtName}}
+            {{district.districtName}} ({{district.D_ID}})
         </option>
     </select>
     <select class="form-select w-25 ms-2" [(ngModel)]="ZoneModel" (change)="getGraphsByZone()">
@@ -137,7 +137,7 @@
 
 <!-- Button trigger modal -->
 <button #openModal data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal"
-  (click)="getStudentByGender(true)" (click)="getStudentCountBySchoolId(true)"> 
+  (click)="getStudentByGender(true)" (click)="getStudentCountBySchoolId(true)" (click)="getStudentByStatusWise(true)"> 
 
 </button>
 
@@ -148,7 +148,7 @@
       <div class="modal-header" style="background-color: #b3d64d;">
         <h5 class="modal-title" *ngIf="configGender" id="exampleModalLabel" >Student Details By Gender: ({{configGender?.dataPointIndex == 0 ? 'Male' : 'Female'}}) </h5>
         <h5 class="modal-title" *ngIf="commonName" id="exampleModalLabel" >Student Details By    {{commonName}} </h5>
-        <h5 class="modal-title" *ngIf="statusWise" id="exampleModalLabel" >Student Details By Status:{{statusWise}} </h5>
+        <h5 class="modal-title" *ngIf="statusWise" id="exampleModalLabel" >Student Details By Status: {{allData.studentStatusCounts[this.statusWise]._id}} </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">

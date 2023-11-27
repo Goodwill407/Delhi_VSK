@@ -292,7 +292,7 @@ export class StudentComponent {
     this.StudentCatogoryWiseCount.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         this.studentDataClear();
-        this.commonName = config
+        this.commonName = `Category : ( ${catogoryWiseStudentCount[0].SchCategory} )`;
         const parameter = {
           "Schoolid": this.schoolModel
         }
@@ -337,7 +337,7 @@ export class StudentComponent {
     this.TypeOfStudSchool.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         this.studentDataClear();
-        this.commonName = config
+        this.commonName = `School Type : ( ${TypeOfStudSchool[0].typeOfSchool} School )`;
         const parameter = {
           "Schoolid": this.schoolModel
         }
@@ -368,7 +368,7 @@ export class StudentComponent {
     this.StudentShiftWiseCounts.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         this.studentDataClear();
-        this.commonName = config
+        this.commonName = this.commonName = `Sift Wise : ( ${StudentShiftWiseCounts[0].shift} )`;
         const parameter = {
           "Schoolid": this.schoolModel
         }
@@ -388,7 +388,7 @@ export class StudentComponent {
     this.StudentManagementWiseCounts.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         this.studentDataClear();
-        this.commonName = config
+        this.commonName = this.commonName = `Management Wise : ( ${StudentManagementWiseCounts[0].SchManagement} )`;
         const parameter = {
           "Schoolid": this.schoolModel
         }
@@ -422,9 +422,11 @@ export class StudentComponent {
   studentDataClear(){
     this.configGender = null;
     this.commonName= null;
+    this.statusWise= null;
     this.allStudentData = [];
   }
   getStudentByGender(flash: any) {
+    this.spinner.show();
     const parameter = {
       "Gender": this.configGender.dataPointIndex == 0 ? 'M' : 'F',
       "Schoolid": this.schoolModel.Schoolid,
@@ -434,10 +436,12 @@ export class StudentComponent {
       if (!flash) {
         this.openModal.nativeElement.click();
       }
+      this.spinner.hide();
     })
   }
 
   getStudentCountBySchoolId(flash: any) {
+    this.spinner.show();
     const parameter = {
       "Schoolid": this.schoolModel.Schoolid,
     }
@@ -446,19 +450,22 @@ export class StudentComponent {
       if (!flash) {
         this.openModal.nativeElement.click();
       }
+      this.spinner.hide();
     })
   }
 
   getStudentByStatusWise(flash: any) {
+    this.spinner.show();
     const parameter = {
       "Schoolid": this.schoolModel.Schoolid,
       "status" : this.allData.studentStatusCounts[this.statusWise]._id
     }
-    this.httpService.post('student/studentcount/schoolname', parameter).subscribe((res: any) => {
+    this.httpService.post('student/studentcount/schoolId/status', parameter).subscribe((res: any) => {
       this.allStudentData = res;
       if (!flash) {
         this.openModal.nativeElement.click();
       }
+      this.spinner.hide();
     })
   }
 
