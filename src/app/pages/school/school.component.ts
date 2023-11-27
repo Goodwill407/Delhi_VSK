@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { GraphService } from 'src/app/services/graph-service.service';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-school',
@@ -35,6 +36,13 @@ export class SchoolComponent {
   schoolModel: any = "";
   districtName: any;
   allSchools: any;
+  teacherGender: any;
+  studGender: any;
+  allTeacherData: any;
+  allStudentData: any;
+  @ViewChild('openModal') openModal: any;
+  itemCount: number | undefined;
+  subscription: Subscription | undefined;
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private toastr: ToastrService) {
   }
@@ -44,6 +52,17 @@ export class SchoolComponent {
     this.getAllSchoolGraph();
     this.getDistrictName();
     this.getAllZones();
+
+    this.subscription = this.graphService
+      .getItemCountObservable()
+      .subscribe((count) => {
+        this.itemCount = count;
+        if (this.itemCount && this.schoolModel && this.teacherGender) {
+          this.getTeachersByGender(false);
+        } else if (this.itemCount && this.schoolModel && this.studGender) {
+          this.getStudentByGender(false);
+        }
+      });
   }
 
   getAllDistricts() {
@@ -88,7 +107,8 @@ export class SchoolComponent {
 
     const studentsGender = {
       totalBoys: data.totalBoys ? data.totalBoys : 0,
-      totalGirls: data.totalGirls ? data.totalGirls : 0
+      totalGirls: data.totalGirls ? data.totalGirls : 0,
+      Other: data.Other ? data.Other : 0,
     }
     this.getStudentsGenderRatio(studentsGender);
 
@@ -135,6 +155,7 @@ export class SchoolComponent {
       if (data) {
         this.setAllGraphs(data, false);
         this.spinner.hide();
+        this.schoolModel = '';
       }
     }, (error) => {
       this.toastr.error('', 'Something went wrong !');
@@ -166,7 +187,7 @@ export class SchoolComponent {
   getGraphsBySchoolName() {
     this.spinner.show();
     const school = {
-      schoolId: this.schoolModel
+      "schoolId": this.schoolModel.Schoolid
     }
     this.httpService.post('zonegraph/school-student-teacher-graph-schoolid', school).subscribe((data: any) => {
       if (data) {
@@ -180,14 +201,67 @@ export class SchoolComponent {
 
   getStudentsGenderRatio(studentsGender: any) {
     this.studentsGenderRatio = this.graphService.PieGraph('donut', ' Students');
-    this.studentsGenderRatio.series = [studentsGender.totalBoys, studentsGender.totalGirls];
-    this.studentsGenderRatio.labels = ["Boys", "Girls"];
+    this.studentsGenderRatio.series = [studentsGender.totalBoys, studentsGender.totalGirls, studentsGender.Other];
+    this.studentsGenderRatio.labels = ["Boys", "Girls", "Other"];
+    this.studentsGenderRatio.chart.events = {
+      dataPointSelection: (event: any, chartContext: any, config: any) => {
+        this.clearData();
+        this.studGender = config;
+        this.graphService.addToCart();
+      }
+    }
+  }
+
+  getStudentByGender(flash: any) {
+    if (!flash) {
+      this.spinner.show();
+      const parameter = {
+        "Gender": this.studGender.dataPointIndex == 0 ? 'M' : (this.studGender?.dataPointIndex == 1 ? 'F' : 'T'),
+        "Schoolid": this.schoolModel.Schoolid,
+      }
+      this.httpService.post('student/studentcount/schoolname/gender', parameter).subscribe((res: any) => {
+        this.allStudentData = res;
+        if (!flash) {
+          this.openModal.nativeElement.click();
+        }
+        this.spinner.hide();
+      })
+    }
   }
 
   getTeachersGenderRatio(teachersGender: any) {
     this.teacherGenderRatio = this.graphService.PieGraph('donut', ' Teachers');
     this.teacherGenderRatio.series = [teachersGender.totalMaleTeachers, teachersGender.totalFemaleTeachers];
     this.teacherGenderRatio.labels = ["Male", "Female"];
+    this.teacherGenderRatio.chart.events = {
+      dataPointSelection: (event: any, chartContext: any, config: any) => {
+        this.clearData();
+        this.teacherGender = config;
+        this.graphService.addToCart();
+      }
+    }
+  }
+
+  getTeachersByGender(flash: any) {
+    if (!flash) {
+      const parameter = {
+        "gender": this.teacherGender.dataPointIndex == 0 ? 'Male' : 'Female',
+        "schname": this.schoolModel.Schoolid
+      }
+      this.httpService.post('teacher/get-teachers-by-gender', parameter).subscribe((res: any) => {
+        this.allTeacherData = res;
+        if (!flash) {
+          this.openModal.nativeElement.click();
+        }
+      })
+    }
+  }
+
+  clearData() {
+    this.allStudentData = [];
+    this.studGender = '';
+    this.teacherGender = '';
+    this.allTeacherData = [];
   }
 
   getSchoolsByManagement(schoolManagementWise: any) {

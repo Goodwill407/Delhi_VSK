@@ -65,7 +65,7 @@ export class TeacherComponent {
   }
 
   getAllDistricts() {
-    this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
+    this.httpService.get('school/districtNames').subscribe((data: any) => {
       if (data && data.length > 0) {
         this.allDistricts = data;
       }
@@ -222,10 +222,6 @@ export class TeacherComponent {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         this.teacherDataClear();
         this.configGender = config;
-        const parameter = {
-          "gender": config.dataPointIndex == 0 ? 'Male' : 'Female',
-          "schname": this.schoolModel.School_Name
-        }
         this.graphService.addToCart();
       }
     }
