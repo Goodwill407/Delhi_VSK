@@ -43,6 +43,7 @@ export class SchoolComponent {
     this.getAllDistricts();
     this.getAllSchoolGraph();
     this.getDistrictName();
+    this.getAllZones();
   }
 
   getAllDistricts() {
@@ -108,7 +109,7 @@ export class SchoolComponent {
     // this.getMinorityCount(data.minorityCounts);
     // this.getAffiliationCount(data.afiliationCounts);
     if (zone) {
-      this.getAllZones(data.zoneWiseCounts);
+      this.getAllZones();
     }
   }
 
@@ -222,13 +223,14 @@ export class SchoolComponent {
 
   getTypesOfSchools(typesOfSchools: any) {
     this.typesOfSchools = this.graphService.PolarGraph();
-    const entries = Object.entries(typesOfSchools);
-    entries.forEach(([key, value]) => {
-      if (Number(value) > 0) {
-        this.typesOfSchools.series.push(value);
-        this.typesOfSchools.labels.push(key);
-      }
-    });
+    if (typesOfSchools.length > 0) {
+      typesOfSchools.forEach((key: any, value: any) => {
+        if (Number(key.count) > 0) {
+          this.typesOfSchools.series.push(key.count);
+          this.typesOfSchools.labels.push(key.typeOfSchool);
+        }
+      })
+    }
     for (let i = 0; i < typesOfSchools.length; i++) {
       if (this.typesOfSchools.series[i] > 0 && this.typesOfSchools.series[i] < 2) {
         this.typesOfSchools.yaxis.show = false;
@@ -272,10 +274,20 @@ export class SchoolComponent {
     }
   }
 
-  getAllZones(allZones: any) {
-    this.allZones = this.graphService.TreeGraph();
-    for (let i = 0; i < allZones.length; i++) {
-      this.allZones.series[0].data.push({ x: allZones[i].zone, y: allZones[i].count });
+  getAllZones() {
+    // this.allZones = this.graphService.TreeGraph();
+    // for (let i = 0; i < allZones.length; i++) {
+    //   this.allZones.series[0].data.push({ x: allZones[i].zone, y: allZones[i].count });
+    // }
+    if (this.districtModel) {
+      const district = { "District_name": this.districtModel };
+      this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
+        this.allZones = res.ZoneSchool;
+      })
+    } else {
+      this.httpService.get('school/zonename').subscribe((res: any) => {
+        this.allZones = res.ZoneInfo;
+      })
     }
   }
 
