@@ -118,6 +118,7 @@ export class StudentComponent {
     const district = {
       districtName: this.districtModel
     }
+    this.ZoneModel = '';
     this.httpService.post('all-student-graph/student-graph-count-districtname', district).subscribe((data: any) => {
       if (data) {
         this.setAllGraphData(data);
@@ -139,7 +140,7 @@ export class StudentComponent {
     const zone = {
       zoneName: this.ZoneModel
     }
-   
+
     this.httpService.post('all-student-graph/student-graph-count-zonename', zone).subscribe((data: any) => {
       if (data) {
         this.setAllGraphData(data);
@@ -428,7 +429,7 @@ export class StudentComponent {
   getStudentByGender(flash: any) {
     this.spinner.show();
     const parameter = {
-      "Gender": this.configGender.dataPointIndex == 0 ? 'M' : 'F',
+      "Gender": this.configGender.dataPointIndex == 0 ? 'M' : (this.configGender.dataPointIndex == 1) ? 'F' : 'T',
       "Schoolid": this.schoolModel.Schoolid,
     }
     this.httpService.post('student/studentcount/schoolname/gender', parameter).subscribe((res: any) => {
