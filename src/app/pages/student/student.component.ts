@@ -83,7 +83,7 @@ export class StudentComponent {
 
   }
   getAllDistricts() {
-    this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
+    this.httpService.get('school/districtNames').subscribe((data: any) => {
       if (data && data.length > 0) {
         this.allDistricts = data;
       }
@@ -140,6 +140,7 @@ export class StudentComponent {
     const zone = {
       zoneName: this.ZoneModel
     }
+   
     this.httpService.post('all-student-graph/student-graph-count-zonename', zone).subscribe((data: any) => {
       if (data) {
         this.setAllGraphData(data);
