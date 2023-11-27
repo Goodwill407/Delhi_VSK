@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Subscription } from 'rxjs';
 import { GraphService } from 'src/app/services/graph-service.service';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 
@@ -35,8 +36,8 @@ export class StudentComponent {
   MinorityWiseStudCount: any;
   StudentShiftWiseCounts: any
   StudentManagementWiseCounts: any
-  StudentStatusWiseCounts:any
-  chartOptions: any
+  StudentStatusWiseCounts: any
+  StudentCatogoryWiseCount: any
 
   allDistricts: any
   allZones: any;
@@ -44,7 +45,18 @@ export class StudentComponent {
   ZoneModel: any = ""
   AllSchool: any
   schoolModel: any = ""
+  allStudentData: any
+  allData: any;
 
+  itemCount: number | undefined;
+  subscription: Subscription | undefined;
+  @ViewChild('openModal') openModal: any;
+
+
+  configGender: any;
+  config: any;
+  commonName: any;
+  statusWise: any;
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService) { }
 
@@ -54,7 +66,20 @@ export class StudentComponent {
     this.getAllZones()
     this.getAllSchools();
 
-
+    this.subscription = this.graphService
+      .getItemCountObservable()
+      .subscribe((count) => {
+        this.itemCount = count;
+        if (this.itemCount && this.schoolModel && this.configGender) {
+          this.getStudentByGender(false);
+        }
+        else if (this.itemCount && this.schoolModel && this.commonName) {
+          this.getStudentCountBySchoolId(false);
+        }
+        else if (this.itemCount && this.schoolModel && this.statusWise) {
+          this.getStudentByStatusWise(false);
+        }
+      });
 
   }
   getAllDistricts() {
@@ -70,15 +95,14 @@ export class StudentComponent {
     if (this.districtModel) {
       const district = { "District_name": this.districtModel };
       this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
-        this.allZones = res.ZoneSchool;
+        this.allZones = res.ZoneSchool.map((zone: any) => ({ id: zone.Z_ID, name: zone.Zone_Name }));
       })
     } else {
       this.httpService.get('school/zonename').subscribe((res: any) => {
-        this.allZones = res.ZoneNames;
+        this.allZones = res.ZoneInfo.map((zone: any) => ({ id: zone.Z_ID, name: zone.Zone_Name }));
       })
     }
   }
-
 
   getStudentGraphData() {
     this.spinner.show();
@@ -95,19 +119,20 @@ export class StudentComponent {
     const district = {
       districtName: this.districtModel
     }
-    this.httpService.post('studentgraph/student-graph-count-districtname', district).subscribe((data: any) => {
+    this.httpService.post('all-student-graph/student-graph-count-districtname', district).subscribe((data: any) => {
       if (data) {
         this.setAllGraphData(data);
         this.getAllZones()
         this.getAllSchools()
-        this.spinner.hide();
+      } else {
+        this.getAllZones();
+        this.ZoneModel = '';
+        this.schoolModel = '';
       }
+      this.spinner.hide();
     }, (error) => {
       this.spinner.hide();
-    })
-    this.ZoneModel = '';
-    this.schoolModel = '';
-    this.spinner.hide();
+    });
   }
 
   getGraphsByZone() {
@@ -115,27 +140,28 @@ export class StudentComponent {
     const zone = {
       zoneName: this.ZoneModel
     }
-    this.httpService.post('studentgraph/student-graph-count-zonename', zone).subscribe((data: any) => {
+    this.httpService.post('all-student-graph/student-graph-count-zonename', zone).subscribe((data: any) => {
       if (data) {
         this.setAllGraphData(data);
 
       }
+      this.spinner.hide();
     }, (error) => {
       this.spinner.hide();
     });
     this.schoolModel = '';
-    // this.districtModel='';
+    this.districtModel = '';
     this.getAllSchools();
-    this.spinner.hide();
+    
 
   }
 
   getGraphsBySchoolName() {
     const school = {
-      schoolName: this.schoolModel
+      schoolName: this.schoolModel.Schoolid.toString()
     }
     this.spinner.show();
-    this.httpService.post('studentgraph/student-graph-count-schoolName', school).subscribe((data: any) => {
+    this.httpService.post('all-student-graph/student-graph-count-schoolName', school).subscribe((data: any) => {
       if (data) {
         this.setAllGraphData(data);
         this.spinner.hide();
@@ -170,7 +196,21 @@ export class StudentComponent {
     }
   }
 
+  getStudentBySchoolName() {
+    const parameter = {
+      "schoolName": this.schoolModel.Schoolid.toString()
+    };
+    // this.teacherDataClear();
+    this.httpService.post('all-student-graph/student-graph-count-schoolName', parameter).subscribe((res: any) => {
+      this.allStudentData = res;
+      if (this.schoolModel) {
+        this.openModal.nativeElement.click();
+      }
+    });
+  }
+
   setAllGraphData(data: any) {
+    this.allData = data;
     this.totalStudent = data.totalStudents;
     this.teacherStudentRatio = data.teacherStudentRatio;
     this.averageStudentOfSchool = data.averageStudentOfSchool;
@@ -199,23 +239,22 @@ export class StudentComponent {
   }
 
   getStudentsGenderRatio(studentsGender: any) {
-let Male_Count = 0;
-let Female_Count = 0;
-let Other_Count = 0;
-studentsGender.forEach((item:any) => {
-  switch (item._id) {
-    case "M":
-      Male_Count = item.count;
-      break;
-    case "F":
-      Female_Count = item.count;
-      break;
-    case "T":
-      Other_Count = item.count;
-      break;
-    
-  }
-})
+    let Male_Count = 0;
+    let Female_Count = 0;
+    let Other_Count = 0;
+    studentsGender.forEach((item: any) => {
+      switch (item._id) {
+        case "M":
+          Male_Count = item.count;
+          break;
+        case "F":
+          Female_Count = item.count;
+          break;
+        case "T":
+          Other_Count = item.count;
+          break;
+      }
+    })
     const series = [Male_Count, Female_Count, Other_Count]
     const labels = [
       "Boys", "Girls", 'Other'
@@ -223,20 +262,43 @@ studentsGender.forEach((item:any) => {
     this.studentsGenderRatio = this.graphService.PieGraph('donut', ' student')
     this.studentsGenderRatio.series = [...series];
     this.studentsGenderRatio.labels = [...labels];
+    this.studentsGenderRatio.chart.events = {
+      dataPointSelection: (event: any, chartContext: any, config: any) => {
+        this.studentDataClear();
+        this.configGender = config;
+        const parameter = {
+          "gender": config.dataPointIndex == 0 ? 'Male' : 'Female',
+          "schname": this.schoolModel
+        }
+        this.graphService.addToCart();
+      }
+    }
   }
 
+
+
   getStudentCatogoryWise(catogoryWiseStudentCount: any) {
-    const categories = catogoryWiseStudentCount.map((category:any) => category.SchCategory);
-    const counts = catogoryWiseStudentCount.map((category:any) => category.count);
-    this.chartOptions = this.graphService.VerticleBarGraph()
+    const categories = catogoryWiseStudentCount.map((category: any) => category.SchCategory);
+    const counts = catogoryWiseStudentCount.map((category: any) => category.count);
+    this.StudentCatogoryWiseCount = this.graphService.VerticleBarGraph()
     const series: any = [{
       name: "Count",
       data: counts
     }];
     const labels = categories;
-    this.chartOptions.series = [...series]
-    this.chartOptions.labels = [...labels]
-    this.chartOptions.plotOptions.bar.horizontal = true
+    this.StudentCatogoryWiseCount.series = [...series]
+    this.StudentCatogoryWiseCount.xaxis.categories = [...labels]
+    this.StudentCatogoryWiseCount.plotOptions.bar.horizontal = true
+    this.StudentCatogoryWiseCount.chart.events = {
+      dataPointSelection: (event: any, chartContext: any, config: any) => {
+        this.studentDataClear();
+        this.commonName = config
+        const parameter = {
+          "Schoolid": this.schoolModel
+        }
+        this.graphService.addToCart();
+      }
+    }
   };
 
   getStreamWiseStudent(StreanWiseCount: any) {
@@ -272,6 +334,16 @@ studentsGender.forEach((item:any) => {
     this.TypeOfStudSchool.series = [...series];
     this.TypeOfStudSchool.labels = [...labels]
     this.TypeOfStudSchool.chart.type = "pie";
+    this.TypeOfStudSchool.chart.events = {
+      dataPointSelection: (event: any, chartContext: any, config: any) => {
+        this.studentDataClear();
+        this.commonName = config
+        const parameter = {
+          "Schoolid": this.schoolModel
+        }
+        this.graphService.addToCart();
+      }
+    }
   }
 
   getMinorityWiseCount(minorityWiseStudCount: any) {
@@ -293,6 +365,16 @@ studentsGender.forEach((item:any) => {
     const labels = shift
     this.StudentShiftWiseCounts.series = [...series];
     this.StudentShiftWiseCounts.labels = [...labels]
+    this.StudentShiftWiseCounts.chart.events = {
+      dataPointSelection: (event: any, chartContext: any, config: any) => {
+        this.studentDataClear();
+        this.commonName = config
+        const parameter = {
+          "Schoolid": this.schoolModel
+        }
+        this.graphService.addToCart();
+      }
+    }
   }
 
   getStudentManagementWiseCounts(StudentManagementWiseCounts: any) {
@@ -303,6 +385,16 @@ studentsGender.forEach((item:any) => {
     const labels = SchManagement
     this.StudentManagementWiseCounts.series = [...series];
     this.StudentManagementWiseCounts.labels = [...labels]
+    this.StudentManagementWiseCounts.chart.events = {
+      dataPointSelection: (event: any, chartContext: any, config: any) => {
+        this.studentDataClear();
+        this.commonName = config
+        const parameter = {
+          "Schoolid": this.schoolModel
+        }
+        this.graphService.addToCart();
+      }
+    }
   }
 
   getStudentStatusWiseCounts(StudentstatusWiseCounts: any) {
@@ -313,8 +405,62 @@ studentsGender.forEach((item:any) => {
     const labels = StudentStatus
     this.StudentStatusWiseCounts.series = [...series];
     this.StudentStatusWiseCounts.labels = [...labels]
+    this.StudentStatusWiseCounts.chart.events = {
+      dataPointSelection: (event: any, chartContext: any, config: any) => {
+        this.studentDataClear();
+        this.statusWise = config.dataPointIndex
+        const parameter = {
+          "Schoolid": this.schoolModel,
+          "status": this.allData
+        }
+        this.graphService.addToCart();
+      }
+    }
   }
 
+  // for pop
+  studentDataClear(){
+    this.configGender = null;
+    this.commonName= null;
+    this.allStudentData = [];
+  }
+  getStudentByGender(flash: any) {
+    const parameter = {
+      "Gender": this.configGender.dataPointIndex == 0 ? 'M' : 'F',
+      "Schoolid": this.schoolModel.Schoolid,
+    }
+    this.httpService.post('student/studentcount/schoolname/gender', parameter).subscribe((res: any) => {
+      this.allStudentData = res;
+      if (!flash) {
+        this.openModal.nativeElement.click();
+      }
+    })
+  }
+
+  getStudentCountBySchoolId(flash: any) {
+    const parameter = {
+      "Schoolid": this.schoolModel.Schoolid,
+    }
+    this.httpService.post('student/studentcount/schoolname', parameter).subscribe((res: any) => {
+      this.allStudentData = res;
+      if (!flash) {
+        this.openModal.nativeElement.click();
+      }
+    })
+  }
+
+  getStudentByStatusWise(flash: any) {
+    const parameter = {
+      "Schoolid": this.schoolModel.Schoolid,
+      "status" : this.allData.studentStatusCounts[this.statusWise]._id
+    }
+    this.httpService.post('student/studentcount/schoolname', parameter).subscribe((res: any) => {
+      this.allStudentData = res;
+      if (!flash) {
+        this.openModal.nativeElement.click();
+      }
+    })
+  }
 
 }
 
