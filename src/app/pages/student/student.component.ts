@@ -75,7 +75,7 @@ export class StudentComponent {
         else if (this.itemCount && this.schoolModel && this.commonName) {
           this.getStudentCountBySchoolId(false);
         }
-        else if (this.itemCount && this.schoolModel && this.statusWise) {
+        else if (this.itemCount && this.schoolModel && (this.statusWise != null || !this.statusWise)) {
           this.getStudentByStatusWise(false);
         }
       });
@@ -427,47 +427,53 @@ export class StudentComponent {
     this.allStudentData = [];
   }
   getStudentByGender(flash: any) {
-    this.spinner.show();
-    const parameter = {
-      "Gender": this.configGender?.dataPointIndex == 0 ? 'M' : (this.configGender?.dataPointIndex == 1) ? 'F' : 'T',
-      "Schoolid": this.schoolModel.Schoolid,
-    }
-    this.httpService.post('student/studentcount/schoolname/gender', parameter).subscribe((res: any) => {
-      this.allStudentData = res;
-      if (!flash) {
-        this.openModal.nativeElement.click();
+    if (!flash) {
+      this.spinner.show();
+      const parameter = {
+        "Gender": this.configGender?.dataPointIndex == 0 ? 'M' : (this.configGender?.dataPointIndex == 1) ? 'F' : 'T',
+        "Schoolid": this.schoolModel.Schoolid,
       }
-      this.spinner.hide();
-    })
+      this.httpService.post('student/studentcount/schoolname/gender', parameter).subscribe((res: any) => {
+        this.allStudentData = res;
+        if (!flash) {
+          this.openModal.nativeElement.click();
+        }
+        this.spinner.hide();
+      })
+    }
   }
 
   getStudentCountBySchoolId(flash: any) {
-    this.spinner.show();
-    const parameter = {
-      "Schoolid": this.schoolModel.Schoolid,
-    }
-    this.httpService.post('student/studentcount/schoolname', parameter).subscribe((res: any) => {
-      this.allStudentData = res;
-      if (!flash) {
-        this.openModal.nativeElement.click();
+    if (!flash) {
+      this.spinner.show();
+      const parameter = {
+        "Schoolid": this.schoolModel.Schoolid,
       }
-      this.spinner.hide();
-    })
+      this.httpService.post('student/studentcount/schoolname', parameter).subscribe((res: any) => {
+        this.allStudentData = res;
+        if (!flash) {
+          this.openModal.nativeElement.click();
+        }
+        this.spinner.hide();
+      })
+    }
   }
 
   getStudentByStatusWise(flash: any) {
-    this.spinner.show();
-    const parameter = {
-      "Schoolid": this.schoolModel.Schoolid,
-      "status": this.allData.studentStatusCounts[this.statusWise]._id
-    }
-    this.httpService.post('student/studentcount/schoolId/status', parameter).subscribe((res: any) => {
-      this.allStudentData = res;
-      if (!flash) {
-        this.openModal.nativeElement.click();
+    if (!flash) {
+      this.spinner.show();
+      const parameter = {
+        "Schoolid": this.schoolModel.Schoolid,
+        "status": this.allData.studentStatusCounts[this.statusWise]._id
       }
-      this.spinner.hide();
-    })
+      this.httpService.post('student/studentcount/schoolId/status', parameter).subscribe((res: any) => {
+        this.allStudentData = res;
+        if (!flash) {
+          this.openModal.nativeElement.click();
+        }
+        this.spinner.hide();
+      })
+    }
   }
 
 }
