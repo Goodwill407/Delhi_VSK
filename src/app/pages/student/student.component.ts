@@ -140,7 +140,7 @@ export class StudentComponent {
     const zone = {
       zoneName: this.ZoneModel
     }
-   
+
     this.httpService.post('all-student-graph/student-graph-count-zonename', zone).subscribe((data: any) => {
       if (data) {
         this.setAllGraphData(data);
@@ -153,7 +153,7 @@ export class StudentComponent {
     this.schoolModel = '';
     this.districtModel = '';
     this.getAllSchools();
-    
+
 
   }
 
@@ -205,7 +205,7 @@ export class StudentComponent {
     this.httpService.post('all-student-graph/student-graph-count-schoolName', parameter).subscribe((res: any) => {
       this.allStudentData = res;
       if (this.schoolModel) {
-        this.openModal.nativeElement.click();
+         this.openModal.nativeElement.click();
       }
     });
   }
@@ -410,26 +410,22 @@ export class StudentComponent {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         this.studentDataClear();
         this.statusWise = config.dataPointIndex
-        const parameter = {
-          "Schoolid": this.schoolModel,
-          "status": this.allData
-        }
         this.graphService.addToCart();
       }
     }
   }
 
   // for pop
-  studentDataClear(){
+  studentDataClear() {
     this.configGender = null;
-    this.commonName= null;
-    this.statusWise= null;
+    this.commonName = null;
+    this.statusWise = null;
     this.allStudentData = [];
   }
   getStudentByGender(flash: any) {
     this.spinner.show();
     const parameter = {
-      "Gender": this.configGender.dataPointIndex == 0 ? 'M' : 'F',
+      "Gender": this.configGender?.dataPointIndex == 0 ? 'M' : 'F',
       "Schoolid": this.schoolModel.Schoolid,
     }
     this.httpService.post('student/studentcount/schoolname/gender', parameter).subscribe((res: any) => {
@@ -459,7 +455,7 @@ export class StudentComponent {
     this.spinner.show();
     const parameter = {
       "Schoolid": this.schoolModel.Schoolid,
-      "status" : this.allData.studentStatusCounts[this.statusWise]._id
+      "status": this.allData.studentStatusCounts[this.statusWise]._id
     }
     this.httpService.post('student/studentcount/schoolId/status', parameter).subscribe((res: any) => {
       this.allStudentData = res;
