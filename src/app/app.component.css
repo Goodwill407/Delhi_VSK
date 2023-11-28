@@ -388,7 +388,11 @@ a.article:hover {
 
 .logo img {
     width: 70px;
-    margin: 0 20px;
+    margin: 0 15px;
+}
+
+.logo i {
+    cursor: pointer;
 }
 
 .logo {
