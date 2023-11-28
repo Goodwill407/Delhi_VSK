@@ -93,7 +93,7 @@ export class LoginPageComponent {
   }
 
   schoolLogin() {
-    if (this.loginForm.value.email == 'school@gmail.com' && this.loginForm.value.password == 'School@123') {
+    if (this.loginForm.value.email == 'school' && this.loginForm.value.password == 'School@123') {
       this.toastr.success('', 'Logged in succesfully!');
       sessionStorage.setItem('userProfile', JSON.stringify({ name: 'New english', role: 'school' }));
       this.router.navigateByUrl('/content/school-dashboard');

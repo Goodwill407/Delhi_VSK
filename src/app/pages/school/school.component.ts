@@ -66,7 +66,7 @@ export class SchoolComponent {
   }
 
   getAllDistricts() {
-    this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
+    this.httpService.get('school/districtNames').subscribe((data: any) => {
       if (data && data.length > 0) {
         this.allDistricts = data;
       }
@@ -107,7 +107,8 @@ export class SchoolComponent {
 
     const studentsGender = {
       totalBoys: data.totalBoys ? data.totalBoys : 0,
-      totalGirls: data.totalGirls ? data.totalGirls : 0
+      totalGirls: data.totalGirls ? data.totalGirls : 0,
+      Other: data.Other ? data.Other : 0,
     }
     this.getStudentsGenderRatio(studentsGender);
 
@@ -154,6 +155,7 @@ export class SchoolComponent {
       if (data) {
         this.setAllGraphs(data, false);
         this.spinner.hide();
+        this.schoolModel = '';
       }
     }, (error) => {
       this.toastr.error('', 'Something went wrong !');
@@ -199,8 +201,8 @@ export class SchoolComponent {
 
   getStudentsGenderRatio(studentsGender: any) {
     this.studentsGenderRatio = this.graphService.PieGraph('donut', ' Students');
-    this.studentsGenderRatio.series = [studentsGender.totalBoys, studentsGender.totalGirls];
-    this.studentsGenderRatio.labels = ["Boys", "Girls"];
+    this.studentsGenderRatio.series = [studentsGender.totalBoys, studentsGender.totalGirls, studentsGender.Other];
+    this.studentsGenderRatio.labels = ["Boys", "Girls", "Other"];
     this.studentsGenderRatio.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         this.clearData();
@@ -214,7 +216,7 @@ export class SchoolComponent {
     if (!flash) {
       this.spinner.show();
       const parameter = {
-        "Gender": this.studGender.dataPointIndex == 0 ? 'M' : 'F',
+        "Gender": this.studGender.dataPointIndex == 0 ? 'M' : (this.studGender?.dataPointIndex == 1 ? 'F' : 'T'),
         "Schoolid": this.schoolModel.Schoolid,
       }
       this.httpService.post('student/studentcount/schoolname/gender', parameter).subscribe((res: any) => {
@@ -272,7 +274,7 @@ export class SchoolComponent {
   }
 
   getShiftWiseSchools(shiftWiseCount: any) {
-    this.shiftWiseSchools = this.graphService.PolarGraph();
+    this.shiftWiseSchools = this.graphService.PolarGraph('Schools');
     const entries = Object.entries(shiftWiseCount);
     entries.forEach(([key, value]) => {
       if (Number(value) > 0) {
@@ -294,7 +296,7 @@ export class SchoolComponent {
   }
 
   getTypesOfSchools(typesOfSchools: any) {
-    this.typesOfSchools = this.graphService.PolarGraph();
+    this.typesOfSchools = this.graphService.PolarGraph('Schools');
     if (typesOfSchools.length > 0) {
       typesOfSchools.forEach((key: any, value: any) => {
         if (Number(key.count) > 0) {

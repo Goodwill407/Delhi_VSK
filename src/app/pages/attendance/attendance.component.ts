@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { GraphService } from 'src/app/services/graph-service.service';
@@ -27,19 +27,23 @@ export class AttendanceComponent {
   districtModel: any = "";
   zoneModel: any = "";
   shiftModel: any = "";
-  dateModel: any ;
+  dateModel: any;
   districtName: any;
   genderWisePresent: any;
   genderWiseAbsent: any;
   allShift: any = ['Morning', 'General', 'Evening'];
+  districtWiseAttendanceCount: any;
+  newDate: any
+  formattedDate: any;
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, public datepipe: DatePipe) {
-    
+
   }
 
   ngOnInit() {
     this.dateModel = new Date();
     this.dateModel.setDate(this.dateModel.getDate() - 1);
+    this.formattedDate = this.datepipe.transform(this.dateModel, 'dd-MMM-yyyy');
     this.getAllSchoolGraph();
     this.getGraphsByDate();
     this.getAllDistricts();
@@ -52,13 +56,9 @@ export class AttendanceComponent {
   }
 
   getAllDistricts() {
-    const data = {
-      "date": this.getDate(this.dateModel)
-    }
-    this.httpService.post('attendance/district/present-student/per', data).subscribe((data: any) => {
-      if (data) {
+    this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
+      if (data && data.length > 0) {
         this.allDistricts = data;
-        this.getdistrictWiseGraph(data);
       }
     })
   }
@@ -79,7 +79,7 @@ export class AttendanceComponent {
       })
     } else {
       this.httpService.get('school/zonename').subscribe((res: any) => {
-        this.allZones = res.ZoneNames;
+        this.allZones = res.ZoneInfo;
       })
     }
   }
@@ -126,17 +126,25 @@ export class AttendanceComponent {
 
 
   getGraphsByDate() {
+    this.formattedDate = this.datepipe.transform(this.dateModel, 'dd-MMM-yyyy');
     if (this.districtModel) {
       this.getGraphsByDistrictName();
-    }
-    if (this.zoneModel) {
+    } else if (this.zoneModel) {
       this.getGraphsByZone();
+    } else if (this.shiftModel) {
+      this.getGraphsBySfhit();
     }
     else {
       let date = { "date": this.getDate(this.dateModel) };
       this.httpService.post('attendance/date-wise', date).subscribe((data) => {
         this.setAllGraphs(data);
-        this.shiftModel = '';
+        // this.shiftModel = '';
+        if (data.totalStudentCount == 0) {
+          this.dateModel.setDate(this.dateModel.getDate() - 1);
+          this.getGraphsByDate();
+        }
+        this.setDistrictWiseGraph();
+        this.formattedDate = this.datepipe.transform(this.dateModel, 'dd-MMM-yyyy');
       });
     }
   }
@@ -167,16 +175,27 @@ export class AttendanceComponent {
     this.allData = data;
     this.getGenderWisePresent(data);
     this.getGenderWiseAbsent(data);
+    this.setDistrictWiseGraph();
+  }
+
+  setDistrictWiseGraph() {
+    let date = { "date": this.getDate(this.dateModel) };
+    this.httpService.post('attendance/district/present-student/per', date).subscribe((data: any) => {
+      if (data) {
+        this.districtWiseAttendanceCount = data;
+        this.getdistrictWiseGraph(data);
+      }
+    })
   }
 
   getGenderWisePresent(data: any) {
-    this.genderWisePresent = this.graphService.PieGraph('pie', '');
+    this.genderWisePresent = this.graphService.PieGraph('pie', ' Students');
     this.genderWisePresent.series = [data.malePresentCount, data.femalePresentCount, data.otherPresentCount];
     this.genderWisePresent.labels = ['Male', 'Female', 'Others']
   }
 
   getGenderWiseAbsent(data: any) {
-    this.genderWiseAbsent = this.graphService.PieGraph('pie', '');
+    this.genderWiseAbsent = this.graphService.PieGraph('pie', ' Students');
     this.genderWiseAbsent.series = [data.maleAbsentCount, data.femaleAbsentCount, data.otherAbsentCount];
     this.genderWiseAbsent.labels = ['Male', 'Female', 'Others']
   }
@@ -187,7 +206,7 @@ export class AttendanceComponent {
       this.districtWiseGraph.series[0].data.push(Number(data[i].presentPercentage.toFixed(0)));
       this.districtWiseGraph.series[1].data.push(Number((100 - data[i].presentPercentage).toFixed(0)));
       this.districtWiseGraph.xaxis.categories.push(data[i]._id);
-    }   
+    }
   }
 
 
