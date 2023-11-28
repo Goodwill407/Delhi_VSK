@@ -50,6 +50,13 @@
     border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
+/* @media screen and (max-width: 760px) {
+    .column1 {
+        height: 350px;
+       
+    }
+  } */
+
 .filter-box {
     margin: auto 10px;
     padding: 10px;
@@ -65,6 +72,7 @@
 .column .header-bg {
     background-color: #b3d64d;
     color: #fff;
+    position: relative;
 }
 
 apx-chart .apexcharts-toolbar {
