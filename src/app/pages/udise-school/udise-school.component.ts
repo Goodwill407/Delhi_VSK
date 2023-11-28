@@ -12,6 +12,13 @@ import { HttpServiceService } from 'src/app/services/http-service.service';
 })
 export class UdiseSchoolComponent {
   TotalSchool:any
+  allDistricts: any;
+  districtModel: any = "";
+  zoneModel: any = "";
+  schoolModel: any = "";
+  districtName: any;
+  allSchools: any;
+  allZones: any;
 
   // for Graph
   RuralUrbanCountsGraph:any
@@ -24,7 +31,100 @@ export class UdiseSchoolComponent {
   }
 
   ngOnInit(){
-    this. GetAllUdiseSchoolData()
+    this. GetAllUdiseSchoolData();
+    this.getAllDistricts();
+    this.getAllZones();
+  }
+
+  
+  getAllDistricts() {
+    this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
+      if (data && data.length > 0) {
+        this.allDistricts = data;
+      }
+    })
+  }
+
+  
+  getSchoolDataByDistrict() {
+    const district = {
+      District_name: this.districtModel
+    }
+    this.httpService.post('school/getDistrictSchool', district).subscribe((data: any) => {
+      if (data && data.districtSchools) {
+        this.allSchools = data.districtSchools;
+      } else {
+        this.allSchools = [];
+      }
+    });
+  }
+
+  getSchoolDataByZone() {
+    const zone = {
+      Zone_Name: this.zoneModel
+    }
+    this.httpService.post('school/getZoneSchool', zone).subscribe((data: any) => {
+      if (data && data.ZoneSchool) {
+        this.allSchools = data.ZoneSchool;
+      } else {
+        this.allSchools = [];
+      }
+    });
+  }
+
+  getGraphsByDistrictName() {
+    this.spinner.show();
+    if (this.districtModel) {
+      const district = {
+        districtName: this.districtModel
+      }
+      this.httpService.post('zonegraph/school-student-teacher-graph-district', district).subscribe((data: any) => {
+        if (data) {
+         
+          this.spinner.hide();
+        }
+      }, (error) => {
+        this.toastr.error('', 'Something went wrong !');
+      })
+    } else {
+    }
+    this.zoneModel = "";
+    this.schoolModel = "";
+  }
+
+  getGraphsByZone() {
+    this.spinner.show();
+    const zone = {
+      zoneName: this.zoneModel
+    }
+    this.httpService.post('zonegraph/school-student-teacher-graph-zonename', zone).subscribe((data: any) => {
+      if (data) {
+        this.spinner.hide();
+      }
+    }, (error) => {
+      this.toastr.error('', 'Something went wrong !');
+    })
+  }
+
+  getGraphsBySchoolName(){
+
+  }
+
+  getAllZones() {
+    // this.allZones = this.graphService.TreeGraph();
+    // for (let i = 0; i < allZones.length; i++) {
+    //   this.allZones.series[0].data.push({ x: allZones[i].zone, y: allZones[i].count });
+    // }
+    if (this.districtModel) {
+      const district = { "District_name": this.districtModel };
+      this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
+        this.allZones = res.ZoneSchool;
+      })
+    } else {
+      this.httpService.get('school/zonename').subscribe((res: any) => {
+        this.allZones = res.ZoneInfo;
+      })
+    }
   }
 
   GetAllUdiseSchoolData(){

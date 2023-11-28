@@ -205,7 +205,7 @@ export class StudentComponent {
     this.httpService.post('all-student-graph/student-graph-count-schoolName', parameter).subscribe((res: any) => {
       this.allStudentData = res;
       if (this.schoolModel) {
-        this.openModal.nativeElement.click();
+         this.openModal.nativeElement.click();
       }
     });
   }
@@ -410,10 +410,6 @@ export class StudentComponent {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         this.studentDataClear();
         this.statusWise = config.dataPointIndex
-        const parameter = {
-          "Schoolid": this.schoolModel,
-          "status": this.allData
-        }
         this.graphService.addToCart();
       }
     }
