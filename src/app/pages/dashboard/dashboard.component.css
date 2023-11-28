@@ -23,10 +23,11 @@
     --------------------------- */
 
 .column {
-    height: 250px;
-    border-radius: 50px;
-    /* background: linear-gradient(135deg, rgb(0, 255, 214) 0%, rgb(8, 226, 96) 100%); */
-    background: radial-gradient(circle, rgba(179,214,77,1) 0%, rgba(130,187,122,1) 100%);
+    height: 200px;
+    border-radius: 10px;
+    /* background: radial-gradient(circle, rgba(179,214,77,1) 0%, rgba(130,187,122,1) 100%); */
+    background: radial-gradient(circle, rgba(61, 155, 233, 1) 0%, rgba(44, 123, 171, 1) 100%);
+    /* background: radial-gradient(circle, rgba(185,183,91,1) 0%, rgba(138,171,44,1) 84%); */
     transition: all 0.5s ease-in-out;
     transform-style: preserve-3d;
     box-shadow: rgba(5, 71, 17, 0) 40px 50px 25px -40px, rgba(5, 71, 17, 0.2) 0px 25px 25px -5px;
@@ -39,12 +40,6 @@
 .graph iframe {
     width: 100%;
     height: 100vh;
-}
-
-.card-bottom-text {
-    position: absolute;
-    bottom: 8px;
-    width: 100%;
 }
 
 .green-bg {
@@ -82,9 +77,9 @@
     position: absolute;
     inset: 15px;
     /* border-radius: 55px; */
-    border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
     border-top-right-radius: 100%;
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.349) 0%, rgba(255, 255, 255, 0.815) 100%);
     /* -webkit-backdrop-filter: blur(5px);
@@ -102,17 +97,33 @@
     align-items: center;
 }
 
+.bg-card {
+    height: 220px;
+    border-radius: 10px;
+    /* background: radial-gradient(circle, rgba(179,214,77,1) 0%, rgba(130,187,122,1) 100%); */
+    background: radial-gradient(circle, rgba(61, 155, 233, 1) 0%, rgba(44, 123, 171, 1) 100%);
+    /* background: radial-gradient(circle, rgba(185,183,91,1) 0%, rgba(138,171,44,1) 84%); */
+    transition: all 0.5s ease-in-out;
+    transform-style: preserve-3d;
+    box-shadow: rgba(5, 71, 17, 0) 40px 50px 25px -40px, rgba(5, 71, 17, 0.2) 0px 25px 25px -5px;
+}
+.card-bottom-text {
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
+}
 .content .title {
     display: block;
-    color: #00894d;
-    font-weight: 900;
-    font-size: 40px;
+    color: #184164;
+    font-weight: 800;
+    font-size: 30px;
 }
 
 .content .text {
     display: block;
-    color: rgba(0, 137, 78, 0.7647058824);
+    color: #184164;
     font-size: 20px;
+    font-weight: 500;
     /* margin-top: 20px; */
 }
 
@@ -213,8 +224,8 @@
 
 .logo {
     position: absolute;
-    right: 35px;
-    top: 8px;
+    right: 20px;
+    top: 5px;
     transform-style: preserve-3d;
 }
 
