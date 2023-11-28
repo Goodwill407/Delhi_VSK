@@ -172,11 +172,7 @@ export class GraphService {
     }
 
     getRandomColor() {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
+        var color = "hsl(" + Math.random() * 360 + ", 100%, 60%)";
         return color;
     }
 
@@ -188,8 +184,7 @@ export class GraphService {
         const graphData = {
             series: [],
             chart: {
-                type: chartType,
-                width: 380,
+                type: chartType
             },
             dataLabels: {
                 enabled: false
@@ -253,8 +248,7 @@ export class GraphService {
         const graphData = {
             series: [],
             chart: {
-                type: "polarArea",
-                width: 380,
+                type: "polarArea"
             },
             stroke: {
                 colors: ["#fff"]

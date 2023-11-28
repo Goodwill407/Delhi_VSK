@@ -42,12 +42,6 @@
     height: 100vh;
 }
 
-.card-bottom-text {
-    position: absolute;
-    bottom: 8px;
-    width: 93%;
-}
-
 .green-bg {
     background-color: #b3d64d;
 }
@@ -103,6 +97,21 @@
     align-items: center;
 }
 
+.bg-card {
+    height: 220px;
+    border-radius: 10px;
+    /* background: radial-gradient(circle, rgba(179,214,77,1) 0%, rgba(130,187,122,1) 100%); */
+    background: radial-gradient(circle, rgba(61, 155, 233, 1) 0%, rgba(44, 123, 171, 1) 100%);
+    /* background: radial-gradient(circle, rgba(185,183,91,1) 0%, rgba(138,171,44,1) 84%); */
+    transition: all 0.5s ease-in-out;
+    transform-style: preserve-3d;
+    box-shadow: rgba(5, 71, 17, 0) 40px 50px 25px -40px, rgba(5, 71, 17, 0.2) 0px 25px 25px -5px;
+}
+.card-bottom-text {
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
+}
 .content .title {
     display: block;
     color: #184164;

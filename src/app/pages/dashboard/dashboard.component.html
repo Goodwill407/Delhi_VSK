@@ -1,27 +1,27 @@
-<div class="row parent mt-3">
-    <div class="col-md-4 upper1 mb-4" [routerLink]="['/school']">
-        <div class="d-flex mb-5">
+<div class="row mt-3 header">
+    <div class="col-md-4 pt-3 mb-4" [routerLink]="['/school']">
+        <div class="bg-card d-flex pb-4">
             <div>
-                <img class="mt-4 ms-3 me-3" src="../../../assets/images/Dashboard/school1.png" style="width: 90px;"
+                <img class="mt-5 ms-3 me-3" src="../../../assets/images/Dashboard/school1.png" style="width: 90px;"
                     alt="">
             </div>
-            <div class="vr mt-5 text-white mx-3 opacity-100"></div>
-            <div>
-                <h1 class="display-6 mt-5 ms-3 fw-bold text-white">{{totalCount.totalSchools}}</h1>
+            <div class="vr mt-4 mb-4 text-white mx-3 opacity-100"></div>
+            <div class="pt-3">
+                <h1 class="display-6 fw-bold text-white mt-5 ms-3">{{totalCount.totalSchools}}</h1>
             </div>
+            <h3 class="text-center mt-5 mb-1 bg-white card-bottom-text">SCHOOLS</h3>
         </div>
-        <h3 class="text-center mt-5 mb-1 bg-white card-bottom-text">SCHOOLS</h3>
 
     </div>
 
-    <div class="col-md-4 upper2 pt-3 mb-4" [routerLink]="['/teacher']">
-        <div class="d-flex mb-1" style="align-items: center;">
-            <div>
+    <div class="col-md-4 pt-3 mb-4" [routerLink]="['/teacher']">
+        <div class="bg-card d-flex pb-4">
+            <div class="pt-5">
                 <img class="ms-3 img-fluid" src="../../../assets/images/Dashboard/lady Teacher.png"
                     style="width: 90px; height: 90px;" alt="">
             </div>
-            <div class="vr text-white mx-3 opacity-100"></div>
-            <div class="">
+            <div class="vr mt-4 mb-4 text-white mx-3 opacity-100"></div>
+            <div class="pt-4">
                 <h1 class="display-6 mt-2 fw-bold text-white">{{totalCount.totalTeachers}}</h1>
                 <div class="d-flex justify-content-around ms-2">
                     <div>
@@ -36,18 +36,18 @@
                     </div>
                 </div>
             </div>
+            <h3 class="text-center mt-1 mb-1 bg-white card-bottom-text">TEACHERS</h3>
         </div>
-        <h3 class="text-center mt-1 mb-1 bg-white card-bottom-text">TEACHERS</h3>
     </div>
 
-    <div class="col-md-4 upper3 pt-3" [routerLink]="['/student']">
-        <div class="d-flex mb-2" style="align-items: center;">
-            <div>
+    <div class="col-md-4 pt-3" [routerLink]="['/student']">
+        <div class="bg-card d-flex pb-4">
+            <div class="pt-5">
                 <img class="ms-3 img-fluid" src="../../../assets/images/Dashboard/student.png"
                     style="width: 90px; height: 90px;" alt="">
             </div>
-            <div class="vr text-white mx-3 opacity-100"></div>
-            <div class="">
+            <div class="vr mt-4 mb-4 text-white mx-3 opacity-100"></div>
+            <div class="pt-4">
                 <h1 class="display-6 mt-2 fw-bold text-white">{{totalCount.totalStudents}}</h1>
                 <div class="d-flex justify-content-around ms-2">
                     <div>
@@ -62,8 +62,8 @@
                     </div>
                 </div>
             </div>
+            <h3 class="text-center mt-1 mb-1 bg-white card-bottom-text">STUDENTS</h3>
         </div>
-        <h3 class="text-center mt-1 mb-1 bg-white card-bottom-text">STUDENTS</h3>
     </div>
 </div>
 <br>
