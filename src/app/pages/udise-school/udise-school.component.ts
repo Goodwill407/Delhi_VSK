@@ -38,7 +38,7 @@ export class UdiseSchoolComponent {
 
   
   getAllDistricts() {
-    this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
+    this.httpService.get('udise-school/district').subscribe((data: any) => {
       if (data && data.length > 0) {
         this.allDistricts = data;
       }
@@ -76,11 +76,11 @@ export class UdiseSchoolComponent {
     this.spinner.show();
     if (this.districtModel) {
       const district = {
-        districtName: this.districtModel
+        district: this.districtModel
       }
-      this.httpService.post('zonegraph/school-student-teacher-graph-district', district).subscribe((data: any) => {
+      this.httpService.post('udise-school/udise-school-stats-by/district', district).subscribe((data: any) => {
         if (data) {
-         
+          this.getAllZones();
           this.spinner.hide();
         }
       }, (error) => {
@@ -116,12 +116,12 @@ export class UdiseSchoolComponent {
     //   this.allZones.series[0].data.push({ x: allZones[i].zone, y: allZones[i].count });
     // }
     if (this.districtModel) {
-      const district = { "District_name": this.districtModel };
-      this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
-        this.allZones = res.ZoneSchool;
+      const district = { "districtName": this.districtModel };
+      this.httpService.post('udise-school/district-zones', district).subscribe((res: any) => {
+        this.allZones = res;
       })
     } else {
-      this.httpService.get('school/zonename').subscribe((res: any) => {
+      this.httpService.get('udise-school/zone').subscribe((res: any) => {
         this.allZones = res.ZoneInfo;
       })
     }
