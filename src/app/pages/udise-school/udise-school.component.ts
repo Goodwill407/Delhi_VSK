@@ -76,11 +76,11 @@ export class UdiseSchoolComponent {
     this.spinner.show();
     if (this.districtModel) {
       const district = {
-        districtName: this.districtModel
+        districtName: 'East'
       }
-      this.httpService.post('zonegraph/school-student-teacher-graph-district', district).subscribe((data: any) => {
+      this.httpService.post('udise-school/udise-school-stats-by/district', district).subscribe((data: any) => {
         if (data) {
-         
+          this.setUdiseSchoolGraphs(data)
           this.spinner.hide();
         }
       }, (error) => {
@@ -95,10 +95,11 @@ export class UdiseSchoolComponent {
   getGraphsByZone() {
     this.spinner.show();
     const zone = {
-      zoneName: this.zoneModel
+      zoneName: 1
     }
-    this.httpService.post('zonegraph/school-student-teacher-graph-zonename', zone).subscribe((data: any) => {
+    this.httpService.post('udise-school/udise-school-stats-by/zone', zone).subscribe((data: any) => {
       if (data) {
+        this.setUdiseSchoolGraphs(data)
         this.spinner.hide();
       }
     }, (error) => {
@@ -106,9 +107,9 @@ export class UdiseSchoolComponent {
     })
   }
 
-  getGraphsBySchoolName(){
+  // getGraphsBySchoolName(){
 
-  }
+  // }
 
   getAllZones() {
     // this.allZones = this.graphService.TreeGraph();
@@ -132,7 +133,6 @@ export class UdiseSchoolComponent {
     this.spinner.show();
     this.httpService.get('udise-school/udise-school-stats').subscribe((data: any) => {
       if (data) {
-        this.TotalSchool = data.totalSchoolCount;
         this.setUdiseSchoolGraphs(data)
         this.spinner.hide();
       }
@@ -142,6 +142,7 @@ export class UdiseSchoolComponent {
   }
 
   setUdiseSchoolGraphs(data:any){
+    this.TotalSchool= data.totalSchoolCount
     const RuralUrbanCounts=data.ruralUrbanCounts
     const School_GenderCounts = data.schoolGenderCounts
     const ShiftfSchoolCounts =data.shiftofschoolCounts

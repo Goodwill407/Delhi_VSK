@@ -20,7 +20,7 @@
             {{zone.Zone_Name}} ({{zone.Z_ID}})
         </option>
     </select>
-    <select class="form-select w-25 ms-2" [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
+    <select class="form-select w-25 ms-2" [(ngModel)]="schoolModel" >
         <option value="" disabled>Select Schools</option>
         <option *ngFor="let school of allSchools" [ngValue]="school">
             {{school.School_Name}} - ({{school.Schoolid}})
