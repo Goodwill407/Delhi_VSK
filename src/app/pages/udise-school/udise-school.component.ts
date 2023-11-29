@@ -42,7 +42,7 @@ export class UdiseSchoolComponent {
   }
 
   getAllDistricts() {
-    this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
+    this.httpService.get('udise-school/district').subscribe((data: any) => {
       if (data && data.length > 0) {
         this.allDistricts = data;
       }
@@ -80,11 +80,13 @@ export class UdiseSchoolComponent {
     this.spinner.show();
     if (this.districtModel) {
       const district = {
-        districtName: this.districtModel
+        district: this.districtModel
       }
-      this.httpService.post('zonegraph/school-student-teacher-graph-district', district).subscribe((data: any) => {
+      this.httpService.post('udise-school/udise-school-stats-by/district', district).subscribe((data: any) => {
         if (data) {
-
+          this.setUdiseSchoolGraphs(data)
+          this.getAllZones();
+          // this.getAllSchools()
           this.spinner.hide();
         }
       }, (error) => {
@@ -99,10 +101,12 @@ export class UdiseSchoolComponent {
   getGraphsByZone() {
     this.spinner.show();
     const zone = {
-      zoneName: this.zoneModel
+      zone: Number(this.zoneModel)
     }
-    this.httpService.post('zonegraph/school-student-teacher-graph-zonename', zone).subscribe((data: any) => {
+    this.httpService.post('udise-school/udise-school-stats-by/zone', zone).subscribe((data: any) => {
       if (data) {
+        this.setUdiseSchoolGraphs(data)
+        // this.getAllSchools()
         this.spinner.hide();
       }
     }, (error) => {
@@ -110,39 +114,73 @@ export class UdiseSchoolComponent {
     })
   }
 
-  getGraphsBySchoolName() {
+  // getGraphsBySchoolName(){
+  //   this.spinner.show();
+  //   const school = {
+  //     SchoolID:this.schoolModel.SchoolID
+  //   }
+  //   this.httpService.post('udise-school/udise-school-stats-by/school', school).subscribe((data: any) => {
+  //     if (data) {
+  //       this.setUdiseSchoolGraphs(data)
+  //       this.spinner.hide();
+  //     }
+  //   }, (error) => {
+  //     this.toastr.error('', 'Something went wrong !');
+  //   })
 
-  }
+  // }
 
   getAllZones() {
     if (this.districtModel) {
-      const district = { "District_name": this.districtModel };
-      this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
-        this.allZones = res.ZoneSchool;
+      const district = { "districtName": this.districtModel };
+      this.httpService.post('udise-school/district-zones', district).subscribe((res: any) => {
+        this.allZones = res;
       })
     } else {
-      this.httpService.get('school/zonename').subscribe((res: any) => {
+      this.httpService.get('udise-school/zone').subscribe((res: any) => {
         this.allZones = res.ZoneInfo;
       })
     }
   }
 
+  // getAllSchools() {
+  //   if (this.districtModel && !this.zoneModel) {
+  //     const district = {
+  //       district: this.districtModel
+  //     }
+  //     this.httpService.post('udise-school/district-wise/schools', district).subscribe((data: any) => {
+  //       if (data) {
+  //         this.allSchools = data
+  //       } else {
+  //         this.allSchools = [];
+  //       }
+  //     });
+  //   } else if (this.zoneModel) {
+  //     const zone = {
+  //       zone: Number(this.zoneModel)
+  //     }
+  //     this.httpService.post('udise-school/zone-wise/school', zone).subscribe((data: any) => {
+  //       if (data) {
+  //         this.allSchools = data
+  //       } else {
+  //         this.allSchools = [];
+  //       }
+  //     });
+  //   }
+  // }
+
   getAllUdiseSchoolData() {
     this.spinner.show();
-    this.httpService.get('udise-school/udise-school-stats').subscribe({
-      next: (res: any) => {
-        if (res) {
-          this.TotalSchool = res.totalSchoolCount;
-          this.setUdiseSchoolGraphs(res);
-          this.spinner.hide();
-        }
-      }, error: () => {
-        this.toastr.error('', 'Something went wrong !');
+    this.httpService.get('udise-school/udise-school-stats').subscribe((data: any) => {
+      if (data) {
+        this.setUdiseSchoolGraphs(data)
+        this.spinner.hide();
       }
     })
   }
 
   setUdiseSchoolGraphs(data: any) {
+    this.TotalSchool = data.totalSchoolCount
     const RuralUrbanCounts = data.ruralUrbanCounts
     const School_GenderCounts = data.schoolGenderCounts
     const ShiftfSchoolCounts = data.shiftofschoolCounts
