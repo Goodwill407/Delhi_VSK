@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommunicationService } from 'src/app/services/communication.service';
 
 @Component({
   selector: 'app-udise',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./udise.component.css']
 })
 export class UdiseComponent {
+
+  constructor(private communicationService: CommunicationService) { }
+
+  handleParentClick() {
+    this.communicationService.emitParentClick();
+  }
 
 }

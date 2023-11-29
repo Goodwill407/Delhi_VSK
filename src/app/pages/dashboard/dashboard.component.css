@@ -24,13 +24,35 @@
 
 .column {
     height: 200px;
-    border-radius: 10px;
-    /* background: radial-gradient(circle, rgba(179,214,77,1) 0%, rgba(130,187,122,1) 100%); */
-    background: radial-gradient(circle, rgba(61, 155, 233, 1) 0%, rgba(44, 123, 171, 1) 100%);
-    /* background: radial-gradient(circle, rgba(185,183,91,1) 0%, rgba(138,171,44,1) 84%); */
+    /* background: radial-gradient(circle, rgba(255,181,232,1) 0%, rgba(212,147,191,1) 100%); */
+    /* background: radial-gradient(circle, rgba(238,86,32,1) 0%, rgba(241,110,64,1) 100%); */
+    /* background: radial-gradient(circle, rgba(233,153,125,1) 0%, rgba(241,110,64,1) 100%); */
+    /* background: #739072; */
+    /* background: #D2E0FB; */
+    /* background: #F9F3CC; */
+    /* background: #BEADFA; */
+    /* background: #EFD595; */
+    /* background: #C8E4B2; */
+    /* background: #FFC6AC; */
+    /* background: #E9B384; */
+    /* background: #F1C27B; */
+    /* background: #F2D8D8; */
+    /* background: #FFF2CC; */
+    /* background: #DFA67B; */
+    /* background: #FFD966; */
+    /* background: #FDF7C3; */
+    background: #EBF5FC;
+    /* border-radius: 10px; */
+    border: 2px solid #3d9be9;
     transition: all 0.5s ease-in-out;
     transform-style: preserve-3d;
     box-shadow: rgba(5, 71, 17, 0) 40px 50px 25px -40px, rgba(5, 71, 17, 0.2) 0px 25px 25px -5px;
+}
+
+.header-dashboard{
+    background-color: #348acb;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
 }
 
 .column img {

@@ -1,23 +1,29 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+</ngx-spinner>
 <ul class="nav nav-pills mb-3 filter-box px-3 mt-3" id="pills-tab" role="tablist">
     <h2 class="fw-bold">NISHTHA</h2>
     <div class="vr mx-3 opacity-100"></div>
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-            type="button" role="tab" aria-controls="pills-home" aria-selected="true">Percentage Enrollment</button>
+            type="button" role="tab" aria-controls="pills-home" aria-selected="true" (click)="getAllData()">Percentage
+            Enrollment</button>
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-            type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Consumption by
+            type="button" role="tab" aria-controls="pills-profile" aria-selected="false"
+            (click)="getAllDistrictsData()">Consumption by
             Districts</button>
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="pills-course-tab" data-bs-toggle="pill" data-bs-target="#pills-course"
-            type="button" role="tab" aria-controls="pills-course" aria-selected="false">Consumption by
+            type="button" role="tab" aria-controls="pills-course" aria-selected="false"
+            (click)="getAllConsumptionsByCourse()">Consumption by
             Course</button>
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"
-            type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Course Medium</button>
+            type="button" role="tab" aria-controls="pills-contact" aria-selected="false"
+            (click)="getCourse_MediumData()">Course Medium</button>
     </li>
 </ul>
 <div class="tab-content filter-box" id="pills-tabContent">

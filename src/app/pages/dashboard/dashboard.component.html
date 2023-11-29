@@ -1,5 +1,5 @@
 <div class="row mt-3 header justify-content-around">
-    <div class="col-sm-8 col-md-6 col-lg-4 pt-3 mb-4" [routerLink]="['/school']">
+    <div class="col-sm-8 col-md-6 col-lg-4 col-xl-4 pt-3 mb-4" [routerLink]="['/school']">
         <div class="bg-card d-flex pb-4">
             <div>
                 <img class="mt-5 ms-3 me-3" src="../../../assets/images/Dashboard/school1.png" style="width: 90px;"
@@ -24,7 +24,7 @@
 
     </div>
 
-    <div class="col-sm-8 col-md-6 col-lg-4 pt-3 mb-4" [routerLink]="['/teacher']">
+    <div class="col-sm-8 col-md-6 col-lg-4 col-xl-4 pt-3 mb-4" [routerLink]="['/teacher']">
         <div class="bg-card d-flex pb-4">
             <div class="pt-5">
                 <img class="ms-3 img-fluid" src="../../../assets/images/Dashboard/lady Teacher.png"
@@ -50,7 +50,7 @@
         </div>
     </div>
 
-    <div class="col-sm-8 col-md-6 col-lg-4 pt-3" [routerLink]="['/student']">
+    <div class="col-sm-8 col-md-6 col-lg-4 col-xl-4 pt-3" [routerLink]="['/student']">
         <div class="bg-card d-flex pb-4">
             <div class="pt-5">
                 <img class="ms-3 img-fluid" src="../../../assets/images/Dashboard/student.png"
@@ -82,11 +82,12 @@
 <div class="container1">
     <div class="column mt-3 ms-3 text-center" *ngFor="let data of allDistrictData" [routerLink]="['/school']"
         [queryParams]="{districtName : data.districtName}">
-        <div class="logo">
-            <h4 class="fw-bold text-white">{{data.districtName}}</h4>
+        <div class="header-dashboard">
+            <h4 class="fw-bold mb-0 p-2 text-white" >{{data.districtName}}</h4>
         </div>
-        <div class="glass"></div>
-        <div class="content d-flex content-margin">
+        
+        <!-- <div class="glass"></div> -->
+        <div class="content d-flex mt-4">
             <span class="text">Total Schools :</span>
             <span class="title ms-2">{{data.totalSchoolCount}}</span>
         </div>

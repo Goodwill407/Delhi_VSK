@@ -24,6 +24,7 @@ a:focus {
     transition: all 0.3s;
 }
 
+
 .navbar {
     /* padding: 15px 10px; */
     background-color: #3d9be9;
@@ -41,7 +42,7 @@ a:focus {
 
 .header-font {
     font-size: 46px;
-    margin: 0;
+    margin-left: 5px;
     font-weight: bold;
 }
 
@@ -395,7 +396,7 @@ a.article:hover {
     cursor: pointer;
 }
 
-.logo {
+.logo ul li img{
     align-items: center;
 }
 
