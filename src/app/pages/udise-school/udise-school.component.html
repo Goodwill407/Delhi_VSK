@@ -1,31 +1,28 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
 </ngx-spinner>
-<div class="d-flex mt-3 filter-box">
-    <h2 class="fw-bold">UDISE School</h2>
-</div>
 
 <!-- Dropdowns -->
 <div class="d-flex mt-3 filter-box">
-    <h2 class="fw-bold mb-0 p-1">SCHOOL</h2>
+    <h2 class="fw-bold mb-0 p-1">UDISE School</h2>
     <div class="vr mx-3 opacity-100"></div>
     <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
         <option value="">All Districts</option>
         <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
-            {{district.districtName}} ({{district.D_ID}})
+            {{district.districtName}} 
         </option>
     </select>
     <select class="form-select w-25 ms-2" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
         <option value="" disabled>All Zones</option>
         <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
-            {{zone.Zone_Name}} ({{zone.Z_ID}})
+            Zone -{{zone.Zone_Name}} 
         </option>
     </select>
-    <select class="form-select w-25 ms-2" [(ngModel)]="schoolModel" >
+    <!-- <select class="form-select w-25 ms-2" [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
         <option value="" disabled>Select Schools</option>
         <option *ngFor="let school of allSchools" [ngValue]="school">
-            {{school.School_Name}} - ({{school.Schoolid}})
+            {{school.SchName}} ({{school.SchoolID}})
         </option>
-    </select>
+    </select> -->
 </div>
 <div class="container1">
     <div class="column text-center">
