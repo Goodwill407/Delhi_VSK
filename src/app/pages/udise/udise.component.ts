@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class UdiseComponent {
 
+  graphType: any = 'udise';
+
+  setGraph(type: any) {
+    this.graphType = type;
+  }
+
 }

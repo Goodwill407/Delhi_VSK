@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, SimpleChange } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -11,7 +11,7 @@ import { HttpServiceService } from 'src/app/services/http-service.service';
   styleUrls: ['./udise-school.component.css']
 })
 export class UdiseSchoolComponent {
-  TotalSchool:any
+  TotalSchool: any
   allDistricts: any;
   districtModel: any = "";
   zoneModel: any = "";
@@ -21,22 +21,26 @@ export class UdiseSchoolComponent {
   allZones: any;
 
   // for Graph
-  RuralUrbanCountsGraph:any
-  SchoolGenderCountsGraph:any
-  ShiftfSchoolCountsGraph:any
-  TypeofSchoolCountsGraph:any
+  RuralUrbanCountsGraph: any
+  SchoolGenderCountsGraph: any
+  ShiftfSchoolCountsGraph: any
+  TypeofSchoolCountsGraph: any
+  @Input() graphTypes: any;
 
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private toastr: ToastrService) {
   }
 
-  ngOnInit(){
-    this. GetAllUdiseSchoolData();
+  ngOnInit() {
     this.getAllDistricts();
     this.getAllZones();
+    this.getAllUdiseSchoolData();
   }
 
-  
+  ngOnChange(change: SimpleChange) {
+    change;
+  }
+
   getAllDistricts() {
     this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
       if (data && data.length > 0) {
@@ -45,7 +49,7 @@ export class UdiseSchoolComponent {
     })
   }
 
-  
+
   getSchoolDataByDistrict() {
     const district = {
       District_name: this.districtModel
@@ -80,7 +84,7 @@ export class UdiseSchoolComponent {
       }
       this.httpService.post('zonegraph/school-student-teacher-graph-district', district).subscribe((data: any) => {
         if (data) {
-         
+
           this.spinner.hide();
         }
       }, (error) => {
@@ -106,15 +110,11 @@ export class UdiseSchoolComponent {
     })
   }
 
-  getGraphsBySchoolName(){
+  getGraphsBySchoolName() {
 
   }
 
   getAllZones() {
-    // this.allZones = this.graphService.TreeGraph();
-    // for (let i = 0; i < allZones.length; i++) {
-    //   this.allZones.series[0].data.push({ x: allZones[i].zone, y: allZones[i].count });
-    // }
     if (this.districtModel) {
       const district = { "District_name": this.districtModel };
       this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
@@ -127,44 +127,45 @@ export class UdiseSchoolComponent {
     }
   }
 
-  GetAllUdiseSchoolData(){
-   
+  getAllUdiseSchoolData() {
     this.spinner.show();
-    this.httpService.get('udise-school/udise-school-stats').subscribe((data: any) => {
-      if (data) {
-        this.TotalSchool = data.totalSchoolCount;
-        this.setUdiseSchoolGraphs(data)
-        this.spinner.hide();
+    this.httpService.get('udise-school/udise-school-stats').subscribe({
+      next: (res: any) => {
+        if (res) {
+          this.TotalSchool = res.totalSchoolCount;
+          this.setUdiseSchoolGraphs(res);
+          this.spinner.hide();
+        }
+      }, error: () => {
+        this.toastr.error('', 'Something went wrong !');
       }
-    }, (error) => {
-      this.toastr.error('', 'Something went wrong !');
     })
   }
 
-  setUdiseSchoolGraphs(data:any){
-    const RuralUrbanCounts=data.ruralUrbanCounts
+  setUdiseSchoolGraphs(data: any) {
+    const RuralUrbanCounts = data.ruralUrbanCounts
     const School_GenderCounts = data.schoolGenderCounts
-    const ShiftfSchoolCounts =data.shiftofschoolCounts
-    const TypeofschoolCounts=data.typeofschoolCounts
-    
-     this.getRuralUrbanCountsGraph(RuralUrbanCounts)
-     this.getSchoolGenderCounts(School_GenderCounts)
-     this.getShiftWiseCountGraph(ShiftfSchoolCounts)
-     this.getTypeofSchoolCountsGraph(TypeofschoolCounts)
+    const ShiftfSchoolCounts = data.shiftofschoolCounts
+    const TypeofschoolCounts = data.typeofschoolCounts
+
+    this.getRuralUrbanCountsGraph(RuralUrbanCounts)
+    this.getSchoolGenderCounts(School_GenderCounts)
+    this.getShiftWiseCountGraph(ShiftfSchoolCounts)
+    this.getTypeofSchoolCountsGraph(TypeofschoolCounts)
 
   }
 
-  getRuralUrbanCountsGraph(RuralUrbanCounts:any){
-     const RuralOrUrban = RuralUrbanCounts.map((item: any) => item._id)
+  getRuralUrbanCountsGraph(RuralUrbanCounts: any) {
+    const RuralOrUrban = RuralUrbanCounts.map((item: any) => item._id)
     const RuralOrUrbanCount = RuralUrbanCounts.map((item: any) => item.count)
     this.RuralUrbanCountsGraph = this.graphService.PieGraph('donut', '');
     const series = RuralOrUrbanCount;
     const labels = RuralOrUrban
     this.RuralUrbanCountsGraph.series = [...series];
     this.RuralUrbanCountsGraph.labels = [...labels]
-   }
+  }
 
-   getSchoolGenderCounts(School_GenderCounts:any){
+  getSchoolGenderCounts(School_GenderCounts: any) {
     const GenderType = School_GenderCounts.map((item: any) => item._id)
     const GenderWiseCount = School_GenderCounts.map((item: any) => item.count)
     this.SchoolGenderCountsGraph = this.graphService.PieGraph('pie', '');
@@ -173,9 +174,9 @@ export class UdiseSchoolComponent {
     this.SchoolGenderCountsGraph.series = [...series];
     this.SchoolGenderCountsGraph.labels = [...labels]
 
-   }
+  }
 
-   getShiftWiseCountGraph(Shift_ofSchoolCounts:any){
+  getShiftWiseCountGraph(Shift_ofSchoolCounts: any) {
     const TypeOfShift = Shift_ofSchoolCounts.map((item: any) => item._id)
     const ShiftWiseCount = Shift_ofSchoolCounts.map((item: any) => item.count)
     this.ShiftfSchoolCountsGraph = this.graphService.PolarGraph();
@@ -184,9 +185,9 @@ export class UdiseSchoolComponent {
     this.ShiftfSchoolCountsGraph.series = [...series];
     this.ShiftfSchoolCountsGraph.labels = [...labels]
 
-   }
+  }
 
-   getTypeofSchoolCountsGraph(Type_Of_School_count:any){
+  getTypeofSchoolCountsGraph(Type_Of_School_count: any) {
     const TypeOfSchool = Type_Of_School_count.map((item: any) => item._id)
     const TypeOfschoolCount = Type_Of_School_count.map((item: any) => item.count)
     this.TypeofSchoolCountsGraph = this.graphService.PieGraph('donut', '');
@@ -195,12 +196,12 @@ export class UdiseSchoolComponent {
     this.TypeofSchoolCountsGraph.series = [...series];
     this.TypeofSchoolCountsGraph.labels = [...labels]
 
-   }
-
-   
+  }
 
 
 
-  
+
+
+
 
 }

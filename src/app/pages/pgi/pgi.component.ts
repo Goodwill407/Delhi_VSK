@@ -29,11 +29,15 @@ export class PgiComponent {
   }
 
   getAllGraphData() {
+    this.spinner.show();
     this.httpService.get('alldashboard2/pgi-alldashboard').subscribe((data: any) => {
       if (data && data.length > 0) {
         this.allGraphData = data;
         this.setGraphData();
       }
+      this.spinner.hide();
+    }, error => {
+      this.spinner.show();
     });
   }
 
