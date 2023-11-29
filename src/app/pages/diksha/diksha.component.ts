@@ -142,7 +142,7 @@ export class DikshaComponent {
       data: []
     }];
     for (let i = 0; i < this.allQRCodeCoverage.length; i++) {
-      series[0].data.push({ x: this.allQRCodeCoverage[i].subject, y: this.allQRCodeCoverage[i].averageQRCodeCoverage });
+      series[0].data.push({ x: this.allQRCodeCoverage[i].subject, y: Number(this.allQRCodeCoverage[i].averageQRCodeCoverage)?.toFixed(2) });
       this.averageQRCodeCoverageGraph.xaxis.categories.push(this.allQRCodeCoverage[i].subject);
     }
     this.averageQRCodeCoverageGraph.series = [...series];
@@ -157,7 +157,7 @@ export class DikshaComponent {
       data: []
     }];
     for (let i = 0; i < this.allQRCodeCoverage.length; i++) {
-      series[0].data.push({ x: this.allQRCodeCoverage[i].subject, y: this.allQRCodeCoverage[i].averageQRCodeLinkedToContent });
+      series[0].data.push({ x: this.allQRCodeCoverage[i].subject, y: Number(this.allQRCodeCoverage[i].averageQRCodeLinkedToContent)?.toFixed(2) });
       this.averageQRCodeLinkedToContentGraph.xaxis.categories.push(this.allQRCodeCoverage[i].subject);
     }
     this.averageQRCodeLinkedToContentGraph.series = [...series];
@@ -172,7 +172,7 @@ export class DikshaComponent {
       data: []
     }];
     for (let i = 0; i < this.allQRCodeCoverage.length; i++) {
-      series[0].data.push({ x: this.allQRCodeCoverage[i].subject, y: this.allQRCodeCoverage[i].averageTotalQRCode });
+      series[0].data.push({ x: this.allQRCodeCoverage[i].subject, y: Number(this.allQRCodeCoverage[i].averageTotalQRCode)?.toFixed(2) });
       this.averageTotalQRCodeGraph.xaxis.categories.push(this.allQRCodeCoverage[i].subject);
     }
     this.averageTotalQRCodeGraph.series = [...series];

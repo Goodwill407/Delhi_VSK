@@ -1,20 +1,19 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
 </ngx-spinner>
-
 <!-- Dropdowns -->
 <div class="d-flex mt-3 filter-box">
-    <h2 class="fw-bold mb-0 p-1">UDISE School</h2>
+    <h2 class="fw-bold mb-0 p-1">School</h2>
     <div class="vr mx-3 opacity-100"></div>
     <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
         <option value="">All Districts</option>
         <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
-            {{district.districtName}} 
+            {{district.districtName}}
         </option>
     </select>
     <select class="form-select w-25 ms-2" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
         <option value="" disabled>All Zones</option>
         <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
-            Zone -{{zone.Zone_Name}} 
+            Zone -{{zone.Zone_Name}}
         </option>
     </select>
     <!-- <select class="form-select w-25 ms-2" [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
@@ -27,14 +26,11 @@
 <div class="container1">
     <div class="column text-center">
         <h5 class="header-bg p-2 m-2">Udise Total School</h5>
-        <div class="d-flex justify-content-around mt-4">
-            <img class="ms-2" src="../../../assets/images/icons/school-2.png" style="height: 100px;" alt="">
-            <div class="vr"></div>
-            <div class="d-block ms-1 text-center">
-                <h1 class="fw-bold mt-3">{{TotalSchool}}</h1>
-            </div>
+        <div class="mt-4">
+            <img class="ms-2" src="../../../assets/images/icons/school-2.png" style="height: 120px;" alt="">
         </div>
-        <h2 class="mt-5">Total school</h2>
+        <h1 class="fw-bold mt-4">{{TotalSchool}}</h1>
+        <h3>Total schools</h3>
     </div>
 
     <div class="column">

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommunicationService } from 'src/app/services/communication.service';
 
 @Component({
   selector: 'app-udise',
@@ -7,10 +8,10 @@ import { Component } from '@angular/core';
 })
 export class UdiseComponent {
 
-  graphType: any = 'udise';
+  constructor(private communicationService: CommunicationService) { }
 
-  setGraph(type: any) {
-    this.graphType = type;
+  handleParentClick() {
+    this.communicationService.emitParentClick();
   }
 
 }
