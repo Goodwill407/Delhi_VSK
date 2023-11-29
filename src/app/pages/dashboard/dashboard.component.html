@@ -6,8 +6,18 @@
                     alt="">
             </div>
             <div class="vr mt-4 mb-5 text-white mx-3 opacity-100"></div>
-            <div class="pt-3">
-                <h1 class="display-6 fw-bold text-white mt-5 ms-3">{{totalCount.totalSchools}}</h1>
+            <div class="pt-4">
+                <h1 class="display-6 mt-2 fw-bold text-white">{{totalCount.totalSchools}}</h1>
+                <div class="d-flex justify-content-around ms-2">
+                    <div>
+                        <h5 class="mb-0">{{(totalCount.schoolManagementWise.Aided | number)}}</h5>
+                        <h6 class="mb-0 text-white">Aided</h6>
+                    </div>
+                    <div class="ms-4">
+                        <h5 class="mb-0">{{(totalCount.schoolManagementWise.Government | number)}}</h5>
+                        <h6 class="mb-0 text-white">Government</h6>
+                    </div>
+                </div>
             </div>
             <h3 class="text-center mt-5 mb-1 bg-white card-bottom-text">SCHOOLS</h3>
         </div>

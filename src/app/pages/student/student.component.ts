@@ -399,7 +399,7 @@ export class StudentComponent {
   }
 
   getStudentStatusWiseCounts(StudentstatusWiseCounts: any) {
-    const StudentStatus = StudentstatusWiseCounts.map((item: any) => item._id)
+    const StudentStatus = StudentstatusWiseCounts.map((item: any) => (item._id !== "" ? item._id : "Not Identified"));
     const StudCount = StudentstatusWiseCounts.map((item: any) => item.count)
     this.StudentStatusWiseCounts = this.graphService.PieGraph('donut', ' Students');
     const series = StudCount;
