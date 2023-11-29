@@ -337,10 +337,22 @@ export class TeacherComponent {
       this.designation.xaxis.categories.push(post[i]._id);
     }
     this.designation.series = [...series];
-    this.designation.plotOptions.bar.horizontal = false;
+    // this.designation.plotOptions.bar.horizontal = false;
     this.designation.xaxis.title.text = "Designation";
+    // this.designation.xaxis.labels= {
+    //   show: true,
+    //   style: {
+    //     colors: [],
+    //     maxWidth: 610,
+    //     fontSize: '12px', // Adjust font size if needed
+    //     fontFamily: 'IBM Plex Sans, sans-serif',
+    //     rotate: -45, // Rotate labels counterclockwise
+    // },hideOverlappingLabels: true,
+    // maxWidth: 800,
+    // }
     this.designation.yaxis.title.text = "Teachers";
     this.designation.dataLabels.enabled = false;
+    this.designation.chart.height = "750px"
     this.designation.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         this.teacherDataClear();

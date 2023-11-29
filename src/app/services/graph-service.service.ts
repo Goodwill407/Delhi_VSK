@@ -74,7 +74,7 @@ export class GraphService {
             colors: colors,
             plotOptions: {
                 bar: {
-                    columnWidth: "45%",
+                    columnWidth: "20%", // You can adjust the columnWidth as needed
                     distributed: true,
                     horizontal: true
                 }
@@ -97,12 +97,22 @@ export class GraphService {
             xaxis: {
                 categories: [],
                 title: {
-                    text: "",
+                    text: "Designation",
                     style: {
                         fontSize: "14px",
                         color: "#3d9be9",
                         fontWeight: "600"
                     }
+                },
+                labels: {
+                    rotate: -45, // You can adjust the rotation angle as needed
+                    style: {
+                        fontSize: "16px", // Adjust font size as needed
+                        colors: "#3d9be9"
+                    },
+                    show: true,
+                    maxWidth: 610,
+                    hideOverlappingLabels: true,
                 }
             },
             yaxis: {
