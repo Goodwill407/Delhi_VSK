@@ -3,15 +3,18 @@
     <div class="vr mx-3 opacity-100"></div>
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-            type="button" role="tab" aria-controls="pills-home" aria-selected="true">ETB coverage status</button>
+            type="button" role="tab" aria-controls="pills-home" aria-selected="true"
+            (click)="getAllAverageQRCodeCoverageStatus()">ETB coverage status</button>
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-            type="button" role="tab" aria-controls="pills-profile" aria-selected="false">ETB QR coverage</button>
+            type="button" role="tab" aria-controls="pills-profile" aria-selected="false"
+            (click)="getAllAverageQRCodeCoverage()">ETB QR coverage</button>
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="pills-course-tab" data-bs-toggle="pill" data-bs-target="#pills-course"
-            type="button" role="tab" aria-controls="pills-course" aria-selected="false">ETB learning session</button>
+            (click)="getAllCounts_learningsession()" type="button" role="tab" aria-controls="pills-course"
+            aria-selected="false">ETB learning session</button>
     </li>
 </ul>
 
@@ -40,17 +43,17 @@
                 <h5 class="header-bg p-2 m-2">Average Linked QR Count</h5>
                 <apx-chart [series]="averageLinkedQRCountGraph?.series" [chart]="averageLinkedQRCountGraph?.chart"
                     [dataLabels]="averageLinkedQRCountGraph?.dataLabels"
-                    [plotOptions]="averageLinkedQRCountGraph?.plotOptions" [xaxis]="averageLinkedQRCountGraph?.xaxis"
-                    [legend]="averageLinkedQRCountGraph?.legend" [fill]="averageLinkedQRCountGraph?.fill"
-                    [colors]="averageLinkedQRCountGraph?.colors"></apx-chart>
+                    [plotOptions]="averageLinkedQRCountGraph?.plotOptions" [yaxis]="averageLinkedQRCountGraph?.yaxis"
+                    [xaxis]="averageLinkedQRCountGraph?.xaxis" [legend]="averageLinkedQRCountGraph?.legend"
+                    [fill]="averageLinkedQRCountGraph?.fill" [colors]="averageLinkedQRCountGraph?.colors"></apx-chart>
             </div>
             <div class="column">
                 <h5 class="header-bg p-2 m-2">Average Resource Count</h5>
                 <apx-chart [series]="averageResourceCountGraph?.series" [chart]="averageResourceCountGraph?.chart"
                     [dataLabels]="averageResourceCountGraph?.dataLabels"
-                    [plotOptions]="averageResourceCountGraph?.plotOptions" [xaxis]="averageResourceCountGraph?.xaxis"
-                    [legend]="averageResourceCountGraph?.legend" [fill]="averageResourceCountGraph?.fill"
-                    [colors]="averageResourceCountGraph?.colors"></apx-chart>
+                    [plotOptions]="averageResourceCountGraph?.plotOptions" [yaxis]="averageResourceCountGraph?.yaxis"
+                    [xaxis]="averageResourceCountGraph?.xaxis" [legend]="averageResourceCountGraph?.legend"
+                    [fill]="averageResourceCountGraph?.fill" [colors]="averageResourceCountGraph?.colors"></apx-chart>
             </div>
         </div>
     </div>
@@ -72,30 +75,34 @@
             </select>
         </div>
 
-        <div class="container1" *ngIf="allQRCodeCoverage?.length > 0">
+        <div class="container1">
             <div class="column">
                 <h5 class="header-bg p-2 m-2">Average QR Code Coverage</h5>
                 <apx-chart [series]="averageQRCodeCoverageGraph?.series" [chart]="averageQRCodeCoverageGraph?.chart"
                     [dataLabels]="averageQRCodeCoverageGraph?.dataLabels"
-                    [plotOptions]="averageQRCodeCoverageGraph?.plotOptions" [xaxis]="averageQRCodeCoverageGraph?.xaxis"
-                    [legend]="averageQRCodeCoverageGraph?.legend" [fill]="averageQRCodeCoverageGraph?.fill"
-                    [colors]="averageQRCodeCoverageGraph?.colors"></apx-chart>
+                    [plotOptions]="averageQRCodeCoverageGraph?.plotOptions" [yaxis]="averageQRCodeCoverageGraph?.yaxis"
+                    [xaxis]="averageQRCodeCoverageGraph?.xaxis" [legend]="averageQRCodeCoverageGraph?.legend"
+                    [fill]="averageQRCodeCoverageGraph?.fill" [colors]="averageQRCodeCoverageGraph?.colors"></apx-chart>
             </div>
             <div class="column">
                 <h5 class="header-bg p-2 m-2">Average QR Code Linked Content</h5>
-                <apx-chart [series]="averageQRCodeCoverageGraph?.series" [chart]="averageQRCodeCoverageGraph?.chart"
-                    [dataLabels]="averageQRCodeCoverageGraph?.dataLabels"
-                    [plotOptions]="averageQRCodeCoverageGraph?.plotOptions" [xaxis]="averageQRCodeCoverageGraph?.xaxis"
-                    [legend]="averageQRCodeCoverageGraph?.legend" [fill]="averageQRCodeCoverageGraph?.fill"
-                    [colors]="averageQRCodeCoverageGraph?.colors"></apx-chart>
+                <apx-chart [series]="averageQRCodeLinkedToContentGraph?.series"
+                    [chart]="averageQRCodeLinkedToContentGraph?.chart"
+                    [dataLabels]="averageQRCodeLinkedToContentGraph?.dataLabels"
+                    [plotOptions]="averageQRCodeLinkedToContentGraph?.plotOptions"
+                    [yaxis]="averageQRCodeLinkedToContentGraph?.yaxis"
+                    [xaxis]="averageQRCodeLinkedToContentGraph?.xaxis"
+                    [legend]="averageQRCodeLinkedToContentGraph?.legend"
+                    [fill]="averageQRCodeLinkedToContentGraph?.fill"
+                    [colors]="averageQRCodeLinkedToContentGraph?.colors"></apx-chart>
             </div>
             <div class="column">
                 <h5 class="header-bg p-2 m-2">Average Total QR Code</h5>
-                <apx-chart [series]="averageQRCodeCoverageGraph?.series" [chart]="averageQRCodeCoverageGraph?.chart"
-                    [dataLabels]="averageQRCodeCoverageGraph?.dataLabels"
-                    [plotOptions]="averageQRCodeCoverageGraph?.plotOptions" [xaxis]="averageQRCodeCoverageGraph?.xaxis"
-                    [legend]="averageQRCodeCoverageGraph?.legend" [fill]="averageQRCodeCoverageGraph?.fill"
-                    [colors]="averageQRCodeCoverageGraph?.colors"></apx-chart>
+                <apx-chart [series]="averageTotalQRCodeGraph?.series" [chart]="averageTotalQRCodeGraph?.chart"
+                    [dataLabels]="averageTotalQRCodeGraph?.dataLabels"
+                    [plotOptions]="averageTotalQRCodeGraph?.plotOptions" [yaxis]="averageTotalQRCodeGraph?.yaxis"
+                    [xaxis]="averageTotalQRCodeGraph?.xaxis" [legend]="averageTotalQRCodeGraph?.legend"
+                    [fill]="averageTotalQRCodeGraph?.fill" [colors]="averageTotalQRCodeGraph?.colors"></apx-chart>
             </div>
         </div>
     </div>
@@ -148,7 +155,7 @@
                 <h5 class="header-bg p-2 m-2">Average Play Time</h5>
                 <apx-chart [series]="Average_play_timeGraph?.series" [chart]="Average_play_timeGraph?.chart"
                     [labels]="Average_play_timeGraph?.labels" [fill]="Average_play_timeGraph?.fill"
-                    [colors]="averageQRCodeCoverageGraph?.colors" [dataLabels]="Average_play_timeGraph?.dataLabels"
+                    [colors]="Average_play_timeGraph?.colors" [dataLabels]="Average_play_timeGraph?.dataLabels"
                     [plotOptions]="Average_play_timeGraph?.plotOptions"
                     [responsive]="Average_play_timeGraph?.responsive"
                     [legend]="Average_play_timeGraph?.legend"></apx-chart>

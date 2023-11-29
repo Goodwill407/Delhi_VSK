@@ -39,12 +39,14 @@ export class DikshaComponent {
   }
 
   ngOnInit() {
-    this.getAllCounts_learningsession();
-    this.getAllAverageQRCodeCoverage();
     this.getAllAverageQRCodeCoverageStatus();
+    this.getAllAverageQRCodeCoverage();
+    this.getAllCounts_learningsession();
   }
 
+  // ====== 3 ======
   getAllCounts_learningsession() {
+    this.clearAllData();
     const data = {
       "medium": this.mediumModel,
       "grade": this.gradeModel,
@@ -62,11 +64,9 @@ export class DikshaComponent {
     this.httpService.post('learningsession/counts-learningsession', data).subscribe((data: any) => {
       if (data) {
         const AllCounts_learningsession = data
-
         this.getTotalCountGraph(AllCounts_learningsession)
         this.getTotalAverage_no_of_playsGraph(AllCounts_learningsession)
         this.getTotalAverage_play_timeGraph(AllCounts_learningsession)
-
       }
     })
   }
@@ -79,36 +79,44 @@ export class DikshaComponent {
     const labels = LableName
     this.TotalCountsGraph.series = [...series];
     this.TotalCountsGraph.labels = [...labels]
-
-
   }
 
   getTotalAverage_no_of_playsGraph(all_Data: any) {
     const LableName = all_Data.map((item: any) => item._id)
     const Average_no_of_playsCount = all_Data.map((item: any) => item.average_no_of_plays)
     this.Average_no_of_playsGraph = this.graphService.PieGraph('donut', '');
-    const series = Average_no_of_playsCount.map((item: any) => parseFloat(item.toFixed(2)));
+    const series = Average_no_of_playsCount.map((item: any) => item);
     const labels = LableName
     this.Average_no_of_playsGraph.series = [...series];
     this.Average_no_of_playsGraph.labels = [...labels]
-    // this.Average_no_of_playsGraph.legend.formatter = function (val: any) { return val; }
-
-
   }
 
   getTotalAverage_play_timeGraph(all_Data: any) {
     const LableName = all_Data.map((item: any) => item._id)
     const Average_play_timeCounts = all_Data.map((item: any) => item.average_play_time)
     this.Average_play_timeGraph = this.graphService.PieGraph('donut', '');
-    const series = Average_play_timeCounts.map((item: any) => parseFloat(item.toFixed(2)));
+    const series = Average_play_timeCounts.map((item: any) => item);
     const labels = LableName;
     this.Average_play_timeGraph.series = [...series];
     this.Average_play_timeGraph.labels = [...labels];
-    // this.Average_play_timeGraph.legend.formatter = function (val: any) { return val; }
+  }
+
+  clearAllData() {
+    this.averageLinkedQRCountGraph = {};
+    this.averageResourceCountGraph = {};
+
+    this.averageQRCodeCoverageGraph = {};
+    this.averageQRCodeLinkedToContentGraph = {};
+    this.averageTotalQRCodeGraph = {};
+
+    this.TotalCountsGraph = {};
+    this.Average_no_of_playsGraph = {};
+
   }
 
   // ====== 2 tab ======
   getAllAverageQRCodeCoverage() {
+    this.clearAllData();
     const data = {
       "medium": this.mediumModel,
       "grade": this.gradeModel
@@ -130,11 +138,11 @@ export class DikshaComponent {
     this.averageQRCodeCoverageGraph = {};
     this.averageQRCodeCoverageGraph = this.graphService.VerticleBarGraph();
     const series: any = [{
-      name: "Count",
+      name: "Schools",
       data: []
     }];
     for (let i = 0; i < this.allQRCodeCoverage.length; i++) {
-      series[0].data.push(Number(this.allQRCodeCoverage[i].averageQRCodeCoverage).toFixed(2));
+      series[0].data.push({ x: this.allQRCodeCoverage[i].subject, y: Number(this.allQRCodeCoverage[i].averageQRCodeCoverage)?.toFixed(2) });
       this.averageQRCodeCoverageGraph.xaxis.categories.push(this.allQRCodeCoverage[i].subject);
     }
     this.averageQRCodeCoverageGraph.series = [...series];
@@ -145,11 +153,11 @@ export class DikshaComponent {
     this.averageQRCodeLinkedToContentGraph = {};
     this.averageQRCodeLinkedToContentGraph = this.graphService.VerticleBarGraph();
     const series: any = [{
-      name: "Count",
+      name: "Schools",
       data: []
     }];
     for (let i = 0; i < this.allQRCodeCoverage.length; i++) {
-      series[0].data.push(Number(this.allQRCodeCoverage[i].averageQRCodeLinkedToContent).toFixed(2));
+      series[0].data.push({ x: this.allQRCodeCoverage[i].subject, y: Number(this.allQRCodeCoverage[i].averageQRCodeLinkedToContent)?.toFixed(2) });
       this.averageQRCodeLinkedToContentGraph.xaxis.categories.push(this.allQRCodeCoverage[i].subject);
     }
     this.averageQRCodeLinkedToContentGraph.series = [...series];
@@ -160,11 +168,11 @@ export class DikshaComponent {
     this.averageTotalQRCodeGraph = {};
     this.averageTotalQRCodeGraph = this.graphService.VerticleBarGraph();
     const series: any = [{
-      name: "Count",
+      name: "Schools",
       data: []
     }];
     for (let i = 0; i < this.allQRCodeCoverage.length; i++) {
-      series[0].data.push(Number(this.allQRCodeCoverage[i].averageTotalQRCode).toFixed(2));
+      series[0].data.push({ x: this.allQRCodeCoverage[i].subject, y: Number(this.allQRCodeCoverage[i].averageTotalQRCode)?.toFixed(2) });
       this.averageTotalQRCodeGraph.xaxis.categories.push(this.allQRCodeCoverage[i].subject);
     }
     this.averageTotalQRCodeGraph.series = [...series];
@@ -172,8 +180,8 @@ export class DikshaComponent {
   }
 
   // 1st Tab
-
   getAllAverageQRCodeCoverageStatus() {
+    this.clearAllData();
     const data = {
       "medium": this.mediumModel,
       "grade": this.gradeModel
@@ -198,7 +206,7 @@ export class DikshaComponent {
       data: []
     }];
     for (let i = 0; i < this.allQRCodeCoverageStatus.length; i++) {
-      series[0].data.push(Number(this.allQRCodeCoverageStatus[i].averageLinkedQRCount).toFixed(2));
+      series[0].data.push({ x: this.allQRCodeCoverageStatus[i].subject, y: Number(this.allQRCodeCoverageStatus[i].averageLinkedQRCount).toFixed(2) });
       this.averageLinkedQRCountGraph.xaxis.categories.push(this.allQRCodeCoverageStatus[i].subject);
     }
     this.averageLinkedQRCountGraph.series = [...series];
@@ -213,7 +221,9 @@ export class DikshaComponent {
       data: []
     }];
     for (let i = 0; i < this.allQRCodeCoverageStatus.length; i++) {
-      series[0].data.push(Number(this.allQRCodeCoverageStatus[i].averageResourceCount).toFixed(2));
+      series[0].data.push({
+        x: this.allQRCodeCoverageStatus[i].subject, y: Number(this.allQRCodeCoverageStatus[i].averageResourceCount).toFixed(2)
+      });
       this.averageResourceCountGraph.xaxis.categories.push(this.allQRCodeCoverageStatus[i].subject);
     }
     this.averageResourceCountGraph.series = [...series];

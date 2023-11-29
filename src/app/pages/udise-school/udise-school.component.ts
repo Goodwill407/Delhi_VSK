@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input, SimpleChange } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
+import { CommunicationService } from 'src/app/services/communication.service';
 import { GraphService } from 'src/app/services/graph-service.service';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 
@@ -11,7 +13,7 @@ import { HttpServiceService } from 'src/app/services/http-service.service';
   styleUrls: ['./udise-school.component.css']
 })
 export class UdiseSchoolComponent {
-  TotalSchool:any
+  TotalSchool: any
   allDistricts: any;
   districtModel: any = "";
   zoneModel: any = "";
@@ -21,22 +23,33 @@ export class UdiseSchoolComponent {
   allZones: any;
 
   // for Graph
-  RuralUrbanCountsGraph:any
-  SchoolGenderCountsGraph:any
-  ShiftfSchoolCountsGraph:any
-  TypeofSchoolCountsGraph:any
+  RuralUrbanCountsGraph: any
+  SchoolGenderCountsGraph: any
+  ShiftfSchoolCountsGraph: any
+  TypeofSchoolCountsGraph: any
+  subscription: Subscription;
 
 
-  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private toastr: ToastrService) {
+  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService) {
+    this.subscription = this.communicationService.parentClick$.subscribe(() => {
+      this.RuralUrbanCountsGraph = {}
+      this.SchoolGenderCountsGraph = {}
+      this.ShiftfSchoolCountsGraph = {}
+      this.TypeofSchoolCountsGraph = {}
+      this.getAllUdiseSchoolData();
+    });
   }
 
-  ngOnInit(){
-    this. GetAllUdiseSchoolData();
+  ngOnInit() {
     this.getAllDistricts();
     this.getAllZones();
+    this.getAllUdiseSchoolData();
   }
 
-  
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
   getAllDistricts() {
     this.httpService.get('udise-school/district').subscribe((data: any) => {
       if (data && data.length > 0) {
@@ -45,7 +58,7 @@ export class UdiseSchoolComponent {
     })
   }
 
-  
+
   getSchoolDataByDistrict() {
     const district = {
       District_name: this.districtModel
@@ -80,7 +93,9 @@ export class UdiseSchoolComponent {
       }
       this.httpService.post('udise-school/udise-school-stats-by/district', district).subscribe((data: any) => {
         if (data) {
+          this.setUdiseSchoolGraphs(data)
           this.getAllZones();
+          // this.getAllSchools()
           this.spinner.hide();
         }
       }, (error) => {
@@ -95,10 +110,12 @@ export class UdiseSchoolComponent {
   getGraphsByZone() {
     this.spinner.show();
     const zone = {
-      zoneName: this.zoneModel
+      zone: Number(this.zoneModel)
     }
-    this.httpService.post('zonegraph/school-student-teacher-graph-zonename', zone).subscribe((data: any) => {
+    this.httpService.post('udise-school/udise-school-stats-by/zone', zone).subscribe((data: any) => {
       if (data) {
+        this.setUdiseSchoolGraphs(data)
+        // this.getAllSchools()
         this.spinner.hide();
       }
     }, (error) => {
@@ -106,15 +123,23 @@ export class UdiseSchoolComponent {
     })
   }
 
-  getGraphsBySchoolName(){
+  // getGraphsBySchoolName(){
+  //   this.spinner.show();
+  //   const school = {
+  //     SchoolID:this.schoolModel.SchoolID
+  //   }
+  //   this.httpService.post('udise-school/udise-school-stats-by/school', school).subscribe((data: any) => {
+  //     if (data) {
+  //       this.setUdiseSchoolGraphs(data)
+  //       this.spinner.hide();
+  //     }
+  //   }, (error) => {
+  //     this.toastr.error('', 'Something went wrong !');
+  //   })
 
-  }
+  // }
 
   getAllZones() {
-    // this.allZones = this.graphService.TreeGraph();
-    // for (let i = 0; i < allZones.length; i++) {
-    //   this.allZones.series[0].data.push({ x: allZones[i].zone, y: allZones[i].count });
-    // }
     if (this.districtModel) {
       const district = { "districtName": this.districtModel };
       this.httpService.post('udise-school/district-zones', district).subscribe((res: any) => {
@@ -127,44 +152,67 @@ export class UdiseSchoolComponent {
     }
   }
 
-  GetAllUdiseSchoolData(){
-   
+  // getAllSchools() {
+  //   if (this.districtModel && !this.zoneModel) {
+  //     const district = {
+  //       district: this.districtModel
+  //     }
+  //     this.httpService.post('udise-school/district-wise/schools', district).subscribe((data: any) => {
+  //       if (data) {
+  //         this.allSchools = data
+  //       } else {
+  //         this.allSchools = [];
+  //       }
+  //     });
+  //   } else if (this.zoneModel) {
+  //     const zone = {
+  //       zone: Number(this.zoneModel)
+  //     }
+  //     this.httpService.post('udise-school/zone-wise/school', zone).subscribe((data: any) => {
+  //       if (data) {
+  //         this.allSchools = data
+  //       } else {
+  //         this.allSchools = [];
+  //       }
+  //     });
+  //   }
+  // }
+
+  getAllUdiseSchoolData() {
     this.spinner.show();
     this.httpService.get('udise-school/udise-school-stats').subscribe((data: any) => {
       if (data) {
-        this.TotalSchool = data.totalSchoolCount;
         this.setUdiseSchoolGraphs(data)
         this.spinner.hide();
       }
-    }, (error) => {
-      this.toastr.error('', 'Something went wrong !');
     })
   }
 
-  setUdiseSchoolGraphs(data:any){
-    const RuralUrbanCounts=data.ruralUrbanCounts
+  setUdiseSchoolGraphs(data: any) {
+    this.TotalSchool = data.totalSchoolCount
+    const RuralUrbanCounts = data.ruralUrbanCounts
     const School_GenderCounts = data.schoolGenderCounts
-    const ShiftfSchoolCounts =data.shiftofschoolCounts
-    const TypeofschoolCounts=data.typeofschoolCounts
-    
-     this.getRuralUrbanCountsGraph(RuralUrbanCounts)
-     this.getSchoolGenderCounts(School_GenderCounts)
-     this.getShiftWiseCountGraph(ShiftfSchoolCounts)
-     this.getTypeofSchoolCountsGraph(TypeofschoolCounts)
+    const ShiftfSchoolCounts = data.shiftofschoolCounts
+    const TypeofschoolCounts = data.typeofschoolCounts
+
+    this.getRuralUrbanCountsGraph(RuralUrbanCounts)
+    this.getSchoolGenderCounts(School_GenderCounts)
+    this.getShiftWiseCountGraph(ShiftfSchoolCounts)
+    this.getTypeofSchoolCountsGraph(TypeofschoolCounts)
 
   }
 
-  getRuralUrbanCountsGraph(RuralUrbanCounts:any){
-     const RuralOrUrban = RuralUrbanCounts.map((item: any) => item._id)
+  getRuralUrbanCountsGraph(RuralUrbanCounts: any) {
+    const RuralOrUrban = RuralUrbanCounts.map((item: any) => item._id)
     const RuralOrUrbanCount = RuralUrbanCounts.map((item: any) => item.count)
     this.RuralUrbanCountsGraph = this.graphService.PieGraph('donut', '');
     const series = RuralOrUrbanCount;
     const labels = RuralOrUrban
     this.RuralUrbanCountsGraph.series = [...series];
     this.RuralUrbanCountsGraph.labels = [...labels]
-   }
+  }
 
-   getSchoolGenderCounts(School_GenderCounts:any){
+  getSchoolGenderCounts(School_GenderCounts: any) {
     const GenderType = School_GenderCounts.map((item: any) => item._id)
     const GenderWiseCount = School_GenderCounts.map((item: any) => item.count)
     this.SchoolGenderCountsGraph = this.graphService.PieGraph('pie', '');
@@ -173,9 +221,9 @@ export class UdiseSchoolComponent {
     this.SchoolGenderCountsGraph.series = [...series];
     this.SchoolGenderCountsGraph.labels = [...labels]
 
-   }
+  }
 
-   getShiftWiseCountGraph(Shift_ofSchoolCounts:any){
+  getShiftWiseCountGraph(Shift_ofSchoolCounts: any) {
     const TypeOfShift = Shift_ofSchoolCounts.map((item: any) => item._id)
     const ShiftWiseCount = Shift_ofSchoolCounts.map((item: any) => item.count)
     this.ShiftfSchoolCountsGraph = this.graphService.PolarGraph();
@@ -184,9 +232,9 @@ export class UdiseSchoolComponent {
     this.ShiftfSchoolCountsGraph.series = [...series];
     this.ShiftfSchoolCountsGraph.labels = [...labels]
 
-   }
+  }
 
-   getTypeofSchoolCountsGraph(Type_Of_School_count:any){
+  getTypeofSchoolCountsGraph(Type_Of_School_count: any) {
     const TypeOfSchool = Type_Of_School_count.map((item: any) => item._id)
     const TypeOfschoolCount = Type_Of_School_count.map((item: any) => item.count)
     this.TypeofSchoolCountsGraph = this.graphService.PieGraph('donut', '');
@@ -195,12 +243,12 @@ export class UdiseSchoolComponent {
     this.TypeofSchoolCountsGraph.series = [...series];
     this.TypeofSchoolCountsGraph.labels = [...labels]
 
-   }
-
-   
+  }
 
 
 
-  
+
+
+
 
 }

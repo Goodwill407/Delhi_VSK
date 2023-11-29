@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input, SimpleChange } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
+import { CommunicationService } from 'src/app/services/communication.service';
 import { GraphService } from 'src/app/services/graph-service.service';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 
@@ -17,12 +19,21 @@ export class UdiseDataComponent {
 
   //Graph
   totalSchoolsData: any;
+  subscription: Subscription;
 
-  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private toastr: ToastrService) {
+  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService) {
+    this.subscription = this.communicationService.parentClick$.subscribe(() => {
+      this.totalSchoolsData = {};
+      this.getAllUdiseData();
+    });
   }
 
   ngOnInit() {
     this.getAllUdiseData();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   getAllUdiseData() {
@@ -50,22 +61,22 @@ export class UdiseDataComponent {
 
     for (let i = 0; i < this.allUdiseData.length; i++) {
       if (graphType == 'totalSchoolsToilet') {
-        seriesData.push(this.allUdiseData[i].tot_school_having_toilet_percentage);
+        seriesData.push({ x: 'Total schools toilet', y: this.allUdiseData[i].tot_school_having_toilet_percentage });
         this.graphType = "Number of Toilets";
       } else if (graphType == 'drinkingWater') {
-        seriesData.push(this.allUdiseData[i].school_having_drinking_percentage);
+        seriesData.push({ x: 'Drinking water', y: this.allUdiseData[i].school_having_drinking_percentage });
         this.graphType = "Number of drinking waters";
       } else if (graphType == 'electricity') {
-        seriesData.push(this.allUdiseData[i].school_having_electricity_percentage);
+        seriesData.push({ x: 'Electricity', y: this.allUdiseData[i].school_having_electricity_percentage });
         this.graphType = "Number of electricity";
       } else if (graphType == 'library') {
-        seriesData.push(this.allUdiseData[i].school_having_library_percentage);
+        seriesData.push({ x: 'Library', y: this.allUdiseData[i].school_having_library_percentage });
         this.graphType = "Number of libraries";
       } else if (graphType == 'textbook') {
-        seriesData.push(this.allUdiseData[i].govt__aided_schools_recieved_textbook_percentage);
+        seriesData.push({ x: 'Textbook', y: this.allUdiseData[i].govt__aided_schools_recieved_textbook_percentage });
         this.graphType = "Number of textbooks";
       } else if (graphType == 'ramp') {
-        seriesData.push(this.allUdiseData[i].school_having_ramp_percentage);
+        seriesData.push({ x: 'Ramp', y: this.allUdiseData[i].school_having_ramp_percentage });
         this.graphType = "Number of ramps";
       }
       allDistricts.push(this.allUdiseData[i].district_name)

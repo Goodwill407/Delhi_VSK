@@ -182,7 +182,7 @@ export class GraphService {
     }
 
     getRandomColor() {
-        var color = "hsl(" + Math.random() * 360 + ", 100%, 60%)";
+        var color = "hsl(" + Math.random() * 360 + ", 100%, 70%)";
         return color;
     }
 
