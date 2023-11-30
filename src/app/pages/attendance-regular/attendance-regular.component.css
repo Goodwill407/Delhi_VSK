@@ -1,0 +1,6 @@
+.marquee{
+    background-color: #3d9be9;
+  }
+  .marquee:hover span {
+    animation-play-state: paused;
+  }

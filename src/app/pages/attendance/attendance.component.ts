@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { CommunicationService } from 'src/app/services/communication.service';
 import { GraphService } from 'src/app/services/graph-service.service';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 
@@ -36,7 +37,7 @@ export class AttendanceComponent {
   newDate: any
   formattedDate: any;
 
-  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, public datepipe: DatePipe) {
+  constructor(private communicationService: CommunicationService,private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, public datepipe: DatePipe) {
 
   }
 
@@ -48,6 +49,10 @@ export class AttendanceComponent {
     this.getGraphsByDate();
     this.getAllDistricts();
     this.getAllZones();
+  }
+
+  handleParentClick() {
+    this.communicationService.emitParentClick();
   }
 
   getDate(date: any) {
@@ -139,10 +144,10 @@ export class AttendanceComponent {
       this.httpService.post('attendance/date-wise', date).subscribe((data) => {
         this.setAllGraphs(data);
         // this.shiftModel = '';
-        if (data.totalStudentCount == 0) {
-          this.dateModel.setDate(this.dateModel.getDate() - 1);
-          this.getGraphsByDate();
-        }
+        // if (data.totalStudentCount == 0) {
+        //   this.dateModel.setDate(this.dateModel.getDate() - 1);
+        //   this.getGraphsByDate();
+        // }
         this.setDistrictWiseGraph();
         this.formattedDate = this.datepipe.transform(this.dateModel, 'dd-MMM-yyyy');
       });
