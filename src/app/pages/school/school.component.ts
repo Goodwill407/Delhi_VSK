@@ -69,6 +69,7 @@ export class SchoolComponent {
     this.httpService.get('school/districtNames').subscribe((data: any) => {
       if (data && data.length > 0) {
         this.allDistricts = data;
+        this.allDistricts = this.allDistricts.sort((a: any, b: any) => a.D_ID - b.D_ID);
       }
     })
   }
@@ -80,6 +81,7 @@ export class SchoolComponent {
     this.httpService.post('school/getDistrictSchool', district).subscribe((data: any) => {
       if (data && data.districtSchools) {
         this.allSchools = data.districtSchools;
+        this.allSchools = this.allSchools.sort((a: any, b: any) => a.Schoolid - b.Schoolid);
       } else {
         this.allSchools = [];
       }
@@ -93,6 +95,7 @@ export class SchoolComponent {
     this.httpService.post('school/getZoneSchool', zone).subscribe((data: any) => {
       if (data && data.ZoneSchool) {
         this.allSchools = data.ZoneSchool;
+        this.allSchools = this.allSchools.sort((a: any, b: any) => a.Schoolid - b.Schoolid);
       } else {
         this.allSchools = [];
       }
@@ -361,6 +364,7 @@ export class SchoolComponent {
     } else {
       this.httpService.get('school/zonename').subscribe((res: any) => {
         this.allZones = res.ZoneInfo;
+        this.allZones = this.allZones.sort((a: any, b: any) => a.Z_ID - b.Z_ID);
       })
     }
   }
