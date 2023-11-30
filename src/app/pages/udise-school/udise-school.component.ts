@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChange } from '@angular/core';
+import { Component, Input, SimpleChange, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -21,13 +21,22 @@ export class UdiseSchoolComponent {
   districtName: any;
   allSchools: any;
   allZones: any;
+  TypeOfSchool: any
+  allData: any
+
+  itemCount: number | undefined;
+  subscription: Subscription | undefined;
+  @ViewChild('openModal') openModal: any;
 
   // for Graph
   RuralUrbanCountsGraph: any
   SchoolGenderCountsGraph: any
   ShiftfSchoolCountsGraph: any
   TypeofSchoolCountsGraph: any
-  subscription: Subscription;
+  SchoolTypeCountsGraph: any
+  // for show school list
+  SchoolType: any;
+  allSchoolTypeData: any
 
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService) {
@@ -44,11 +53,27 @@ export class UdiseSchoolComponent {
     this.getAllDistricts();
     this.getAllZones();
     this.getAllUdiseSchoolData();
+
+    this.subscription = this.graphService
+      .getItemCountObservable()
+      .subscribe((count) => {
+        this.itemCount = count;
+        if (this.itemCount && this.SchoolType && !this.districtModel && !this.zoneModel) {
+          this.getTypeWiseSchoolName(false);
+        }
+        else if (this.itemCount && this.districtModel && !this.zoneModel) {
+          this.getTypeWiseSchoolNameOfDistrict(false);
+        }
+        else if (this.itemCount && this.zoneModel && this.districtModel) {
+          this.getTypeWiseSchoolNameOfZone(false);
+        }
+      });
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+  // ngOnDestroy() {
+  //   this.subscription.unsubscribe();
+  // }
+
 
   getAllDistricts() {
     this.httpService.get('udise-school/district').subscribe((data: any) => {
@@ -189,16 +214,19 @@ export class UdiseSchoolComponent {
   }
 
   setUdiseSchoolGraphs(data: any) {
+    this.allData = data
     this.TotalSchool = data.totalSchoolCount
     const RuralUrbanCounts = data.ruralUrbanCounts
     const School_GenderCounts = data.schoolGenderCounts
     const ShiftfSchoolCounts = data.shiftofschoolCounts
     const TypeofschoolCounts = data.typeofschoolCounts
+    const SchoolTypeCountsGraph = data.schoolTypeCounts
 
     this.getRuralUrbanCountsGraph(RuralUrbanCounts)
     this.getSchoolGenderCounts(School_GenderCounts)
     this.getShiftWiseCountGraph(ShiftfSchoolCounts)
     this.getTypeofSchoolCountsGraph(TypeofschoolCounts)
+    this.getSchoolTypeCountsGraph(SchoolTypeCountsGraph)
 
   }
 
@@ -245,10 +273,86 @@ export class UdiseSchoolComponent {
 
   }
 
+  getSchoolTypeCountsGraph(SchoolTypeCounts: any) {
+    this.TypeOfSchool = SchoolTypeCounts.map((item: any) => item._id)
+    const TypeOfschoolCount = SchoolTypeCounts.map((item: any) => item.count)
+    const seres: any = [{
+      name: "Teachers",
+      data: [...TypeOfschoolCount]
+    }];
+    this.SchoolTypeCountsGraph = this.graphService.VerticleBarGraph();
+    const series = seres;
+    const labels = this.TypeOfSchool
+    this.SchoolTypeCountsGraph.series = [...series];
+    this.SchoolTypeCountsGraph.xaxis.categories = [...labels]
+    this.SchoolTypeCountsGraph.chart.events = {
+      dataPointSelection: (event: any, chartContext: any, config: any) => {
+        this.UdiseSchoolDataClear();
+        this.SchoolType = config.dataPointIndex;
+        this.graphService.addToCart();
+      }
+    }
+  }
 
+  // get data for showing udise school list
 
+  UdiseSchoolDataClear() {
+    this.SchoolType = null;
+    this.allSchoolTypeData = []
+  }
 
+  getTypeWiseSchoolName(flash: any) {
+    if (!flash) {
+      this.spinner.show();
+      const parameter = {
+        "schoolType": this.allData.schoolTypeCounts[this.SchoolType]._id
+      }
+      this.httpService.post('udise-school/school/school-type-wise', parameter).subscribe((res: any) => {
+        this.allSchoolTypeData = res;
+        if (!flash) {
+          this.openModal.nativeElement.click();
+        }
+        this.spinner.hide();
+      })
+    }
+  }
 
+  getTypeWiseSchoolNameOfDistrict(flash: any) {
+    if (!flash) {
+      this.spinner.show();
+      const parameter = {
+        "schoolType": this.allData.schoolTypeCounts[this.SchoolType]._id,
+        "district": this.districtModel
+      }
+
+      this.httpService.post('/udise-school/school/school-type-wise/district', parameter).subscribe((res: any) => {
+        this.allSchoolTypeData = res;
+        if (!flash) {
+          this.openModal.nativeElement.click();
+        }
+        this.spinner.hide();
+      })
+    }
+  }
+
+  getTypeWiseSchoolNameOfZone(flash: any) {
+    if (!flash) {
+      this.spinner.show();
+      const parameter = {
+        "schoolType": this.allData.schoolTypeCounts[this.SchoolType]._id,
+        "zone": Number(this.zoneModel)
+      }
+      this.httpService.post('udise-school/school/school-type-wise/zone', parameter).subscribe((res: any) => {
+        this.allSchoolTypeData = res;
+        if (!flash) {
+          this.openModal.nativeElement.click();
+        }
+        this.spinner.hide();
+      })
+    }
+  }
 
 
 }
+
+

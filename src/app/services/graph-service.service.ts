@@ -97,7 +97,7 @@ export class GraphService {
             xaxis: {
                 categories: [],
                 title: {
-                    text: "Designation",
+                    text: "",
                     style: {
                         fontSize: "14px",
                         color: "#3d9be9",
