@@ -7,12 +7,11 @@
 }
 
 .under-maintenance {
-  font-size: 25px;
+  font-size: 30px;
   font-weight: 700;
   color: red;
   animation: wiggle 2s linear infinite;
-  align-items: center;
-  border: 2px solid red;
+  align-items: center;margin: 10px auto;
 }
 
 /* Keyframes */
