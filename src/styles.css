@@ -37,7 +37,7 @@
     /* background-color: #FFDEE9;
     background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%); */
 
-    background-color: #fff;
+    background-color: #EBF5FC;
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -66,10 +66,10 @@
 }
 
 .column .header-bg {
-    /* background-color: #b3d64d; */
-    /* color: #fff; */
-    border: 2px solid #3d9be9;
-    border-radius: 10px;
+    color: #fff;
+    background-color: #348acb;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
     position: relative;
 }
 
