@@ -35,6 +35,7 @@ export class AttendanceRegularComponent {
  districtWiseAttendanceCount: any;
  newDate: any
  formattedDate: any;
+ StudentStatusWiseCounts:any;
 
  constructor(private communicationService: CommunicationService,private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, public datepipe: DatePipe) {
 
@@ -212,5 +213,16 @@ export class AttendanceRegularComponent {
      this.districtWiseGraph.xaxis.categories.push(data[i]._id);
    }
  }
+
+ getStudentStatusWiseCounts(StudentstatusWiseCounts: any) {
+  const StudentStatus = StudentstatusWiseCounts.map((item: any) => (item._id !== "" ? item._id : "Not Identified"));
+  const StudCount = StudentstatusWiseCounts.map((item: any) => item.count)
+  this.StudentStatusWiseCounts = this.graphService.PieGraph('donut', ' Students');
+  const series = StudCount;
+  const labels = StudentStatus
+  this.StudentStatusWiseCounts.series = [...series];
+  this.StudentStatusWiseCounts.labels = [...labels]
+  
+}
 
 }

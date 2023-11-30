@@ -28,7 +28,6 @@
     <input type="date" class="form-control  ms-2" [(ngModel)]="dateModel" (change)="getGraphsByDate()">
 </div>
 
-
 <div class="d-flex justify-content-start filter-box mt-2" *ngIf="districtModel || zoneModel || shiftModel || dateModel">
     <div class="text-center flex-grow-1">
       <h3 class="text-center mb-0" *ngIf="dateModel">{{ formattedDate }}&nbsp;</h3>

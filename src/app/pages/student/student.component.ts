@@ -205,7 +205,7 @@ export class StudentComponent {
     this.httpService.post('all-student-graph/student-graph-count-schoolName', parameter).subscribe((res: any) => {
       this.allStudentData = res;
       if (this.schoolModel) {
-         this.openModal.nativeElement.click();
+        this.openModal.nativeElement.click();
       }
     });
   }
@@ -327,7 +327,7 @@ export class StudentComponent {
   }
 
   getTypeOfStudSchool(TypeOfStudSchool: any) {
-    const TypeOfSchool = TypeOfStudSchool.map((item: any) => item.typeOfSchool)
+    const TypeOfSchool = TypeOfStudSchool.map((item: any) => item.typeOfSchool !== "" ? item.typeOfSchool : "Not Identified")
     const TypeOfStudCount = TypeOfStudSchool.map((item: any) => item.count)
     this.TypeOfStudSchool = this.graphService.PieGraph('pie', ' Students');
     const series = TypeOfStudCount;
