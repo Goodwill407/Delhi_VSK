@@ -141,7 +141,7 @@ export class AttendanceComponent {
         // this.shiftModel = '';
         if (data.totalStudentCount == 0) {
           this.dateModel.setDate(this.dateModel.getDate() - 1);
-          this.getGraphsByDate();
+          // this.getGraphsByDate();
         }
         this.setDistrictWiseGraph();
         this.formattedDate = this.datepipe.transform(this.dateModel, 'dd-MMM-yyyy');

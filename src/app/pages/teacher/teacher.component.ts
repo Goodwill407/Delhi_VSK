@@ -341,7 +341,7 @@ export class TeacherComponent {
     this.designation.xaxis.title.text = "Designation";
     this.designation.yaxis.title.text = "Teachers";
     this.designation.dataLabels.enabled = false;
-    this.designation.chart.height = "720px"
+    this.designation.chart.height = "660px"
     this.designation.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         this.teacherDataClear();

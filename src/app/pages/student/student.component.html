@@ -31,7 +31,7 @@
 
 <div class="container1">
     <div class="column text-center">
-        <h5 class="header-bg p-2 m-2">Delhi</h5>
+        <h5 class="header-bg p-2">Delhi</h5>
         <div>
             <img class="img-fluid mt-2" width="160" src="../../../assets/images/icons/student 3.png">
         </div>
@@ -49,7 +49,7 @@
     </div>
 
     <div class="column">
-        <h5 class="header-bg p-2 m-2">Student By Status </h5>
+        <h5 class="header-bg p-2">Student By Status </h5>
         <apx-chart [series]="StudentStatusWiseCounts?.series" [chart]="StudentStatusWiseCounts?.chart"
             [labels]="StudentStatusWiseCounts?.labels" [fill]="StudentStatusWiseCounts?.fill"
             [dataLabels]="StudentStatusWiseCounts?.dataLabels"
@@ -59,14 +59,14 @@
     </div>
     
     <div class="column text-center">
-        <h5 class="header-bg p-2 m-2">Student & Teacher Ratio</h5>
+        <h5 class="header-bg p-2">Student & Teacher Ratio</h5>
         <img class="img-fluid mt-3" width="180" src="../../../assets/images/pngegg.png">
         <h5 class="mt-5">{{teacherStudentRatio | number: '1.0-0'}}
             : 1 Teacher</h5>
     </div>
 
     <div class="column">
-        <h5 class="header-bg p-2 m-2">Student Gender Ratio</h5>
+        <h5 class="header-bg p-2">Student Gender Ratio</h5>
         <apx-chart [series]="studentsGenderRatio?.series" [chart]="studentsGenderRatio?.chart"
             [labels]="studentsGenderRatio?.labels" [fill]="studentsGenderRatio?.fill"
             [dataLabels]="studentsGenderRatio?.dataLabels" [plotOptions]="studentsGenderRatio?.plotOptions"
@@ -75,14 +75,14 @@
     </div>
 
     <div class="column">
-        <h5 class="header-bg p-2 m-2">Shift Wise Student </h5>
+        <h5 class="header-bg p-2">Shift Wise Student </h5>
         <apx-chart [series]="StudentShiftWiseCounts?.series" [chart]="StudentShiftWiseCounts?.chart" [labels]="StudentShiftWiseCounts?.labels"
       [fill]="StudentShiftWiseCounts?.fill" [stroke]="StudentShiftWiseCounts?.stroke" [responsive]="StudentShiftWiseCounts?.responsive"
       [legend]="StudentShiftWiseCounts?.legend" [colors]="StudentShiftWiseCounts?.colors" [tooltip]="StudentShiftWiseCounts?.tooltip"></apx-chart>
     </div>
 
     <!-- <div class="column">
-        <h5 class="header-bg p-2 m-2">Stream Wise Student</h5>
+        <h5 class="header-bg p-2">Stream Wise Student</h5>
         <apx-chart [series]="StreamWiseStudent?.series" [chart]="StreamWiseStudent?.chart"
             [dataLabels]="StreamWiseStudent?.dataLabels" [plotOptions]="StreamWiseStudent?.plotOptions"
             [yaxis]="StreamWiseStudent?.yaxis" [labels]="StreamWiseStudent?.labels" [legend]="StreamWiseStudent?.legend"
@@ -91,7 +91,7 @@
     </div> -->
 
     <div class="column">
-        <h5 class="header-bg p-2 m-2">Student By Management Wise </h5>
+        <h5 class="header-bg p-2">Student By Management Wise </h5>
         <apx-chart [series]="StudentManagementWiseCounts?.series" [chart]="StudentManagementWiseCounts?.chart"
             [labels]="StudentManagementWiseCounts?.labels" [fill]="StudentManagementWiseCounts?.fill"
             [dataLabels]="StudentManagementWiseCounts?.dataLabels"
@@ -101,7 +101,7 @@
     </div>
 
     <!-- <div class="column">
-        <h5 class="header-bg p-2 m-2">Affiliation Wise Student</h5>
+        <h5 class="header-bg p-2">Affiliation Wise Student</h5>
         <apx-chart [series]="AffiliationWiseStudent?.series" [chart]="AffiliationWiseStudent?.chart"
             [labels]="AffiliationWiseStudent?.labels" [fill]="AffiliationWiseStudent?.fill"
             [dataLabels]="AffiliationWiseStudent?.dataLabels" [plotOptions]="AffiliationWiseStudent?.plotOptions"
@@ -110,21 +110,21 @@
     </div> -->
 
     <div class="column">
-        <h5 class="header-bg p-2 m-2">Student By Type Wise</h5>
+        <h5 class="header-bg p-2">Student By Type Wise</h5>
         <apx-chart [series]="TypeOfStudSchool?.series" [chart]="TypeOfStudSchool?.chart"
             [labels]="TypeOfStudSchool?.labels" [responsive]="TypeOfStudSchool?.responsive"
             [legend]="TypeOfStudSchool?.legend" [tooltip]="TypeOfStudSchool?.tooltip"></apx-chart>
     </div>
 
     <!-- <div class="column">
-        <h5 class="header-bg p-2 m-2">Student By minority Wise</h5>
+        <h5 class="header-bg p-2">Student By minority Wise</h5>
         <apx-chart [series]="MinorityWiseStudCount?.series" [chart]="MinorityWiseStudCount?.chart"
             [labels]="MinorityWiseStudCount?.labels" [responsive]="MinorityWiseStudCount?.responsive"
             [legend]="MinorityWiseStudCount?.legend"></apx-chart>
     </div> -->
 
     <div class="column wide">
-        <h5 class="header-bg p-2 m-2">Student By School Category</h5>
+        <h5 class="header-bg p-2">Student By School Category</h5>
         <apx-chart [series]="StudentCatogoryWiseCount?.series" [chart]="StudentCatogoryWiseCount?.chart"
           [dataLabels]="StudentCatogoryWiseCount?.dataLabels" [plotOptions]="StudentCatogoryWiseCount?.plotOptions"
           [xaxis]="StudentCatogoryWiseCount?.xaxis" [yaxis]="StudentCatogoryWiseCount?.yaxis" [colors]="StudentCatogoryWiseCount?.colors"
