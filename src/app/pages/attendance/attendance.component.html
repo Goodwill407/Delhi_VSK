@@ -30,24 +30,26 @@
     <input type="date" class="form-control  ms-2" [(ngModel)]="dateModel" (change)="getGraphsByDate()">
 </div>
 
+<h4 class="d-block under-maintenance fw-1 mb-0 text-center">(Under-Maintenance)</h4>
 
 <div class="d-flex justify-content-start filter-box mt-2" *ngIf="districtModel || zoneModel || shiftModel || dateModel">
-    <span class=" fw-1 mb-0">(Under-Maintenance)</span>
     <div class="text-center flex-grow-1">
-      <h3 class="text-center mb-0" *ngIf="dateModel">{{ formattedDate }}&nbsp;</h3>
-      <h3 class="text-center mb-0" *ngIf="districtModel && !shiftModel"><span>|</span>&nbsp;{{districtModel}}&nbsp;</h3>
-      <h3 class="text-center mb-0" *ngIf="zoneModel && !shiftModel"><span *ngIf="districtModel">|</span>&nbsp;{{zoneModel}}&nbsp;</h3>
-      <h3 class="text-center mb-0" *ngIf="shiftModel"><span>|</span>&nbsp;{{shiftModel}}</h3>
+        <h3 class="text-center mb-0" *ngIf="dateModel">{{ formattedDate }}&nbsp;</h3>
+        <h3 class="text-center mb-0" *ngIf="districtModel && !shiftModel"><span>|</span>&nbsp;{{districtModel}}&nbsp;
+        </h3>
+        <h3 class="text-center mb-0" *ngIf="zoneModel && !shiftModel"><span
+                *ngIf="districtModel">|</span>&nbsp;{{zoneModel}}&nbsp;</h3>
+        <h3 class="text-center mb-0" *ngIf="shiftModel"><span>|</span>&nbsp;{{shiftModel}}</h3>
     </div>
-  </div>
+</div>
 
 
 
 <div class="container1">
 
     <div class="column">
-        <h5 *ngIf="!districtModel" class="header-bg p-2 m-2">Delhi</h5>
-        <h5 *ngIf="districtModel" class="header-bg p-2 m-2">{{districtModel}}</h5>
+        <h5 *ngIf="!districtModel" class="header-bg p-2">Delhi</h5>
+        <h5 *ngIf="districtModel" class="header-bg p-2">{{districtModel}}</h5>
         <div class="d-flex justify-content-around mt-4">
             <img class="ms-2" src="../../../assets/images/icons/immigration.png" style="height: 100px;" alt="">
             <div class="d-block ms-1 text-center">
@@ -68,7 +70,7 @@
     </div>
 
     <div class="column text-center">
-        <h5 class="header-bg p-2 m-2">Total Attendance</h5>
+        <h5 class="header-bg p-2">Total Attendance</h5>
         <img class="img-fluid" width="150" src="../../../assets/images/icons/available.png">
         <div class="d-flex justify-content-around text-center mt-5">
             <div>
@@ -84,7 +86,7 @@
     </div>
 
     <div class="column">
-        <h5 class="header-bg p-2 m-2">Gender Wise Present</h5>
+        <h5 class="header-bg p-2">Gender Wise Present</h5>
         <apx-chart [series]="genderWisePresent?.series" [chart]="genderWisePresent?.chart"
             [labels]="genderWisePresent?.labels" [fill]="genderWisePresent?.fill" [colors]="genderWisePresent?.colors"
             [dataLabels]="genderWisePresent?.dataLabels" [plotOptions]="genderWisePresent?.plotOptions"
@@ -92,7 +94,7 @@
     </div>
 
     <div class="column">
-        <h5 class="header-bg p-2 m-2">Gender Wise Absent</h5>
+        <h5 class="header-bg p-2">Gender Wise Absent</h5>
         <apx-chart [series]="genderWiseAbsent?.series" [chart]="genderWiseAbsent?.chart"
             [labels]="genderWiseAbsent?.labels" [fill]="genderWiseAbsent?.fill" [colors]="genderWiseAbsent?.colors"
             [dataLabels]="genderWiseAbsent?.dataLabels" [plotOptions]="genderWiseAbsent?.plotOptions"
@@ -100,7 +102,7 @@
     </div>
 
     <div class="column wide">
-        <h5 class="header-bg p-2 m-2">Attendance Bar</h5>
+        <h5 class="header-bg p-2">Attendance Bar</h5>
         <apx-chart [series]="districtWiseGraph?.series" [chart]="districtWiseGraph?.chart"
             [dataLabels]="districtWiseGraph?.dataLabels" [plotOptions]="districtWiseGraph?.plotOptions"
             [responsive]="districtWiseGraph?.responsive" [xaxis]="districtWiseGraph?.xaxis"

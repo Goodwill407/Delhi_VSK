@@ -34,7 +34,7 @@
 
 <div class="container1">
   <div class="column text-center">
-    <h5 class="header-bg p-2 m-2">Total Teacher</h5>
+    <h5 class="header-bg p-2">Total Teacher</h5>
     <div class="d-flex justify-content-around mt-4" (click)="getTachersBySchoolName()">
       <img class="ms-2" src="../../../assets/images/Dashboard/lady Teacher.png" style="height: 120px;" alt="">
       <div class="d-block ms-1 text-center">
@@ -57,22 +57,28 @@
 
 
   <div class="column text-center">
-    <h5 class="header-bg p-2 m-2">Student & Teacher Ratio</h5>
+    <h5 class="header-bg p-2">Student & Teacher Ratio</h5>
     <img class="img-fluid mt-4" width="180" src="../../../assets/images/pngegg.png">
     <h5 class="mt-5">{{allData?.teacherStudentRatio | number: '1.0-0'}} : 1 Teacher</h5>
   </div>
 
   <div class="column">
-    <h5 class="header-bg p-2 m-2">Teachers Gender Ratio</h5>
+    <h5 class="header-bg p-2">Teachers Gender Ratio</h5>
     <apx-chart [series]="teacherGenderRatio?.series" [chart]="teacherGenderRatio?.chart"
       [dataLabels]="teacherGenderRatio?.dataLabels" [plotOptions]="teacherGenderRatio?.plotOptions"
       [legend]="teacherGenderRatio?.legend" [labels]="teacherGenderRatio?.labels" [colors]="teacherGenderRatio?.colors"
       [grid]="teacherGenderRatio?.grid" [tooltip]="teacherGenderRatio?.tooltip"></apx-chart>
   </div>
-
+  <div class="column wide" style="height: auto;">
+    <h5 class="header-bg p-2">Designation wise Teacher</h5>
+    <apx-chart [series]="designation?.series" [chart]="designation?.chart" [dataLabels]="designation?.dataLabels"
+      [plotOptions]="designation?.plotOptions" [xaxis]="designation?.xaxis" [yaxis]="designation?.yaxis"
+      [labels]="designation?.labels" [legend]="designation?.legend" [colors]="designation?.colors"
+      [grid]="designation?.grid" [fill]="designation?.fill"></apx-chart>
+  </div>
   <!--  -->
   <div class="column">
-    <h5 class="header-bg p-2 m-2">Shift wise Teacher</h5>
+    <h5 class="header-bg p-2">Shift wise Teacher</h5>
     <apx-chart [series]="shiftWiseSchools?.series" [chart]="shiftWiseSchools?.chart" [labels]="shiftWiseSchools?.labels"
       [fill]="shiftWiseSchools?.fill" [stroke]="shiftWiseSchools?.stroke" [responsive]="shiftWiseSchools?.responsive"
       [legend]="shiftWiseSchools?.legend" [colors]="shiftWiseSchools?.colors"
@@ -80,7 +86,7 @@
   </div>
   <!--  -->
   <div class="column">
-    <h5 class="header-bg p-2 m-2">Schools Management Wise Teacher</h5>
+    <h5 class="header-bg p-2">Schools Management Wise Teacher</h5>
     <apx-chart [series]="schoolsManagementWiseTeacher?.series" [chart]="schoolsManagementWiseTeacher?.chart"
       [labels]="schoolsManagementWiseTeacher?.labels" [fill]="schoolsManagementWiseTeacher?.fill"
       [colors]="schoolsManagementWiseTeacher?.colors" [dataLabels]="schoolsManagementWiseTeacher?.dataLabels"
@@ -89,7 +95,7 @@
   </div>
 
   <div class="column">
-    <h5 class="header-bg p-2 m-2">Schools Category Wise Teacher</h5>
+    <h5 class="header-bg p-2">Schools Category Wise Teacher</h5>
     <apx-chart [series]="teacherCategory?.series" [chart]="teacherCategory?.chart"
       [dataLabels]="teacherCategory?.dataLabels" [plotOptions]="teacherCategory?.plotOptions"
       [xaxis]="teacherCategory?.xaxis" [yaxis]="teacherCategory?.yaxis" [colors]="teacherCategory?.colors"
@@ -97,7 +103,7 @@
   </div>
   <!--  -->
   <div class="column">
-    <h5 class="header-bg p-2 m-2">Experience Wise Teacher Count</h5>
+    <h5 class="header-bg p-2">Experience Wise Teacher Count</h5>
     <apx-chart [series]="experienceWiseTeacher?.series" [chart]="experienceWiseTeacher?.chart"
       [dataLabels]="experienceWiseTeacher?.dataLabels" [plotOptions]="experienceWiseTeacher?.plotOptions"
       [xaxis]="experienceWiseTeacher?.xaxis" [yaxis]="experienceWiseTeacher?.yaxis"
@@ -106,7 +112,7 @@
   </div>
   <!--  -->
   <div class="column">
-    <h5 class="header-bg p-2 m-2">Schools Type Wise Teacher</h5>
+    <h5 class="header-bg p-2">Schools Type Wise Teacher</h5>
     <apx-chart [series]="schoolTypeWiseCount?.series" [chart]="schoolTypeWiseCount?.chart"
       [labels]="schoolTypeWiseCount?.labels" [fill]="schoolTypeWiseCount?.fill"
       [dataLabels]="schoolTypeWiseCount?.dataLabels" [plotOptions]="schoolTypeWiseCount?.plotOptions"
@@ -116,14 +122,14 @@
 
   <!--  -->
   <!-- <div class="column">
-    <h5 class="header-bg p-2 m-2">Stream wise Teacher</h5>
+    <h5 class="header-bg p-2">Stream wise Teacher</h5>
     <apx-chart [series]="streamWiseTeacher?.series" [chart]="streamWiseTeacher?.chart"
       [labels]="streamWiseTeacher?.labels" [fill]="streamWiseTeacher?.fill" [stroke]="streamWiseTeacher?.stroke"
       [responsive]="streamWiseTeacher?.responsive" [legend]="streamWiseTeacher?.legend"></apx-chart>
   </div> -->
 
   <!-- <div class="column">
-    <h5 class="header-bg p-2 m-2">Stream Wise Teacher</h5>
+    <h5 class="header-bg p-2">Stream Wise Teacher</h5>
     <apx-chart [series]="streamWiseTeacher?.series" [chart]="streamWiseTeacher?.chart"
       [dataLabels]="streamWiseTeacher?.dataLabels" [plotOptions]="streamWiseTeacher?.plotOptions"
       [xaxis]="streamWiseTeacher?.xaxis" [yaxis]="streamWiseTeacher?.yaxis" [labels]="streamWiseTeacher?.labels"
@@ -133,7 +139,7 @@
 
   <!--  -->
   <!-- <div class="column">
-    <h5 class="header-bg p-2 m-2">Minority wise Teacher</h5>
+    <h5 class="header-bg p-2">Minority wise Teacher</h5>
     <apx-chart [series]="minorityWiseTeacher?.series" [chart]="minorityWiseTeacher?.chart"
       [labels]="minorityWiseTeacher?.labels" [fill]="minorityWiseTeacher?.fill"
       [dataLabels]="minorityWiseTeacher?.dataLabels" [plotOptions]="minorityWiseTeacher?.plotOptions"
@@ -141,13 +147,6 @@
   </div> -->
 
   <!--  -->
-  <div class="column wide" style="height: 800px;">
-    <h5 class="header-bg p-2 m-2">Designation wise Teacher</h5>
-    <apx-chart [series]="designation?.series" [chart]="designation?.chart" [dataLabels]="designation?.dataLabels"
-      [plotOptions]="designation?.plotOptions" [xaxis]="designation?.xaxis" [yaxis]="designation?.yaxis"
-      [labels]="designation?.labels" [legend]="designation?.legend" [colors]="designation?.colors"
-      [grid]="designation?.grid" [fill]="designation?.fill"></apx-chart>
-  </div>
 </div>
 
 
