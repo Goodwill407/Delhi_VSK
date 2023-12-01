@@ -6,11 +6,12 @@
   animation-play-state: paused;
 }
 
+
 .under-maintenance {
   font-size: 30px;
   font-weight: 700;
   color: red;
-  animation: wiggle 2s linear infinite;
+  /* animation: wiggle 10s linear infinite; */
   align-items: center;margin: 10px auto;
 }
 
@@ -47,41 +48,3 @@
     transform: rotateZ(0);
   }
 }
-
-/* .marquee {
-    background-color: #6610f2 !important;
-    margin: 0 auto;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-  .marquee span {
-    display: inline-block;
-    font-size: 20px;
-    position: relative;
-    left: 100%;
-    animation: marquee 12s linear infinite;
-  }
-  .marquee:hover span {
-    animation-play-state: paused;
-  }
-  
-  .marquee span:nth-child(1) {
-    animation-delay: 0s;
-  }
-  .marquee span:nth-child(2) {
-    animation-delay: 0.8s;
-  }
-  .marquee span:nth-child(3) {
-    animation-delay: 1.6s;
-  }
-  .marquee span:nth-child(4) {
-    animation-delay: 2.4s;
-  }
-  .marquee span:nth-child(5) {
-    animation-delay: 3.2s;
-  }
-  
-  @keyframes marquee {
-    0%   { left: 100%; }
-    100% { left: -100%; }
-  } */

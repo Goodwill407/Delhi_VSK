@@ -20,6 +20,8 @@ import { UdiseDataComponent } from './udise-data/udise-data.component';
 import { UdiseSchoolComponent } from './udise-school/udise-school.component';
 import { NasComponent } from './nas/nas.component';
 import { DikshaComponent } from './diksha/diksha.component';
+import { AttendanceRangeWiseComponent } from './attendance-range-wise/attendance-range-wise.component';
+import { AttendanceRegularComponent } from './attendance-regular/attendance-regular.component';
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import { DikshaComponent } from './diksha/diksha.component';
     UdiseDataComponent,
     UdiseSchoolComponent,
     NasComponent,
-    DikshaComponent
+    DikshaComponent,
+    AttendanceRangeWiseComponent,
+    AttendanceRegularComponent
   ],
   imports: [
     CommonModule,
