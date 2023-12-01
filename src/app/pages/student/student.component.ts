@@ -85,6 +85,7 @@ export class StudentComponent {
     this.httpService.get('school/districtNames').subscribe((data: any) => {
       if (data && data.length > 0) {
         this.allDistricts = data;
+        this.allDistricts = this.allDistricts.sort((a: any, b: any) => a.D_ID - b.D_ID);
       }
     })
   }
@@ -99,6 +100,7 @@ export class StudentComponent {
     } else {
       this.httpService.get('school/zonename').subscribe((res: any) => {
         this.allZones = res.ZoneInfo.map((zone: any) => ({ id: zone.Z_ID, name: zone.Zone_Name }));
+        this.allZones = this.allZones.sort((a: any, b: any) => a.id - b.id);
       })
     }
   }
@@ -126,9 +128,9 @@ export class StudentComponent {
         this.getAllSchools()
       } else {
         this.getAllZones();
-        this.ZoneModel = '';
-        this.schoolModel = '';
       }
+      this.ZoneModel = '';
+      this.schoolModel = '';
       this.spinner.hide();
     }, (error) => {
       this.spinner.hide();
@@ -151,7 +153,7 @@ export class StudentComponent {
       this.spinner.hide();
     });
     this.schoolModel = '';
-    this.districtModel = '';
+    // this.districtModel = '';
     this.getAllSchools();
 
 
@@ -190,6 +192,7 @@ export class StudentComponent {
       this.httpService.post('school/getZoneSchool', zone).subscribe((data: any) => {
         if (data && data.ZoneSchool) {
           this.AllSchool = data.ZoneSchool;
+          this.AllSchool = this.AllSchool.sort((a: any, b: any) => a.Schoolid - b.Schoolid);
         } else {
           this.AllSchool = [];
         }

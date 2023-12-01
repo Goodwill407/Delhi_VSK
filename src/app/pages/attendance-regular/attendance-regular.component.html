@@ -1,0 +1,108 @@
+<marquee class="mt-3 p-2 marquee filter-box" behavior="scroll" direction="left">
+    <span class="mx-4 text-white" *ngFor="let district of districtWiseAttendanceCount">
+        {{district._id}} - {{district.presentPercentage | number:'1.0-0'}}%
+    </span>
+</marquee>
+
+<div class="d-flex mt-2 mt-4 filter-box">
+    <h2 class="fw-bold">Regular </h2>
+    <div class="vr mx-3 opacity-100"></div>
+    <select class="form-select  ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
+        <option value="">All District</option>
+        <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
+            {{district.districtName}} ({{district.D_ID}})
+        </option>
+    </select>
+    <select class="form-select ms-2" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
+        <option value="" disabled>All Zones</option>
+        <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
+            {{zone.Zone_Name}} ({{zone.Z_ID}})
+        </option>
+    </select>
+    <select class="form-select  ms-2" [(ngModel)]="shiftModel" (change)="getGraphsBySfhit()">
+        <option value="" disabled>Select Shift</option>
+        <option *ngFor="let shift of allShift" value="{{shift}}">
+            {{shift}}
+        </option>
+    </select>
+    <input type="date" class="form-control  ms-2" [(ngModel)]="dateModel" (change)="getGraphsByDate()">
+</div>
+
+<div class="d-flex justify-content-start filter-box mt-2" *ngIf="districtModel || zoneModel || shiftModel || dateModel">
+    <div class="text-center flex-grow-1">
+      <h3 class="text-center mb-0" *ngIf="dateModel">{{ formattedDate }}&nbsp;</h3>
+      <h3 class="text-center mb-0" *ngIf="districtModel && !shiftModel"><span>|</span>&nbsp;{{districtModel}}&nbsp;</h3>
+      <h3 class="text-center mb-0" *ngIf="zoneModel && !shiftModel"><span *ngIf="districtModel">|</span>&nbsp;{{zoneModel}}&nbsp;</h3>
+      <h3 class="text-center mb-0" *ngIf="shiftModel"><span>|</span>&nbsp;{{shiftModel}}</h3>
+    </div>
+  </div>
+
+
+
+<div class="container1">
+
+    <div class="column">
+        <h5 *ngIf="!districtModel" class="header-bg p-2">Delhi</h5>
+        <h5 *ngIf="districtModel" class="header-bg p-2">{{districtModel}}</h5>
+        <div class="d-flex justify-content-around mt-4">
+            <img class="ms-2" src="../../../assets/images/icons/immigration.png" style="height: 100px;" alt="">
+            <div class="d-block ms-1 text-center">
+                <h1 class="fw-bold">{{allData?.totalStudentCount}}</h1>
+                <h3>Total Student</h3>
+            </div>
+        </div>
+        <div class="mt-5">
+            <div class="d-flex justify-content-around text-center mt-5">
+                <div class="mt-5">
+                    <h3>Total Schools</h3>
+                </div>
+                <div class="mt-5">
+                    <h2 class="fw-bold">{{allData?.countofSchoool}}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="column text-center">
+        <h5 class="header-bg p-2">Total Attendance</h5>
+        <img class="img-fluid" width="150" src="../../../assets/images/icons/available.png">
+        <div class="d-flex justify-content-around text-center mt-5">
+            <div>
+                <h3 class="fw-bold">{{(allData?.totalStudentCount - allData?.presentStudentCount)}}</h3>
+                <h5>Total Absent</h5>
+            </div>
+            <div class="vr mx-3"></div>
+            <div>
+                <h3 class="fw-bold">{{allData?.presentStudentCount}}</h3>
+                <h5>Total Present</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="column">
+        <h5 class="header-bg p-2">Gender Wise Present</h5>
+        <apx-chart [series]="genderWisePresent?.series" [chart]="genderWisePresent?.chart"
+            [labels]="genderWisePresent?.labels" [fill]="genderWisePresent?.fill" [colors]="genderWisePresent?.colors"
+            [dataLabels]="genderWisePresent?.dataLabels" [plotOptions]="genderWisePresent?.plotOptions"
+            [responsive]="genderWisePresent?.responsive" [legend]="genderWisePresent?.legend"></apx-chart>
+    </div>
+
+    <div class="column">
+        <h5 class="header-bg p-2">Gender Wise Absent</h5>
+        <apx-chart [series]="genderWiseAbsent?.series" [chart]="genderWiseAbsent?.chart"
+            [labels]="genderWiseAbsent?.labels" [fill]="genderWiseAbsent?.fill" [colors]="genderWiseAbsent?.colors"
+            [dataLabels]="genderWiseAbsent?.dataLabels" [plotOptions]="genderWiseAbsent?.plotOptions"
+            [responsive]="genderWiseAbsent?.responsive" [legend]="genderWiseAbsent?.legend"></apx-chart>
+    </div>
+
+    <div class="column wide">
+        <h5 class="header-bg p-2">Attendance Bar</h5>
+        <apx-chart [series]="districtWiseGraph?.series" [chart]="districtWiseGraph?.chart"
+            [dataLabels]="districtWiseGraph?.dataLabels" [plotOptions]="districtWiseGraph?.plotOptions"
+            [responsive]="districtWiseGraph?.responsive" [xaxis]="districtWiseGraph?.xaxis"
+            [legend]="districtWiseGraph?.legend" [fill]="districtWiseGraph?.fill"
+            [colors]="districtWiseGraph?.colors"></apx-chart>
+    </div>
+
+
+</div>
