@@ -212,6 +212,12 @@ export class GraphService {
                                 show: true,
                                 formatter: (w: any) => {
                                     return w.globals.seriesTotals.reduce((a: any, b: any) => {
+                                        if (a % 1 != 0) {
+                                            a = Number(a.toFixed(2))
+                                        }
+                                        if (b % 1 != 0) {
+                                            b = Number(b.toFixed(2))
+                                        }
                                         return a + b
                                     }, 0) + totalType
                                 }

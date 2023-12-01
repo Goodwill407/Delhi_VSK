@@ -29,6 +29,10 @@
     grid-row: span 2;
 }
 
+.container1 .extra-wide {
+    grid-column: span 3;
+}
+
 .column {
     font-size: 18px;
     cursor: pointer;
