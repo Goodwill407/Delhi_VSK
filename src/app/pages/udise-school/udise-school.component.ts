@@ -58,7 +58,7 @@ export class UdiseSchoolComponent {
       .getItemCountObservable()
       .subscribe((count) => {
         this.itemCount = count;
-        if (this.itemCount && this.SchoolType && !this.districtModel && !this.zoneModel) {
+        if (this.itemCount && (this.SchoolType == this.SchoolType || this.SchoolType == 0) && !this.districtModel && !this.zoneModel) {
           this.getTypeWiseSchoolName(false);
         }
         else if (this.itemCount && this.districtModel && !this.zoneModel) {
