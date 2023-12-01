@@ -70,7 +70,7 @@ export class GraphService {
             series: [],
             chart: {
                 type: "bar",
-                height: "300px",
+                height: "240px",
                 events: {
                     click: function (chart: any, w: any, e: any) {
                     }

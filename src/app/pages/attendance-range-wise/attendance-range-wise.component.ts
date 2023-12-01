@@ -29,7 +29,6 @@ export class AttendanceRangeWiseComponent {
   allZones: any;
   districtName: any;
   schoolName: any;
-
   constructor( private toastr: ToastrService,private httpService: HttpServiceService, public datepipe: DatePipe, private spinner: NgxSpinnerService, private graphService: GraphService) { }
 
   ngOnInit() {
@@ -42,6 +41,7 @@ export class AttendanceRangeWiseComponent {
     this.httpService.get('school/districtNames').subscribe((data: any) => {
       if (data && data.length > 0) {
         this.allDistricts = data;
+        this.allDistricts = this.allDistricts.sort((a: any, b: any) => a.D_ID - b.D_ID);
         this.spinner.hide();
       }
     },(error)=>{
@@ -73,16 +73,15 @@ export class AttendanceRangeWiseComponent {
 
   datePicker() {
     if (this.dateModel1 && this.dateModel2) {
-      const obj = {
-        "schoolId": this.schoolModel.Schoolid,
+      const obj:any = {
         "startDate": this.getDate(this.dateModel1),
         "endDate": this.getDate(this.dateModel2),
         "zoneName": this.zoneModel,
         "districtName": this.districtModel
       };
 
-      if(!this.schoolModel){
-        delete obj.schoolId;
+      if(this.schoolModel){
+        obj.schoolId = String(this.schoolModel.Schoolid);
       }
       if(!this.districtModel){
         delete obj.districtName;
@@ -92,8 +91,13 @@ export class AttendanceRangeWiseComponent {
       };
       this.spinner.show();
       this.httpService.post('attendance/attendancepercentage/range/parameter', obj).subscribe((res: any) => {
-        this.setAllGraphs(res);
-        this.spinner.hide();
+        if(res.dateWisePercentage.length > 0){
+          this.setAllGraphs(res);
+          this.spinner.hide();
+        }else{
+          this.spinner.hide();
+          alert('DATA NOT FOUND ...')
+        }
       },(error)=>{
         this.spinner.hide();
         this.toastr.error('', 'Something went wrong !');
@@ -107,6 +111,7 @@ export class AttendanceRangeWiseComponent {
       const district = { "District_name": this.districtModel };
       this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
         this.allZones = res.ZoneSchool;
+        this.allZones = this.allZones.sort((a: any, b: any) => a.Z_ID - b.Z_ID);
         this.spinner.hide();
       },(error)=>{
         this.toastr.error('', 'Something went wrong !');
@@ -115,6 +120,7 @@ export class AttendanceRangeWiseComponent {
     } else {
       this.httpService.get('school/zonename').subscribe((res: any) => {
         this.allZones = res.ZoneInfo;
+        this.allZones = this.allZones.sort((a: any, b: any) => a.Z_ID - b.Z_ID);
       },(error)=>{
         this.toastr.error('', 'Something went wrong !');
       });
@@ -135,7 +141,9 @@ export class AttendanceRangeWiseComponent {
     this.httpService.post('school/getZoneSchool', zone).subscribe((data: any) => {
       if (data && data.ZoneSchool) {
         this.allSchools = data.ZoneSchool;
+        this.allSchools = this.allSchools.sort((a: any, b: any) => a.Schoolid - b.Schoolid);
         this.schoolModel = ''
+        this.spinner.hide();
       } else {
         this.allSchools = [];
         this.spinner.hide();
