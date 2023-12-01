@@ -9,7 +9,7 @@
 <div class="d-flex mt-2 mt-4 filter-box">
     <h2 class="fw-bold">Regular </h2>
     <div class="vr mx-3 opacity-100"></div>
-    <select class="form-select  ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
+    <select class="form-select ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
         <option value="">All District</option>
         <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
             {{district.districtName}} ({{district.D_ID}})
@@ -21,24 +21,33 @@
             {{zone.Zone_Name}} ({{zone.Z_ID}})
         </option>
     </select>
-    <select class="form-select  ms-2" [(ngModel)]="shiftModel" (change)="getGraphsBySfhit()">
+    <select class="form-select ms-2" [(ngModel)]="shiftModel" (change)="getGraphsBySfhit()">
         <option value="" disabled>Select Shift</option>
         <option *ngFor="let shift of allShift" value="{{shift}}">
             {{shift}}
         </option>
     </select>
-    <input type="date" class="form-control  ms-2" [(ngModel)]="dateModel" (change)="getGraphsByDate()">
+    <select class="form-select ms-2" [(ngModel)]="schoolModel" (change)="getGraphsBySchool()">
+        <option value="" disabled>All School</option>
+        <option *ngFor="let school of allSchools" [ngValue]="school">
+            {{school.School_Name}} - ({{school.Schoolid}})
+        </option>
+    </select>
+    <input type="date" class="form-control  ms-2" [(ngModel)]="dateModel" (change)="getGraphsByDate(false)">
 </div>
 
 <div class="d-flex justify-content-center filter-box mt-2"
     *ngIf="districtModel || zoneModel || shiftModel || dateModel">
     <!-- <div class="text-center"> -->
-    <h3 class="text-center mb-0" *ngIf="dateModel"><span
-            *ngIf="districtModel || zoneModel || shiftModel">|</span>&nbsp;{{ formattedDate }}&nbsp;</h3>
-    <h3 class="text-center mb-0" *ngIf="districtModel && !shiftModel"><span>|</span>&nbsp;{{districtModel}}&nbsp;</h3>
-    <h3 class="text-center mb-0" *ngIf="zoneModel && !shiftModel"><span
-            *ngIf="districtModel">|</span>&nbsp;{{zoneModel}}&nbsp;</h3>
-    <h3 class="text-center mb-0" *ngIf="shiftModel"><span>|</span>&nbsp;{{shiftModel}}</h3>
+    <h3 class="text-center mb-0" *ngIf="dateModel">{{ formattedDate }}&nbsp;</h3>
+    <h3 class="text-center mb-0" *ngIf="districtModel"><span *ngIf="dateModel">|</span>&nbsp;{{districtModel}}&nbsp;
+    </h3>
+    <h3 class="text-center mb-0" *ngIf="zoneModel"><span
+            *ngIf="dateModel || districtModel">|</span>&nbsp;{{zoneModel}}&nbsp;</h3>
+    <h3 class="text-center mb-0" *ngIf="shiftModel"><span
+            *ngIf="districtModel || zoneModel || dateModel">|</span>&nbsp;{{shiftModel}}</h3>
+    <h3 class="text-center mb-0" *ngIf="schoolModel"><span
+            *ngIf="districtModel || zoneModel || dateModel || shiftModel">|</span>&nbsp;{{schoolModel.School_Name}}</h3>
     <!-- </div> -->
 </div>
 
@@ -62,7 +71,7 @@
                     <h3>Total Schools</h3>
                 </div>
                 <div class="mt-5">
-                    <h2 class="fw-bold">{{allData?.countofSchoool}}</h2>
+                    <h2 class="fw-bold">{{allData?.countofSchool}}</h2>
                 </div>
             </div>
         </div>
@@ -127,14 +136,71 @@
             [legend]="genderWiseNotMarked?.legend"></apx-chart>
     </div>
 
-    <div class="column extra-wide">
-        <h5 class="header-bg p-2">Attendance Bar</h5>
-        <apx-chart [series]="districtWiseGraph?.series" [chart]="districtWiseGraph?.chart"
-            [dataLabels]="districtWiseGraph?.dataLabels" [plotOptions]="districtWiseGraph?.plotOptions"
-            [responsive]="districtWiseGraph?.responsive" [xaxis]="districtWiseGraph?.xaxis"
-            [legend]="districtWiseGraph?.legend" [fill]="districtWiseGraph?.fill"
-            [colors]="districtWiseGraph?.colors"></apx-chart>
+    <div class="column" *ngIf="!zoneModel && !districtModel">
+        <h5 class="header-bg p-2">District wise top 5 attendance</h5>
+        <apx-chart [series]="districtWiseTopFiveGraph?.series" [chart]="districtWiseTopFiveGraph?.chart"
+            [dataLabels]="districtWiseTopFiveGraph?.dataLabels" [plotOptions]="districtWiseTopFiveGraph?.plotOptions"
+            [responsive]="districtWiseTopFiveGraph?.responsive" [xaxis]="districtWiseTopFiveGraph?.xaxis"
+            [legend]="districtWiseTopFiveGraph?.legend" [fill]="districtWiseTopFiveGraph?.fill"
+            [colors]="districtWiseTopFiveGraph?.colors"></apx-chart>
+        <p class="text-center bg-danger text-light"><span class="fw-bold"> {{districtWiseTopFiveGraph?.notFound}} :
+            </span> Schools data not found</p>
     </div>
 
+    <div class="column" *ngIf="!zoneModel && !districtModel">
+        <h5 class="header-bg p-2">District wise bottom 5 attendance</h5>
+        <apx-chart [series]="districtWiseBottomFiveGraph?.series" [chart]="districtWiseBottomFiveGraph?.chart"
+            [dataLabels]="districtWiseBottomFiveGraph?.dataLabels"
+            [plotOptions]="districtWiseBottomFiveGraph?.plotOptions"
+            [responsive]="districtWiseBottomFiveGraph?.responsive" [xaxis]="districtWiseBottomFiveGraph?.xaxis"
+            [legend]="districtWiseBottomFiveGraph?.legend" [fill]="districtWiseBottomFiveGraph?.fill"
+            [colors]="districtWiseBottomFiveGraph?.colors"></apx-chart>
+        <p class="text-center bg-danger text-light"><span class="fw-bold"> {{districtWiseBottomFiveGraph?.notFound}} :
+            </span> Schools data not found</p>
+    </div>
+
+    <div class="column" *ngIf="!zoneModel && districtModel">
+        <h5 class="header-bg p-2">Zone wise top 5 attendance</h5>
+        <apx-chart [series]="zoneWiseTopFiveGraph?.series" [chart]="zoneWiseTopFiveGraph?.chart"
+            [dataLabels]="zoneWiseTopFiveGraph?.dataLabels" [plotOptions]="zoneWiseTopFiveGraph?.plotOptions"
+            [responsive]="zoneWiseTopFiveGraph?.responsive" [xaxis]="zoneWiseTopFiveGraph?.xaxis"
+            [legend]="zoneWiseTopFiveGraph?.legend" [fill]="zoneWiseTopFiveGraph?.fill"
+            [colors]="zoneWiseTopFiveGraph?.colors"></apx-chart>
+        <p class="text-center bg-danger text-light"><span class="fw-bold"> {{zoneWiseTopFiveGraph?.notFound}} :
+            </span> Schools data not found</p>
+    </div>
+
+    <div class="column" *ngIf="!zoneModel && districtModel">
+        <h5 class="header-bg p-2">Zone wise bottom 5 attendance</h5>
+        <apx-chart [series]="zoneWiseBottomFiveGraph?.series" [chart]="zoneWiseBottomFiveGraph?.chart"
+            [dataLabels]="zoneWiseBottomFiveGraph?.dataLabels" [plotOptions]="zoneWiseBottomFiveGraph?.plotOptions"
+            [responsive]="zoneWiseBottomFiveGraph?.responsive" [xaxis]="zoneWiseBottomFiveGraph?.xaxis"
+            [legend]="zoneWiseBottomFiveGraph?.legend" [fill]="zoneWiseBottomFiveGraph?.fill"
+            [colors]="zoneWiseBottomFiveGraph?.colors"></apx-chart>
+        <p class="text-center bg-danger text-light"><span class="fw-bold"> {{zoneWiseBottomFiveGraph?.notFound}} :
+            </span> Schools data not found</p>
+    </div>
+
+    <div class="column" *ngIf="zoneModel">
+        <h5 class="header-bg p-2">School wise top 5 attendance</h5>
+        <apx-chart [series]="schoolWiseTopFiveGraph?.series" [chart]="schoolWiseTopFiveGraph?.chart"
+            [dataLabels]="schoolWiseTopFiveGraph?.dataLabels" [plotOptions]="schoolWiseTopFiveGraph?.plotOptions"
+            [responsive]="schoolWiseTopFiveGraph?.responsive" [xaxis]="schoolWiseTopFiveGraph?.xaxis"
+            [legend]="schoolWiseTopFiveGraph?.legend" [fill]="schoolWiseTopFiveGraph?.fill"
+            [colors]="schoolWiseTopFiveGraph?.colors"></apx-chart>
+        <p class="text-center bg-danger text-light"><span class="fw-bold"> {{schoolWiseTopFiveGraph?.notFound}} :
+            </span> Schools data not found</p>
+    </div>
+
+    <div class="column" *ngIf="zoneModel">
+        <h5 class="header-bg p-2">School wise bottom 5 attendance</h5>
+        <apx-chart [series]="schoolWiseBottomFiveGraph?.series" [chart]="schoolWiseBottomFiveGraph?.chart"
+            [dataLabels]="schoolWiseBottomFiveGraph?.dataLabels" [plotOptions]="schoolWiseBottomFiveGraph?.plotOptions"
+            [responsive]="schoolWiseBottomFiveGraph?.responsive" [xaxis]="schoolWiseBottomFiveGraph?.xaxis"
+            [legend]="schoolWiseBottomFiveGraph?.legend" [fill]="schoolWiseBottomFiveGraph?.fill"
+            [colors]="schoolWiseBottomFiveGraph?.colors"></apx-chart>
+        <p class="text-center bg-danger text-light"><span class="fw-bold"> {{schoolWiseBottomFiveGraph?.notFound}} :
+            </span> Schools data not found</p>
+    </div>
 
 </div>
