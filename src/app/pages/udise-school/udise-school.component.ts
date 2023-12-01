@@ -58,7 +58,7 @@ export class UdiseSchoolComponent {
       .getItemCountObservable()
       .subscribe((count) => {
         this.itemCount = count;
-        if (this.itemCount && this.SchoolType && !this.districtModel && !this.zoneModel) {
+        if (this.itemCount && (this.SchoolType == this.SchoolType || this.SchoolType == 0) && !this.districtModel && !this.zoneModel) {
           this.getTypeWiseSchoolName(false);
         }
         else if (this.itemCount && this.districtModel && !this.zoneModel) {
@@ -262,16 +262,16 @@ export class UdiseSchoolComponent {
 
   }
 
-  getTypeofSchoolCountsGraph(Type_Of_School_count: any) {
-    const TypeOfSchool = Type_Of_School_count.map((item: any) => item._id)
-    const TypeOfschoolCount = Type_Of_School_count.map((item: any) => item.count)
-    this.TypeofSchoolCountsGraph = this.graphService.PieGraph('donut', '');
-    const series = TypeOfschoolCount;
-    const labels = TypeOfSchool
-    this.TypeofSchoolCountsGraph.series = [...series];
-    this.TypeofSchoolCountsGraph.labels = [...labels]
+  // getTypeofSchoolCountsGraph(Type_Of_School_count: any) {
+  //   const TypeOfSchool = Type_Of_School_count.map((item: any) => item._id)
+  //   const TypeOfschoolCount = Type_Of_School_count.map((item: any) => item.count)
+  //   this.TypeofSchoolCountsGraph = this.graphService.PieGraph('donut', '');
+  //   const series = TypeOfschoolCount;
+  //   const labels = TypeOfSchool
+  //   this.TypeofSchoolCountsGraph.series = [...series];
+  //   this.TypeofSchoolCountsGraph.labels = [...labels]
 
-  }
+  // }
 
   getSchoolTypeCountsGraph(SchoolTypeCounts: any) {
     this.TypeOfSchool = SchoolTypeCounts.map((item: any) => item._id)

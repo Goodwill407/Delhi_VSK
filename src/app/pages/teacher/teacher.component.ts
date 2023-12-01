@@ -51,14 +51,14 @@ export class TeacherComponent {
     this.getAllTeacherData();
     this.getAllDistricts();
     this.getAllZones();
-
+    
     this.subscription = this.graphService
       .getItemCountObservable()
       .subscribe((count) => {
         this.itemCount = count;
         if (this.itemCount && this.schoolModel && this.configGender) {
           this.getTeachersByGender(false);
-        } else if (this.itemCount && this.schoolModel && this.configDesignation) {
+        } else if (this.itemCount && this.schoolModel && this.configDesignation == this.configDesignation || 0) {
           this.getTeachersByDesignation(false);
         }
       });
@@ -419,5 +419,6 @@ export class TeacherComponent {
       this.minorityWiseTeacher.labels.push(data[i].minority);
     }
   }
+ 
 
 }

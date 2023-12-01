@@ -17,11 +17,19 @@ export class GraphService {
                 {
                     name: "ABSENT",
                     data: []
+                },
+                {
+                    name: "LEAVE",
+                    data: []
+                },
+                {
+                    name: "NOT MARK",
+                    data: []
                 }
             ],
             chart: {
                 type: "bar",
-                height: 300,
+                height: 250,
                 stacked: true,
                 stackType: "100%"
             },
@@ -62,7 +70,7 @@ export class GraphService {
             series: [],
             chart: {
                 type: "bar",
-                height: "300px",
+                height: "240px",
                 events: {
                     click: function (chart: any, w: any, e: any) {
                     }
