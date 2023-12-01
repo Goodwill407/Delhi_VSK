@@ -59,6 +59,15 @@
           [plotOptions]="TypeofSchoolCountsGraph?.plotOptions" [responsive]="TypeofSchoolCountsGraph?.responsive"
           [legend]="RuralUrbanCountsGraph?.legend"></apx-chart>
     </div> -->
+    
+    <div class="column wide">
+      <h5 class="header-bg p-2"> New School Type Wise Count</h5>
+      <apx-chart [series]="SchoolTypeCountsGraph?.series" [chart]="SchoolTypeCountsGraph?.chart"
+    [dataLabels]="SchoolTypeCountsGraph?.dataLabels" [plotOptions]="SchoolTypeCountsGraph?.plotOptions"
+    [xaxis]="SchoolTypeCountsGraph?.xaxis"  [colors]="SchoolTypeCountsGraph?.colors"
+    [legend]="SchoolTypeCountsGraph?.legend" [fill]="SchoolTypeCountsGraph?.fill"></apx-chart>
+  </div>
+
     <div class="column">
         <h5 class="header-bg p-2">School Shift Wise Count</h5>
         <apx-chart [series]="ShiftfSchoolCountsGraph?.series" [chart]="ShiftfSchoolCountsGraph?.chart"
@@ -68,13 +77,7 @@
             [legend]="RuralUrbanCountsGraph?.legend"></apx-chart>
     </div>
 
-    <div class="column wide">
-      <h5 class="header-bg p-2"> New School Type Wise Count</h5>
-      <apx-chart [series]="SchoolTypeCountsGraph?.series" [chart]="SchoolTypeCountsGraph?.chart"
-    [dataLabels]="SchoolTypeCountsGraph?.dataLabels" [plotOptions]="SchoolTypeCountsGraph?.plotOptions"
-    [xaxis]="SchoolTypeCountsGraph?.xaxis"  [colors]="SchoolTypeCountsGraph?.colors"
-    [legend]="SchoolTypeCountsGraph?.legend" [fill]="SchoolTypeCountsGraph?.fill"></apx-chart>
-  </div>
+   
     
 </div>
 
