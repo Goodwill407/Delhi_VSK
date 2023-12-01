@@ -51,6 +51,14 @@
             [legend]="RuralUrbanCountsGraph?.legend"></apx-chart>
     </div>
 
+    <!-- <div class="column">
+      <h5 class="header-bg p-2">School Type Wise Count</h5>
+      <apx-chart [series]="TypeofSchoolCountsGraph?.series" [chart]="TypeofSchoolCountsGraph?.chart"
+          [labels]="TypeofSchoolCountsGraph?.labels" [fill]="TypeofSchoolCountsGraph?.fill"
+          [colors]="TypeofSchoolCountsGraph?.colors" [dataLabels]="TypeofSchoolCountsGraph?.dataLabels"
+          [plotOptions]="TypeofSchoolCountsGraph?.plotOptions" [responsive]="TypeofSchoolCountsGraph?.responsive"
+          [legend]="RuralUrbanCountsGraph?.legend"></apx-chart>
+    </div> -->
     <div class="column">
         <h5 class="header-bg p-2">School Shift Wise Count</h5>
         <apx-chart [series]="ShiftfSchoolCountsGraph?.series" [chart]="ShiftfSchoolCountsGraph?.chart"
@@ -60,30 +68,21 @@
             [legend]="RuralUrbanCountsGraph?.legend"></apx-chart>
     </div>
 
-    <div class="column">
-        <h5 class="header-bg p-2">School Type Wise Count</h5>
-        <apx-chart [series]="TypeofSchoolCountsGraph?.series" [chart]="TypeofSchoolCountsGraph?.chart"
-            [labels]="TypeofSchoolCountsGraph?.labels" [fill]="TypeofSchoolCountsGraph?.fill"
-            [colors]="TypeofSchoolCountsGraph?.colors" [dataLabels]="TypeofSchoolCountsGraph?.dataLabels"
-            [plotOptions]="TypeofSchoolCountsGraph?.plotOptions" [responsive]="TypeofSchoolCountsGraph?.responsive"
-            [legend]="RuralUrbanCountsGraph?.legend"></apx-chart>
-    </div>
-
-    <div class="column">
-        <h5 class="header-bg p-2 m-2"> New School Type Wise Count</h5>
-        <apx-chart [series]="SchoolTypeCountsGraph?.series" [chart]="SchoolTypeCountsGraph?.chart"
-      [dataLabels]="SchoolTypeCountsGraph?.dataLabels" [plotOptions]="SchoolTypeCountsGraph?.plotOptions"
-      [xaxis]="SchoolTypeCountsGraph?.xaxis"  [colors]="SchoolTypeCountsGraph?.colors"
-      [legend]="SchoolTypeCountsGraph?.legend" [fill]="SchoolTypeCountsGraph?.fill"></apx-chart>
-    </div>
-
+    <div class="column wide">
+      <h5 class="header-bg p-2"> New School Type Wise Count</h5>
+      <apx-chart [series]="SchoolTypeCountsGraph?.series" [chart]="SchoolTypeCountsGraph?.chart"
+    [dataLabels]="SchoolTypeCountsGraph?.dataLabels" [plotOptions]="SchoolTypeCountsGraph?.plotOptions"
+    [xaxis]="SchoolTypeCountsGraph?.xaxis"  [colors]="SchoolTypeCountsGraph?.colors"
+    [legend]="SchoolTypeCountsGraph?.legend" [fill]="SchoolTypeCountsGraph?.fill"></apx-chart>
+  </div>
+    
 </div>
+
 
 <!-- Button trigger modal -->
 <button #openModal data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal"
   (click)="getTypeWiseSchoolName(true)"  (click)="getTypeWiseSchoolNameOfDistrict(true)" 
   (click)="getTypeWiseSchoolNameOfZone(true)" >
-
 </button>
 
 <!-- Modal -->
@@ -91,7 +90,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-xl">
     <div class="modal-content">
       <div class="modal-header" style="background-color: #b3d64d;">
-        <h5 class="modal-title" *ngIf="SchoolType" id="exampleModalLabel">School Type Wise Data : ({{allData.schoolTypeCounts[this.SchoolType]._id}})  </h5>
+        <h5 class="modal-title" *ngIf="SchoolType" id="exampleModalLabel">Type Wise School Data : ({{allData.schoolTypeCounts[this.SchoolType]._id}})  </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -105,7 +104,7 @@
               <th>School ID</th>
               <th>UDISE Code</th>
               <th>School Name</th>
-              <th>WEBSITE</th>
+              <th>Rural Or Urban</th>
               <th>Phone</th>
               <th>Address</th>
               <th>Shift</th>
@@ -121,7 +120,8 @@
               <td>{{data.SchoolID}}</td>
               <td>{{data.Udise_Code}}</td>
               <td>{{data.SchName}}</td>
-              <td>{{data.WEBSITE}}</td>
+              <td>{{data.RuralUrban}}</td>
+              <td>{{data.SchAddress}}</td>
               <td>{{data.School_Deatils_Landline_Phone}}</td>
               <td>{{data.Shiftofschool}}</td>
               <td>{{data.School_Level}}</td>

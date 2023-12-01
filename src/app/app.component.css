@@ -396,7 +396,7 @@ a.article:hover {
     cursor: pointer;
 }
 
-.logo ul li img{
+.logo ul li img {
     align-items: center;
 }
 
@@ -447,4 +447,16 @@ a.article:hover {
 #sidebarCollapse {
     background-color: #b3d64d;
     color: #fff;
+}
+
+@media (min-width: 1200px) {
+    .navbar-collapse {
+        justify-content: end !important;
+        display: flex;
+    }
+}
+
+.navbar-collapse ul li {
+    align-items: center;
+    display: flex;
 }

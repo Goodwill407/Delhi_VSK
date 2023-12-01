@@ -55,8 +55,8 @@ export class GraphService {
 
     VerticleBarGraph() {
         let colors = [];
-        for (let i = 0; i < 8; i++) {
-            colors.push(this.getRandomColor())
+        for (let i = 0; i < 5; i++) {
+            colors.push(this.getRandomColor(i))
         }
         const graphData = {
             series: [],
@@ -108,6 +108,12 @@ export class GraphService {
                         fontWeight: "600"
                     }
                 },
+                labels: {
+                    maxWidth: 250,
+                    style: {
+                        fontSize: '10px'
+                    }
+                }
             }
         }
         return graphData;
@@ -165,15 +171,16 @@ export class GraphService {
         return graphData;
     }
 
-    getRandomColor() {
-        var color = "hsl(" + Math.random() * 360 + ", 100%, 70%)";
-        return color;
+    getRandomColor(i: any) {
+        // var color = "hsl(" + Math.random() * 360 + ", 100%, 70%)";
+        var color = ["#7ED7C1", "#F9B572", "#CBB279", "#73A9AD", "#DC8686",];
+        return color[i];
     }
 
     PieGraph(chartType: any, totalType?: any) {
         let colors = [];
-        for (let i = 0; i < 8; i++) {
-            colors.push(this.getRandomColor())
+        for (let i = 0; i < 5; i++) {
+            colors.push(this.getRandomColor(i))
         }
         const graphData = {
             series: [],
@@ -236,19 +243,16 @@ export class GraphService {
 
     PolarGraph(toolTipName?: any) {
         let colors = [];
-        for (let i = 0; i < 8; i++) {
-            colors.push(this.getRandomColor())
+        for (let i = 0; i < 5; i++) {
+            colors.push(this.getRandomColor(i))
         }
         const graphData = {
             series: [],
             chart: {
                 type: "polarArea"
             },
-            stroke: {
-                colors: ["#fff"]
-            },
             fill: {
-                colors: colors
+                colors: colors,
             },
             colors: colors,
             legend: {

@@ -23,5 +23,5 @@ export class AttendanceComponent {
     this.communicationService.emitParentClick();
   }
 
-  
+
 }
