@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 import { GraphService } from 'src/app/services/graph-service.service';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 
@@ -16,6 +17,7 @@ export class AttendanceRangeWiseComponent {
   genderWiseAbsent: any;
   genderWiseLeave: any;
   genderWiseNotMarked: any;
+  dateRangeGraph: any;
 
   allDistricts: any;
   allSchools: any;
@@ -28,48 +30,35 @@ export class AttendanceRangeWiseComponent {
   districtName: any;
   schoolName: any;
 
-  constructor(private httpService: HttpServiceService, public datepipe: DatePipe, private spinner: NgxSpinnerService, private graphService: GraphService) { }
+  constructor( private toastr: ToastrService,private httpService: HttpServiceService, public datepipe: DatePipe, private spinner: NgxSpinnerService, private graphService: GraphService) { }
 
   ngOnInit() {
-    this.getAllTeacherData();
     this.getAllDistricts();
     this.getAllZones();
   }
 
   getAllDistricts() {
+    this.spinner.show();
     this.httpService.get('school/districtNames').subscribe((data: any) => {
       if (data && data.length > 0) {
         this.allDistricts = data;
-      }
-    })
-  }
-
-  getAllTeacherData() {
-    this.spinner.show();
-    this.httpService.get('teacher-graph/school-category-wise').subscribe((data: any) => {
-      if (data) {
         this.spinner.hide();
       }
-    })
+    },(error)=>{
+      this.spinner.hide();
+      this.toastr.error('', 'Something went wrong !');
+    });
   }
 
+
   getGraphsByDistrictName() {
-    if (this.districtModel) {
-      const district = {
-        DistrictName: this.districtModel
-      }
-      this.spinner.show();
-      this.httpService.post('teacher-graph/school-category-wise/district', district).subscribe((data: any) => {
-        if (data) {
-          // this.setAllGraphs(data);
-          this.getAllZones();
-          this.getAllSchools();
-          this.zoneModel = '';
-          this.schoolModel = '';
-        }
-      })
+    if (this.districtModel) {      
+      this.getAllZones();
+      this.getAllSchools();
+      this.zoneModel = '';
+      this.schoolModel = '';
+      this.datePicker();   
     } else {
-      this.getAllTeacherData();
       this.getAllZones();
       this.allSchools = [];
       this.zoneModel = '';
@@ -101,58 +90,64 @@ export class AttendanceRangeWiseComponent {
       if(!this.zoneModel){
         delete obj.zoneName;
       };
-
+      this.spinner.show();
       this.httpService.post('attendance/attendancepercentage/range/parameter', obj).subscribe((res: any) => {
-        this.setAllGraphs(res.overallPercentage);
-      })
-
+        this.setAllGraphs(res);
+        this.spinner.hide();
+      },(error)=>{
+        this.spinner.hide();
+        this.toastr.error('', 'Something went wrong !');
+      });
     }
   }
 
   getAllZones() {
+    this.spinner.show();
     if (this.districtModel) {
       const district = { "District_name": this.districtModel };
       this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
         this.allZones = res.ZoneSchool;
-      })
+        this.spinner.hide();
+      },(error)=>{
+        this.toastr.error('', 'Something went wrong !');
+        this.spinner.hide();
+      });
     } else {
       this.httpService.get('school/zonename').subscribe((res: any) => {
         this.allZones = res.ZoneInfo;
-      })
+      },(error)=>{
+        this.toastr.error('', 'Something went wrong !');
+      });
+      this.spinner.hide();
     }
   }
 
   getGraphsByZone() {
-    this.spinner.show();
-    const zone = {
-      zoneName: this.zoneModel
-    }
-    this.httpService.post('teacher-graph/school-category-wise/zone', zone).subscribe((data: any) => {
-      if (data) {
-        // this.setAllGraphs(data);
-        this.spinner.hide();
-      }
-    }, (error: any) => {
-      this.spinner.hide();
-    });
     this.getSchoolDataByZone();
+    this.datePicker();
   }
 
   getSchoolDataByZone() {
     const zone = {
       Zone_Name: this.zoneModel
     }
+    this.spinner.show();
     this.httpService.post('school/getZoneSchool', zone).subscribe((data: any) => {
       if (data && data.ZoneSchool) {
         this.allSchools = data.ZoneSchool;
         this.schoolModel = ''
       } else {
         this.allSchools = [];
+        this.spinner.hide();
       }
-    });
+    },(error)=>{
+      this.spinner.hide();
+      this.toastr.error('', 'Something went wrong !');
+    })
   }
 
   getAllSchools() {
+    this.spinner.show();
     const district = {
       District_name: this.districtModel
     }
@@ -162,28 +157,23 @@ export class AttendanceRangeWiseComponent {
       } else {
         this.allSchools = [];
       }
-    });
-  }
-
-  getGraphsBySchoolName() {
-    const school = {
-      schname: String(this.schoolModel.Schoolid)
-    }
-    this.spinner.show();
-    this.httpService.post('teacher-graph/school-category-wise/school', school).subscribe((data: any) => {
-      if (data) {
-        // this.setAllGraphs(data);
-        this.spinner.hide();
-      }
       this.spinner.hide();
+    },(error)=>{
+    this.spinner.hide();
+    this.toastr.error('', 'Something went wrong !');
     })
   }
 
+  getGraphsBySchoolName() {
+    this.datePicker();
+  }
+
   setAllGraphs(data: any) {
-    this.getGenderWiseAbsent(data);
-    this.getGenderWiseLeave(data);
-    this.getGenderWisePresent(data);
-    this.getGenderWiseNotMarked(data);
+    this.getGenderWiseAbsent(data.overallPercentage);
+    this.getGenderWiseLeave(data.overallPercentage);
+    this.getGenderWisePresent(data.overallPercentage);
+    this.getGenderWiseNotMarked(data.overallPercentage);
+    this.getDateRangeGraph(data.dateWisePercentage)
   }
 
   getGenderWisePresent(present: any) {
@@ -214,5 +204,12 @@ export class AttendanceRangeWiseComponent {
     this.genderWiseNotMarked.labels = ["Boys", "Girls", "Others"];
   }
 
-
+  getDateRangeGraph(data: any) {
+    this.dateRangeGraph = this.graphService.districtWiseGraph();
+    for (let i = 0; i < data.length; i++) {
+      this.dateRangeGraph.series[0].data.push(Number(data[i].presentPercentage.toFixed(0)));
+      this.dateRangeGraph.series[1].data.push(Number((100 - data[i].presentPercentage).toFixed(0)));
+      this.dateRangeGraph.xaxis.categories.push(data[i]._id);
+    }
+  }
 }
