@@ -64,7 +64,7 @@ export class UdiseSchoolComponent {
         else if (this.itemCount && this.districtModel && !this.zoneModel) {
           this.getTypeWiseSchoolNameOfDistrict(false);
         }
-        else if (this.itemCount && this.zoneModel && this.districtModel) {
+        else if (this.itemCount && this.zoneModel || this.districtModel) {
           this.getTypeWiseSchoolNameOfZone(false);
         }
       });
@@ -219,13 +219,13 @@ export class UdiseSchoolComponent {
     const RuralUrbanCounts = data.ruralUrbanCounts
     const School_GenderCounts = data.schoolGenderCounts
     const ShiftfSchoolCounts = data.shiftofschoolCounts
-    const TypeofschoolCounts = data.typeofschoolCounts
+    // const TypeofschoolCounts = data.typeofschoolCounts
     const SchoolTypeCountsGraph = data.schoolTypeCounts
 
     this.getRuralUrbanCountsGraph(RuralUrbanCounts)
     this.getSchoolGenderCounts(School_GenderCounts)
     this.getShiftWiseCountGraph(ShiftfSchoolCounts)
-    this.getTypeofSchoolCountsGraph(TypeofschoolCounts)
+    // this.getTypeofSchoolCountsGraph(TypeofschoolCounts)
     this.getSchoolTypeCountsGraph(SchoolTypeCountsGraph)
 
   }
@@ -277,7 +277,7 @@ export class UdiseSchoolComponent {
     this.TypeOfSchool = SchoolTypeCounts.map((item: any) => item._id)
     const TypeOfschoolCount = SchoolTypeCounts.map((item: any) => item.count)
     const seres: any = [{
-      name: "Teachers",
+      name: "School",
       data: [...TypeOfschoolCount]
     }];
     this.SchoolTypeCountsGraph = this.graphService.VerticleBarGraph();
