@@ -75,7 +75,7 @@
       [tooltip]="genderWiseLeave?.tooltip"></apx-chart>
   </div>
 
-  <div class="column wide">
+  <div class="column extra-wide">
     <h5 class="header-bg p-2">Attendance Bar</h5>
     <apx-chart [series]="dateRangeGraph?.series" [chart]="dateRangeGraph?.chart"
         [dataLabels]="dateRangeGraph?.dataLabels" [plotOptions]="dateRangeGraph?.plotOptions"
@@ -84,6 +84,6 @@
         [colors]="dateRangeGraph?.colors"></apx-chart>
 </div>
 </div>
-<div class="bg-primary m-4">
+<div class="bg-primary m-4" *ngIf="!(dateModel1 && dateModel2)">
   <h2 class="text-center text-white fst-italic p-2">Please Select Date Range...</h2>
 </div>

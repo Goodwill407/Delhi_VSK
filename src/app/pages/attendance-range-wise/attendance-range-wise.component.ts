@@ -206,10 +206,13 @@ export class AttendanceRangeWiseComponent {
 
   getDateRangeGraph(data: any) {
     this.dateRangeGraph = this.graphService.districtWiseGraph();
-    for (let i = 0; i < data.length; i++) {
-      this.dateRangeGraph.series[0].data.push(Number(data[i].presentPercentage.toFixed(0)));
-      this.dateRangeGraph.series[1].data.push(Number((100 - data[i].presentPercentage).toFixed(0)));
-      this.dateRangeGraph.xaxis.categories.push(data[i]._id);
+    
+    for(let i = 0; i< data.length; i++){     
+      this.dateRangeGraph.series[0].data.push(Number((data[i].malePresentPercentage + data[i].feMalePresentPercentage + data[i].otherPresentPercentage).toFixed(2)));
+      this.dateRangeGraph.series[1].data.push(Number((data[i].maleAbsentPercentage + data[i].feMaleAbsentPercentage + data[i].otherAbsentPercentage).toFixed(2)));
+      this.dateRangeGraph.series[2].data.push(Number((data[i].maleLeavePercentage + data[i].femaleLeavePercentage + data[i].otherLeavePercentage).toFixed(2)));
+      this.dateRangeGraph.series[3].data.push(Number((data[i].maleNotMarkedPercentage + data[i].femaleNotMarkedPercentage + data[i].otherNotMarkedPercentage).toFixed(2)));
+      this.dateRangeGraph.xaxis.categories.push(data[i].attendance_DATE)
     }
   }
 }
