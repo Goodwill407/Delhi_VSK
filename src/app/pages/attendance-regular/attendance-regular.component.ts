@@ -126,11 +126,11 @@ export class AttendanceRegularComponent {
     }
     this.httpService.post('attendance/district-wise/date-wise', district).subscribe((data: any) => {
       if (data && data.Counts.length > 0) {
+        this.zoneModel = '';
+        this.shiftModel = '';
         this.setAllGraphs(data);
         this.getAllZones();
         this.getAllSchools();
-        this.zoneModel = '';
-        this.shiftModel = '';
       } else {
         this.toastr.error('', 'Data not found for this district or date')
       }

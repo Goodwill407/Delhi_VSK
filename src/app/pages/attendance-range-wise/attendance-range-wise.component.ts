@@ -37,15 +37,15 @@ export class AttendanceRangeWiseComponent {
   }
 
   getAllDistricts() {
-    this.spinner.show();
+    // this.spinner.show();
     this.httpService.get('school/districtNames').subscribe((data: any) => {
       if (data && data.length > 0) {
         this.allDistricts = data;
         this.allDistricts = this.allDistricts.sort((a: any, b: any) => a.D_ID - b.D_ID);
-        this.spinner.hide();
+        // this.spinner.hide();
       }
     }, (error) => {
-      this.spinner.hide();
+      // this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     });
   }
@@ -106,8 +106,8 @@ export class AttendanceRangeWiseComponent {
   }
 
   getAllZones() {
-    this.spinner.show();
     if (this.districtModel) {
+      this.spinner.show();
       const district = { "District_name": this.districtModel };
       this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
         this.allZones = res.ZoneSchool;
@@ -118,13 +118,15 @@ export class AttendanceRangeWiseComponent {
         this.spinner.hide();
       });
     } else {
+      // this.spinner.show();
       this.httpService.get('school/zonename').subscribe((res: any) => {
         this.allZones = res.ZoneInfo;
         this.allZones = this.allZones.sort((a: any, b: any) => a.Z_ID - b.Z_ID);
+        // this.spinner.hide();
       }, (error) => {
         this.toastr.error('', 'Something went wrong !');
+        // this.spinner.hide();
       });
-      this.spinner.hide();
     }
   }
 
