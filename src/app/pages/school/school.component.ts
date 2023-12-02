@@ -203,7 +203,7 @@ export class SchoolComponent {
   }
 
   getStudentsGenderRatio(studentsGender: any) {
-    this.studentsGenderRatio = this.graphService.PieGraph('donut', ' Students');
+    this.studentsGenderRatio = this.graphService.PieGraph('donut', 'Student');
     this.studentsGenderRatio.series = [studentsGender.totalBoys, studentsGender.totalGirls, studentsGender.Other];
     this.studentsGenderRatio.labels = ["Boys", "Girls", "Other"];
     this.studentsGenderRatio.chart.events = {

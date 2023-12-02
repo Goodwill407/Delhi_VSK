@@ -223,16 +223,24 @@ export class GraphService {
                     donut: {
                         labels: {
                             show: true,
-                            total: {
+                            name: {
+                                formatter: () => {
+                                    return 'Total' +' '+ totalType
+                                }
+                              },
+                            total:{
                                 show: true,
+                                
                                 formatter: (w: any) => {
-                                    return w.globals.seriesTotals.reduce((a: any, b: any) => {
+                                    return w.globals.seriesTotals.reduce((a: any, b: any) => { 
                                         a = (a % 1 != 0) ? Number(a.toFixed(2)) : a;
                                         b = (b % 1 != 0) ? Number(b.toFixed(2)) : b;
-                                        return a + b
-                                    }, 0) + totalType
+                                        return a + b;
+                                    }, 0)
                                 }
+                                
                             }
+
                         }
                     }
                 }
