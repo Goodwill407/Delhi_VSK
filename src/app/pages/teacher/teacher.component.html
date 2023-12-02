@@ -164,7 +164,7 @@
       <div class="modal-header" style="background-color: #b3d64d;">
         <h5 class="modal-title" *ngIf="configGender" id="exampleModalLabel">Teacher Details By Gender:
           ({{configGender?.dataPointIndex == 0 ? 'Male' : 'Female'}}) </h5>
-        <h5 class="modal-title" *ngIf="configDesignation" id="exampleModalLabel">Teacher Details By Designation:
+        <h5 class="modal-title" *ngIf="configDesignation == 0 || configDesignation" id="exampleModalLabel">Teacher Details By Designation:
           ({{allData.postdescWiseTeacherCounts[configDesignation]._id}}) </h5>
         <h5 class="modal-title" *ngIf="commonName" id="exampleModalLabel">Teacher Details By {{commonName}} </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
