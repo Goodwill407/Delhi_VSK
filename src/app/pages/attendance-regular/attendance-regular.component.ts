@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 import { CommunicationService } from 'src/app/services/communication.service';
 import { GraphService } from 'src/app/services/graph-service.service';
 import { HttpServiceService } from 'src/app/services/http-service.service';
@@ -12,217 +13,462 @@ import { HttpServiceService } from 'src/app/services/http-service.service';
   styleUrls: ['./attendance-regular.component.css']
 })
 export class AttendanceRegularComponent {
- // Graphs
- teacherGenderRatio: any;
- studentsGenderRatio: any;
- districtWiseGraph: any;
- lowClassHighClass: any;
- allZones: any;
- streamCount: any;
- minorityCount: any;
+  // Graphs
+  teacherGenderRatio: any;
+  studentsGenderRatio: any;
+  districtWiseGraph: any;
+  lowClassHighClass: any;
+  allZones: any;
+  streamCount: any;
+  minorityCount: any;
 
- // Single data
- allData: any;
- allDistricts: any;
- districtModel: any = "";
- zoneModel: any = "";
- shiftModel: any = "";
- dateModel: any;
- districtName: any;
- genderWisePresent: any;
- genderWiseAbsent: any;
- allShift: any = ['Morning', 'General', 'Evening'];
- districtWiseAttendanceCount: any;
- newDate: any
- formattedDate: any;
- StudentStatusWiseCounts:any;
+  // Single data
+  allData: any;
+  allDistricts: any;
+  allSchools: any;
+  districtModel: any = "";
+  zoneModel: any = "";
+  shiftModel: any = "";
+  schoolModel: any = "";
+  dateModel: any;
+  districtName: any;
 
- constructor(private communicationService: CommunicationService,private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, public datepipe: DatePipe) {
+  // Graphs
+  genderWisePresent: any;
+  genderWiseAbsent: any;
+  genderWiseLeave: any;
+  genderWiseNotMarked: any;
+  districtWiseTopFiveGraph: any;
+  zoneWiseTopFiveGraph: any;
+  schoolWiseTopFiveGraph: any;
+  districtWiseBottomFiveGraph: any;
+  zoneWiseBottomFiveGraph: any;
+  schoolWiseBottomFiveGraph: any;
 
- }
+  allShift: any = ['Morning', 'General', 'Evening'];
+  districtWiseAttendanceCount: any;
+  newDate: any
+  formattedDate: any;
 
- ngOnInit() {
-   this.dateModel = new Date();
-   this.dateModel.setDate(this.dateModel.getDate() - 1);
-   this.formattedDate = this.datepipe.transform(this.dateModel, 'dd-MMM-yyyy');
-   this.getAllSchoolGraph();
-   this.getGraphsByDate();
-   this.getAllDistricts();
-   this.getAllZones();
- }
+  constructor(private communicationService: CommunicationService, private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, public datepipe: DatePipe, private toastr: ToastrService) {
 
- handleParentClick() {
-   this.communicationService.emitParentClick();
- }
+  }
 
- getDate(date: any) {
-   let Mdate: any;
-   return Mdate = this.datepipe.transform(date, 'dd/MM/yyyy');
- }
+  ngOnInit() {
+    this.dateModel = new Date();
+    this.dateModel.setDate(this.dateModel.getDate() - 1);
+    this.formattedDate = this.datepipe.transform(this.dateModel, 'dd-MMM-yyyy');
+    this.getGraphsByDate(true);
+    this.getAllDistricts();
+    this.getAllZones();
+  }
 
- getAllDistricts() {
-   this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
-     if (data && data.length > 0) {
-       this.allDistricts = data;
-     }
-   })
- }
+  handleParentClick() {
+    this.communicationService.emitParentClick();
+  }
 
- getAllSchoolGraph() {
-   this.httpService.get('attendance/date-wise').subscribe((data: any) => {
-     if (data) {
-       this.setAllGraphs(data);
-     }
-   })
- }
+  getDate(date: any) {
+    let Mdate: any;
+    return Mdate = this.datepipe.transform(date, 'dd/MM/yyyy');
+  }
 
- getAllZones() {
-   if (this.districtModel) {
-     const district = { "District_name": this.districtModel };
-     this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
-       this.allZones = res.ZoneSchool;
-     })
-   } else {
-     this.httpService.get('school/zonename').subscribe((res: any) => {
-       this.allZones = res.ZoneInfo;
-     })
-   }
- }
+  getAllDistricts() {
+    this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
+      if (data && data.length > 0) {
+        this.allDistricts = data;
+        this.allDistricts = this.allDistricts.sort((a: any, b: any) => a.D_ID - b.D_ID);
+      }
+    })
+  }
 
- getGraphsByZone() {
-   this.spinner.show();
-   const zone = {
-     date: this.getDate(this.dateModel),
-     zoneName: this.zoneModel
-   }
-   this.httpService.post('attendance/zone/date-wise', zone).subscribe((data: any) => {
-     if (data) {
-       this.setAllGraphs(data);
-       this.spinner.hide();
-       this.shiftModel = '';
-     }
-   }, (error) => {
-     this.spinner.hide();
-   })
- }
+  getAllZones() {
+    if (this.districtModel) {
+      const district = { "District_name": this.districtModel };
+      this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
+        this.allZones = res.ZoneSchool;
+        this.allZones = this.allZones.sort((a: any, b: any) => a.Z_ID - b.Z_ID);
+        this.getAllSchools();
+      })
+    } else {
+      this.httpService.get('school/zonename').subscribe((res: any) => {
+        this.allZones = res.ZoneInfo;
+        this.allZones = this.allZones.sort((a: any, b: any) => a.Z_ID - b.Z_ID);
+        this.getAllSchools();
+      })
+    }
+  }
 
- getGraphsByDistrictName() {
-   if (this.districtModel) {
-     this.spinner.show();
-     const district = {
-       "date": this.getDate(this.dateModel),
-       "districtName": this.districtModel
-     }
-     this.httpService.post('attendance/district-wise/date-wise', district).subscribe((data: any) => {
-       if (data) {
-         this.setAllGraphs(data);
-         this.getAllZones();
-         this.spinner.hide();
-         this.zoneModel = '';
-         this.shiftModel = '';
-       }
-     }, (error) => {
-       this.spinner.hide();
-     });
-   } else {
-     this.getGraphsByDate();
-   }
- }
+  getGraphsByZone() {
+    this.spinner.show();
+    const zone = {
+      date: this.getDate(this.dateModel),
+      zoneName: this.zoneModel
+    }
+    this.httpService.post('attendance/zone/date-wise', zone).subscribe((data: any) => {
+      if (data && data.Counts.length > 0) {
+        this.setAllGraphs(data);
+        this.getAllSchools();
+        this.shiftModel = '';
+      } else {
+        this.toastr.error('Data not found for this zone or date')
+      }
+      this.spinner.hide();
+    }, (error) => {
+      this.spinner.hide();
+    })
+  }
 
+  getGraphsByDistrictName() {
+    this.spinner.show();
+    const district = {
+      "date": this.getDate(this.dateModel),
+      "districtName": this.districtModel
+    }
+    this.httpService.post('attendance/district-wise/date-wise', district).subscribe((data: any) => {
+      if (data && data.Counts.length > 0) {
+        this.zoneModel = '';
+        this.shiftModel = '';
+        this.setAllGraphs(data);
+        this.getAllZones();
+        this.getAllSchools();
+      } else {
+        this.toastr.error('', 'Data not found for this district or date')
+      }
+      this.spinner.hide();
+    }, (error) => {
+      this.spinner.hide();
+    });
+  }
 
- getGraphsByDate() {
-   this.formattedDate = this.datepipe.transform(this.dateModel, 'dd-MMM-yyyy');
-   if (this.districtModel) {
-     this.getGraphsByDistrictName();
-   } else if (this.zoneModel) {
-     this.getGraphsByZone();
-   } else if (this.shiftModel) {
-     this.getGraphsBySfhit();
-   }
-   else {
-     let date = { "date": this.getDate(this.dateModel) };
-     this.httpService.post('attendance/date-wise', date).subscribe((data) => {
-       this.setAllGraphs(data);
-       // this.shiftModel = '';
-       // if (data.totalStudentCount == 0) {
-       //   this.dateModel.setDate(this.dateModel.getDate() - 1);
-       //   this.getGraphsByDate();
-       // }
-       this.setDistrictWiseGraph();
-       this.formattedDate = this.datepipe.transform(this.dateModel, 'dd-MMM-yyyy');
-     });
-   }
- }
+  getAllSchools() {
+    if (this.districtModel && !this.zoneModel) {
+      const district = {
+        District_name: this.districtModel
+      }
+      this.httpService.post('school/getDistrictSchool', district).subscribe((data: any) => {
+        if (data && data.districtSchools) {
+          this.allSchools = data.districtSchools;
+          this.allSchools = this.allSchools.sort((a: any, b: any) => a.Schoolid - b.Schoolid);
+        } else {
+          this.allSchools = [];
+        }
+      });
+    } else if (this.zoneModel) {
+      const zone = {
+        Zone_Name: this.zoneModel
+      }
+      this.httpService.post('school/getZoneSchool', zone).subscribe((data: any) => {
+        if (data && data.ZoneSchool) {
+          this.allSchools = data.ZoneSchool;
+          this.allSchools = this.allSchools.sort((a: any, b: any) => a.Schoolid - b.Schoolid);
+          this.schoolModel = ''
+        } else {
+          this.allSchools = [];
+        }
+      });
+    }
+  }
 
- getGraphsBySfhit() {
-   if (this.shiftModel) {
-     this.spinner.show();
-     const shift = {
-       "shift": this.shiftModel,
-       "date": this.getDate(this.dateModel)
-     }
-     this.httpService.post('attendance/zone/shift/wise', shift).subscribe((data: any) => {
-       if (data) {
-         this.setAllGraphs(data);
-         this.districtModel = '';
-         this.zoneModel = '';
-         this.getAllZones();
-         this.spinner.hide();
-       }
-     }, (error) => {
-       this.spinner.hide();
-     });
-   }
- }
+  getGraphsByDate(onload: boolean) {
+    // this.formattedDate = this.datepipe.transform(this.dateModel, 'dd-MMM-yyyy');
+    if (this.districtModel) {
+      this.getGraphsByDistrictName();
+    } else if (this.zoneModel) {
+      this.getGraphsByZone();
+    } else if (this.shiftModel) {
+      this.getGraphsBySfhit();
+    } else if (this.schoolModel) {
+      this.getGraphsBySchool();
+    } else {
+      this.spinner.show();
+      let date = { "date": this.getDate(this.dateModel) };
+      this.httpService.post('attendance/date-wise', date).subscribe((data) => {
+        if (data.Counts && data.Counts.length == 0 && onload) {
+          this.dateModel.setDate(this.dateModel.getDate() - 1);
+          this.getGraphsByDate(true);
+        } else if (data.Counts && data.Counts.length == 0 && !onload) {
+          this.toastr.error('', 'Data not found for this date')
+        } else {
+          this.setAllGraphs(data);
+          this.formattedDate = this.datepipe.transform(this.dateModel, 'dd-MMM-yyyy');
+          this.dateModel = this.formattedDate;
+        }
+        this.spinner.hide();
+      }, error => {
+        this.spinner.hide();
+      }
+      );
+    }
+  }
 
+  getGraphsBySfhit() {
+    if (this.shiftModel) {
+      this.spinner.show();
+      const shift = {
+        "shift": this.shiftModel,
+        "date": this.getDate(this.dateModel)
+      }
+      this.httpService.post('attendance/zone/shift/wise', shift).subscribe((data: any) => {
+        if (data && data.Counts.length > 0) {
+          this.setAllGraphs(data);
+          this.districtModel = '';
+          this.zoneModel = '';
+          this.getAllZones();
+        } else {
+          this.toastr.error('', 'Data not found for this shift or date')
+        }
+        this.spinner.hide();
+      }, (error) => {
+        this.spinner.hide();
+      });
+    }
+  }
 
- setAllGraphs(data: any) {
-   this.allData = data;
-   this.getGenderWisePresent(data);
-   this.getGenderWiseAbsent(data);
-   this.setDistrictWiseGraph();
- }
+  getGraphsBySchool() {
+    if (this.schoolModel) {
+      this.spinner.show();
+      const school = {
+        "School_ID": this.schoolModel,
+        "date": this.getDate(this.dateModel)
+      }
+      this.httpService.post('attendance/school/date-wise', school).subscribe((data: any) => {
+        if (data && data.Counts.length > 0) {
+          this.setAllGraphs(data);
+          this.shiftModel = '';
+        } else {
+          this.toastr.error('', 'Data not found for this school or date')
+        }
+        this.spinner.hide();
+      }, (error) => {
+        this.spinner.hide();
+      });
+    }
+  }
 
- setDistrictWiseGraph() {
-   let date = { "date": this.getDate(this.dateModel) };
-   this.httpService.post('attendance/district/present-student/per', date).subscribe((data: any) => {
-     if (data) {
-       this.districtWiseAttendanceCount = data;
-       this.getdistrictWiseGraph(data);
-     }
-   })
- }
+  setAllGraphs(data: any) {
+    this.allData = data;
+    this.getGenderWisePresent(data);
+    this.getGenderWiseAbsent(data);
+    this.getGenderWiseLeave(data);
+    this.getGenderWiseNotMarked(data);
+    this.setDistrictWiseGraph();
+    if (!this.zoneModel && !this.districtModel) {
+      this.districtWiseTopFive();
+      this.districtWiseBottomFive();
+    } else if (this.districtModel && !this.zoneModel) {
+      this.zoneWiseTopFive();
+      this.zoneWiseBottomFive();
+    } else if (this.zoneModel) {
+      this.schoolWiseTopFive();
+      this.schoolWiseBottomFive();
+    }
+  }
 
- getGenderWisePresent(data: any) {
-   this.genderWisePresent = this.graphService.PieGraph('pie', ' Students');
-   this.genderWisePresent.series = [data.malePresentCount, data.femalePresentCount, data.otherPresentCount];
-   this.genderWisePresent.labels = ['Male', 'Female', 'Others']
- }
+  getGenderWisePresent(data: any) {
+    this.genderWisePresent = this.graphService.PieGraph('pie', ' Students');
+    this.genderWisePresent.series = [data.Counts[0].malePresentCount, data.Counts[0].feMalePresentCount, data.Counts[0].otherPresentCount];
+    this.genderWisePresent.labels = ['Male', 'Female', 'Others']
+  }
 
- getGenderWiseAbsent(data: any) {
-   this.genderWiseAbsent = this.graphService.PieGraph('pie', ' Students');
-   this.genderWiseAbsent.series = [data.maleAbsentCount, data.femaleAbsentCount, data.otherAbsentCount];
-   this.genderWiseAbsent.labels = ['Male', 'Female', 'Others']
- }
+  getGenderWiseAbsent(data: any) {
+    this.genderWiseAbsent = this.graphService.PieGraph('pie', ' Students');
+    this.genderWiseAbsent.series = [data.Counts[0].maleAbsentCount, data.Counts[0].feMaleAbsentCount, data.Counts[0].othersAbsentCount];
+    this.genderWiseAbsent.labels = ['Male', 'Female', 'Others'];
+  }
 
- getdistrictWiseGraph(data: any) {
-   this.districtWiseGraph = this.graphService.districtWiseGraph();
-   for (let i = 0; i < data.length; i++) {
-     this.districtWiseGraph.series[0].data.push(Number(data[i].presentPercentage.toFixed(0)));
-     this.districtWiseGraph.series[1].data.push(Number((100 - data[i].presentPercentage).toFixed(0)));
-     this.districtWiseGraph.xaxis.categories.push(data[i]._id);
-   }
- }
+  getGenderWiseLeave(data: any) {
+    this.genderWiseLeave = this.graphService.PieGraph('pie', ' Students');
+    this.genderWiseLeave.series = [data.Counts[0].maleLeaveCount, data.Counts[0].femaleLeaveCount, data.Counts[0].otherLeaveCount];
+    this.genderWiseLeave.labels = ['Male', 'Female', 'Others'];
+  }
 
- getStudentStatusWiseCounts(StudentstatusWiseCounts: any) {
-  const StudentStatus = StudentstatusWiseCounts.map((item: any) => (item._id !== "" ? item._id : "Not Identified"));
-  const StudCount = StudentstatusWiseCounts.map((item: any) => item.count)
-  this.StudentStatusWiseCounts = this.graphService.PieGraph('donut', ' Students');
-  const series = StudCount;
-  const labels = StudentStatus
-  this.StudentStatusWiseCounts.series = [...series];
-  this.StudentStatusWiseCounts.labels = [...labels]
-  
-}
+  getGenderWiseNotMarked(data: any) {
+    this.genderWiseNotMarked = this.graphService.PieGraph('pie', ' Students');
+    this.genderWiseNotMarked.series = [data.Counts[0].maleAttendanceNotMarked, data.Counts[0].femaleAttendanceNotMarked, data.Counts[0].otherAttendanceNotMarked];
+    this.genderWiseNotMarked.labels = ['Male', 'Female', 'Others'];
+  }
+
+  setDistrictWiseGraph() {
+    let date = { "date": this.getDate(this.dateModel) };
+    this.httpService.post('attendance/district/present-student/per', date).subscribe((data: any) => {
+      if (data) {
+        this.districtWiseAttendanceCount = data;
+      }
+    })
+  }
+
+  districtWiseTopFive() {
+    let date = { "date": this.getDate(this.dateModel) };
+    this.httpService.post('attendance/top-performing-districts', date).subscribe((data: any) => {
+      if (data) {
+        this.setDistrictWiseTopFiveGraph(data);
+      }
+    })
+  }
+
+  setDistrictWiseTopFiveGraph(data: any) {
+    this.districtWiseTopFiveGraph = this.graphService.VerticleBarGraph(true);
+    const series: any = [{
+      name: "Count",
+      data: []
+    }];
+    this.districtWiseTopFiveGraph.notFound = 0;
+    for (let i = 0; i < data.length; i++) {
+      series[0].data.push(Number(data[i].totalPresentCount));
+      this.districtWiseTopFiveGraph.xaxis.categories.push(data[i].district_name);
+      this.districtWiseTopFiveGraph.notFound += data[i].schoolsDataNotFoundCount;
+    }
+    this.districtWiseTopFiveGraph.series = [...series];
+    this.districtWiseTopFiveGraph.plotOptions.bar.isFunnel = true;
+    this.districtWiseTopFiveGraph.legend.show = true;
+    let colors = ["#36454F"]
+    this.districtWiseTopFiveGraph.dataLabels.style.colors = [...colors];
+    this.districtWiseTopFiveGraph.dataLabels.dropShadow.enabled = false;
+  }
+
+  districtWiseBottomFive() {
+    let date = { "date": this.getDate(this.dateModel) };
+    this.httpService.post('attendance/bottom-performing-districts', date).subscribe((data: any) => {
+      if (data) {
+        this.setDistrictWiseBottomFiveGraph(data);
+      }
+    })
+  }
+
+  setDistrictWiseBottomFiveGraph(data: any) {
+    this.districtWiseBottomFiveGraph = this.graphService.VerticleBarGraph(true);
+    const series: any = [{
+      name: "Count",
+      data: []
+    }];
+    this.districtWiseBottomFiveGraph.notFound = 0;
+    for (let i = 0; i < data.length; i++) {
+      series[0].data.push(Number(data[i].totalPresentCount));
+      this.districtWiseBottomFiveGraph.xaxis.categories.push(data[i].district_name);
+      this.districtWiseBottomFiveGraph.notFound += data[i].schoolsDataNotFoundCount;
+    }
+    this.districtWiseBottomFiveGraph.series = [...series];
+    this.districtWiseBottomFiveGraph.plotOptions.bar.isFunnel = true;
+    this.districtWiseBottomFiveGraph.legend.show = true;
+    let colors = ["#36454F"]
+    this.districtWiseBottomFiveGraph.dataLabels.style.colors = [...colors];
+    this.districtWiseBottomFiveGraph.dataLabels.dropShadow.enabled = false;
+  }
+
+  zoneWiseTopFive() {
+    let data = { "date": this.getDate(this.dateModel), districtName: this.districtModel };
+    this.httpService.post('attendance/top-performing-zones/bydistrictname', data).subscribe((data: any) => {
+      if (data) {
+        this.setZoneWiseTopFiveGraph(data);
+      }
+    })
+  }
+
+  setZoneWiseTopFiveGraph(data: any) {
+    this.zoneWiseTopFiveGraph = this.graphService.VerticleBarGraph(true);
+    const series: any = [{
+      name: "Count",
+      data: []
+    }];
+    this.zoneWiseTopFiveGraph.notFound = 0;
+    for (let i = 0; i < data.length; i++) {
+      series[0].data.push(Number(data[i].totalPresentCount));
+      this.zoneWiseTopFiveGraph.xaxis.categories.push(data[i].zone_name);
+      this.zoneWiseTopFiveGraph.notFound += data[i].schoolsDataNotFoundCount;
+    }
+    this.zoneWiseTopFiveGraph.series = [...series];
+    this.zoneWiseTopFiveGraph.plotOptions.bar.isFunnel = true;
+    this.zoneWiseTopFiveGraph.legend.show = true;
+    let colors = ["#36454F"]
+    this.zoneWiseTopFiveGraph.dataLabels.style.colors = [...colors];
+    this.zoneWiseTopFiveGraph.dataLabels.dropShadow.enabled = false;
+  }
+
+  zoneWiseBottomFive() {
+    let data = { "date": this.getDate(this.dateModel), districtName: this.districtModel };
+    this.httpService.post('attendance/bottom-performing-zones/bydistrictname', data).subscribe((data: any) => {
+      if (data) {
+        this.setZoneWiseBottomFiveGraph(data);
+      }
+    })
+  }
+
+  setZoneWiseBottomFiveGraph(data: any) {
+    this.zoneWiseBottomFiveGraph = this.graphService.VerticleBarGraph(true);
+    const series: any = [{
+      name: "Count",
+      data: []
+    }];
+    this.zoneWiseBottomFiveGraph.notFound = 0;
+    for (let i = 0; i < data.length; i++) {
+      series[0].data.push(Number(data[i].totalPresentCount));
+      this.zoneWiseBottomFiveGraph.xaxis.categories.push(data[i].zone_name);
+      this.zoneWiseBottomFiveGraph.notFound += data[i].schoolsDataNotFoundCount;
+    }
+    this.zoneWiseBottomFiveGraph.series = [...series];
+    this.zoneWiseBottomFiveGraph.plotOptions.bar.isFunnel = true;
+    this.zoneWiseBottomFiveGraph.legend.show = true;
+    let colors = ["#36454F"]
+    this.zoneWiseBottomFiveGraph.dataLabels.style.colors = [...colors];
+    this.zoneWiseBottomFiveGraph.dataLabels.dropShadow.enabled = false;
+  }
+
+  schoolWiseTopFive() {
+    let data = { "date": this.getDate(this.dateModel), zoneName: this.zoneModel };
+    this.httpService.post('attendance/top-performing-schools/byzonename', data).subscribe((data: any) => {
+      if (data) {
+        this.setSchoolWiseTopFive(data);
+      }
+    })
+  }
+
+  setSchoolWiseTopFive(data: any) {
+    this.schoolWiseTopFiveGraph = this.graphService.VerticleBarGraph(true);
+    const series: any = [{
+      name: "Count",
+      data: []
+    }];
+    this.schoolWiseTopFiveGraph.notFound = 0;
+    for (let i = 0; i < data.length; i++) {
+      series[0].data.push(Number(data[i].totalPresentCount));
+      this.schoolWiseTopFiveGraph.xaxis.categories.push(data[i].schoolName);
+      this.schoolWiseTopFiveGraph.notFound += data[i].schoolsDataNotFoundCount;
+    }
+    this.schoolWiseTopFiveGraph.series = [...series];
+    this.schoolWiseTopFiveGraph.plotOptions.bar.isFunnel = true;
+    this.schoolWiseTopFiveGraph.legend.show = true;
+    let colors = ["#36454F"]
+    this.schoolWiseTopFiveGraph.dataLabels.style.colors = [...colors];
+    this.schoolWiseTopFiveGraph.dataLabels.dropShadow.enabled = false;
+  }
+
+  schoolWiseBottomFive() {
+    let data = { "date": this.getDate(this.dateModel), zoneName: this.zoneModel };
+    this.httpService.post('attendance/bottom-performing-schools/byzonename', data).subscribe((data: any) => {
+      if (data) {
+        this.setSchoolWiseBottomFive(data);
+      }
+    })
+  }
+
+  setSchoolWiseBottomFive(data: any) {
+    this.schoolWiseBottomFiveGraph = this.graphService.VerticleBarGraph(true);
+    const series: any = [{
+      name: "Count",
+      data: []
+    }];
+    this.schoolWiseBottomFiveGraph.notFound = 0;
+    for (let i = 0; i < data.length; i++) {
+      series[0].data.push(Number(data[i].totalPresentCount));
+      this.schoolWiseBottomFiveGraph.xaxis.categories.push(data[i].schoolName);
+      this.schoolWiseBottomFiveGraph.notFound += data[i].schoolsDataNotFoundCount;
+    }
+    this.schoolWiseBottomFiveGraph.series = [...series];
+    this.schoolWiseBottomFiveGraph.plotOptions.bar.isFunnel = true;
+    this.schoolWiseBottomFiveGraph.legend.show = true;
+    let colors = ["#36454F"]
+    this.schoolWiseBottomFiveGraph.dataLabels.style.colors = [...colors];
+    this.schoolWiseBottomFiveGraph.dataLabels.dropShadow.enabled = false;
+  }
 
 }

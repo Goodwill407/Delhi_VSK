@@ -17,11 +17,19 @@ export class GraphService {
                 {
                     name: "ABSENT",
                     data: []
+                },
+                {
+                    name: "LEAVE",
+                    data: []
+                },
+                {
+                    name: "NOT MARK",
+                    data: []
                 }
             ],
             chart: {
                 type: "bar",
-                height: 300,
+                height: 250,
                 stacked: true,
                 stackType: "100%"
             },
@@ -53,7 +61,7 @@ export class GraphService {
         return graphData;
     }
 
-    VerticleBarGraph() {
+    VerticleBarGraph(isFunnel?: any) {
         let colors = [];
         for (let i = 0; i < 5; i++) {
             colors.push(this.getRandomColor(i))
@@ -62,7 +70,7 @@ export class GraphService {
             series: [],
             chart: {
                 type: "bar",
-                height: "300px",
+                height: "240px",
                 events: {
                     click: function (chart: any, w: any, e: any) {
                     }
@@ -82,11 +90,18 @@ export class GraphService {
             dataLabels: {
                 enabled: true,
                 formatter: function (val: any, opt: any) {
-                    return val;
+                    if (isFunnel) {
+                        return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val;
+                    } else {
+                        return val;
+                    }
                 },
                 dropShadow: {
                     enabled: true
                 },
+                style: {
+                    
+                }
             },
             legend: {
                 show: false
@@ -212,6 +227,8 @@ export class GraphService {
                                 show: true,
                                 formatter: (w: any) => {
                                     return w.globals.seriesTotals.reduce((a: any, b: any) => {
+                                        a = (a % 1 != 0) ? Number(a.toFixed(2)) : a;
+                                        b = (b % 1 != 0) ? Number(b.toFixed(2)) : b;
                                         return a + b
                                     }, 0) + totalType
                                 }
