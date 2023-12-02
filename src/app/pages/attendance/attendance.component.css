@@ -6,6 +6,23 @@
   animation-play-state: paused;
 }
 
+.nav-item .active {
+  background-color: #3d9be9;
+}
+
+.nav-link {
+  color: #000;
+}
+
+.filter-box-attendance {
+  margin: auto 10px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
 
 .under-maintenance {
   font-size: 30px;
