@@ -193,10 +193,10 @@
     <div class="column" *ngIf="zoneModel">
         <h5 class="header-bg p-2">School wise top 5 attendance</h5>
         <apx-chart [series]="schoolWiseTopFiveGraph?.series" [chart]="schoolWiseTopFiveGraph?.chart"
-            [dataLabels]="schoolWiseTopFiveGraph?.dataLabels" [plotOptions]="schoolWiseTopFiveGraph?.plotOptions"
-            [responsive]="schoolWiseTopFiveGraph?.responsive" [xaxis]="schoolWiseTopFiveGraph?.xaxis"
-            [legend]="schoolWiseTopFiveGraph?.legend" [fill]="schoolWiseTopFiveGraph?.fill"
-            [colors]="schoolWiseTopFiveGraph?.colors"></apx-chart>
+      [dataLabels]="schoolWiseTopFiveGraph?.dataLabels" [plotOptions]="schoolWiseTopFiveGraph?.plotOptions"
+      [xaxis]="schoolWiseTopFiveGraph?.xaxis" [yaxis]="schoolWiseTopFiveGraph?.yaxis"
+      [colors]="schoolWiseTopFiveGraph?.colors" [title]="schoolWiseTopFiveGraph?.title"
+      [legend]="schoolWiseTopFiveGraph?.legend" [fill]="schoolWiseTopFiveGraph?.fill"></apx-chart>
         <p class="text-center bg-danger text-light"><span class="fw-bold"> {{schoolWiseTopFiveGraph?.notFound}} :
             </span> Schools data not found</p>
     </div>

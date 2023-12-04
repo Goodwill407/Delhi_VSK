@@ -506,7 +506,7 @@ export class AttendanceRegularComponent {
   }
 
   setSchoolWiseTopFive(data: any) {
-    this.schoolWiseTopFiveGraph = this.graphService.VerticleBarGraph(true);
+    this.schoolWiseTopFiveGraph = this.graphService.VerticleBarGraph();
     const series: any = [{
       name: "Count",
       data: []
@@ -519,10 +519,11 @@ export class AttendanceRegularComponent {
     }
     this.schoolWiseTopFiveGraph.series = [...series];
     this.schoolWiseTopFiveGraph.plotOptions.bar.isFunnel = true;
-    this.schoolWiseTopFiveGraph.legend.show = true;
+    this.schoolWiseTopFiveGraph.legend.show = false;
     let colors = ["#36454F"]
     this.schoolWiseTopFiveGraph.dataLabels.style.colors = [...colors];
     this.schoolWiseTopFiveGraph.dataLabels.dropShadow.enabled = false;
+  
   }
 
   schoolWiseBottomFive() {
