@@ -1,87 +1,89 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
 </ngx-spinner>
 <div class="d-flex mt-3 filter-box">
-    <h2 class="fw-bold">Student</h2>
-    <div class="vr mx-3 opacity-100"></div>
-    <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
-        <option value="" disabled>Select District</option>
-        <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
-            {{district.districtName}} ({{district.D_ID}})
-        </option>
-    </select>
-    <select class="form-select w-25 ms-2" [(ngModel)]="ZoneModel" (change)="getGraphsByZone()">
-        <option value="" disabled>Select Zone</option>
-        <option *ngFor="let zone of allZones" value="{{zone.name}}">
-            {{zone.name}}  ({{zone.id}})
-          </option>
-    </select>
-    <select class="form-select w-25 ms-2" [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
-        <option value="" disabled>Select School</option>
-        <option *ngFor="let school of AllSchool"  [ngValue]="school">
-            {{school.School_Name}} - ({{school.Schoolid}})
-           </option>
-    </select>
+  <h2 class="fw-bold">Student</h2>
+  <div class="vr mx-3 opacity-100"></div>
+  <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
+    <option value="" disabled>Select District</option>
+    <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
+      {{district.districtName}} ({{district.D_ID}})
+    </option>
+  </select>
+  <select class="form-select w-25 ms-2" [(ngModel)]="ZoneModel" (change)="getGraphsByZone()">
+    <option value="" disabled>Select Zone</option>
+    <option *ngFor="let zone of allZones" value="{{zone.name}}">
+      {{zone.name}} ({{zone.id}})
+    </option>
+  </select>
+  <select class="form-select w-25 ms-2" [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
+    <option value="" disabled>Select School</option>
+    <option *ngFor="let school of AllSchool" [ngValue]="school">
+      {{school.School_Name}} - ({{school.Schoolid}})
+    </option>
+  </select>
 </div>
 
 <div class="d-flex justify-content-center filter-box mt-2" *ngIf="districtModel || ZoneModel || schoolModel">
-    <h3 class="text-center mb-0" *ngIf="districtModel">{{districtModel}}&nbsp; </h3>
-    <h3 class="text-center mb-0" *ngIf="ZoneModel"> <span *ngIf="districtModel">|</span> {{ZoneModel}}&nbsp; </h3>
-    <h3 class="text-center mb-0" *ngIf="schoolModel"> <span *ngIf="ZoneModel">|</span> {{schoolModel.School_Name}}</h3>
+  <h3 class="text-center mb-0" *ngIf="districtModel">{{districtModel}}&nbsp; </h3>
+  <h3 class="text-center mb-0" *ngIf="ZoneModel"> <span *ngIf="districtModel">|</span> {{ZoneModel}}&nbsp; </h3>
+  <h3 class="text-center mb-0" *ngIf="schoolModel"> <span *ngIf="ZoneModel">|</span> {{schoolModel.School_Name}}</h3>
 </div>
 
 <div class="container1">
-    <div class="column text-center">
-        <h5 class="header-bg p-2">Delhi</h5>
-        <div>
-            <img class="img-fluid mt-2" width="160" src="../../../assets/images/icons/student 3.png">
-        </div>
-        <div class="d-flex justify-content-around pt-3">
-            <div class="pt-4 pe-4 ps-4">
-                <h2 class="fw-bold">{{totalStudent}}</h2>
-                <h5>Total Student</h5>
-            </div>
-            <div class="vr ms-2"></div>
-            <div class="pt-4">
-                <h2 class="fw-bold">1 : {{averageStudentOfSchool?.toFixed(1)}}</h2>
-                <h5>Average Student Per School</h5>
-            </div>
-        </div>
+  <div class="column text-center">
+    <h5 class="header-bg p-2">Delhi</h5>
+    <!-- <div>
+      <img class="img-fluid mt-2" width="160" src="../../../assets/images/Dashboard/reading.png">
+    </div> -->
+    <img class="mt-4" src="../../../assets/images/Dashboard/reading.png" style="height: 100px;" alt="">
+    <div class="d-flex justify-content-around text-center ratio-data">
+      <div style="width: 45%;">
+        <h2 class="fw-bold">{{totalStudent}}</h2>
+        <h5>Total Student</h5>
+      </div>
+      <div class="vr ms-2"></div>
+      <div style="width: 45%;">
+        <h2 class="fw-bold">1 : {{averageStudentOfSchool?.toFixed(1)}}</h2>
+        <h5>Average Student Per School</h5>
+      </div>
     </div>
+  </div>
 
-    <div class="column">
-        <h5 class="header-bg p-2">Student By Status </h5>
-        <apx-chart [series]="StudentStatusWiseCounts?.series" [chart]="StudentStatusWiseCounts?.chart"
-            [labels]="StudentStatusWiseCounts?.labels" [fill]="StudentStatusWiseCounts?.fill"
-            [dataLabels]="StudentStatusWiseCounts?.dataLabels"
-            [plotOptions]="StudentStatusWiseCounts?.plotOptions"
-            [responsive]="StudentStatusWiseCounts?.responsive" [legend]="StudentStatusWiseCounts?.legend"
-            [colors]="StudentStatusWiseCounts?.colors" [tooltip]="StudentStatusWiseCounts?.tooltip"></apx-chart>
-    </div>
-    
-    <div class="column text-center">
-        <h5 class="header-bg p-2">Student & Teacher Ratio</h5>
-        <img class="img-fluid mt-3" width="180" src="../../../assets/images/pngegg.png">
-        <h5 class="mt-5">{{teacherStudentRatio | number: '1.0-0'}}
-            : 1 Teacher</h5>
-    </div>
+  <div class="column">
+    <h5 class="header-bg p-2">Student By Status </h5>
+    <apx-chart [series]="StudentStatusWiseCounts?.series" [chart]="StudentStatusWiseCounts?.chart"
+      [labels]="StudentStatusWiseCounts?.labels" [fill]="StudentStatusWiseCounts?.fill"
+      [dataLabels]="StudentStatusWiseCounts?.dataLabels" [plotOptions]="StudentStatusWiseCounts?.plotOptions"
+      [responsive]="StudentStatusWiseCounts?.responsive" [legend]="StudentStatusWiseCounts?.legend"
+      [colors]="StudentStatusWiseCounts?.colors" [tooltip]="StudentStatusWiseCounts?.tooltip"></apx-chart>
+  </div>
 
-    <div class="column">
-        <h5 class="header-bg p-2">Student Gender Ratio</h5>
-        <apx-chart [series]="studentsGenderRatio?.series" [chart]="studentsGenderRatio?.chart"
-            [labels]="studentsGenderRatio?.labels" [fill]="studentsGenderRatio?.fill"
-            [dataLabels]="studentsGenderRatio?.dataLabels" [plotOptions]="studentsGenderRatio?.plotOptions"
-            [responsive]="studentsGenderRatio?.responsive" [legend]="studentsGenderRatio?.legend"
-            [colors]="studentsGenderRatio?.colors" [tooltip]="studentsGenderRatio?.tooltip"></apx-chart>
-    </div>
+  <div class="column text-center">
+    <h5 class="header-bg p-2">Student & Teacher Ratio</h5>
+    <img class="img-fluid mt-5" width="120" src="../../../assets/images/Dashboard/education.png">
+    <h3 class="mt-5 fw-semibold teacher-ratio-count">{{teacherStudentRatio | number: '1.0-0'}}
+      : 1 Teacher</h3>
+  </div>
 
-    <div class="column">
-        <h5 class="header-bg p-2">Shift Wise Student </h5>
-        <apx-chart [series]="StudentShiftWiseCounts?.series" [chart]="StudentShiftWiseCounts?.chart" [labels]="StudentShiftWiseCounts?.labels"
-      [fill]="StudentShiftWiseCounts?.fill" [stroke]="StudentShiftWiseCounts?.stroke" [responsive]="StudentShiftWiseCounts?.responsive"
-      [legend]="StudentShiftWiseCounts?.legend" [colors]="StudentShiftWiseCounts?.colors" [tooltip]="StudentShiftWiseCounts?.tooltip"></apx-chart>
-    </div>
+  <div class="column">
+    <h5 class="header-bg p-2">Student Gender Ratio</h5>
+    <apx-chart [series]="studentsGenderRatio?.series" [chart]="studentsGenderRatio?.chart"
+      [labels]="studentsGenderRatio?.labels" [fill]="studentsGenderRatio?.fill"
+      [dataLabels]="studentsGenderRatio?.dataLabels" [plotOptions]="studentsGenderRatio?.plotOptions"
+      [responsive]="studentsGenderRatio?.responsive" [legend]="studentsGenderRatio?.legend"
+      [colors]="studentsGenderRatio?.colors" [tooltip]="studentsGenderRatio?.tooltip"></apx-chart>
+  </div>
 
-    <!-- <div class="column">
+  <div class="column">
+    <h5 class="header-bg p-2">Shift Wise Student </h5>
+    <apx-chart [series]="StudentShiftWiseCounts?.series" [chart]="StudentShiftWiseCounts?.chart"
+      [labels]="StudentShiftWiseCounts?.labels" [fill]="StudentShiftWiseCounts?.fill"
+      [stroke]="StudentShiftWiseCounts?.stroke" [responsive]="StudentShiftWiseCounts?.responsive"
+      [legend]="StudentShiftWiseCounts?.legend" [colors]="StudentShiftWiseCounts?.colors"
+      [tooltip]="StudentShiftWiseCounts?.tooltip"></apx-chart>
+  </div>
+
+  <!-- <div class="column">
         <h5 class="header-bg p-2">Stream Wise Student</h5>
         <apx-chart [series]="StreamWiseStudent?.series" [chart]="StreamWiseStudent?.chart"
             [dataLabels]="StreamWiseStudent?.dataLabels" [plotOptions]="StreamWiseStudent?.plotOptions"
@@ -90,17 +92,16 @@
             [fill]="StreamWiseStudent?.fill"></apx-chart>
     </div> -->
 
-    <div class="column">
-        <h5 class="header-bg p-2">Student By Management Wise </h5>
-        <apx-chart [series]="StudentManagementWiseCounts?.series" [chart]="StudentManagementWiseCounts?.chart"
-            [labels]="StudentManagementWiseCounts?.labels" [fill]="StudentManagementWiseCounts?.fill"
-            [dataLabels]="StudentManagementWiseCounts?.dataLabels"
-            [plotOptions]="StudentManagementWiseCounts?.plotOptions"
-            [responsive]="StudentManagementWiseCounts?.responsive" [legend]="StudentManagementWiseCounts?.legend"
-            [colors]="StudentManagementWiseCounts?.colors" [tooltip]="StudentManagementWiseCounts?.tooltip"></apx-chart>
-    </div>
+  <div class="column">
+    <h5 class="header-bg p-2">Student By Management Wise </h5>
+    <apx-chart [series]="StudentManagementWiseCounts?.series" [chart]="StudentManagementWiseCounts?.chart"
+      [labels]="StudentManagementWiseCounts?.labels" [fill]="StudentManagementWiseCounts?.fill"
+      [dataLabels]="StudentManagementWiseCounts?.dataLabels" [plotOptions]="StudentManagementWiseCounts?.plotOptions"
+      [responsive]="StudentManagementWiseCounts?.responsive" [legend]="StudentManagementWiseCounts?.legend"
+      [colors]="StudentManagementWiseCounts?.colors" [tooltip]="StudentManagementWiseCounts?.tooltip"></apx-chart>
+  </div>
 
-    <!-- <div class="column">
+  <!-- <div class="column">
         <h5 class="header-bg p-2">Affiliation Wise Student</h5>
         <apx-chart [series]="AffiliationWiseStudent?.series" [chart]="AffiliationWiseStudent?.chart"
             [labels]="AffiliationWiseStudent?.labels" [fill]="AffiliationWiseStudent?.fill"
@@ -109,34 +110,35 @@
             [colors]="AffiliationWiseStudent?.colors"></apx-chart>
     </div> -->
 
-    <!-- <div class="column">
+  <!-- <div class="column">
         <h5 class="header-bg p-2">Student By Type Wise</h5>
         <apx-chart [series]="TypeOfStudSchool?.series" [chart]="TypeOfStudSchool?.chart"
             [labels]="TypeOfStudSchool?.labels" [responsive]="TypeOfStudSchool?.responsive"
             [legend]="TypeOfStudSchool?.legend" [tooltip]="TypeOfStudSchool?.tooltip"></apx-chart>
     </div> -->
 
-    <!-- <div class="column">
+  <!-- <div class="column">
         <h5 class="header-bg p-2">Student By minority Wise</h5>
         <apx-chart [series]="MinorityWiseStudCount?.series" [chart]="MinorityWiseStudCount?.chart"
             [labels]="MinorityWiseStudCount?.labels" [responsive]="MinorityWiseStudCount?.responsive"
             [legend]="MinorityWiseStudCount?.legend"></apx-chart>
     </div> -->
 
-    <div class="column wide">
-        <h5 class="header-bg p-2">Student By School Category</h5>
-        <apx-chart [series]="StudentCatogoryWiseCount?.series" [chart]="StudentCatogoryWiseCount?.chart"
-          [dataLabels]="StudentCatogoryWiseCount?.dataLabels" [plotOptions]="StudentCatogoryWiseCount?.plotOptions"
-          [xaxis]="StudentCatogoryWiseCount?.xaxis" [yaxis]="StudentCatogoryWiseCount?.yaxis" [colors]="StudentCatogoryWiseCount?.colors"
-          [title]="StudentCatogoryWiseCount?.title" [legend]="StudentCatogoryWiseCount?.legend" [fill]="StudentCatogoryWiseCount?.fill"></apx-chart>
-    </div>
+  <div class="column wide">
+    <h5 class="header-bg p-2">Student By School Category</h5>
+    <apx-chart [series]="StudentCatogoryWiseCount?.series" [chart]="StudentCatogoryWiseCount?.chart"
+      [dataLabels]="StudentCatogoryWiseCount?.dataLabels" [plotOptions]="StudentCatogoryWiseCount?.plotOptions"
+      [xaxis]="StudentCatogoryWiseCount?.xaxis" [yaxis]="StudentCatogoryWiseCount?.yaxis"
+      [colors]="StudentCatogoryWiseCount?.colors" [title]="StudentCatogoryWiseCount?.title"
+      [legend]="StudentCatogoryWiseCount?.legend" [fill]="StudentCatogoryWiseCount?.fill"></apx-chart>
+  </div>
 
-    
+
 </div>
 
 <!-- Button trigger modal -->
 <button #openModal data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal"
-  (click)="getStudentByGender(true)" (click)="getStudentCountBySchoolId(true)" (click)="getStudentByStatusWise(true)"> 
+  (click)="getStudentByGender(true)" (click)="getStudentCountBySchoolId(true)" (click)="getStudentByStatusWise(true)">
 
 </button>
 
@@ -145,16 +147,19 @@
   <div class="modal-dialog modal-dialog-scrollable modal-xl">
     <div class="modal-content">
       <div class="modal-header" style="background-color: #b3d64d;">
-        <h5 class="modal-title" *ngIf="configGender" id="exampleModalLabel" >Student Details By Gender: ({{configGender?.dataPointIndex == 0 ? 'Male' : (this.configGender.dataPointIndex == 1) ? 'Female': 'Other'}}) </h5>
-        <h5 class="modal-title" *ngIf="commonName" id="exampleModalLabel" >Student Details By    {{commonName}} </h5>
-        <h5 class="modal-title" *ngIf="statusWise == 0 || statusWise " id="exampleModalLabel" >Student Details By Status: {{allData.studentStatusCounts[this.statusWise]._id}} </h5>
+        <h5 class="modal-title" *ngIf="configGender" id="exampleModalLabel">Student Details By Gender:
+          ({{configGender?.dataPointIndex == 0 ? 'Male' : (this.configGender.dataPointIndex == 1) ? 'Female': 'Other'}})
+        </h5>
+        <h5 class="modal-title" *ngIf="commonName" id="exampleModalLabel">Student Details By {{commonName}} </h5>
+        <h5 class="modal-title" *ngIf="statusWise == 0 || statusWise " id="exampleModalLabel">Student Details By Status:
+          {{allData.studentStatusCounts[this.statusWise]._id}} </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        
+
         <table class="table table-responsive table-hover table-bordered table-striped">
           <thead class="thead-light">
-            <tr class="table-bordered " >
+            <tr class="table-bordered ">
               <th>Sr No</th>
               <th>Name</th>
               <th style="width: 112px;">Class</th>

@@ -25,15 +25,16 @@
 <div class="d-flex justify-content-center filter-box mt-2" *ngIf="districtModel || zoneModel || schoolModel">
     <h3 class="text-center mb-0" *ngIf="districtModel">{{districtModel}}&nbsp; </h3>
     <h3 class="text-center mb-0" *ngIf="zoneModel"> <span *ngIf="districtModel">|</span> {{zoneModel}}&nbsp; </h3>
-    <h3 class="text-center mb-0" *ngIf="schoolModel"> <span *ngIf="zoneModel || districtModel">|</span> {{schoolModel.School_Name}}
+    <h3 class="text-center mb-0" *ngIf="schoolModel"> <span *ngIf="zoneModel || districtModel">|</span>
+        {{schoolModel.School_Name}}
     </h3>
 </div>
 <div class="container1">
-    <div class="column  Text center" style="height: 350px;">
+    <div class="column" style="height: 350px;">
         <h5 *ngIf="!districtModel" class="header-bg p-2">Delhi</h5>
         <h5 *ngIf="districtModel" class="header-bg p-2">{{districtModel}}</h5>
         <div class="d-flex justify-content-around mt-4 ">
-            <img class="ms-2" src="../../../assets/images/Dashboard/school1.png" style="height: 100px;" alt="">
+            <img class="ms-2" src="../../../assets/images/Dashboard/school.png" style="height: 100px;" alt="">
             <div class="d-block ms-1 ">
                 <h1 class="fw-bold">{{totalSchools}}</h1>
                 <h3>Total schools</h3>
@@ -53,8 +54,9 @@
     </div>
     <div class="column text-center">
         <h5 class="header-bg p-2">Student & Teacher Ratio</h5>
-        <img class="img-fluid mt-4" width="180" src="../../../assets/images/pngegg.png">
-        <h5 class="mt-5">{{teachersRatio | number: '1.0-0'}} : 1 Teacher</h5>
+        <img class="img-fluid mt-5" width="120" src="../../../assets/images/Dashboard/education.png">
+        <h3 class="mt-5 fw-semibold teacher-ratio-count">{{teachersRatio | number:
+            '1.0-0'}} : 1 Teacher</h3>
     </div>
 
     <div class="column ">
@@ -86,14 +88,15 @@
         <apx-chart [series]="shiftWiseSchools?.series" [chart]="shiftWiseSchools?.chart"
             [labels]="shiftWiseSchools?.labels" [fill]="shiftWiseSchools?.fill" [stroke]="shiftWiseSchools?.stroke"
             [responsive]="shiftWiseSchools?.responsive" [legend]="shiftWiseSchools?.legend"
-            [colors]="shiftWiseSchools?.colors" [yaxis]="shiftWiseSchools?.yaxis" [tooltip]="shiftWiseSchools?.tooltip"></apx-chart>
+            [colors]="shiftWiseSchools?.colors" [yaxis]="shiftWiseSchools?.yaxis"
+            [tooltip]="shiftWiseSchools?.tooltip"></apx-chart>
     </div>
     <div class="column">
         <h5 class="header-bg p-2">Types of schools</h5>
         <apx-chart [series]="typesOfSchools?.series" [chart]="typesOfSchools?.chart" [labels]="typesOfSchools?.labels"
             [fill]="typesOfSchools?.fill" [stroke]="typesOfSchools?.stroke" [responsive]="typesOfSchools?.responsive"
-            [colors]="typesOfSchools?.colors" [legend]="typesOfSchools?.legend"
-            [yaxis]="shiftWiseSchools?.yaxis" [tooltip]="typesOfSchools?.tooltip"></apx-chart>
+            [colors]="typesOfSchools?.colors" [legend]="typesOfSchools?.legend" [yaxis]="shiftWiseSchools?.yaxis"
+            [tooltip]="typesOfSchools?.tooltip"></apx-chart>
     </div>
     <!-- <div class="column">
         <h5 class="header-bg p-2">Schools by minority</h5>
@@ -122,74 +125,77 @@
 <!--  -->
 <!-- Button trigger modal -->
 <button #openModal data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal"
-  (click)="getTeachersByGender(true)" (click)="getStudentByGender(true)">
+    (click)="getTeachersByGender(true)" (click)="getStudentByGender(true)">
 
 </button>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-xl">
-    <div class="modal-content">
-      <div class="modal-header" style="background-color: #b3d64d;">
-        <h5 class="modal-title" *ngIf="allTeacherData?.length > 0" id="exampleModalLabel" >Teacher Details By Gender: ({{teacherGender?.dataPointIndex == 0 ? 'Male' : 'Female'}}) </h5>
-        <h5 class="modal-title" *ngIf="allStudentData?.length > 0" id="exampleModalLabel" >Student Details By Gender: ({{studGender?.dataPointIndex == 0 ? 'Boys' : (studGender?.dataPointIndex == 1 ? 'Girls' : 'Other')}}) </h5>
-        <!-- <h5 class="modal-title" *ngIf="commonName" id="exampleModalLabel" >Teacher Details By {{commonName}} </h5> -->
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        
-        <table class="table table-responsive table-hover table-bordered table-striped">
-          <thead class="thead-light">
-            <tr class="table-bordered" *ngIf="allTeacherData?.length > 0">
-              <th>Sr No</th>
-              <th>Name</th>
-              <th>Emp. Id</th>
-              <th style="width: 112px;">Joining Date</th>
-              <th>School</th>
-              <th>Designation</th>
-              <th>Gender</th>
-              <th>DOB</th>
-              <th>District</th>
-            </tr>
-            <tr class="table-bordered" *ngIf="allStudentData?.length > 0">
-                <th>Sr No</th>
-                <th>Name</th>
-                <th style="width: 112px;">Class</th>
-                <th>School</th>
-                <!-- <th>Designation</th> -->
-                <th>Gender</th>
-                <th>DOB</th>
-                <th>District</th>
-              </tr>
-          </thead>
-          <tbody *ngIf="allTeacherData?.length > 0">
-            <tr *ngFor="let data of allTeacherData;let i = index">
-              <td>{{i+1}}</td>
-              <td>{{data.Name}}</td>
-              <td>{{data.empid}}</td>
-              <td>{{data.JoiningDate}}</td>
-              <td>{{data.schname}}</td>
-              <td>{{data.postdesc}}</td>
-              <td>{{data.gender}}</td>
-              <td>{{data.dob}}</td>
-              <td>{{data.districtname}}</td>
-            </tr>
-          </tbody>
-          <tbody *ngIf="allStudentData?.length > 0">
-            <tr *ngFor="let data of allStudentData;let i = index">
-                <td>{{i+1}}</td>
-                <td>{{data.Name}}</td>
-                <td>{{data.CLASS}}</td>
-                <td>{{data.SCHOOL_NAME}}</td>
-                <!-- <td>{{data.postdesc}}</td> -->
-                <td>{{data.Gender}}</td>
-                <td>{{data.Dob}}</td>
-                <td>{{data.District}}</td>
-              </tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #b3d64d;">
+                <h5 class="modal-title" *ngIf="allTeacherData?.length > 0" id="exampleModalLabel">Teacher Details By
+                    Gender: ({{teacherGender?.dataPointIndex == 0 ? 'Male' : 'Female'}}) </h5>
+                <h5 class="modal-title" *ngIf="allStudentData?.length > 0" id="exampleModalLabel">Student Details By
+                    Gender: ({{studGender?.dataPointIndex == 0 ? 'Boys' : (studGender?.dataPointIndex == 1 ? 'Girls' :
+                    'Other')}}) </h5>
+                <!-- <h5 class="modal-title" *ngIf="commonName" id="exampleModalLabel" >Teacher Details By {{commonName}} </h5> -->
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
 
+                <table class="table table-responsive table-hover table-bordered table-striped">
+                    <thead class="thead-light">
+                        <tr class="table-bordered" *ngIf="allTeacherData?.length > 0">
+                            <th>Sr No</th>
+                            <th>Name</th>
+                            <th>Emp. Id</th>
+                            <th style="width: 112px;">Joining Date</th>
+                            <th>School</th>
+                            <th>Designation</th>
+                            <th>Gender</th>
+                            <th>DOB</th>
+                            <th>District</th>
+                        </tr>
+                        <tr class="table-bordered" *ngIf="allStudentData?.length > 0">
+                            <th>Sr No</th>
+                            <th>Name</th>
+                            <th style="width: 112px;">Class</th>
+                            <th>School</th>
+                            <!-- <th>Designation</th> -->
+                            <th>Gender</th>
+                            <th>DOB</th>
+                            <th>District</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="allTeacherData?.length > 0">
+                        <tr *ngFor="let data of allTeacherData;let i = index">
+                            <td>{{i+1}}</td>
+                            <td>{{data.Name}}</td>
+                            <td>{{data.empid}}</td>
+                            <td>{{data.JoiningDate}}</td>
+                            <td>{{data.schname}}</td>
+                            <td>{{data.postdesc}}</td>
+                            <td>{{data.gender}}</td>
+                            <td>{{data.dob}}</td>
+                            <td>{{data.districtname}}</td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="allStudentData?.length > 0">
+                        <tr *ngFor="let data of allStudentData;let i = index">
+                            <td>{{i+1}}</td>
+                            <td>{{data.Name}}</td>
+                            <td>{{data.CLASS}}</td>
+                            <td>{{data.SCHOOL_NAME}}</td>
+                            <!-- <td>{{data.postdesc}}</td> -->
+                            <td>{{data.Gender}}</td>
+                            <td>{{data.Dob}}</td>
+                            <td>{{data.District}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
     </div>
-  </div>
 </div>
