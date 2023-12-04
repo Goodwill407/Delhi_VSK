@@ -402,11 +402,11 @@ export class AttendanceRegularComponent {
       this.districtWiseTopFiveGraph.notFound += data[i].schoolsDataNotFoundCount;
     }
     this.districtWiseTopFiveGraph.series = [...series];
-    // this.districtWiseTopFiveGraph.plotOptions.bar.isFunnel = true;
-    this.districtWiseTopFiveGraph.legend.show = true;
+    // this.districtWiseTopFiveGraph.plotOptions.bar.isFunnel = false;
+    this.districtWiseTopFiveGraph.legend.show = false;
     let colors = ["#36454F"]
     this.districtWiseTopFiveGraph.dataLabels.style.colors = [...colors];
-    // this.districtWiseTopFiveGraph.dataLabels.dropShadow.enabled = false;
+    this.districtWiseTopFiveGraph.dataLabels.dropShadow.enabled = false;
   }
 
   districtWiseBottomFive() {
@@ -432,7 +432,7 @@ export class AttendanceRegularComponent {
     }
     this.districtWiseBottomFiveGraph.series = [...series];
     // this.districtWiseBottomFiveGraph.plotOptions.bar.isFunnel = true;
-    this.districtWiseBottomFiveGraph.legend.show = true;
+    this.districtWiseBottomFiveGraph.legend.show = false;
     let colors = ["#36454F"]
     this.districtWiseBottomFiveGraph.dataLabels.style.colors = [...colors];
     this.districtWiseBottomFiveGraph.dataLabels.dropShadow.enabled = false;
@@ -448,7 +448,7 @@ export class AttendanceRegularComponent {
   }
 
   setZoneWiseTopFiveGraph(data: any) {
-    this.zoneWiseTopFiveGraph = this.graphService.VerticleBarGraph(true);
+    this.zoneWiseTopFiveGraph = this.graphService.VerticleBarGraph();
     const series: any = [{
       name: "Count",
       data: []
@@ -460,8 +460,8 @@ export class AttendanceRegularComponent {
       this.zoneWiseTopFiveGraph.notFound += data[i].schoolsDataNotFoundCount;
     }
     this.zoneWiseTopFiveGraph.series = [...series];
-    this.zoneWiseTopFiveGraph.plotOptions.bar.isFunnel = true;
-    this.zoneWiseTopFiveGraph.legend.show = true;
+    // this.zoneWiseTopFiveGraph.plotOptions.bar.isFunnel = true;
+    this.zoneWiseTopFiveGraph.legend.show = false;
     let colors = ["#36454F"]
     this.zoneWiseTopFiveGraph.dataLabels.style.colors = [...colors];
     this.zoneWiseTopFiveGraph.dataLabels.dropShadow.enabled = false;
@@ -477,7 +477,7 @@ export class AttendanceRegularComponent {
   }
 
   setZoneWiseBottomFiveGraph(data: any) {
-    this.zoneWiseBottomFiveGraph = this.graphService.VerticleBarGraph(true);
+    this.zoneWiseBottomFiveGraph = this.graphService.VerticleBarGraph();
     const series: any = [{
       name: "Count",
       data: []
@@ -489,8 +489,8 @@ export class AttendanceRegularComponent {
       this.zoneWiseBottomFiveGraph.notFound += data[i].schoolsDataNotFoundCount;
     }
     this.zoneWiseBottomFiveGraph.series = [...series];
-    this.zoneWiseBottomFiveGraph.plotOptions.bar.isFunnel = true;
-    this.zoneWiseBottomFiveGraph.legend.show = true;
+    // this.zoneWiseBottomFiveGraph.plotOptions.bar.isFunnel = true;
+    this.zoneWiseBottomFiveGraph.legend.show = false;
     let colors = ["#36454F"]
     this.zoneWiseBottomFiveGraph.dataLabels.style.colors = [...colors];
     this.zoneWiseBottomFiveGraph.dataLabels.dropShadow.enabled = false;
@@ -518,7 +518,7 @@ export class AttendanceRegularComponent {
       this.schoolWiseTopFiveGraph.notFound += data[i].schoolsDataNotFoundCount;
     }
     this.schoolWiseTopFiveGraph.series = [...series];
-    this.schoolWiseTopFiveGraph.plotOptions.bar.isFunnel = true;
+    // this.schoolWiseTopFiveGraph.plotOptions.bar.isFunnel = true;
     this.schoolWiseTopFiveGraph.legend.show = false;
     let colors = ["#36454F"]
     this.schoolWiseTopFiveGraph.dataLabels.style.colors = [...colors];
@@ -536,7 +536,7 @@ export class AttendanceRegularComponent {
   }
 
   setSchoolWiseBottomFive(data: any) {
-    this.schoolWiseBottomFiveGraph = this.graphService.VerticleBarGraph(true);
+    this.schoolWiseBottomFiveGraph = this.graphService.VerticleBarGraph();
     const series: any = [{
       name: "Count",
       data: []
@@ -548,8 +548,8 @@ export class AttendanceRegularComponent {
       this.schoolWiseBottomFiveGraph.notFound += data[i].schoolsDataNotFoundCount;
     }
     this.schoolWiseBottomFiveGraph.series = [...series];
-    this.schoolWiseBottomFiveGraph.plotOptions.bar.isFunnel = true;
-    this.schoolWiseBottomFiveGraph.legend.show = true;
+    // this.schoolWiseBottomFiveGraph.plotOptions.bar.isFunnel = true;
+    this.schoolWiseBottomFiveGraph.legend.show = false;
     let colors = ["#36454F"]
     this.schoolWiseBottomFiveGraph.dataLabels.style.colors = [...colors];
     this.schoolWiseBottomFiveGraph.dataLabels.dropShadow.enabled = false;
