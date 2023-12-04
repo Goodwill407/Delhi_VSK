@@ -11,7 +11,7 @@
     </option>
   </select>
   <select class="form-select ms-2" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
-    <option value="" disabled>All Zones</option>
+    <option value="">All Zones</option>
     <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
       {{zone.Zone_Name}} ({{zone.Z_ID}})
     </option>
@@ -23,7 +23,7 @@
     </option>
   </select>
   <select class="form-select ms-2" [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
-    <option value="" disabled>All School</option>
+    <option value="">All School</option>
     <option *ngFor="let school of allSchools" [ngValue]="school">
       {{school.School_Name}} - ({{school.Schoolid}})
     </option>

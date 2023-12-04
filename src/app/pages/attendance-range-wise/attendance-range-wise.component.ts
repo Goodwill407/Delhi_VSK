@@ -68,6 +68,7 @@ export class AttendanceRangeWiseComponent {
     } else {
       this.getAllZones();
       this.allSchools = [];
+      this.datePicker();
       this.zoneModel = '';
       this.schoolModel = '';
       this.shiftModel = '';
@@ -198,37 +199,31 @@ export class AttendanceRangeWiseComponent {
   }
 
   getGenderWisePresent(present: any) {
-    this.genderWisePresent = this.graphService.PieGraph('donut', "% Students");
+    this.genderWisePresent = this.graphService.PieGraph('donut', "Students");
     let series = [present.malePresentPercentage, present.feMalePresentPercentage, present.otherPresentPercentage];
     this.genderWisePresent.series = series.map((item: any) => (item !== undefined ? Number(item == 0 ? 0 : item?.toFixed(2)) : 0));
     this.genderWisePresent.labels = ["Boys", "Girls", "Others"];
   }
 
   getGenderWiseAbsent(absent: any) {
-    this.genderWiseAbsent = this.graphService.PieGraph('donut', "% Students");
+    this.genderWiseAbsent = this.graphService.PieGraph('donut', "Students");
     let series = [absent.maleAbsentPercentage, absent.feMaleAbsentPercentage, absent.otherAbsentPercentage];
     this.genderWiseAbsent.series = series.map((item: any) => (item !== undefined ? Number(item == 0 ? 0 : item?.toFixed(2)) : 0));
     this.genderWiseAbsent.labels = ["Boys", "Girls", "Others"];
   }
 
   getGenderWiseLeave(leave: any) {
-    this.genderWiseLeave = this.graphService.PieGraph('donut', "% Students");
+    this.genderWiseLeave = this.graphService.PieGraph('donut', "Students");
     let series = [leave.maleLeavePercentage, leave.feMaleLeavePercentage, leave.otherLeavePercentage];
     this.genderWiseLeave.series = series.map((item: any) => (item !== undefined ? Number(item == 0 ? 0 : item?.toFixed(2)) : 0));
     this.genderWiseLeave.labels = ["Boys", "Girls", "Others"];
   }
 
   getGenderWiseNotMarked(notMark: any) {
-    this.genderWiseNotMarked = this.graphService.PieGraph('donut', "% Students");
+    this.genderWiseNotMarked = this.graphService.PieGraph('donut', "Students");
     let series = [notMark.maleNotMarkedPercentage, notMark.feMaleNotMarkedPercentage, notMark.otherNotMarkedPercentage];
     this.genderWiseNotMarked.series = series.map((item: any) => (item !== undefined ? Number(item == 0 ? 0 : item?.toFixed(2)) : 0));
     this.genderWiseNotMarked.labels = ["Boys", "Girls", "Others"];
-    this.genderWiseNotMarked.dataLabels = {
-      enabled: true,
-      formatter: function (val: any) {
-        return val.toFixed(0) + "%"
-      }
-    }
   }
 
   getDateRangeGraph(data: any) {

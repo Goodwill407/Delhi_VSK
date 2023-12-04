@@ -243,7 +243,7 @@ export class UdiseSchoolComponent {
   getSchoolGenderCounts(School_GenderCounts: any) {
     const GenderType = School_GenderCounts.map((item: any) => item._id)
     const GenderWiseCount = School_GenderCounts.map((item: any) => item.count)
-    this.SchoolGenderCountsGraph = this.graphService.PieGraph('pie', '');
+    this.SchoolGenderCountsGraph = this.graphService.PieGraph('donut', '');
     const series = GenderWiseCount;
     const labels = GenderType
     this.SchoolGenderCountsGraph.series = [...series];

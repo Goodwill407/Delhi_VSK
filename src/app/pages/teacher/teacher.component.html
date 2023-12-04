@@ -65,7 +65,7 @@
   <div class="column text-center">
     <h5 class="header-bg p-2">Teachers Gender Ratio</h5>
     <apx-chart [series]="teacherGenderRatio?.series" [chart]="teacherGenderRatio?.chart"
-      [dataLabels]="teacherGenderRatio?.dataLabels" 
+      [dataLabels]="teacherGenderRatio?.dataLabels" [plotOptions]="teacherGenderRatio?.plotOptions"
       [legend]="teacherGenderRatio?.legend" [labels]="teacherGenderRatio?.labels" [colors]="teacherGenderRatio?.colors"
       [grid]="teacherGenderRatio?.grid" [tooltip]="teacherGenderRatio?.tooltip"></apx-chart>
       <h6 class="fw-bold">Total Teachers : {{teacherGenderRatio?.total}}</h6>
