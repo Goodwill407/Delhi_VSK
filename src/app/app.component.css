@@ -441,7 +441,7 @@ a.article:hover {
 
 #content {
     background-image: url("../../src/assets/images/Dashboard/bg.png");
-    background-size: cover;
+    background-size: 100% 100%;
 }
 
 #sidebarCollapse {

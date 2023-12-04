@@ -70,7 +70,7 @@ export class GraphService {
             series: [],
             chart: {
                 type: "bar",
-                height: "240px",
+                height: 300,
                 events: {
                     click: function (chart: any, w: any, e: any) {
                     }
@@ -332,7 +332,7 @@ export class GraphService {
         const graphData = {
             series: [],
             chart: {
-                height: 350,
+                height: 300,
                 type: "line",
                 zoom: {
                     enabled: false
