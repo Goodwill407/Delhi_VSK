@@ -3,6 +3,7 @@ import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { CommunicationService } from 'src/app/services/communication.service';
 import { GraphService } from 'src/app/services/graph-service.service';
 import { HttpServiceService } from 'src/app/services/http-service.service';
@@ -32,12 +33,15 @@ export class AttendanceRegularComponent {
   schoolModel: any = "";
   dateModel: any;
   districtName: any;
+  allSchoolAttendanceStatus: any;
 
   // Graphs
   genderWisePresent: any;
   genderWiseAbsent: any;
   genderWiseLeave: any;
   genderWiseNotMarked: any;
+  attendanceStatusCount: any;
+  indexNoConfig: any;
   districtWiseTopFiveGraph: any;
   zoneWiseTopFiveGraph: any;
   schoolWiseTopFiveGraph: any;
@@ -48,7 +52,11 @@ export class AttendanceRegularComponent {
   allShift: any = ['Morning', 'General', 'Evening'];
   districtWiseAttendanceCount: any;
   newDate: any
+  @ViewChild('openModal') openModal: any;
   formattedDate: any;
+  itemCount: number | undefined;
+  subscription: Subscription | undefined;
+
 
   constructor(private communicationService: CommunicationService, private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, public datepipe: DatePipe, private toastr: ToastrService) {
 
@@ -61,6 +69,15 @@ export class AttendanceRegularComponent {
     this.getGraphsByDate(true);
     this.getAllDistricts();
     this.getAllZones();
+
+    this.subscription = this.graphService
+      .getItemCountObservable()
+      .subscribe((count) => {
+        this.itemCount = count;
+        if (this.itemCount && this.indexNoConfig == this.indexNoConfig || 0) {
+          this.getAttendanceStatusCountClick(false);
+        }
+      });
   }
 
   handleParentClick() {
@@ -228,7 +245,7 @@ export class AttendanceRegularComponent {
     if (this.schoolModel) {
       this.spinner.show();
       const school = {
-        "School_ID": this.schoolModel,
+        "School_ID": String(this.schoolModel.Schoolid),
         "date": this.getDate(this.dateModel)
       }
       this.httpService.post('attendance/school/date-wise', school).subscribe((data: any) => {
@@ -251,6 +268,7 @@ export class AttendanceRegularComponent {
     this.getGenderWiseAbsent(data);
     this.getGenderWiseLeave(data);
     this.getGenderWiseNotMarked(data);
+    this.getAttendanceStatusCount(data.statusCounts);
     this.setDistrictWiseGraph();
     if (!this.zoneModel && !this.districtModel) {
       this.districtWiseTopFive();
@@ -286,6 +304,71 @@ export class AttendanceRegularComponent {
     this.genderWiseNotMarked = this.graphService.PieGraph('pie', ' Students');
     this.genderWiseNotMarked.series = [data.Counts[0].maleAttendanceNotMarked, data.Counts[0].femaleAttendanceNotMarked, data.Counts[0].otherAttendanceNotMarked];
     this.genderWiseNotMarked.labels = ['Male', 'Female', 'Others'];
+  }
+
+  getAttendanceStatusCount(data: any) {
+    this.attendanceStatusCount = this.graphService.PieGraph('donut', ' School');
+    for (let i = 0; i < data.length; i++) {
+      this.attendanceStatusCount.series.push(data[i].count);
+      this.attendanceStatusCount.labels.push(data[i]._id);
+    }
+    this.attendanceStatusCount.chart.events = {
+      dataPointSelection: (event: any, chartContext: any, config: any) => {
+        this.indexNoConfig = config.dataPointIndex;
+        this.getAttendanceStatusCountClick(true);
+        this.graphService.addToCart();
+      }
+    }
+  }
+
+  getAttendanceStatusCountClick(flash: any) {
+    let parameter:any = {
+      "attendanceStatus": this.attendanceStatusCount.labels[this.indexNoConfig],
+      "date": this.getDate(this.dateModel),
+      // "district_name": this.districtModel,
+      // "Z_name": this.zoneModel,
+      // "School_ID": this.schoolModel.schoolId
+    }
+    if (this.dateModel && !this.schoolModel && !this.districtModel && !this.zoneModel && !this.shiftModel) {
+      this.httpService.post('attendance/attendance-status-wise', parameter).subscribe((res: any) => {
+        this.allSchoolAttendanceStatus = res;
+        if (!flash) {
+          this.openModal.nativeElement.click();
+        }
+      })
+    }else if(!this.schoolModel && this.districtModel && !this.zoneModel){
+      parameter.district_name = this.districtModel;
+      this.httpService.post('attendance/attendance-status-district-wise', parameter).subscribe((res: any) => {
+        this.allSchoolAttendanceStatus = res;
+        if (!flash) {
+          this.openModal.nativeElement.click();
+        }
+      })
+    }else if(!this.schoolModel && this.zoneModel){
+      parameter.Z_name = this.zoneModel;
+      this.httpService.post('attendance/attendance-status-zone-wise', parameter).subscribe((res: any) => {
+        this.allSchoolAttendanceStatus = res;
+        if (!flash) {
+          this.openModal.nativeElement.click();
+        }
+      })
+    }else if(this.schoolModel){
+      parameter.School_ID = this.schoolModel.Schoolid;
+      this.httpService.post('attendance/attendance-status-school-wise', parameter).subscribe((res: any) => {
+        this.allSchoolAttendanceStatus = res;
+        if (!flash) {
+          this.openModal.nativeElement.click();
+        }
+      })
+    }else if(this.dateModel && this.shiftModel){
+      parameter.shift = this.shiftModel;
+      this.httpService.post('attendance/attendance-status-shift-wise', parameter).subscribe((res: any) => {
+        this.allSchoolAttendanceStatus = res;
+        if (!flash) {
+          this.openModal.nativeElement.click();
+        }
+      })
+    }
   }
 
   setDistrictWiseGraph() {

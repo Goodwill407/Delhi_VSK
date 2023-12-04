@@ -35,7 +35,7 @@
     {{schoolModel.School_Name}}
   </h3>
   <h3 class="text-center mb-0" *ngIf="dateModel1 && dateModel2"> <span
-      *ngIf="districtModel || zoneModel || schoolModel">|</span> {{dateModel1}} To {{dateModel2}}</h3>
+      *ngIf="districtModel || zoneModel || schoolModel">|</span> {{dateModel1 | date: 'dd MMM yyyy'}} To {{dateModel2 | date: 'dd MMM yyyy'}}</h3>
 </div>
 
 <div class="container1" *ngIf="dateModel1 && dateModel2">
