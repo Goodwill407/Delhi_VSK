@@ -390,7 +390,7 @@ export class AttendanceRegularComponent {
   }
 
   setDistrictWiseTopFiveGraph(data: any) {
-    this.districtWiseTopFiveGraph = this.graphService.VerticleBarGraph(true);
+    this.districtWiseTopFiveGraph = this.graphService.VerticleBarGraph();
     const series: any = [{
       name: "Count",
       data: []
@@ -402,11 +402,11 @@ export class AttendanceRegularComponent {
       this.districtWiseTopFiveGraph.notFound += data[i].schoolsDataNotFoundCount;
     }
     this.districtWiseTopFiveGraph.series = [...series];
-    this.districtWiseTopFiveGraph.plotOptions.bar.isFunnel = true;
+    // this.districtWiseTopFiveGraph.plotOptions.bar.isFunnel = true;
     this.districtWiseTopFiveGraph.legend.show = true;
     let colors = ["#36454F"]
     this.districtWiseTopFiveGraph.dataLabels.style.colors = [...colors];
-    this.districtWiseTopFiveGraph.dataLabels.dropShadow.enabled = false;
+    // this.districtWiseTopFiveGraph.dataLabels.dropShadow.enabled = false;
   }
 
   districtWiseBottomFive() {
@@ -419,7 +419,7 @@ export class AttendanceRegularComponent {
   }
 
   setDistrictWiseBottomFiveGraph(data: any) {
-    this.districtWiseBottomFiveGraph = this.graphService.VerticleBarGraph(true);
+    this.districtWiseBottomFiveGraph = this.graphService.VerticleBarGraph();
     const series: any = [{
       name: "Count",
       data: []
@@ -431,7 +431,7 @@ export class AttendanceRegularComponent {
       this.districtWiseBottomFiveGraph.notFound += data[i].schoolsDataNotFoundCount;
     }
     this.districtWiseBottomFiveGraph.series = [...series];
-    this.districtWiseBottomFiveGraph.plotOptions.bar.isFunnel = true;
+    // this.districtWiseBottomFiveGraph.plotOptions.bar.isFunnel = true;
     this.districtWiseBottomFiveGraph.legend.show = true;
     let colors = ["#36454F"]
     this.districtWiseBottomFiveGraph.dataLabels.style.colors = [...colors];
