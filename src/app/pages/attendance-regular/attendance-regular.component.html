@@ -16,19 +16,19 @@
         </option>
     </select>
     <select class="form-select ms-2" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
-        <option value="" disabled>All Zones</option>
+        <option value="">All Zones</option>
         <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
             {{zone.Zone_Name}} ({{zone.Z_ID}})
         </option>
     </select>
     <select class="form-select ms-2" [(ngModel)]="shiftModel" (change)="getGraphsBySfhit()">
-        <option value="" disabled>Select Shift</option>
+        <option value="">Select Shift</option>
         <option *ngFor="let shift of allShift" value="{{shift}}">
             {{shift}}
         </option>
     </select>
     <select class="form-select ms-2" [(ngModel)]="schoolModel" (change)="getGraphsBySchool()">
-        <option value="" disabled>All School</option>
+        <option value="">All School</option>
         <option *ngFor="let school of allSchools" [ngValue]="school">
             {{school.School_Name}} - ({{school.Schoolid}})
         </option>
@@ -136,15 +136,6 @@
             [legend]="genderWiseNotMarked?.legend"></apx-chart>
     </div>
 
-    <div class="column">
-        <h5 class="header-bg p-2">Attendance Status Wise Count</h5>
-        <apx-chart [series]="attendanceStatusCount?.series" [chart]="attendanceStatusCount?.chart"
-            [labels]="attendanceStatusCount?.labels" [fill]="attendanceStatusCount?.fill"
-            [colors]="attendanceStatusCount?.colors" [dataLabels]="attendanceStatusCount?.dataLabels"
-            [plotOptions]="attendanceStatusCount?.plotOptions" [responsive]="attendanceStatusCount?.responsive"
-            [legend]="attendanceStatusCount?.legend"></apx-chart>
-    </div>
-
     <div class="column" *ngIf="!zoneModel && !districtModel">
         <h5 class="header-bg p-2">District wise top 5 attendance</h5>
         <apx-chart [series]="districtWiseTopFiveGraph?.series" [chart]="districtWiseTopFiveGraph?.chart"
@@ -193,10 +184,10 @@
     <div class="column" *ngIf="zoneModel">
         <h5 class="header-bg p-2">School wise top 5 attendance</h5>
         <apx-chart [series]="schoolWiseTopFiveGraph?.series" [chart]="schoolWiseTopFiveGraph?.chart"
-      [dataLabels]="schoolWiseTopFiveGraph?.dataLabels" [plotOptions]="schoolWiseTopFiveGraph?.plotOptions"
-      [xaxis]="schoolWiseTopFiveGraph?.xaxis" [yaxis]="schoolWiseTopFiveGraph?.yaxis"
-      [colors]="schoolWiseTopFiveGraph?.colors" [title]="schoolWiseTopFiveGraph?.title"
-      [legend]="schoolWiseTopFiveGraph?.legend" [fill]="schoolWiseTopFiveGraph?.fill"></apx-chart>
+            [dataLabels]="schoolWiseTopFiveGraph?.dataLabels" [plotOptions]="schoolWiseTopFiveGraph?.plotOptions"
+            [responsive]="schoolWiseTopFiveGraph?.responsive" [xaxis]="schoolWiseTopFiveGraph?.xaxis"
+            [legend]="schoolWiseTopFiveGraph?.legend" [fill]="schoolWiseTopFiveGraph?.fill"
+            [colors]="schoolWiseTopFiveGraph?.colors"></apx-chart>
         <p class="text-center bg-danger text-light"><span class="fw-bold"> {{schoolWiseTopFiveGraph?.notFound}} :
             </span> Schools data not found</p>
     </div>
@@ -212,49 +203,4 @@
             </span> Schools data not found</p>
     </div>
 
-</div>
-<!-- Button trigger modal -->
-<button #openModal data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal"
-  (click)="getAttendanceStatusCountClick(true)">
-
-</button>
-
-<!--  -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-xl">
-    <div class="modal-content">
-      <div class="modal-header" style="background-color: #b3d64d;">
-        <h5 class="modal-title" id="exampleModalLabel">Attendance Status Wise Details By {{attendanceStatusCount?.labels[indexNoConfig]}} </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-
-        <table class="table table-responsive table-hover table-bordered table-striped">
-          <thead class="thead-light">
-            <tr class="table-bordered ">
-              <th>Sr No</th>
-              <th>School</th>
-              <th>District</th>
-              <th>Zone</th>
-              <th>Shift</th>
-              <th>Date</th>
-              <th>Attendance Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let data of allSchoolAttendanceStatus;let i = index">
-              <td>{{i+1}}</td>
-              <td>{{data.school_name}}</td>
-              <td>{{data.district_name}}</td>
-              <td>{{data.Z_name}}</td>
-              <td>{{data.shift}}</td>
-              <td>{{data.attendance_DATE}}</td>
-              <td>{{data.attendanceStatus}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-    </div>
-  </div>
 </div>

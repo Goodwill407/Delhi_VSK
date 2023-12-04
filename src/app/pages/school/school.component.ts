@@ -168,9 +168,7 @@ export class SchoolComponent {
 
   getGraphsByZone() {
     this.spinner.show();
-    const zone = {
-      zoneName: this.zoneModel
-    }
+    const zone = { zoneName: this.zoneModel };
     this.getSchoolDataByZone();
     this.httpService.post('zonegraph/school-student-teacher-graph-zonename', zone).subscribe((data: any) => {
       if (data) {

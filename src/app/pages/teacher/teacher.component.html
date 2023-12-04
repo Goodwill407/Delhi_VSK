@@ -62,12 +62,13 @@
     <h3 class="mt-5 fw-semibold teacher-ratio-count">{{allData?.teacherStudentRatio | number: '1.0-0'}} : 1 Teacher</h3>
   </div>
 
-  <div class="column">
+  <div class="column text-center">
     <h5 class="header-bg p-2">Teachers Gender Ratio</h5>
     <apx-chart [series]="teacherGenderRatio?.series" [chart]="teacherGenderRatio?.chart"
-      [dataLabels]="teacherGenderRatio?.dataLabels" [plotOptions]="teacherGenderRatio?.plotOptions"
+      [dataLabels]="teacherGenderRatio?.dataLabels" 
       [legend]="teacherGenderRatio?.legend" [labels]="teacherGenderRatio?.labels" [colors]="teacherGenderRatio?.colors"
       [grid]="teacherGenderRatio?.grid" [tooltip]="teacherGenderRatio?.tooltip"></apx-chart>
+      <h6 class="fw-bold">Total Teachers : {{teacherGenderRatio?.total}}</h6>
   </div>
   <div class="column wide-height" style="height: auto;">
     <h5 class="header-bg p-2">Designation wise Teacher</h5>

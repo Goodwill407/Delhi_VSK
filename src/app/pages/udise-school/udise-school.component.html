@@ -27,7 +27,7 @@
   <div class="column text-center">
     <h5 class="header-bg p-2">Udise Total School</h5>
     <div class="mt-4">
-      <img class="ms-2" src="../../../assets/images/icons/school-2.png" style="height: 120px;" alt="">
+      <img class="ms-2" src="../../../assets/images/Dashboard/school.png" style="height: 120px;" alt="">
     </div>
     <h1 class="fw-bold mt-4">{{TotalSchool}}</h1>
     <h3>Total schools</h3>
@@ -60,14 +60,6 @@
           [legend]="RuralUrbanCountsGraph?.legend"></apx-chart>
     </div> -->
 
-  <div class="column wide">
-    <h5 class="header-bg p-2">School Type Wise Count</h5>
-    <apx-chart [series]="SchoolTypeCountsGraph?.series" [chart]="SchoolTypeCountsGraph?.chart"
-      [dataLabels]="SchoolTypeCountsGraph?.dataLabels" [plotOptions]="SchoolTypeCountsGraph?.plotOptions"
-      [xaxis]="SchoolTypeCountsGraph?.xaxis" [colors]="SchoolTypeCountsGraph?.colors"
-      [legend]="SchoolTypeCountsGraph?.legend" [fill]="SchoolTypeCountsGraph?.fill"></apx-chart>
-  </div>
-
   <div class="column">
     <h5 class="header-bg p-2">School Shift Wise Count</h5>
     <apx-chart [series]="ShiftfSchoolCountsGraph?.series" [chart]="ShiftfSchoolCountsGraph?.chart"
@@ -77,7 +69,13 @@
       [legend]="RuralUrbanCountsGraph?.legend"></apx-chart>
   </div>
 
-
+  <div class="column wide">
+    <h5 class="header-bg p-2">School Type Wise Count</h5>
+    <apx-chart [series]="SchoolTypeCountsGraph?.series" [chart]="SchoolTypeCountsGraph?.chart"
+      [dataLabels]="SchoolTypeCountsGraph?.dataLabels" [plotOptions]="SchoolTypeCountsGraph?.plotOptions"
+      [xaxis]="SchoolTypeCountsGraph?.xaxis" [colors]="SchoolTypeCountsGraph?.colors"
+      [legend]="SchoolTypeCountsGraph?.legend" [fill]="SchoolTypeCountsGraph?.fill"></apx-chart>
+  </div>
 
 </div>
 

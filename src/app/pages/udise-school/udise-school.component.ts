@@ -283,8 +283,9 @@ export class UdiseSchoolComponent {
     this.SchoolTypeCountsGraph = this.graphService.VerticleBarGraph();
     const series = seres;
     const labels = this.TypeOfSchool
-    this.SchoolTypeCountsGraph.series = [...series];
+    this.SchoolTypeCountsGraph.plotOptions.bar.horizontal = false;
     this.SchoolTypeCountsGraph.xaxis.categories = [...labels]
+    this.SchoolTypeCountsGraph.series = [...series];
     this.SchoolTypeCountsGraph.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         this.UdiseSchoolDataClear();

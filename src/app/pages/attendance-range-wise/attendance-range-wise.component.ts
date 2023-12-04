@@ -22,6 +22,7 @@ export class AttendanceRangeWiseComponent {
   allDistricts: any;
   allSchools: any;
   districtModel: any = "";
+  shiftModel: any = "";
   schoolModel: any = "";
   zoneModel: any = "";
   dateModel1: any;
@@ -29,6 +30,8 @@ export class AttendanceRangeWiseComponent {
   allZones: any;
   districtName: any;
   schoolName: any;
+  allShift: any = ['Morning', 'General', 'Evening'];
+
   constructor(private toastr: ToastrService, private httpService: HttpServiceService, public datepipe: DatePipe, private spinner: NgxSpinnerService, private graphService: GraphService) { }
 
   ngOnInit() {
@@ -50,6 +53,9 @@ export class AttendanceRangeWiseComponent {
     });
   }
 
+  getGraphsBySfhit() {
+
+  }
 
   getGraphsByDistrictName() {
     if (this.districtModel) {
@@ -57,12 +63,14 @@ export class AttendanceRangeWiseComponent {
       this.getAllSchools();
       this.zoneModel = '';
       this.schoolModel = '';
+      this.shiftModel = '';
       this.datePicker();
     } else {
       this.getAllZones();
       this.allSchools = [];
       this.zoneModel = '';
       this.schoolModel = '';
+      this.shiftModel = '';
     }
   }
 
@@ -92,6 +100,7 @@ export class AttendanceRangeWiseComponent {
       this.spinner.show();
       this.httpService.post('attendance/attendancepercentage/range/parameter', obj).subscribe((res: any) => {
         if (res.dateWisePercentage.length > 0) {
+          this.shiftModel = '';
           this.setAllGraphs(res);
           this.spinner.hide();
         } else {
@@ -112,6 +121,7 @@ export class AttendanceRangeWiseComponent {
       this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
         this.allZones = res.ZoneSchool;
         this.allZones = this.allZones.sort((a: any, b: any) => a.Z_ID - b.Z_ID);
+        this.shiftModel = '';
         this.spinner.hide();
       }, (error) => {
         this.toastr.error('', 'Something went wrong !');
@@ -122,6 +132,7 @@ export class AttendanceRangeWiseComponent {
       this.httpService.get('school/zonename').subscribe((res: any) => {
         this.allZones = res.ZoneInfo;
         this.allZones = this.allZones.sort((a: any, b: any) => a.Z_ID - b.Z_ID);
+        this.shiftModel = '';
         // this.spinner.hide();
       }, (error) => {
         this.toastr.error('', 'Something went wrong !');
@@ -214,9 +225,10 @@ export class AttendanceRangeWiseComponent {
     this.genderWiseNotMarked.labels = ["Boys", "Girls", "Others"];
     this.genderWiseNotMarked.dataLabels = {
       enabled: true,
-      formatter: function (val:any) {
+      formatter: function (val: any) {
         return val.toFixed(0) + "%"
-      }}
+      }
+    }
   }
 
   getDateRangeGraph(data: any) {
