@@ -283,25 +283,25 @@ export class AttendanceRegularComponent {
   }
 
   getGenderWisePresent(data: any) {
-    this.genderWisePresent = this.graphService.PieGraph('pie', ' Students');
+    this.genderWisePresent = this.graphService.PieGraph('donut', ' Students');
     this.genderWisePresent.series = [data.Counts[0].malePresentCount, data.Counts[0].feMalePresentCount, data.Counts[0].otherPresentCount];
     this.genderWisePresent.labels = ['Male', 'Female', 'Others']
   }
 
   getGenderWiseAbsent(data: any) {
-    this.genderWiseAbsent = this.graphService.PieGraph('pie', ' Students');
+    this.genderWiseAbsent = this.graphService.PieGraph('donut', ' Students');
     this.genderWiseAbsent.series = [data.Counts[0].maleAbsentCount, data.Counts[0].feMaleAbsentCount, data.Counts[0].othersAbsentCount];
     this.genderWiseAbsent.labels = ['Male', 'Female', 'Others'];
   }
 
   getGenderWiseLeave(data: any) {
-    this.genderWiseLeave = this.graphService.PieGraph('pie', ' Students');
+    this.genderWiseLeave = this.graphService.PieGraph('donut', ' Students');
     this.genderWiseLeave.series = [data.Counts[0].maleLeaveCount, data.Counts[0].femaleLeaveCount, data.Counts[0].otherLeaveCount];
     this.genderWiseLeave.labels = ['Male', 'Female', 'Others'];
   }
 
   getGenderWiseNotMarked(data: any) {
-    this.genderWiseNotMarked = this.graphService.PieGraph('pie', ' Students');
+    this.genderWiseNotMarked = this.graphService.PieGraph('donut', ' Students');
     this.genderWiseNotMarked.series = [data.Counts[0].maleAttendanceNotMarked, data.Counts[0].femaleAttendanceNotMarked, data.Counts[0].otherAttendanceNotMarked];
     this.genderWiseNotMarked.labels = ['Male', 'Female', 'Others'];
   }

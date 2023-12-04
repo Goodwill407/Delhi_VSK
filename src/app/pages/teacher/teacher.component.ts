@@ -251,6 +251,7 @@ export class TeacherComponent {
     this.teacherGenderRatio.series = [...series];
     this.teacherGenderRatio.chart.type = "pie";
     this.teacherGenderRatio.labels = [...categories];
+    this.teacherGenderRatio.total = series.reduce((a:any,b:any)=>a+b,0);
     this.teacherGenderRatio.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         this.teacherDataClear();
