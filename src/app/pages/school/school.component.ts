@@ -66,11 +66,16 @@ export class SchoolComponent {
   }
 
   getAllDistricts() {
+    this.spinner.show();
     this.httpService.get('school/districtNames').subscribe((data: any) => {
       if (data && data.length > 0) {
         this.allDistricts = data;
+        this.spinner.hide();
         this.allDistricts = this.allDistricts.sort((a: any, b: any) => a.D_ID - b.D_ID);
       }
+    },(error)=>{
+      this.spinner.hide();
+      this.toastr.error('', 'Something went wrong !');
     })
   }
 
@@ -78,28 +83,40 @@ export class SchoolComponent {
     const district = {
       District_name: this.districtModel
     }
+    this.spinner.show();
     this.httpService.post('school/getDistrictSchool', district).subscribe((data: any) => {
       if (data && data.districtSchools) {
         this.allSchools = data.districtSchools;
         this.allSchools = this.allSchools.sort((a: any, b: any) => a.Schoolid - b.Schoolid);
+        this.spinner.hide();
       } else {
+        this.spinner.hide();
         this.allSchools = [];
       }
-    });
+    },(error)=>{
+      this.spinner.hide();
+      this.toastr.error('', 'Something went wrong !');
+    })
   }
 
   getSchoolDataByZone() {
     const zone = {
       Zone_Name: this.zoneModel
     }
+    this.spinner.show();
     this.httpService.post('school/getZoneSchool', zone).subscribe((data: any) => {
       if (data && data.ZoneSchool) {
         this.allSchools = data.ZoneSchool;
         this.allSchools = this.allSchools.sort((a: any, b: any) => a.Schoolid - b.Schoolid);
+        this.spinner.hide();
       } else {
         this.allSchools = [];
+        this.spinner.hide();
       }
-    });
+    },(error)=>{
+      this.spinner.hide();
+      this.toastr.error('', 'Something went wrong !');
+    })
   }
 
   setAllGraphs(data: any, zone: any) {
@@ -144,6 +161,7 @@ export class SchoolComponent {
         this.spinner.hide();
       }
     }, (error) => {
+      this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     })
   }
@@ -178,6 +196,7 @@ export class SchoolComponent {
           this.spinner.hide();
         }
       }, (error) => {
+        this.spinner.hide();
         this.toastr.error('', 'Something went wrong !');
       })
     } else {
@@ -198,6 +217,7 @@ export class SchoolComponent {
         this.spinner.hide();
       }
     }, (error) => {
+      this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     })
   }
@@ -228,6 +248,9 @@ export class SchoolComponent {
           this.openModal.nativeElement.click();
         }
         this.spinner.hide();
+      },(error)=>{
+        this.spinner.hide();
+        this.toastr.error('', 'Something went wrong !');
       })
     }
   }

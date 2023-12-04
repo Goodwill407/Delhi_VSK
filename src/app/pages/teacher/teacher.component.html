@@ -36,7 +36,7 @@
   <div class="column text-center">
     <h5 class="header-bg p-2">Total Teacher</h5>
     <div class="d-flex justify-content-around mt-4" (click)="getTachersBySchoolName()">
-      <img class="ms-2" src="../../../assets/images/Dashboard/lady Teacher.png" style="height: 120px;" alt="">
+      <img class="ms-2" src="../../../assets/images/Dashboard/teacher.png" style="height: 90px;" alt="">
       <div class="d-block ms-1 text-center">
         <h1 class="fw-bold">{{allData?.totalTeachers}}</h1>
         <h3>Total Teacher</h3>
@@ -58,7 +58,7 @@
 
   <div class="column text-center">
     <h5 class="header-bg p-2">Student & Teacher Ratio</h5>
-    <img class="img-fluid mt-4" width="180" src="../../../assets/images/pngegg.png">
+    <img class="img-fluid mt-4" width="130" src="../../../assets/images/education.png"><br>
     <h5 class="mt-5">{{allData?.teacherStudentRatio | number: '1.0-0'}} : 1 Teacher</h5>
   </div>
 
@@ -159,7 +159,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-xl">
+  <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-xxl-down">
     <div class="modal-content">
       <div class="modal-header" style="background-color: #b3d64d;">
         <h5 class="modal-title" *ngIf="configGender" id="exampleModalLabel">Teacher Details By Gender:

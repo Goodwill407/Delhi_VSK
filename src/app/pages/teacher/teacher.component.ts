@@ -3,6 +3,7 @@ import { HttpServiceService } from 'src/app/services/http-service.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { GraphService } from 'src/app/services/graph-service.service';
 import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-teacher',
@@ -45,7 +46,7 @@ export class TeacherComponent {
   configGender: any;
   commonName: any;
   configDesignation: any;
-  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService) { }
+  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService , private toastr: ToastrService) { }
 
   ngOnInit() {
     this.getAllTeacherData();
@@ -65,11 +66,16 @@ export class TeacherComponent {
   }
 
   getAllDistricts() {
+    this.spinner.show();
     this.httpService.get('school/districtNames').subscribe((data: any) => {
       if (data && data.length > 0) {
         this.allDistricts = data;
         this.allDistricts = this.allDistricts.sort((a: any, b: any) => a.D_ID - b.D_ID);
+        this.spinner.hide();
       }
+    },(error)=>{
+      this.spinner.hide();
+      this.toastr.error('', 'Something went wrong !');
     })
   }
 
@@ -80,6 +86,9 @@ export class TeacherComponent {
         this.setAllGraphs(data);
         this.spinner.hide();
       }
+    },(error)=>{
+      this.spinner.hide();
+      this.toastr.error('', 'Something went wrong !');
     })
   }
 
@@ -115,7 +124,11 @@ export class TeacherComponent {
           this.getAllSchools();
           this.zoneModel = '';
           this.schoolModel = '';
+          this.spinner.hide();
         }
+      },(error)=>{
+        this.spinner.hide();
+        this.toastr.error('', 'Something went wrong !');
       })
     } else {
       this.getAllTeacherData();
@@ -128,15 +141,24 @@ export class TeacherComponent {
   }
 
   getAllZones() {
+    this.spinner.show();
     if (this.districtModel) {
       const district = { "District_name": this.districtModel };
       this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
         this.allZones = res.ZoneSchool;
+        this.spinner.hide();
+      },(error)=>{
+        this.spinner.hide();
+        this.toastr.error('', 'Something went wrong !');
       })
     } else {
       this.httpService.get('school/zonename').subscribe((res: any) => {
         this.allZones = res.ZoneInfo;
+        this.spinner.hide();
         this.allZones = this.allZones.sort((a: any, b: any) => a.Z_ID - b.Z_ID);
+      },(error)=>{
+        this.spinner.hide();
+        this.toastr.error('', 'Something went wrong !');
       })
     }
   }
@@ -151,9 +173,10 @@ export class TeacherComponent {
         this.setAllGraphs(data);
         this.spinner.hide();
       }
-    }, (error) => {
+    },(error)=>{
       this.spinner.hide();
-    });
+      this.toastr.error('', 'Something went wrong !');
+    })
     this.getSchoolDataByZone();
   }
 
@@ -161,14 +184,20 @@ export class TeacherComponent {
     const zone = {
       Zone_Name: this.zoneModel
     }
+    this.spinner.show();
     this.httpService.post('school/getZoneSchool', zone).subscribe((data: any) => {
       if (data && data.ZoneSchool) {
         this.allSchools = data.ZoneSchool;
         this.allSchools = this.allSchools.sort((a: any, b: any) => a.Schoolid - b.Schoolid);
         this.schoolModel = ''
+        this.spinner.hide();
       } else {
         this.allSchools = [];
+        this.spinner.hide();
       }
+    },(error)=>{
+      this.spinner.hide();
+      this.toastr.error('', 'Something went wrong !');
     });
   }
 
@@ -176,22 +205,20 @@ export class TeacherComponent {
     const district = {
       District_name: this.districtModel
     }
+    this.spinner.show();
     this.httpService.post('school/getDistrictSchool', district).subscribe((data: any) => {
       if (data && data.districtSchools) {
         this.allSchools = data.districtSchools;
         this.allSchools = this.allSchools.sort((a: any, b: any) => a.Schoolid - b.Schoolid);
+        this.spinner.hide();
       } else {
+        this.spinner.hide();
         this.allSchools = [];
       }
-    });
-  }
-
-  getSchoolId(schoolName: any) {
-    for (let i = 0; i < this.allSchools.length; i++) {
-      if (schoolName == this.allSchools[i].School_Name) {
-        return this.allSchools[i].Schoolid;
-      }
-    }
+    },(error)=>{
+      this.spinner.hide();
+      this.toastr.error('', 'Something went wrong !');
+    })
   }
 
   getGraphsBySchoolName() {
@@ -204,7 +231,9 @@ export class TeacherComponent {
         this.setAllGraphs(data);
         this.spinner.hide();
       }
+    },(error)=>{
       this.spinner.hide();
+      this.toastr.error('', 'Something went wrong !');
     })
   }
 
@@ -242,10 +271,6 @@ export class TeacherComponent {
         this.openModal.nativeElement.click();
       }
     })
-  }
-
-  ngOnChange(change: SimpleChange) {
-    change;
   }
 
   getShiftWiseSchools(shiftWiseCount: any) {
