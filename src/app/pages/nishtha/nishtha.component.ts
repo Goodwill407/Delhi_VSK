@@ -99,7 +99,7 @@ export class NishthaComponent {
   getTotal_Certificate_issued(allDashboardData: any) {
     const Total_certificates_issued = allDashboardData.map((item: any) => item.total_certificates_issued)
     const program = allDashboardData.map((item: any) => item.program)
-    this.Total_certificates = this.graphService.PieGraph('pie');
+    this.Total_certificates = this.graphService.PieGraph('donut','');
     const series = Total_certificates_issued.map((str: any) => Number(str));
     const labels = program
     this.Total_certificates.series = [...series];

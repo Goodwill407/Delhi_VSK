@@ -60,14 +60,16 @@
                 <apx-chart [series]="Total_certificates?.series" [chart]="Total_certificates?.chart"
                     [labels]="Total_certificates?.labels" [responsive]="Total_certificates?.responsive"
                     [legend]="Total_certificates?.legend" [fill]="Total_certificates?.fill"
-                    [colors]="Total_certificates?.colors"></apx-chart>
+                    [colors]="Total_certificates?.colors" [dataLabels]="Total_certificates?.dataLabels"
+                    [plotOptions]="Total_certificates?.plotOptions"></apx-chart>
             </div>
 
             <div class="column">
                 <h5 class="header-bg p-2">Local Body </h5>
                 <apx-chart [series]="Total_Local_body?.series" [chart]="Total_Local_body?.chart"
                     [labels]="Total_Local_body?.labels" [responsive]="Total_Local_body?.responsive"
-                    [legend]="Total_Local_body?.legend" [fill]="Total_Local_body?.fill"
+                    [legend]="Total_Local_body?.legend" [fill]="Total_Local_body?.fill" [dataLabels]="Total_Local_body?.dataLabels"
+                    [plotOptions]="Total_Local_body?.plotOptions"
                     [colors]="Total_Local_body?.colors"></apx-chart>
             </div>
         </div>
@@ -168,7 +170,8 @@
                 <h5 class="header-bg p-2">Total Courses </h5>
                 <apx-chart [series]="Total_CoursesGraph?.series" [chart]="Total_CoursesGraph?.chart"
                     [labels]="Total_CoursesGraph?.labels" [responsive]="Total_CoursesGraph?.responsive"
-                    [legend]="Total_CoursesGraph?.legend" [fill]="Total_CoursesGraph?.fill"
+                    [legend]="Total_CoursesGraph?.legend" [fill]="Total_CoursesGraph?.fill" [dataLabels]="Total_CoursesGraph?.dataLabels"
+                    [plotOptions]="Total_CoursesGraph?.plotOptions"
                     [colors]="Total_CoursesGraph?.colors"></apx-chart>
             </div>
 

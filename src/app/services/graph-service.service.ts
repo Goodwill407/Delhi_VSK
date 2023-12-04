@@ -249,7 +249,7 @@ export class GraphService {
             legend: {
                 position: 'bottom',
                 formatter: function (val: any, opts: any) {
-                    return val + " - " + opts.w.globals.series[opts.seriesIndex];
+                    return val + " - " + opts.w.globals.series[opts.seriesIndex].toFixed(2);
                 },
             },
             responsive: [
