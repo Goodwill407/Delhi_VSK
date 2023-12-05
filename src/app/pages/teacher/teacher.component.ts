@@ -114,7 +114,6 @@ export class TeacherComponent {
     this.getSchoolTypeWiseCount(data.teacherTypeOfSchoolWiseCounts);
     // this.getStreamWiseCount(data.teacherStreamWiseCounts);
     // this.getMinorityWiseCount(data.teacherMinorityWiseCounts);
-    this.spinner.hide();
   }
 
   getGraphsByDistrictName() {
@@ -170,20 +169,24 @@ export class TeacherComponent {
   }
 
   getGraphsByZone() {
-    this.spinner.show();
-    const zone = {
-      zoneName: this.zoneModel
-    }
-    this.httpService.post('teacher-graph/school-category-wise/zone', zone).subscribe((data: any) => {
-      if (data) {
-        this.setAllGraphs(data);
-        this.spinner.hide();
+    if (this.zoneModel) {
+      this.spinner.show();
+      const zone = {
+        zoneName: this.zoneModel
       }
-    }, (error) => {
-      this.spinner.hide();
-      this.toastr.error('', 'Something went wrong !');
-    })
-    this.getSchoolDataByZone();
+      this.httpService.post('teacher-graph/school-category-wise/zone', zone).subscribe((data: any) => {
+        if (data) {
+          this.setAllGraphs(data);
+          this.spinner.hide();
+          this.getSchoolDataByZone();
+        }
+      }, (error) => {
+        this.spinner.hide();
+        this.toastr.error('', 'Something went wrong !');
+      })
+    } else {
+      this.getGraphsByDistrictName();
+    }
   }
 
   getSchoolDataByZone() {

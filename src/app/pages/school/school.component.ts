@@ -168,6 +168,7 @@ export class SchoolComponent {
   }
 
   getGraphsByZone() {
+    if(this.zoneModel){
     this.spinner.show();
     const zone = { zoneName: this.zoneModel };
     this.getSchoolDataByZone();
@@ -180,6 +181,10 @@ export class SchoolComponent {
     }, (error) => {
       this.toastr.error('', 'Something went wrong !');
     })
+  }else{
+    this.allSchools = [];
+    this.getGraphsByDistrictName();
+  }
   }
 
   getGraphsByDistrictName() {
@@ -199,6 +204,7 @@ export class SchoolComponent {
         this.toastr.error('', 'Something went wrong !');
       })
     } else {
+      this.allSchools= [];
       this.getAllSchoolGraph();
     }
     this.zoneModel = "";

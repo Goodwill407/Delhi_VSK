@@ -120,46 +120,55 @@ export class StudentComponent {
   }
 
   getGraphsByDistrictName() {
-    this.spinner.show();
-    const district = {
-      districtName: this.districtModel
-    }
-    this.ZoneModel = '';
-    this.httpService.post('all-student-graph/student-graph-count-districtname', district).subscribe((data: any) => {
-      if (data) {
-        this.setAllGraphData(data);
-        this.getAllZones()
-        this.getAllSchools()
-      } else {
-        this.getAllZones();
+    if (this.districtModel) {
+      this.spinner.show();
+      const district = {
+        districtName: this.districtModel
       }
       this.ZoneModel = '';
-      this.schoolModel = '';
-      this.spinner.hide();
-    }, (error) => {
-      this.spinner.hide();
-    });
+      this.httpService.post('all-student-graph/student-graph-count-districtname', district).subscribe((data: any) => {
+        if (data) {
+          this.setAllGraphData(data);
+          this.getAllZones()
+          this.getAllSchools()
+        } else {
+          this.getAllZones();
+        }
+        this.ZoneModel = '';
+        this.schoolModel = '';
+        this.spinner.hide();
+      }, (error) => {
+        this.spinner.hide();
+      });
+    } else {
+      this.getAllZones()
+      this.getAllSchools()
+      this.AllSchool = [];
+      this.getStudentGraphData();
+    }
   }
 
   getGraphsByZone() {
-    this.spinner.show();
-    const zone = {
-      zoneName: this.ZoneModel
-    }
-
-    this.httpService.post('all-student-graph/student-graph-count-zonename', zone).subscribe((data: any) => {
-      if (data) {
-        this.setAllGraphData(data);
-
+    if (this.ZoneModel) {
+      this.spinner.show();
+      const zone = {
+        zoneName: this.ZoneModel
       }
-      this.spinner.hide();
-    }, (error) => {
-      this.spinner.hide();
-    });
-    this.schoolModel = '';
-    // this.districtModel = '';
-    this.getAllSchools();
 
+      this.httpService.post('all-student-graph/student-graph-count-zonename', zone).subscribe((data: any) => {
+        if (data) {
+          this.setAllGraphData(data);
+
+        }
+        this.spinner.hide();
+      }, (error) => {
+        this.spinner.hide();
+      });
+      this.schoolModel = '';
+      this.getAllSchools();
+    } else {
+      this.getGraphsByDistrictName();
+    }
 
   }
 

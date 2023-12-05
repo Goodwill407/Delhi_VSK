@@ -10,7 +10,7 @@
     </option>
   </select>
   <select class="form-select w-25 ms-2" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
-    <option value="" disabled>All Zones</option>
+    <option value="">All Zones</option>
     <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
       {{zone.Zone_Name}} ({{zone.Z_ID}})
     </option>
@@ -65,9 +65,9 @@
   <div class="column text-center">
     <h5 class="header-bg p-2">Teachers Gender Ratio</h5>
     <apx-chart [series]="teacherGenderRatio?.series" [chart]="teacherGenderRatio?.chart"
-      [dataLabels]="teacherGenderRatio?.dataLabels" [plotOptions]="teacherGenderRatio?.plotOptions"
-      [legend]="teacherGenderRatio?.legend" [labels]="teacherGenderRatio?.labels" [colors]="teacherGenderRatio?.colors"
-      [grid]="teacherGenderRatio?.grid" [tooltip]="teacherGenderRatio?.tooltip"></apx-chart>
+      [dataLabels]="teacherGenderRatio?.dataLabels" [legend]="teacherGenderRatio?.legend"
+      [labels]="teacherGenderRatio?.labels" [colors]="teacherGenderRatio?.colors" [grid]="teacherGenderRatio?.grid"
+      [tooltip]="teacherGenderRatio?.tooltip"></apx-chart>
     <h6 class="fw-bold">Total Teachers : {{teacherGenderRatio?.total}}</h6>
   </div>
   <div class="column" [ngClass]="communicationServiceMobile ? '' : 'wide-height'" style="height: auto;">
@@ -160,7 +160,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-xxl-down">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header" style="background-color: #b3d64d;">
         <h5 class="modal-title" *ngIf="configGender" id="exampleModalLabel">Teacher Details By Gender:
