@@ -46,13 +46,13 @@ export class TeacherComponent {
   configGender: any;
   commonName: any;
   configDesignation: any;
-  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService , private toastr: ToastrService) { }
+  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.getAllTeacherData();
     this.getAllDistricts();
     this.getAllZones();
-    
+
     this.subscription = this.graphService
       .getItemCountObservable()
       .subscribe((count) => {
@@ -73,7 +73,7 @@ export class TeacherComponent {
         this.allDistricts = this.allDistricts.sort((a: any, b: any) => a.D_ID - b.D_ID);
         this.spinner.hide();
       }
-    },(error)=>{
+    }, (error) => {
       this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     })
@@ -86,7 +86,7 @@ export class TeacherComponent {
         this.setAllGraphs(data);
         this.spinner.hide();
       }
-    },(error)=>{
+    }, (error) => {
       this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     })
@@ -126,7 +126,7 @@ export class TeacherComponent {
           this.schoolModel = '';
           this.spinner.hide();
         }
-      },(error)=>{
+      }, (error) => {
         this.spinner.hide();
         this.toastr.error('', 'Something went wrong !');
       })
@@ -147,7 +147,7 @@ export class TeacherComponent {
       this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
         this.allZones = res.ZoneSchool;
         this.spinner.hide();
-      },(error)=>{
+      }, (error) => {
         this.spinner.hide();
         this.toastr.error('', 'Something went wrong !');
       })
@@ -156,7 +156,7 @@ export class TeacherComponent {
         this.allZones = res.ZoneInfo;
         this.spinner.hide();
         this.allZones = this.allZones.sort((a: any, b: any) => a.Z_ID - b.Z_ID);
-      },(error)=>{
+      }, (error) => {
         this.spinner.hide();
         this.toastr.error('', 'Something went wrong !');
       })
@@ -173,7 +173,7 @@ export class TeacherComponent {
         this.setAllGraphs(data);
         this.spinner.hide();
       }
-    },(error)=>{
+    }, (error) => {
       this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     })
@@ -195,7 +195,7 @@ export class TeacherComponent {
         this.allSchools = [];
         this.spinner.hide();
       }
-    },(error)=>{
+    }, (error) => {
       this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     });
@@ -215,7 +215,7 @@ export class TeacherComponent {
         this.spinner.hide();
         this.allSchools = [];
       }
-    },(error)=>{
+    }, (error) => {
       this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     })
@@ -231,7 +231,7 @@ export class TeacherComponent {
         this.setAllGraphs(data);
         this.spinner.hide();
       }
-    },(error)=>{
+    }, (error) => {
       this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     })
@@ -251,6 +251,7 @@ export class TeacherComponent {
     this.teacherGenderRatio.series = [...series];
     this.teacherGenderRatio.chart.type = "pie";
     this.teacherGenderRatio.labels = [...categories];
+    this.teacherGenderRatio.total = series.reduce((a:any,b:any)=>a+b,0);
     this.teacherGenderRatio.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         this.teacherDataClear();
@@ -394,16 +395,18 @@ export class TeacherComponent {
   }
 
   getTachersBySchoolName() {
-    const parameter = {
-      "schname": this.schoolModel.Schoolid
-    };
-    this.teacherDataClear();
-    this.httpService.post('teacher-graph/teachercount/schoolname', parameter).subscribe((res: any) => {
-      this.allTeacherData = res;
-      if (this.schoolModel) {
-        this.openModal.nativeElement.click();
-      }
-    });
+    if (this.schoolModel) {
+      const parameter = {
+        "schname": this.schoolModel.Schoolid
+      };
+      this.teacherDataClear();
+      this.httpService.post('teacher-graph/teachercount/schoolname', parameter).subscribe((res: any) => {
+        this.allTeacherData = res;
+        if (this.schoolModel) {
+          this.openModal.nativeElement.click();
+        }
+      });
+    }
   }
 
   getSchoolTypeWiseCount(data: any) {
@@ -444,6 +447,6 @@ export class TeacherComponent {
       this.minorityWiseTeacher.labels.push(data[i].minority);
     }
   }
- 
+
 
 }

@@ -16,19 +16,19 @@
         </option>
     </select>
     <select class="form-select ms-2" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
-        <option value="" disabled>All Zones</option>
+        <option value="">All Zones</option>
         <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
             {{zone.Zone_Name}} ({{zone.Z_ID}})
         </option>
     </select>
     <select class="form-select ms-2" [(ngModel)]="shiftModel" (change)="getGraphsBySfhit()">
-        <option value="" disabled>Select Shift</option>
+        <option value="">Select Shift</option>
         <option *ngFor="let shift of allShift" value="{{shift}}">
             {{shift}}
         </option>
     </select>
     <select class="form-select ms-2" [(ngModel)]="schoolModel" (change)="getGraphsBySchool()">
-        <option value="" disabled>All School</option>
+        <option value="">All School</option>
         <option *ngFor="let school of allSchools" [ngValue]="school">
             {{school.School_Name}} - ({{school.Schoolid}})
         </option>
@@ -59,7 +59,7 @@
         <h5 *ngIf="!districtModel" class="header-bg p-2">Delhi</h5>
         <h5 *ngIf="districtModel" class="header-bg p-2">{{districtModel}}</h5>
         <div class="d-flex justify-content-around mt-4">
-            <img class="ms-2" src="../../../assets/images/icons/immigration.png" style="height: 100px;" alt="">
+            <img class="ms-2" src="../../../assets/images/Dashboard/attendance.png" style="height: 100px;" alt="">
             <div class="d-block ms-1 text-center">
                 <h1 class="fw-bold">{{allData?.totalStudentCount}}</h1>
                 <h3>Total Student</h3>

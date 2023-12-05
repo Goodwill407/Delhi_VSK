@@ -33,22 +33,22 @@
 </div>
 
 <div class="container1">
-  <div class="column text-center">
+  <div class="column">
     <h5 class="header-bg p-2">Total Teacher</h5>
     <div class="d-flex justify-content-around mt-4" (click)="getTachersBySchoolName()">
-      <img class="ms-2" src="../../../assets/images/Dashboard/teacher.png" style="height: 90px;" alt="">
+      <img class="ms-2" src="../../../assets/images/Dashboard/teacher.png" style="height: 100px;" alt="">
       <div class="d-block ms-1 text-center">
         <h1 class="fw-bold">{{allData?.totalTeachers}}</h1>
         <h3>Total Teacher</h3>
       </div>
     </div>
-    <div class="d-flex mt-5 justify-content-around">
-      <div class="teacher-info">
+    <div class="d-flex justify-content-around text-center ratio-data">
+      <div style="width: 45%;">
         <h1 class="fw-bold">{{allData?.totalSchools}}</h1>
         <h5>Total School</h5>
       </div>
-      <div class="vr"></div>
-      <div class="teacher-info">
+      <div class="vr mx-3"></div>
+      <div style="width: 45%;">
         <h1 class="fw-bold">{{allData?.averageTeachers?.toFixed(1)}}</h1>
         <h5>Average Teacher</h5>
       </div>
@@ -58,18 +58,19 @@
 
   <div class="column text-center">
     <h5 class="header-bg p-2">Student & Teacher Ratio</h5>
-    <img class="img-fluid mt-4" width="130" src="../../../assets/images/education.png"><br>
-    <h5 class="mt-5">{{allData?.teacherStudentRatio | number: '1.0-0'}} : 1 Teacher</h5>
+    <img class="img-fluid mt-5" width="120" src="../../../assets/images/Dashboard/education.png"><br>
+    <h3 class="mt-5 fw-semibold teacher-ratio-count">{{allData?.teacherStudentRatio | number: '1.0-0'}} : 1 Teacher</h3>
   </div>
 
-  <div class="column">
+  <div class="column text-center">
     <h5 class="header-bg p-2">Teachers Gender Ratio</h5>
     <apx-chart [series]="teacherGenderRatio?.series" [chart]="teacherGenderRatio?.chart"
       [dataLabels]="teacherGenderRatio?.dataLabels" [plotOptions]="teacherGenderRatio?.plotOptions"
       [legend]="teacherGenderRatio?.legend" [labels]="teacherGenderRatio?.labels" [colors]="teacherGenderRatio?.colors"
       [grid]="teacherGenderRatio?.grid" [tooltip]="teacherGenderRatio?.tooltip"></apx-chart>
+      <h6 class="fw-bold">Total Teachers : {{teacherGenderRatio?.total}}</h6>
   </div>
-  <div class="column wide" style="height: auto;">
+  <div class="column wide-height" style="height: auto;">
     <h5 class="header-bg p-2">Designation wise Teacher</h5>
     <apx-chart [series]="designation?.series" [chart]="designation?.chart" [dataLabels]="designation?.dataLabels"
       [plotOptions]="designation?.plotOptions" [xaxis]="designation?.xaxis" [yaxis]="designation?.yaxis"
@@ -164,7 +165,8 @@
       <div class="modal-header" style="background-color: #b3d64d;">
         <h5 class="modal-title" *ngIf="configGender" id="exampleModalLabel">Teacher Details By Gender:
           ({{configGender?.dataPointIndex == 0 ? 'Male' : 'Female'}}) </h5>
-        <h5 class="modal-title" *ngIf="configDesignation == 0 || configDesignation" id="exampleModalLabel">Teacher Details By Designation:
+        <h5 class="modal-title" *ngIf="configDesignation == 0 || configDesignation" id="exampleModalLabel">Teacher
+          Details By Designation:
           ({{allData.postdescWiseTeacherCounts[configDesignation]._id}}) </h5>
         <h5 class="modal-title" *ngIf="commonName" id="exampleModalLabel">Teacher Details By {{commonName}} </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
