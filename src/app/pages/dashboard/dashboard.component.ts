@@ -13,7 +13,7 @@ export class DashboardComponent {
   allDistrictData: any = [];
 
   totalCount: any = [];
-  constructor( private spinner: NgxSpinnerService,private httpService: HttpServiceService , private toastr: ToastrService) { }
+  constructor(private spinner: NgxSpinnerService, private httpService: HttpServiceService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.getSchoolByDistrict();
@@ -27,8 +27,8 @@ export class DashboardComponent {
         this.allDistrictData = data;
         this.spinner.hide();
       }
-    },error =>{
-      this.spinner.hide();      
+    }, error => {
+      this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     })
   }
@@ -40,7 +40,7 @@ export class DashboardComponent {
         this.totalCount = data;
         this.spinner.hide();
       }
-    },(error) =>{
+    }, (error) => {
       this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     })
