@@ -461,3 +461,20 @@ a.article:hover {
     align-items: center;
     display: flex;
 }
+
+@media only screen and (max-width: 415px) {
+    .small-screen {
+      display: block;
+    }
+    .large-screen {
+      display: none;
+    }    
+  }
+  @media only screen and (min-width: 415px) {
+    .small-screen {
+      display: none;
+    }
+    .large-screen {
+      display: block;
+    }
+  }
