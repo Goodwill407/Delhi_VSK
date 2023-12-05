@@ -45,7 +45,7 @@
     date: 'dd MMM yyyy'}}</h3>
 </div>
 
-<div class="container1" *ngIf="dateModel1 && dateModel2">
+<div class="container1" *ngIf="dateModel1 && dateModel2 && !dataNotFound">
   <div class="column">
     <h5 class="header-bg p-2">Gender Wise Present Students</h5>
     <apx-chart [series]="genderWisePresent?.series" [chart]="genderWisePresent?.chart"

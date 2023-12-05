@@ -56,7 +56,7 @@ export class AttendanceRegularComponent {
   formattedDate: any;
   itemCount: number | undefined;
   subscription: Subscription | undefined;
-
+  searchBox: any;
 
   constructor(private communicationService: CommunicationService, private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, public datepipe: DatePipe, private toastr: ToastrService) {
 

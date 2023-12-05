@@ -30,7 +30,7 @@
     </h3>
 </div>
 <div class="container1">
-    <div class="column" style="height: 350px;">
+    <div class="column">
         <h5 *ngIf="!districtModel" class="header-bg p-2">Delhi</h5>
         <h5 *ngIf="districtModel" class="header-bg p-2">{{districtModel}}</h5>
         <div class="d-flex justify-content-around mt-4 ">
@@ -140,10 +140,15 @@
                     Gender: ({{studGender?.dataPointIndex == 0 ? 'Boys' : (studGender?.dataPointIndex == 1 ? 'Girls' :
                     'Other')}}) </h5>
                 <!-- <h5 class="modal-title" *ngIf="commonName" id="exampleModalLabel" >Teacher Details By {{commonName}} </h5> -->
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="searchBox = ''"></button>
             </div>
             <div class="modal-body">
-
+                <div class="input-group mb-3 w-50">
+                    <span class="input-group-text" id="basic-addon1">🔍</span>
+                    <input class="form-control" type="search" [(ngModel)]="searchBox" placeholder="Search by name..."
+                        value="" id="example-search-input">
+                </div>
                 <table class="table table-responsive table-hover table-bordered table-striped">
                     <thead class="thead-light">
                         <tr class="table-bordered" *ngIf="allTeacherData?.length > 0">
@@ -169,7 +174,7 @@
                         </tr>
                     </thead>
                     <tbody *ngIf="allTeacherData?.length > 0">
-                        <tr *ngFor="let data of allTeacherData;let i = index">
+                        <tr *ngFor="let data of allTeacherData | search:searchBox;let i = index">
                             <td>{{i+1}}</td>
                             <td>{{data.Name}}</td>
                             <td>{{data.empid}}</td>
@@ -182,7 +187,7 @@
                         </tr>
                     </tbody>
                     <tbody *ngIf="allStudentData?.length > 0">
-                        <tr *ngFor="let data of allStudentData;let i = index">
+                        <tr *ngFor="let data of allStudentData | search:searchBox;let i = index">
                             <td>{{i+1}}</td>
                             <td>{{data.Name}}</td>
                             <td>{{data.CLASS}}</td>

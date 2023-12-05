@@ -70,16 +70,8 @@
       [tooltip]="teacherGenderRatio?.tooltip"></apx-chart>
     <h6 class="fw-bold">Total Teachers : {{teacherGenderRatio?.total}}</h6>
   </div>
-
-  <div class="column wide-height large-screen" style="height: auto;">
-    <h5 class="header-bg p-2">Designation wise Teacher</h5>
-    <apx-chart [series]="designation?.series" [chart]="designation?.chart" [dataLabels]="designation?.dataLabels"
-      [plotOptions]="designation?.plotOptions" [xaxis]="designation?.xaxis" [yaxis]="designation?.yaxis"
-      [labels]="designation?.labels" [legend]="designation?.legend" [colors]="designation?.colors"
-      [grid]="designation?.grid" [fill]="designation?.fill"></apx-chart>
-  </div>
-
-  <div class="column small-screen" style="overflow: scroll; height: 350px;">
+  
+  <div class="column" [ngClass]="communicationServiceMobile ? '' : 'wide-height'" style="height: auto;">
     <h5 class="header-bg p-2">Designation wise Teacher</h5>
     <apx-chart [series]="designation?.series" [chart]="designation?.chart" [dataLabels]="designation?.dataLabels"
       [plotOptions]="designation?.plotOptions" [xaxis]="designation?.xaxis" [yaxis]="designation?.yaxis"
@@ -179,10 +171,15 @@
           Details By Designation:
           ({{allData.postdescWiseTeacherCounts[configDesignation]._id}}) </h5>
         <h5 class="modal-title" *ngIf="commonName" id="exampleModalLabel">Teacher Details By {{commonName}} </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" (click)="searchBox = ''" class="btn-close" data-bs-dismiss="modal"
+          aria-label="Close"></button>
       </div>
       <div class="modal-body">
-
+        <div class="input-group mb-3 w-50">
+          <span class="input-group-text" id="basic-addon1">🔍</span>
+          <input class="form-control" type="search" [(ngModel)]="searchBox" placeholder="Search by name..." value=""
+            id="example-search-input">
+        </div>
         <table class="table table-responsive table-hover table-bordered table-striped">
           <thead class="thead-light">
             <tr class="table-bordered ">
@@ -198,7 +195,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let data of allTeacherData;let i = index">
+            <tr *ngFor="let data of allTeacherData | search:searchBox;let i = index">
               <td>{{i+1}}</td>
               <td>{{data.Name}}</td>
               <td>{{data.empid}}</td>

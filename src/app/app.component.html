@@ -1,6 +1,5 @@
 <div class="wrapper" *ngIf="isLogIn">
   <div class="sidebarMenu large-screen" [ngClass]="status ? 'darSideBar' : 'genisSideBar'">
-
     <div class="sideBarUst text-center pt-3">
       <div class="logo">
         <button type="button" id="sidebarCollapse" class="btn" (click)="clickEvent() ">
@@ -181,36 +180,6 @@
           </a>
         </li>
 
-
-        <!--<li class="nav-item mt-2">
-          <a class="nav-link" routerLink="cquib" [queryParams]="{tabName : 'UDISE+'}" href="#">
-            <span class="image-icon">
-              <img src="../assets/images/UDISE.png" alt="">
-            </span>
-            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">
-              UDISE+</span>
-          </a>
-        </li>
-
-        <li class="nav-item mt-2">
-          <a class="nav-link" routerLink="cquib" [queryParams]="{tabName : 'NIPUN Bharat'}" href="#">
-            <span class="image-icon">
-              <img src="../assets/images/Nipun Bharat Logo-01.png" alt="">
-            </span>
-            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'"> NIPUN
-              Bharat</span>
-          </a>
-        </li>
-
-        <li class="nav-item mt-2">
-          <a class="nav-link active d-flex" href="https://ncert.delhivsk.org/#/login">
-            <span class="image-icon">
-              <img src="../assets/images/Dashboard/cQube_logo.jpg" alt="">
-            </span>
-            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">NCERT</span>
-          </a>
-        </li> -->
-
       </ul>
     </div>
 
@@ -236,7 +205,7 @@
     <!--  -->
     <nav class="navbar navbar-expand-xl navbar-light ">
       <div class="container-fluid d-flex">
-        <p routerLink="content/school-dashboard" class="navbar-brand text-center text-white header-font mb-0">Vidya
+        <p routerLink="content/admin-dashboard" class="text-center text-white header-font mb-0" style="cursor: pointer;">Vidya
           Samiksha Kendra, Delhi</p>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
           aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -260,6 +229,118 @@
         </div>
       </div>
     </nav>
+
+    <div class="small-screen ms-2 mt-2">
+      <ul class="nav d-flex" *ngIf="user.role == 'user'">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="content/admin-dashboard" routerLinkActive="active" href="#">
+            <span class="image-icon">
+              <img src="../assets/images/dashboard.png" alt="">
+            </span>
+            <!-- <span class="ms-2"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Dashboard</span> -->
+          </a>
+          <p>Dashboard</p>
+        </li>
+    
+        <li class="nav-item">
+          <a class="nav-link" routerLink="school" routerLinkActive="active" href="#">
+            <span class="image-icon text-center">
+              <img src="../assets/images/Dashboard/school.png" alt="">
+            </span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">School</span>
+          </a>
+          <p>School</p>
+        </li>
+    
+        <li class="nav-item">
+          <a class="nav-link" routerLink="teacher" routerLinkActive="active" href="#">
+            <span class="image-icon text-center justify-content-center">
+              <img src="../assets/images/Dashboard/teacher.png" alt="">
+            </span>
+            <span class="ms-2"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Teacher</span>
+            </a>
+          <p>Teacher</p>
+        </li>
+    
+        <li class="nav-item">
+          <a class="nav-link" routerLink="student" routerLinkActive="active" href="#">
+            <span class="image-icon text-center justify-content-center">
+              <img src="../assets/images/Dashboard/reading.png" alt="">
+            </span>
+            <span class="ms-2"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Student</span>
+          </a>
+          <p>Student</p>
+        </li>
+    
+        <li class="nav-item">
+          <a class="nav-link" routerLink="attendance" routerLinkActive="active" href="#">
+            <span class="image-icon text-center justify-content-center">
+              <img src="../assets/images/Dashboard/attendance.png" alt="">
+            </span>
+            <span class="ms-2"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Attendance</span>
+          </a>
+          <p>Attendance</p>
+        </li>
+    
+        <li class="nav-item mt-2">
+          <a class="nav-link" routerLink="nishtha" routerLinkActive="active" href="#">
+            <span class="image-icon">
+              <img src="../assets/images/Dashboard/nishtha.png" alt="">
+            </span>
+            <span class="ms-2"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">NISHTHA</span>
+          </a>
+          <p>Nishtha</p>
+        </li>
+    
+        <li class="nav-item mt-2">
+          <a class="nav-link" routerLink="pgi" routerLinkActive="active">
+            <span class="image-icon">
+              <img src="../assets/images/Dashboard/pgi.png" alt="">
+            </span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">PGI</span>
+          </a>
+          <p>PGI</p>
+        </li>
+    
+        <li class="nav-item mt-2">
+          <a class="nav-link" routerLink="udise" routerLinkActive="active">
+            <span class="image-icon">
+              <img src="../assets/images/UDISE.png" alt="">
+            </span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">UDISE</span>
+          </a>
+          <p>UDISE</p>
+        </li>
+    
+        <li class="nav-item mt-2">
+          <a class="nav-link" routerLink="nas" routerLinkActive="active">
+            <span class="image-icon">
+              <img src="../assets/images/Dashboard/unnamed.png" alt="">
+            </span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'"> NAS</span>
+          </a>
+          <p>NAS</p>
+        </li>
+    
+        <li class="nav-item mt-2">
+          <a class="nav-link" routerLink="diksha" routerLinkActive="active">
+            <span class="image-icon">
+              <img src="../assets/images/ETB & E-Content.png" alt="">
+            </span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">
+              Diksha</span>
+          </a>
+          <p>Diksha</p>
+        </li>
+    
+      </ul>
+    </div> 
+
     <router-outlet></router-outlet>
 
 

@@ -4,3 +4,7 @@
   width: 100%;
 }
 
+.container1 .column {
+  min-height: 350px;
+}
+

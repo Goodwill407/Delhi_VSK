@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
+import { CommunicationService } from 'src/app/services/communication.service';
 import { GraphService } from 'src/app/services/graph-service.service';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 
@@ -52,13 +53,16 @@ export class StudentComponent {
   subscription: Subscription | undefined;
   @ViewChild('openModal') openModal: any;
 
-
   configGender: any;
   config: any;
   commonName: any;
   statusWise: any;
+  searchBox: any;
+  communicationServiceMobile: any;
 
-  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService) { }
+  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private communicationService: CommunicationService) {
+    this.communicationServiceMobile = this.communicationService.isMobile;
+   }
 
   ngOnInit() {
     this.getStudentGraphData();

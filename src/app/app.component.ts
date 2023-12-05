@@ -1,5 +1,6 @@
 import { Component, SimpleChanges, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommunicationService } from './services/communication.service';
 
 @Component({
   selector: 'app-root',
@@ -15,8 +16,11 @@ export class AppComponent {
   statusLink: boolean = true;
   isLogIn: boolean = false;
   user: any;
+  isMobile: boolean = false;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private communicationService: CommunicationService) {
+    this.isMobile = window.innerWidth <= 768 ? true : false;
+    this.communicationService.isMobile = this.isMobile;
     this.user = JSON.parse(sessionStorage.getItem('userProfile')!);
     if (!this.user) {
       this.isLogIn = false;

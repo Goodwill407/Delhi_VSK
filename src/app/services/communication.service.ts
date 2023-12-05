@@ -6,6 +6,8 @@ import { Subject } from "rxjs";
 })
 
 export class CommunicationService {
+    isMobile: boolean = false;
+
     private parentClickSubject = new Subject<void>();
 
     parentClick$ = this.parentClickSubject.asObservable();

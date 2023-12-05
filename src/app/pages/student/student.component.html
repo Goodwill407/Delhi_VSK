@@ -124,7 +124,7 @@
             [legend]="MinorityWiseStudCount?.legend"></apx-chart>
     </div> -->
 
-  <div class="column wide">
+  <div class="column" [ngClass]="communicationServiceMobile ? '' : 'wide'">
     <h5 class="header-bg p-2">Student By School Category</h5>
     <apx-chart [series]="StudentCatogoryWiseCount?.series" [chart]="StudentCatogoryWiseCount?.chart"
       [dataLabels]="StudentCatogoryWiseCount?.dataLabels" [plotOptions]="StudentCatogoryWiseCount?.plotOptions"
@@ -152,10 +152,15 @@
         <h5 class="modal-title" *ngIf="commonName" id="exampleModalLabel">Student Details By {{commonName}} </h5>
         <h5 class="modal-title" *ngIf="statusWise == 0 || statusWise " id="exampleModalLabel">Student Details By Status:
           {{allData.studentStatusCounts[this.statusWise]._id}} </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" (click)="searchBox = ''" class="btn-close" data-bs-dismiss="modal"
+          aria-label="Close"></button>
       </div>
       <div class="modal-body">
-
+        <div class="input-group mb-3 w-50">
+          <span class="input-group-text" id="basic-addon1">🔍</span>
+          <input class="form-control" type="search" [(ngModel)]="searchBox" placeholder="Search by name..." value=""
+            id="example-search-input">
+        </div>
         <table class="table table-responsive table-hover table-bordered table-striped">
           <thead class="thead-light">
             <tr class="table-bordered ">
@@ -170,7 +175,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let data of allStudentData;let i = index">
+            <tr *ngFor="let data of allStudentData | search:searchBox;let i = index">
               <td>{{i+1}}</td>
               <td>{{data.Name}}</td>
               <td>{{data.CLASS}}</td>
