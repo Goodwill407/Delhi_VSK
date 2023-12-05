@@ -3,5 +3,5 @@
 }
 
 .container1 .column {
-    height: 300px;
+    min-height: 350px;
 }
