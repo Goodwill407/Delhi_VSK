@@ -30,6 +30,7 @@ export class AttendanceRangeWiseComponent {
   allZones: any;
   districtName: any;
   schoolName: any;
+  DateWiseRange: any;
   allShift: any = ['Morning', 'General', 'Evening'];
 
   constructor(private toastr: ToastrService, private httpService: HttpServiceService, public datepipe: DatePipe, private spinner: NgxSpinnerService, private graphService: GraphService) { }
@@ -227,6 +228,8 @@ export class AttendanceRangeWiseComponent {
   }
 
   getDateRangeGraph(data: any) {
+    this.DateWiseRange=data
+    console.log(this.DateWiseRange.length)
     this.dateRangeGraph = this.graphService.districtWiseGraph();
     for (let i = 0; i < data.length; i++) {
       this.dateRangeGraph.series[0].data.push(Number((data[i].malePresentPercentage + data[i].feMalePresentPercentage + data[i].otherPresentPercentage).toFixed(2)));
