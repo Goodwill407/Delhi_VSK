@@ -327,7 +327,7 @@ export class AttendanceRegularComponent {
     this.attendanceStatusCount.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         this.indexNoConfig = config.dataPointIndex;
-        this.getAttendanceStatusCountClick(true);
+        this.getAttendanceStatusCountClick(false);
         this.graphService.addToCart();
       }
     }
@@ -339,7 +339,7 @@ export class AttendanceRegularComponent {
       "date": this.getDate(this.dateModel),
     }
     if (this.dateModel && !this.schoolModel && !this.districtModel && !this.zoneModel && !this.shiftModel) {
-      this.getDataOfCommon(true,'attendance/attendance-status-wise',parameter);
+      this.getDataOfCommon(flash,'attendance/attendance-status-wise',parameter);
       // this.httpService.post('attendance/attendance-status-wise', parameter).subscribe((res: any) => {
       //   this.allSchoolAttendanceStatus = res;
       //   if (!flash) {
@@ -348,7 +348,7 @@ export class AttendanceRegularComponent {
       // })
     } else if (!this.schoolModel && this.districtModel && !this.zoneModel) {
       parameter.district_name = this.districtModel;
-      this.getDataOfCommon(true,'attendance/attendance-status-shift-wise',parameter);
+      this.getDataOfCommon(flash,'attendance/attendance-status-shift-wise',parameter);
       // this.httpService.post('attendance/attendance-status-district-wise', parameter).subscribe((res: any) => {
       //   this.allSchoolAttendanceStatus = res;
       //   if (!flash) {
@@ -357,7 +357,7 @@ export class AttendanceRegularComponent {
       // })
     } else if (!this.schoolModel && this.zoneModel) {
       parameter.Z_name = this.zoneModel;
-      this.getDataOfCommon(true,'attendance/attendance-status-zone-wise',parameter);
+      this.getDataOfCommon(flash,'attendance/attendance-status-zone-wise',parameter);
       // this.httpService.post('attendance/attendance-status-zone-wise', parameter).subscribe((res: any) => {
       //   this.allSchoolAttendanceStatus = res;
       //   if (!flash) {
@@ -366,7 +366,7 @@ export class AttendanceRegularComponent {
       // })
     } else if (this.schoolModel) {
       parameter.School_ID = this.schoolModel.Schoolid;
-      this.getDataOfCommon(true,'attendance/attendance-status-school-wise',parameter);
+      this.getDataOfCommon(flash,'attendance/attendance-status-school-wise',parameter);
       // this.httpService.post('attendance/attendance-status-school-wise', parameter).subscribe((res: any) => {
       //   this.allSchoolAttendanceStatus = res;
       //   if (!flash) {
@@ -375,7 +375,7 @@ export class AttendanceRegularComponent {
       // })
     } else if (this.dateModel && this.shiftModel) {
       parameter.shift = this.shiftModel;
-      this.getDataOfCommon(true,'attendance/attendance-status-shift-wise',parameter);
+      this.getDataOfCommon(flash,'attendance/attendance-status-shift-wise',parameter);
       // this.httpService.post('attendance/attendance-status-shift-wise', parameter).subscribe((res: any) => {
       //   this.allSchoolAttendanceStatus = res;
       //   if (!flash) {
