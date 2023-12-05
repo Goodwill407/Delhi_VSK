@@ -43,6 +43,7 @@ export class SchoolComponent {
   @ViewChild('openModal') openModal: any;
   itemCount: number | undefined;
   subscription: Subscription | undefined;
+  searchBox: any;
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private toastr: ToastrService) {
   }
@@ -73,7 +74,7 @@ export class SchoolComponent {
         this.spinner.hide();
         this.allDistricts = this.allDistricts.sort((a: any, b: any) => a.D_ID - b.D_ID);
       }
-    },(error)=>{
+    }, (error) => {
       this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     })
@@ -93,7 +94,7 @@ export class SchoolComponent {
         this.spinner.hide();
         this.allSchools = [];
       }
-    },(error)=>{
+    }, (error) => {
       this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     })
@@ -113,7 +114,7 @@ export class SchoolComponent {
         this.allSchools = [];
         this.spinner.hide();
       }
-    },(error)=>{
+    }, (error) => {
       this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     })
@@ -246,7 +247,7 @@ export class SchoolComponent {
           this.openModal.nativeElement.click();
         }
         this.spinner.hide();
-      },(error)=>{
+      }, (error) => {
         this.spinner.hide();
         this.toastr.error('', 'Something went wrong !');
       })

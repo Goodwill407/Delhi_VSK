@@ -227,10 +227,15 @@
             <div class="modal-header" style="background-color: #b3d64d;">
                 <h5 class="modal-title" id="exampleModalLabel">Attendance Status Wise Details By
                     {{attendanceStatusCount?.labels[indexNoConfig]}} </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" (click)="searchBox = ''" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
+                <div class="input-group mb-3 w-50">
+                    <span class="input-group-text" id="basic-addon1">🔍</span>
+                    <input class="form-control" type="search" [(ngModel)]="searchBox" placeholder="Search by name..."
+                        value="" id="example-search-input">
+                </div>
                 <table class="table table-responsive table-hover table-bordered table-striped">
                     <thead class="thead-light">
                         <tr class="table-bordered ">
@@ -244,7 +249,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let data of allSchoolAttendanceStatus;let i = index">
+                        <tr *ngFor="let data of allSchoolAttendanceStatus | search:searchBox;let i = index">
                             <td>{{i+1}}</td>
                             <td>{{data.school_name}}</td>
                             <td>{{data.district_name}}</td>

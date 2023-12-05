@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { GraphService } from 'src/app/services/graph-service.service';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { CommunicationService } from 'src/app/services/communication.service';
 
 @Component({
   selector: 'app-teacher',
@@ -46,7 +47,12 @@ export class TeacherComponent {
   configGender: any;
   commonName: any;
   configDesignation: any;
-  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService, private toastr: ToastrService) { }
+  searchBox: any;
+  communicationServiceMobile: any;
+
+  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService) {
+    this.communicationServiceMobile = this.communicationService.isMobile;
+  }
 
   ngOnInit() {
     this.getAllTeacherData();
@@ -251,7 +257,7 @@ export class TeacherComponent {
     this.teacherGenderRatio.series = [...series];
     this.teacherGenderRatio.chart.type = "pie";
     this.teacherGenderRatio.labels = [...categories];
-    this.teacherGenderRatio.total = series.reduce((a:any,b:any)=>a+b,0);
+    this.teacherGenderRatio.total = series.reduce((a: any, b: any) => a + b, 0);
     this.teacherGenderRatio.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         this.teacherDataClear();

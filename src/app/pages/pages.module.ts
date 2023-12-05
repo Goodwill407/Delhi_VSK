@@ -22,7 +22,7 @@ import { NasComponent } from './nas/nas.component';
 import { DikshaComponent } from './diksha/diksha.component';
 import { AttendanceRangeWiseComponent } from './attendance-range-wise/attendance-range-wise.component';
 import { AttendanceRegularComponent } from './attendance-regular/attendance-regular.component';
-
+import { SearchPipe } from '../pipes/search.pipe';
 
 @NgModule({
   declarations: [
@@ -41,7 +41,8 @@ import { AttendanceRegularComponent } from './attendance-regular/attendance-regu
     NasComponent,
     DikshaComponent,
     AttendanceRangeWiseComponent,
-    AttendanceRegularComponent
+    AttendanceRegularComponent,
+    SearchPipe
   ],
   imports: [
     CommonModule,
@@ -52,6 +53,6 @@ import { AttendanceRegularComponent } from './attendance-regular/attendance-regu
     NgApexchartsModule,
     NgxSpinnerModule
   ],
-  providers:[DatePipe]
+  providers: [DatePipe]
 })
 export class PagesModule { }

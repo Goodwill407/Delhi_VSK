@@ -32,6 +32,7 @@ export class AttendanceRangeWiseComponent {
   schoolName: any;
   DateWiseRange: any;
   allShift: any = ['Morning', 'General', 'Evening'];
+  dataNotFound: boolean = false;
 
   constructor(private toastr: ToastrService, private httpService: HttpServiceService, public datepipe: DatePipe, private spinner: NgxSpinnerService, private graphService: GraphService) { }
 
@@ -107,7 +108,10 @@ export class AttendanceRangeWiseComponent {
           this.spinner.hide();
         } else {
           this.spinner.hide();
-          alert('DATA NOT FOUND ...')
+          this.toastr.error('', 'Data not found between this range !');
+          if (!this.genderWisePresent && !this.genderWiseAbsent && !this.genderWiseLeave && !this.genderWiseNotMarked) {
+            this.dataNotFound = true;
+          }
         }
       }, (error) => {
         this.spinner.hide();
@@ -228,7 +232,7 @@ export class AttendanceRangeWiseComponent {
   }
 
   getDateRangeGraph(data: any) {
-    this.DateWiseRange=data
+    this.DateWiseRange = data
     console.log(this.DateWiseRange.length)
     this.dateRangeGraph = this.graphService.districtWiseGraph();
     for (let i = 0; i < data.length; i++) {
