@@ -75,7 +75,7 @@
       [tooltip]="genderWiseLeave?.tooltip"></apx-chart>
   </div>
 
-  <div class="column extra-wide">
+  <div [ngClass]="{'wide': DateWiseRange.length < 3, 'extra-wide': DateWiseRange.length > 7}" class="column">
     <h5 class="header-bg p-2">Attendance Bar</h5>
     <apx-chart [series]="dateRangeGraph?.series" [chart]="dateRangeGraph?.chart"
         [dataLabels]="dateRangeGraph?.dataLabels" [plotOptions]="dateRangeGraph?.plotOptions"
