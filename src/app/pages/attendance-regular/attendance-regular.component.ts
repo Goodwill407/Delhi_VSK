@@ -57,9 +57,10 @@ export class AttendanceRegularComponent {
   itemCount: number | undefined;
   subscription: Subscription | undefined;
   searchBox: any;
+  communicationServiceMobile: any;
 
   constructor(private communicationService: CommunicationService, private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, public datepipe: DatePipe, private toastr: ToastrService) {
-
+    this.communicationServiceMobile = this.communicationService.isMobile;
   }
 
   ngOnInit() {
@@ -86,7 +87,8 @@ export class AttendanceRegularComponent {
 
   getDate(date: any) {
     let Mdate: any;
-    return Mdate = this.datepipe.transform(date, 'dd/MM/yyyy');
+    // return Mdate = this.datepipe.transform(date, 'dd/MM/yyyy');
+    return Mdate = this.datepipe.transform(date, 'yyyy-MM-dd');
   }
 
   getAllDistricts() {
