@@ -282,6 +282,23 @@ span {
     }
   }
 
-.small-screen div ul li{
-    border: 2px solid;
+#content {
+    width: 100%;
+    padding: 2px 10px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    /* margin-left: 60px; */
+}
+
+.small-screen{
+    position: absolute;
+    z-index: 1;
+    background: #fff;
+}
+.small-screen p{
+  font-size: small;
+  text-align: center;
+}
+.small-screen .nav-item{
+   margin-left: 5px;
 }

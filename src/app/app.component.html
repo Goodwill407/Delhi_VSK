@@ -205,7 +205,8 @@
     <!--  -->
     <nav class="navbar navbar-expand-xl navbar-light ">
       <div class="container-fluid d-flex">
-        <p routerLink="content/admin-dashboard" class="text-center text-white header-font mb-0" style="cursor: pointer;">Vidya
+        <p routerLink="content/admin-dashboard" class="text-center text-white header-font mb-0"
+          style="cursor: pointer;">Vidya
           Samiksha Kendra, Delhi</p>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
           aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -230,117 +231,115 @@
       </div>
     </nav>
 
-    <div class="small-screen ms-2 mt-2">
-      <ul class="nav d-flex" *ngIf="user.role == 'user'">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="content/admin-dashboard" routerLinkActive="active" href="#">
-            <span class="image-icon">
+    <h1 class="btn mt-2 mb-0 small-screen" (click)="sideBarNav()">
+      ☰
+    </h1>
+    <div class="small-screen" *ngIf="showFlag">
+      <ul class="nav" *ngIf="user.role == 'user'" style="width: 85px;">
+        <li class="nav-item mt-2">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="content/admin-dashboard" routerLinkActive="active" href="#">
+            <span>
               <img src="../assets/images/dashboard.png" alt="">
             </span>
-            <!-- <span class="ms-2"
-              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Dashboard</span> -->
           </a>
-          <p>Dashboard</p>
-        </li>
-    
+          <p class="mb-0">Dashboard</p>
+        </li> 
+        <hr class="m-0 w-100">
+
         <li class="nav-item">
-          <a class="nav-link" routerLink="school" routerLinkActive="active" href="#">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="school" routerLinkActive="active" href="#">
             <span class="image-icon text-center">
               <img src="../assets/images/Dashboard/school.png" alt="">
             </span>
-            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">School</span>
           </a>
-          <p>School</p>
+          <p class="mb-0 ">School</p>
         </li>
-    
+        <hr class="m-0 w-100">
+
         <li class="nav-item">
-          <a class="nav-link" routerLink="teacher" routerLinkActive="active" href="#">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="teacher" routerLinkActive="active" href="#">
             <span class="image-icon text-center justify-content-center">
               <img src="../assets/images/Dashboard/teacher.png" alt="">
             </span>
-            <span class="ms-2"
-              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Teacher</span>
-            </a>
-          <p>Teacher</p>
+          </a>
+          <p class="mb-0 ">Teacher</p>
         </li>
-    
+        <hr class="m-0 w-100">
+
         <li class="nav-item">
-          <a class="nav-link" routerLink="student" routerLinkActive="active" href="#">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="student" routerLinkActive="active" href="#">
             <span class="image-icon text-center justify-content-center">
               <img src="../assets/images/Dashboard/reading.png" alt="">
             </span>
-            <span class="ms-2"
-              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Student</span>
           </a>
-          <p>Student</p>
+          <p class="mb-0 ">Student</p>
         </li>
-    
+        <hr class="m-0 w-100">
+
         <li class="nav-item">
-          <a class="nav-link" routerLink="attendance" routerLinkActive="active" href="#">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="attendance" routerLinkActive="active" href="#">
             <span class="image-icon text-center justify-content-center">
               <img src="../assets/images/Dashboard/attendance.png" alt="">
             </span>
-            <span class="ms-2"
-              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Attendance</span>
           </a>
-          <p>Attendance</p>
+          <p class="mb-0 ">Attendance</p>
         </li>
-    
-        <li class="nav-item mt-2">
-          <a class="nav-link" routerLink="nishtha" routerLinkActive="active" href="#">
+        <hr class="m-0 w-100">
+
+        <li class="nav-item">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="nishtha" routerLinkActive="active" href="#">
             <span class="image-icon">
               <img src="../assets/images/Dashboard/nishtha.png" alt="">
             </span>
-            <span class="ms-2"
-              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">NISHTHA</span>
           </a>
-          <p>Nishtha</p>
+          <p class="mb-0 ">Nishtha</p>
         </li>
-    
-        <li class="nav-item mt-2">
-          <a class="nav-link" routerLink="pgi" routerLinkActive="active">
+        <hr class="m-0 w-100">
+
+        <li class="nav-item">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="pgi" routerLinkActive="active">
             <span class="image-icon">
               <img src="../assets/images/Dashboard/pgi.png" alt="">
             </span>
-            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">PGI</span>
           </a>
-          <p>PGI</p>
+          <p class="mb-0 text-center">PGI</p>
         </li>
-    
-        <li class="nav-item mt-2">
-          <a class="nav-link" routerLink="udise" routerLinkActive="active">
+        <hr class="m-0 w-100">
+
+        <li class="nav-item">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="udise" routerLinkActive="active">
             <span class="image-icon">
               <img src="../assets/images/UDISE.png" alt="">
             </span>
-            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">UDISE</span>
           </a>
-          <p>UDISE</p>
+          <p class="mb-0 text-center">UDISE</p>
         </li>
-    
-        <li class="nav-item mt-2">
-          <a class="nav-link" routerLink="nas" routerLinkActive="active">
+        <hr class="m-0 w-100">
+
+        <li class="nav-item">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="nas" routerLinkActive="active">
             <span class="image-icon">
               <img src="../assets/images/Dashboard/unnamed.png" alt="">
             </span>
-            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'"> NAS</span>
           </a>
-          <p>NAS</p>
+          <p class="mb-0 text-center">NAS</p>
         </li>
-    
-        <li class="nav-item mt-2">
-          <a class="nav-link" routerLink="diksha" routerLinkActive="active">
+        <hr class="m-0 w-100">
+
+        <li class="nav-item">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="diksha" routerLinkActive="active">
             <span class="image-icon">
               <img src="../assets/images/ETB & E-Content.png" alt="">
             </span>
-            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">
-              Diksha</span>
           </a>
-          <p>Diksha</p>
+          <p class="mb-0 ">Diksha</p>
         </li>
-    
-      </ul>
-    </div> 
+        <hr class="m-0 w-100">
 
+      </ul>
+    </div>
+    <br class="small-screen">
+    <br class="small-screen">
     <router-outlet></router-outlet>
 
 
