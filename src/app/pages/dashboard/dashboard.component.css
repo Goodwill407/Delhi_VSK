@@ -49,7 +49,7 @@
     box-shadow: rgba(5, 71, 17, 0) 40px 50px 25px -40px, rgba(5, 71, 17, 0.2) 0px 25px 25px -5px;
 }
 
-.header-dashboard{
+.header-dashboard {
     background-color: #348acb;
     border-top-left-radius: 7px;
     border-top-right-radius: 7px;
@@ -128,12 +128,15 @@
     transition: all 0.5s ease-in-out;
     transform-style: preserve-3d;
     box-shadow: rgba(5, 71, 17, 0) 40px 50px 25px -40px, rgba(5, 71, 17, 0.2) 0px 25px 25px -5px;
+    justify-content: space-evenly;
 }
+
 .card-bottom-text {
     position: absolute;
     bottom: 15px;
     width: 100%;
 }
+
 .content .title {
     display: block;
     color: #184164;
