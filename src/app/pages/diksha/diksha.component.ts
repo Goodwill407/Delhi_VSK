@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { CommunicationService } from 'src/app/services/communication.service';
 import { GraphService } from 'src/app/services/graph-service.service';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 
@@ -34,8 +35,10 @@ export class DikshaComponent {
   // ==
   averageLinkedQRCountGraph: any;
   averageResourceCountGraph: any;
+  communicationServiceMobile: any;
 
-  constructor(private httpService: HttpServiceService, private graphService: GraphService, private spinner: NgxSpinnerService) {
+  constructor( private communicationService:CommunicationService,private httpService: HttpServiceService, private graphService: GraphService, private spinner: NgxSpinnerService) {
+    this.communicationServiceMobile = this.communicationService.isMobile;
   }
 
   ngOnInit() {

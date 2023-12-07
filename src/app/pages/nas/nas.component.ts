@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { CommunicationService } from 'src/app/services/communication.service';
 import { GraphService } from 'src/app/services/graph-service.service';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 
@@ -33,8 +34,11 @@ export class NasComponent {
   allSubject: any = ["Math", 'Sst', 'Sci',"Evs","Language","Eng","Mil"];
   allGrade: any = ["Grade 3","Grade 5","Grade 8","Grade 10"];
   filterData:any;
+  communicationServiceMobile: any;
 
-  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, public datepipe: DatePipe) {
+
+  constructor( private communicationService:CommunicationService,private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, public datepipe: DatePipe) {
+    this.communicationServiceMobile = this.communicationService.isMobile;
 
   }
 
