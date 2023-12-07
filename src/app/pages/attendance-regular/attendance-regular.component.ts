@@ -57,9 +57,12 @@ export class AttendanceRegularComponent {
   itemCount: number | undefined;
   subscription: Subscription | undefined;
   searchBox: any;
+  communicationServiceMobile: any;
+  allAttendanceData: any;
+  allSchoolAttendance: any = [];
 
   constructor(private communicationService: CommunicationService, private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, public datepipe: DatePipe, private toastr: ToastrService) {
-
+    this.communicationServiceMobile = this.communicationService.isMobile;
   }
 
   ngOnInit() {
@@ -86,7 +89,8 @@ export class AttendanceRegularComponent {
 
   getDate(date: any) {
     let Mdate: any;
-    return Mdate = this.datepipe.transform(date, 'dd/MM/yyyy');
+    // return Mdate = this.datepipe.transform(date, 'dd/MM/yyyy');
+    return Mdate = this.datepipe.transform(date, 'yyyy-MM-dd');
   }
 
   getAllDistricts() {
@@ -194,8 +198,23 @@ export class AttendanceRegularComponent {
     }
   }
 
+  getStudentAttendanceData() {
+    if (this.schoolModel && this.dateModel) {
+      const data = {
+        "Schoolid": this.schoolModel.Schoolid,
+        "Date": this.datepipe.transform(this.dateModel, 'dd/MM/yyyy')
+      }
+      this.httpService.post('student/student-attendance-data', data).subscribe((data) => {
+        if (data && data.Cargo.length > 0) {
+          this.allAttendanceData = data.Cargo;
+        }
+      })
+    }
+  }
+
   getGraphsByDate(onload: boolean) {
     // this.formattedDate = this.datepipe.transform(this.dateModel, 'dd-MMM-yyyy');
+    this.getStudentAttendanceData();
     if (this.districtModel && !this.zoneModel && !this.schoolModel) {
       this.getGraphsByDistrictName();
     } else if (this.zoneModel && !this.schoolModel) {
@@ -297,13 +316,44 @@ export class AttendanceRegularComponent {
   getGenderWisePresent(data: any) {
     this.genderWisePresent = this.graphService.PieGraph('donut', ' Students');
     this.genderWisePresent.series = [data.Counts[0].malePresentCount, data.Counts[0].feMalePresentCount, data.Counts[0].otherPresentCount];
-    this.genderWisePresent.labels = ['Male', 'Female', 'Others']
+    this.genderWisePresent.labels = ['Male', 'Female', 'Others'];
+    this.genderWisePresent.chart.events = {
+      dataPointSelection: (event: any, chartContext: any, config: any) => {
+        if (this.schoolModel) {
+          this.indexNoConfig = config;
+          this.setGenderWisePresentPopup(config, "Present");
+        }
+      }
+    }
+  }
+
+  setGenderWisePresentPopup(config: any, attendanceType: any) {
+    if (config) {
+      const labelName = config.w.config.labels[config.dataPointIndex];
+      const a = labelName[0];
+      const b = Array.from(labelName)[0];
+      this.allSchoolAttendance = [];
+      for (let i = 0; i < this.allAttendanceData.length; i++) {
+        if (this.allAttendanceData[i].attendance == attendanceType && this.allAttendanceData[i].Gender == labelName[0]) {
+          this.allSchoolAttendance.push(this.allAttendanceData[i]);
+        }
+      }
+      this.openModal.nativeElement.click();
+    }
   }
 
   getGenderWiseAbsent(data: any) {
     this.genderWiseAbsent = this.graphService.PieGraph('donut', ' Students');
     this.genderWiseAbsent.series = [data.Counts[0].maleAbsentCount, data.Counts[0].feMaleAbsentCount, data.Counts[0].othersAbsentCount];
     this.genderWiseAbsent.labels = ['Male', 'Female', 'Others'];
+    this.genderWiseAbsent.chart.events = {
+      dataPointSelection: (event: any, chartContext: any, config: any) => {
+        if (this.schoolModel) {
+          this.indexNoConfig = config;
+          this.setGenderWisePresentPopup(config, "Absent");
+        }
+      }
+    }
   }
 
   getGenderWiseLeave(data: any) {
@@ -339,53 +389,23 @@ export class AttendanceRegularComponent {
       "date": this.getDate(this.dateModel),
     }
     if (this.dateModel && !this.schoolModel && !this.districtModel && !this.zoneModel && !this.shiftModel) {
-      this.getDataOfCommon(flash,'attendance/attendance-status-wise',parameter);
-      // this.httpService.post('attendance/attendance-status-wise', parameter).subscribe((res: any) => {
-      //   this.allSchoolAttendanceStatus = res;
-      //   if (!flash) {
-      //     this.openModal.nativeElement.click();
-      //   }
-      // })
+      this.getDataOfCommon(flash, 'attendance/attendance-status-wise', parameter);
     } else if (!this.schoolModel && this.districtModel && !this.zoneModel) {
       parameter.district_name = this.districtModel;
-      this.getDataOfCommon(flash,'attendance/attendance-status-shift-wise',parameter);
-      // this.httpService.post('attendance/attendance-status-district-wise', parameter).subscribe((res: any) => {
-      //   this.allSchoolAttendanceStatus = res;
-      //   if (!flash) {
-      //     this.openModal.nativeElement.click();
-      //   }
-      // })
+      this.getDataOfCommon(flash, 'attendance/attendance-status-shift-wise', parameter);
     } else if (!this.schoolModel && this.zoneModel) {
       parameter.Z_name = this.zoneModel;
-      this.getDataOfCommon(flash,'attendance/attendance-status-zone-wise',parameter);
-      // this.httpService.post('attendance/attendance-status-zone-wise', parameter).subscribe((res: any) => {
-      //   this.allSchoolAttendanceStatus = res;
-      //   if (!flash) {
-      //     this.openModal.nativeElement.click();
-      //   }
-      // })
+      this.getDataOfCommon(flash, 'attendance/attendance-status-zone-wise', parameter);
     } else if (this.schoolModel) {
       parameter.School_ID = this.schoolModel.Schoolid;
-      this.getDataOfCommon(flash,'attendance/attendance-status-school-wise',parameter);
-      // this.httpService.post('attendance/attendance-status-school-wise', parameter).subscribe((res: any) => {
-      //   this.allSchoolAttendanceStatus = res;
-      //   if (!flash) {
-      //     this.openModal.nativeElement.click();
-      //   }
-      // })
+      this.getDataOfCommon(flash, 'attendance/attendance-status-school-wise', parameter);
     } else if (this.dateModel && this.shiftModel) {
       parameter.shift = this.shiftModel;
-      this.getDataOfCommon(flash,'attendance/attendance-status-shift-wise',parameter);
-      // this.httpService.post('attendance/attendance-status-shift-wise', parameter).subscribe((res: any) => {
-      //   this.allSchoolAttendanceStatus = res;
-      //   if (!flash) {
-      //     this.openModal.nativeElement.click();
-      //   }
-      // })
+      this.getDataOfCommon(flash, 'attendance/attendance-status-shift-wise', parameter);
     }
   }
 
-  getDataOfCommon(flash:any,apiPath:any,parameter:any){
+  getDataOfCommon(flash: any, apiPath: any, parameter: any) {
     this.httpService.post(apiPath, parameter).subscribe((res: any) => {
       this.allSchoolAttendanceStatus = res;
       if (!flash) {

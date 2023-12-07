@@ -6,37 +6,37 @@
     </span>
 </marquee>
 
-<div class="d-flex mt-2 mt-4 filter-box">
+<div class="mt-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
     <h2 class="fw-bold">Regular </h2>
-    <div class="vr mx-3 opacity-100"></div>
-    <select class="form-select ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
+    <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
+    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
         <option value="">All District</option>
         <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
             {{district.districtName}} ({{district.D_ID}})
         </option>
     </select>
-    <select class="form-select ms-2" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
+    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
         <option value="">All Zones</option>
         <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
             {{zone.Zone_Name}} ({{zone.Z_ID}})
         </option>
     </select>
-    <select class="form-select ms-2" [(ngModel)]="shiftModel" (change)="getGraphsBySfhit()">
+    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="shiftModel" (change)="getGraphsBySfhit()">
         <option value="">Select Shift</option>
         <option *ngFor="let shift of allShift" value="{{shift}}">
             {{shift}}
         </option>
     </select>
-    <select class="form-select ms-2" [(ngModel)]="schoolModel" (change)="getGraphsBySchool()">
+    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="schoolModel" (change)="getGraphsBySchool()">
         <option value="">All School</option>
         <option *ngFor="let school of allSchools" [ngValue]="school">
             {{school.School_Name}} - ({{school.Schoolid}})
         </option>
     </select>
-    <input type="date" class="form-control  ms-2" [(ngModel)]="dateModel" (change)="getGraphsByDate(false)">
+    <input type="date" class="form-control  ms-2 mx-1 my-1" [(ngModel)]="dateModel" (change)="getGraphsByDate(false)">
 </div>
 
-<div class="d-flex justify-content-center filter-box mt-2"
+<div class="justify-content-center filter-box mt-2" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"
     *ngIf="districtModel || zoneModel || shiftModel || dateModel">
     <!-- <div class="text-center"> -->
     <h3 class="text-center mb-0" *ngIf="dateModel">{{ formattedDate }}&nbsp;</h3>
@@ -236,30 +236,32 @@
                     <input class="form-control" type="search" [(ngModel)]="searchBox" placeholder="Search by name..."
                         value="" id="example-search-input">
                 </div>
-                <table class="table table-responsive table-hover table-bordered table-striped">
-                    <thead class="thead-light">
-                        <tr class="table-bordered ">
-                            <th>Sr No</th>
-                            <th>School</th>
-                            <th>District</th>
-                            <th>Zone</th>
-                            <th>Shift</th>
-                            <th>Date</th>
-                            <th>Attendance Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let data of allSchoolAttendanceStatus | search:searchBox;let i = index">
-                            <td>{{i+1}}</td>
-                            <td>{{data.school_name}}</td>
-                            <td>{{data.district_name}}</td>
-                            <td>{{data.Z_name}}</td>
-                            <td>{{data.shift}}</td>
-                            <td>{{data.attendance_DATE}}</td>
-                            <td>{{data.attendanceStatus}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-responsive table-hover table-bordered table-striped">
+                        <thead class="thead-light">
+                            <tr class="table-bordered ">
+                                <th>Sr No</th>
+                                <th>Student ID</th>
+                                <th>Name</th>
+                                <th>Gender</th>
+                                <th>Class</th>
+                                <th>Section</th>
+                                <th>Shift</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of allSchoolAttendance | search:searchBox;let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{data.Student_ID}}</td>
+                                <td>{{data.Student_Name}}</td>
+                                <td>{{data.Gender}}</td>
+                                <td>{{data.CLASS}}</td>
+                                <td>{{data.section}}</td>
+                                <td>{{data.shift}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
         </div>

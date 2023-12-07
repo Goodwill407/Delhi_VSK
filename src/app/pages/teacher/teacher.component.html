@@ -70,7 +70,7 @@
       [tooltip]="teacherGenderRatio?.tooltip"></apx-chart>
     <h6 class="fw-bold">Total Teachers : {{teacherGenderRatio?.total}}</h6>
   </div>
-  
+
   <div class="column" [ngClass]="communicationServiceMobile ? '' : 'wide-height'" style="height: auto;">
     <h5 class="header-bg p-2">Designation wise Teacher</h5>
     <apx-chart [series]="designation?.series" [chart]="designation?.chart" [dataLabels]="designation?.dataLabels"
@@ -180,34 +180,36 @@
           <input class="form-control" type="search" [(ngModel)]="searchBox" placeholder="Search by name..." value=""
             id="example-search-input">
         </div>
-        <table class="table table-responsive table-hover table-bordered table-striped">
-          <thead class="thead-light">
-            <tr class="table-bordered ">
-              <th>Sr No</th>
-              <th>Name</th>
-              <th>Emp. Id</th>
-              <th style="width: 112px;">Joining Date</th>
-              <th>School</th>
-              <th>Designation</th>
-              <th>Gender</th>
-              <th>DOB</th>
-              <th>District</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let data of allTeacherData | search:searchBox;let i = index">
-              <td>{{i+1}}</td>
-              <td>{{data.Name}}</td>
-              <td>{{data.empid}}</td>
-              <td>{{data.JoiningDate}}</td>
-              <td>{{data.schname}}</td>
-              <td>{{data.postdesc}}</td>
-              <td>{{data.gender}}</td>
-              <td>{{data.dob}}</td>
-              <td>{{data.districtname}}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="table table-responsive table-hover table-bordered table-striped">
+            <thead class="thead-light">
+              <tr class="table-bordered ">
+                <th>Sr No</th>
+                <th>Name</th>
+                <th>Emp. Id</th>
+                <th style="width: 112px;">Joining Date</th>
+                <th>School</th>
+                <th>Designation</th>
+                <th>Gender</th>
+                <th>DOB</th>
+                <th>District</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of allTeacherData | search:searchBox;let i = index">
+                <td>{{i+1}}</td>
+                <td>{{data.Name}}</td>
+                <td>{{data.empid}}</td>
+                <td>{{data.JoiningDate}}</td>
+                <td>{{data.schname}}</td>
+                <td>{{data.postdesc}}</td>
+                <td>{{data.gender}}</td>
+                <td>{{data.dob}}</td>
+                <td>{{data.districtname}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
     </div>

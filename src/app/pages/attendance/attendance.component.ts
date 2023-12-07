@@ -12,8 +12,12 @@ import { HttpServiceService } from 'src/app/services/http-service.service';
   styleUrls: ['./attendance.component.css']
 })
 export class AttendanceComponent {
+  communicationServiceMobile: any;
 
-  constructor(private communicationService: CommunicationService) { }
+  constructor(private communicationService: CommunicationService) { 
+    this.communicationServiceMobile = this.communicationService.isMobile;
+
+  }
 
   ngOnInit() {
 

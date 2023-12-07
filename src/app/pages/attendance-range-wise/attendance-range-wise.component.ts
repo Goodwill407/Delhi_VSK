@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { CommunicationService } from 'src/app/services/communication.service';
 import { GraphService } from 'src/app/services/graph-service.service';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 
@@ -33,8 +34,12 @@ export class AttendanceRangeWiseComponent {
   DateWiseRange: any;
   allShift: any = ['Morning', 'General', 'Evening'];
   dataNotFound: boolean = false;
+  communicationServiceMobile: any;
 
-  constructor(private toastr: ToastrService, private httpService: HttpServiceService, public datepipe: DatePipe, private spinner: NgxSpinnerService, private graphService: GraphService) { }
+  constructor(private toastr: ToastrService, private httpService: HttpServiceService, public datepipe: DatePipe, private spinner: NgxSpinnerService, private graphService: GraphService, private communicationService: CommunicationService) {
+    this.communicationServiceMobile = this.communicationService.isMobile;
+  }
+
 
   ngOnInit() {
     this.getAllDistricts();
@@ -55,8 +60,31 @@ export class AttendanceRangeWiseComponent {
     });
   }
 
-  getGraphsBySfhit() {
+  getGraphsByShift() {
+    let obj: any = {
+      "startDate": this.getDate(this.dateModel1),
+      "endDate": this.getDate(this.dateModel2),
+      "zoneName": this.zoneModel,
+      "districtName": this.districtModel,
+      "shift": this.shiftModel,
+    };
+    if(this.zoneModel){
+      delete obj.districtName;
+    }else{
+      delete obj.zoneName;
+    }
+    if(!this.districtModel){
+      delete obj.districtName
+    }
 
+    this.spinner.show();
+    this.httpService.post('attendance/attendancepercentage/range/parameter/shift', obj).subscribe(res => {
+      this.setAllGraphs(res);
+      this.spinner.hide();
+    }, error => {
+      this.spinner.hide();
+      this.toastr.error('', 'Something went wrong !');
+    })
   }
 
   getGraphsByDistrictName() {
@@ -79,7 +107,8 @@ export class AttendanceRangeWiseComponent {
 
   getDate(date: any) {
     let Mdate: any;
-    return Mdate = this.datepipe.transform(date, 'dd/MM/yyyy');
+    // return Mdate = this.datepipe.transform(date, 'dd/MM/yyyy');
+    return Mdate = this.datepipe.transform(date, 'yyyy-MM-dd');
   }
 
   datePicker() {
@@ -240,7 +269,7 @@ export class AttendanceRangeWiseComponent {
       this.dateRangeGraph.series[1].data.push(Number((data[i].maleAbsentPercentage + data[i].feMaleAbsentPercentage + data[i].otherAbsentPercentage).toFixed(2)));
       this.dateRangeGraph.series[2].data.push(Number((data[i].maleLeavePercentage + data[i].femaleLeavePercentage + data[i].otherLeavePercentage).toFixed(2)));
       this.dateRangeGraph.series[3].data.push(Number((data[i].maleNotMarkedPercentage + data[i].femaleNotMarkedPercentage + data[i].otherNotMarkedPercentage).toFixed(2)));
-      this.dateRangeGraph.xaxis.categories.push(data[i].attendance_DATE)
+      this.dateRangeGraph.xaxis.categories.push(data[i].attendance_DATE);
     }
   }
 }

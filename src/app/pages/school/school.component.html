@@ -10,7 +10,7 @@
         </option>
     </select>
     <select class="form-select mb-1 mt-1 mx-1" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
-        <option value="" >All Zones</option>
+        <option value="">All Zones</option>
         <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
             {{zone.Zone_Name}} ({{zone.Z_ID}})
         </option>
@@ -149,56 +149,58 @@
                     <input class="form-control" type="search" [(ngModel)]="searchBox" placeholder="Search by name..."
                         value="" id="example-search-input">
                 </div>
-                <table class="table table-responsive table-hover table-bordered table-striped">
-                    <thead class="thead-light">
-                        <tr class="table-bordered" *ngIf="allTeacherData?.length > 0">
-                            <th>Sr No</th>
-                            <th>Name</th>
-                            <th>Emp. Id</th>
-                            <th style="width: 112px;">Joining Date</th>
-                            <th>School</th>
-                            <th>Designation</th>
-                            <th>Gender</th>
-                            <th>DOB</th>
-                            <th>District</th>
-                        </tr>
-                        <tr class="table-bordered" *ngIf="allStudentData?.length > 0">
-                            <th>Sr No</th>
-                            <th>Name</th>
-                            <th style="width: 112px;">Class</th>
-                            <th>School</th>
-                            <!-- <th>Designation</th> -->
-                            <th>Gender</th>
-                            <th>DOB</th>
-                            <th>District</th>
-                        </tr>
-                    </thead>
-                    <tbody *ngIf="allTeacherData?.length > 0">
-                        <tr *ngFor="let data of allTeacherData | search:searchBox;let i = index">
-                            <td>{{i+1}}</td>
-                            <td>{{data.Name}}</td>
-                            <td>{{data.empid}}</td>
-                            <td>{{data.JoiningDate}}</td>
-                            <td>{{data.schname}}</td>
-                            <td>{{data.postdesc}}</td>
-                            <td>{{data.gender}}</td>
-                            <td>{{data.dob}}</td>
-                            <td>{{data.districtname}}</td>
-                        </tr>
-                    </tbody>
-                    <tbody *ngIf="allStudentData?.length > 0">
-                        <tr *ngFor="let data of allStudentData | search:searchBox;let i = index">
-                            <td>{{i+1}}</td>
-                            <td>{{data.Name}}</td>
-                            <td>{{data.CLASS}}</td>
-                            <td>{{data.SCHOOL_NAME}}</td>
-                            <!-- <td>{{data.postdesc}}</td> -->
-                            <td>{{data.Gender}}</td>
-                            <td>{{data.Dob}}</td>
-                            <td>{{data.District}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-responsive table-hover table-bordered table-striped">
+                        <thead class="thead-light">
+                            <tr class="table-bordered" *ngIf="allTeacherData?.length > 0">
+                                <th>Sr No</th>
+                                <th>Name</th>
+                                <th>Emp. Id</th>
+                                <th style="width: 112px;">Joining Date</th>
+                                <th>School</th>
+                                <th>Designation</th>
+                                <th>Gender</th>
+                                <th>DOB</th>
+                                <th>District</th>
+                            </tr>
+                            <tr class="table-bordered" *ngIf="allStudentData?.length > 0">
+                                <th>Sr No</th>
+                                <th>Name</th>
+                                <th style="width: 112px;">Class</th>
+                                <th>School</th>
+                                <!-- <th>Designation</th> -->
+                                <th>Gender</th>
+                                <th>DOB</th>
+                                <th>District</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="allTeacherData?.length > 0">
+                            <tr *ngFor="let data of allTeacherData | search:searchBox;let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{data.Name}}</td>
+                                <td>{{data.empid}}</td>
+                                <td>{{data.JoiningDate}}</td>
+                                <td>{{data.schname}}</td>
+                                <td>{{data.postdesc}}</td>
+                                <td>{{data.gender}}</td>
+                                <td>{{data.dob}}</td>
+                                <td>{{data.districtname}}</td>
+                            </tr>
+                        </tbody>
+                        <tbody *ngIf="allStudentData?.length > 0">
+                            <tr *ngFor="let data of allStudentData | search:searchBox;let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{data.Name}}</td>
+                                <td>{{data.CLASS}}</td>
+                                <td>{{data.SCHOOL_NAME}}</td>
+                                <!-- <td>{{data.postdesc}}</td> -->
+                                <td>{{data.Gender}}</td>
+                                <td>{{data.Dob}}</td>
+                                <td>{{data.District}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
         </div>

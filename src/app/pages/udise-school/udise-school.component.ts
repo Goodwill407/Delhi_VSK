@@ -37,7 +37,7 @@ export class UdiseSchoolComponent {
   // for show school list
   SchoolType: any;
   allSchoolTypeData: any
-
+  communicationServiceMobile: any;
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService) {
     this.subscription = this.communicationService.parentClick$.subscribe(() => {
@@ -47,6 +47,7 @@ export class UdiseSchoolComponent {
       this.TypeofSchoolCountsGraph = {}
       this.getAllUdiseSchoolData();
     });
+    this.communicationServiceMobile = this.communicationService.isMobile;
   }
 
   ngOnInit() {
