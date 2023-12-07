@@ -24,3 +24,7 @@ section {
 .delhi-logos img {
     /* width: 150px; */
 }
+.backImg{
+    background-image: url("../../assets/images/bg_img.jpg");
+    background-size: 100% 100%;
+}
