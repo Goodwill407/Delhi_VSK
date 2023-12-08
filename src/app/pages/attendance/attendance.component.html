@@ -1,34 +1,56 @@
-
 <h4 class="d-block under-maintenance fw-1 mb-0 text-center">(Under-Maintenance)</h4>
 
-<!--  -->
-<ul class="nav nav-pills mb-3 filter-box px-3 mt-3" id="pills-tab" role="tablist" >
-    <h2 class="fw-bold" >Attendance </h2>
+<!-- Aided -->
+<ul class="nav nav-pills mb-3 filter-box px-3 mt-3" id="pills-tab" role="tablist">
+    <h2 class="fw-bold">Attendance type</h2>
     <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
     <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-            type="button" role="tab" aria-controls="pills-home" aria-selected="true"
-            (click)="handleParentClick()">Attendance Regular</button>
+        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#government"
+            type="button" role="tab" aria-controls="pills-home" aria-selected="true">Government</button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-            type="button" role="tab" aria-controls="pills-profile" aria-selected="false"
-            (click)="handleParentClick()">Attendance Range Wise</button>
+        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#unaided" type="button"
+            role="tab" aria-controls="pills-profile" aria-selected="false">Unaided</button>
     </li>
 </ul>
 
 <div class="tab-content filter-box-attendance" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="government" role="tabpanel" aria-labelledby="pills-home-tab">
+        <!-- Government -->
+        <ul class="nav nav-pills mb-3 filter-box px-3 mt-3" id="pills-tab" role="tablist">
+            <h2 class="fw-bold">Attendance </h2>
+            <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+                    type="button" role="tab" aria-controls="pills-home" aria-selected="true"
+                    (click)="handleParentClick()">Attendance Regular</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
+                    type="button" role="tab" aria-controls="pills-profile" aria-selected="false"
+                    (click)="handleParentClick()">Attendance Range Wise</button>
+            </li>
+        </ul>
 
-    <!-- == 1 == -->
-    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-       <app-attendance-regular></app-attendance-regular>
+        <div class="tab-content filter-box-attendance" id="pills-tabContent">
+
+            <!-- == 1 == -->
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <app-attendance-regular></app-attendance-regular>
+            </div>
+
+            <!-- == 2 == -->
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <app-attendance-range-wise></app-attendance-range-wise>
+            </div>
+        </div>
     </div>
-
-    <!-- == 2 == -->
-    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-        <app-attendance-range-wise></app-attendance-range-wise>
+    <div class="tab-pane fade show" id="unaided" role="tabpanel" aria-labelledby="pills-home-tab">
+        Datas
     </div>
 </div>
+
+
 <!--  -->
 
 <div id='map'></div>
