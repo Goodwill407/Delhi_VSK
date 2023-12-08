@@ -43,7 +43,7 @@ export class LoginPageComponent {
 
   initializeSaveFormValidations() {
     this.loginForm = this.fb.group({
-      'email': new FormControl(''),
+      'userName': new FormControl(''),
       'password': new FormControl(''),
     });
   }

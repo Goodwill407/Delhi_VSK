@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
 import * as L from 'leaflet';
+import * as XLSX from 'xlsx';
 
 @Injectable({
     providedIn: 'root'
@@ -236,5 +237,11 @@ export class CommunicationService {
         legend.addTo(map);
 
         return map;
+    }
+    exportToExcel(data: any[], fileName: string, sheetName: string): void {
+        const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+        const wb: XLSX.WorkBook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, sheetName);
+        XLSX.writeFile(wb, `${fileName}.xlsx`);
     }
 }
