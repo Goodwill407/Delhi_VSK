@@ -488,6 +488,9 @@ export class StudentComponent {
     }
   }
 
+  downloadExcel(data:any): void {
+    this.communicationService.exportToExcel(data, 'table_data', 'Sheet1');
+  }
 }
 
 

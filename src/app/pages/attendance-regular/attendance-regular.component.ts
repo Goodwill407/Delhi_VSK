@@ -585,4 +585,7 @@ export class AttendanceRegularComponent {
     this.schoolWiseBottomFiveGraph.dataLabels.dropShadow.enabled = false;
   }
 
+  downloadExcel(data:any): void {
+    this.communicationService.exportToExcel(data, 'table_data', 'Sheet1');
+  }
 }

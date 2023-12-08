@@ -8,7 +8,7 @@
 
 <div class="mt-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
     <h2 class="fw-bold">Regular </h2>
-      <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
+    <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
     <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
         <option value="">All District</option>
         <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
@@ -227,6 +227,11 @@
             <div class="modal-header" style="background-color: #b3d64d;">
                 <h5 class="modal-title" id="exampleModalLabel">Attendance Status Wise Details By
                     {{attendanceStatusCount?.labels[indexNoConfig]}} </h5>
+                <button class="btn text-center text-danger ms-3"
+                    (click)="downloadExcel(allSchoolAttendanceStatus)"
+                    data-toggle="tooltip" data-placement="top" title="Download">
+                    <i class="bi bi-box-arrow-in-down h2"></i>
+                </button>
                 <button type="button" (click)="searchBox = ''" class="btn-close" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>

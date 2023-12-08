@@ -4,19 +4,19 @@
   <h2 class="fw-bold">Student</h2>
   <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
   <select class="form-select mb-1 mt-1 mx-1" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
-    <option value="" >All Districts</option>
+    <option value="">All Districts</option>
     <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
       {{district.districtName}} ({{district.D_ID}})
     </option>
   </select>
   <select class="form-select mb-1 mt-1 mx-1" [(ngModel)]="ZoneModel" (change)="getGraphsByZone()">
-    <option value="" >All Zone</option>
+    <option value="">All Zone</option>
     <option *ngFor="let zone of allZones" value="{{zone.name}}">
       {{zone.name}} ({{zone.id}})
     </option>
   </select>
   <select class="form-select mb-1 mt-1 mx-1" [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
-    <option value="" >All School</option>
+    <option value="">All School</option>
     <option *ngFor="let school of AllSchool" [ngValue]="school">
       {{school.School_Name}} - ({{school.Schoolid}})
     </option>
@@ -152,6 +152,11 @@
         <h5 class="modal-title" *ngIf="commonName" id="exampleModalLabel">Student Details By {{commonName}} </h5>
         <h5 class="modal-title" *ngIf="statusWise == 0 || statusWise " id="exampleModalLabel">Student Details By Status:
           {{allData.studentStatusCounts[this.statusWise]._id}} </h5>
+        <button class="btn text-center text-danger ms-3"
+          (click)="downloadExcel(allStudentData)" data-toggle="tooltip"
+          data-placement="top" title="Download">
+          <i class="bi bi-box-arrow-in-down h2"></i>
+        </button>
         <button type="button" (click)="searchBox = ''" class="btn-close" data-bs-dismiss="modal"
           aria-label="Close"></button>
       </div>
