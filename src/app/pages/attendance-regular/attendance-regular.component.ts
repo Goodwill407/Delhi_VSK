@@ -327,21 +327,6 @@ export class AttendanceRegularComponent {
     }
   }
 
-  setGenderWisePresentPopup(config: any, attendanceType: any) {
-    if (config) {
-      const labelName = config.w.config.labels[config.dataPointIndex];
-      const a = labelName[0];
-      const b = Array.from(labelName)[0];
-      this.allSchoolAttendance = [];
-      for (let i = 0; i < this.allAttendanceData.length; i++) {
-        if (this.allAttendanceData[i].attendance == attendanceType && this.allAttendanceData[i].Gender == labelName[0]) {
-          this.allSchoolAttendance.push(this.allAttendanceData[i]);
-        }
-      }
-      this.openModal.nativeElement.click();
-    }
-  }
-
   getGenderWiseAbsent(data: any) {
     this.genderWiseAbsent = this.graphService.PieGraph('donut', ' Students');
     this.genderWiseAbsent.series = [data.Counts[0].maleAbsentCount, data.Counts[0].feMaleAbsentCount, data.Counts[0].othersAbsentCount];
@@ -360,12 +345,44 @@ export class AttendanceRegularComponent {
     this.genderWiseLeave = this.graphService.PieGraph('donut', ' Students');
     this.genderWiseLeave.series = [data.Counts[0].maleLeaveCount, data.Counts[0].femaleLeaveCount, data.Counts[0].otherLeaveCount];
     this.genderWiseLeave.labels = ['Male', 'Female', 'Others'];
+    this.genderWiseLeave.chart.events = {
+      dataPointSelection: (event: any, chartContext: any, config: any) => {
+        if (this.schoolModel) {
+          this.indexNoConfig = config;
+          this.setGenderWisePresentPopup(config, "Leave");
+        }
+      }
+    }
   }
 
   getGenderWiseNotMarked(data: any) {
     this.genderWiseNotMarked = this.graphService.PieGraph('donut', ' Students');
     this.genderWiseNotMarked.series = [data.Counts[0].maleAttendanceNotMarked, data.Counts[0].femaleAttendanceNotMarked, data.Counts[0].otherAttendanceNotMarked];
     this.genderWiseNotMarked.labels = ['Male', 'Female', 'Others'];
+    this.genderWiseNotMarked.chart.events = {
+      dataPointSelection: (event: any, chartContext: any, config: any) => {
+        if (this.schoolModel) {
+          this.indexNoConfig = config;
+          this.setGenderWisePresentPopup(config, "");
+        }
+      }
+    }
+  }
+
+  setGenderWisePresentPopup(config: any, attendanceType: any) {
+    if (config) {
+      const labelName = config.w.config.labels[config.dataPointIndex];
+      const a = labelName[0];
+      const b = Array.from(labelName)[0];
+      this.allSchoolAttendance = [];
+      for (let i = 0; i < this.allAttendanceData.length; i++) {
+        if (this.allAttendanceData[i].attendance == attendanceType && this.allAttendanceData[i].Gender == labelName[0]) {
+          this.allSchoolAttendance.push(this.allAttendanceData[i]);
+        }
+      }
+      this.allSchoolAttendanceStatus = [];
+      this.openModal.nativeElement.click();
+    }
   }
 
   getAttendanceStatusCount(data: any) {
@@ -406,10 +423,17 @@ export class AttendanceRegularComponent {
   }
 
   getDataOfCommon(flash: any, apiPath: any, parameter: any) {
+    this.allSchoolAttendanceStatus = [];
+    if (parameter.School_ID) {
+      delete parameter.School_ID;
+    }
     this.httpService.post(apiPath, parameter).subscribe((res: any) => {
-      this.allSchoolAttendanceStatus = res;
-      if (!flash) {
-        this.openModal.nativeElement.click();
+      if (res && res.length > 0) {
+        this.allSchoolAttendanceStatus = res;
+        // this.allSchoolAttendance = [];
+        if (!flash) {
+          this.openModal.nativeElement.click();
+        }
       }
     })
   }
