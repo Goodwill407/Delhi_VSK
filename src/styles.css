@@ -129,3 +129,20 @@ apx-chart .apexcharts-toolbar {
     bottom: 25px;
     width: 100%;
 }
+
+@media only screen and (max-width: 415px) {
+    .filter-box {
+        margin: 10px;
+    }
+    .large-screen {
+      display: none;
+    }    
+  }
+  @media only screen and (min-width: 415px) {
+    .filter-box {
+        margin: auto 10px;
+    }
+    .large-screen {
+      display: block;
+    }
+  }
