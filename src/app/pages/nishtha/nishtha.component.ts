@@ -133,7 +133,7 @@ export class NishthaComponent {
   getTotal_Local_Body(allDashboardData: any) {
     const total_Local_body = allDashboardData.map((item: any) => item.local_body)
     const program = allDashboardData.map((item: any) => item.program)
-    this.Total_Local_body = this.graphService.PieGraph('donut');
+    this.Total_Local_body = this.graphService.PieGraph('donut','');
     const series = total_Local_body.map((str: any) => Number(str));
     const labels = program
     this.Total_Local_body.series = [...series];
@@ -217,7 +217,7 @@ export class NishthaComponent {
     this.totalCertificationsPercentage = {};
     this.totalCertificationsPercentage = this.graphService.PieGraph('donut', '');
     for (let i = 0; i < this.districtWiseData.length; i++) {
-      this.totalCertificationsPercentage.series.push(Number(this.districtWiseData[i].certification));
+      this.totalCertificationsPercentage.series.push(Number(this.districtWiseData[i].total_certifications));
       this.totalCertificationsPercentage.labels.push(this.districtWiseData[i].program);
     }
   }
@@ -319,7 +319,7 @@ export class NishthaComponent {
   getCoursesGraphData(TotalData: any) {
     const TotalCourses = TotalData.map((item: any) => item.total_courses)
     const TotalProgram = TotalData.map((item: any) => item.program_name)
-    this.Total_CoursesGraph = this.graphService.PieGraph('donut');;
+    this.Total_CoursesGraph = this.graphService.PieGraph('donut','');;
     const series = TotalCourses.map((str: any) => Number(str));
     const labels = TotalProgram
     this.Total_CoursesGraph.series = [...series];

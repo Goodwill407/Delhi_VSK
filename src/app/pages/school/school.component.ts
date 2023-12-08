@@ -5,6 +5,7 @@ import { HttpServiceService } from 'src/app/services/http-service.service';
 import { GraphService } from 'src/app/services/graph-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { CommunicationService } from 'src/app/services/communication.service';
 
 @Component({
   selector: 'app-school',
@@ -43,8 +44,11 @@ export class SchoolComponent {
   @ViewChild('openModal') openModal: any;
   itemCount: number | undefined;
   subscription: Subscription | undefined;
+  searchBox: any;
+  communicationServiceMobile: any;
 
-  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private toastr: ToastrService) {
+  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService) {
+    this.communicationServiceMobile = this.communicationService.isMobile;
   }
 
   ngOnInit() {
@@ -73,7 +77,7 @@ export class SchoolComponent {
         this.spinner.hide();
         this.allDistricts = this.allDistricts.sort((a: any, b: any) => a.D_ID - b.D_ID);
       }
-    },(error)=>{
+    }, (error) => {
       this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     })
@@ -93,7 +97,7 @@ export class SchoolComponent {
         this.spinner.hide();
         this.allSchools = [];
       }
-    },(error)=>{
+    }, (error) => {
       this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     })
@@ -113,7 +117,7 @@ export class SchoolComponent {
         this.allSchools = [];
         this.spinner.hide();
       }
-    },(error)=>{
+    }, (error) => {
       this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     })
@@ -167,6 +171,7 @@ export class SchoolComponent {
   }
 
   getGraphsByZone() {
+    if(this.zoneModel){
     this.spinner.show();
     const zone = { zoneName: this.zoneModel };
     this.getSchoolDataByZone();
@@ -179,6 +184,10 @@ export class SchoolComponent {
     }, (error) => {
       this.toastr.error('', 'Something went wrong !');
     })
+  }else{
+    this.allSchools = [];
+    this.getGraphsByDistrictName();
+  }
   }
 
   getGraphsByDistrictName() {
@@ -198,6 +207,7 @@ export class SchoolComponent {
         this.toastr.error('', 'Something went wrong !');
       })
     } else {
+      this.allSchools= [];
       this.getAllSchoolGraph();
     }
     this.zoneModel = "";
@@ -246,7 +256,7 @@ export class SchoolComponent {
           this.openModal.nativeElement.click();
         }
         this.spinner.hide();
-      },(error)=>{
+      }, (error) => {
         this.spinner.hide();
         this.toastr.error('', 'Something went wrong !');
       })

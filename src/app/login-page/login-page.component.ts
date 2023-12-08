@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpServiceService } from '../services/http-service.service';
 import { ToastrService } from 'ngx-toastr';
+import { CommunicationService } from '../services/communication.service';
 
 export interface LoginClass {
   email: string,
@@ -20,13 +21,15 @@ export class LoginPageComponent {
   submitted: boolean = false;
   loginModel!: LoginClass;
   setLoginType: string = "admin";
-  @Output() loginFlag = new EventEmitter<boolean>();
+  @Output() loginFlag = new EventEmitter<boolean>(); 
+  communicationServiceMobile: any;
 
-  constructor(private fb: FormBuilder, private httpService: HttpServiceService, private route: ActivatedRoute, private router: Router, private spinner: NgxSpinnerService, private toastr: ToastrService) {
+  constructor(private fb: FormBuilder, private httpService: HttpServiceService, private route: ActivatedRoute, private router: Router, private spinner: NgxSpinnerService, private toastr: ToastrService,private communicationService:CommunicationService) {
     const user: any = JSON.parse(sessionStorage.getItem('userProfile')!);
     if (user) {
       this.router.navigateByUrl('/dashboard');
     }
+    this.communicationServiceMobile = this.communicationService.isMobile;
   }
 
   ngOnInit() {

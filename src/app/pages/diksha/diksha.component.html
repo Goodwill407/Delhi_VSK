@@ -22,15 +22,15 @@
 
     <!-- == 1 == -->
     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-        <div class="d-flex mt-3 filter-box">
-            <select class="form-select w-25 ms-2" [(ngModel)]="gradeModel"
+        <div class="mt-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
+            <select class="form-select" [ngClass]="communicationServiceMobile ? 'w-100' : 'w-25 ms-2'" [(ngModel)]="gradeModel"
                 (change)="getAllAverageQRCodeCoverageStatus()">
                 <option value="" disabled>Select Grade</option>
                 <option *ngFor="let grade of allGrade" value="{{grade}}">
                     {{grade}}
                 </option>
             </select>
-            <select class="form-select w-25 ms-2" [(ngModel)]="mediumModel"
+            <select class="form-select" [ngClass]="communicationServiceMobile ? 'w-100 mt-2' : 'w-25 ms-2'" [(ngModel)]="mediumModel"
                 (change)="getAllAverageQRCodeCoverageStatus()">
                 <option value="" disabled>Select Medium</option>
                 <option *ngFor="let medium of allMedium" value="{{medium}}">
@@ -60,14 +60,14 @@
 
     <!-- == 2 == -->
     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-        <div class="d-flex mt-3 filter-box">
-            <select class="form-select w-25 ms-2" [(ngModel)]="gradeModel" (change)="getAllAverageQRCodeCoverage()">
+        <div class="mt-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
+            <select class="form-select" [ngClass]="communicationServiceMobile ? 'w-100 mb-2' : 'w-25 ms-2'" [(ngModel)]="gradeModel" (change)="getAllAverageQRCodeCoverage()">
                 <option value="" disabled>Select Grade</option>
                 <option *ngFor="let grade of allGrade" value="{{grade}}">
                     {{grade}}
                 </option>
             </select>
-            <select class="form-select w-25 ms-2" [(ngModel)]="mediumModel" (change)="getAllAverageQRCodeCoverage()">
+            <select class="form-select" [ngClass]="communicationServiceMobile ? 'w-100' : 'w-25 ms-2'" [(ngModel)]="mediumModel" (change)="getAllAverageQRCodeCoverage()">
                 <option value="" disabled>Select Medium</option>
                 <option *ngFor="let medium of allMedium" value="{{medium}}">
                     {{medium}}
@@ -110,20 +110,20 @@
     <!-- == 3 == -->
     <div class="tab-pane fade" id="pills-course" role="tabpanel" aria-labelledby="pills-course-tab">
 
-        <div class="d-flex mt-3 filter-box">
-            <select class="form-select w-25 ms-2" [(ngModel)]="gradeModel" (change)="getAllCounts_learningsession()">
+        <div class="mt-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
+            <select class="form-select" [ngClass]="communicationServiceMobile ? 'w-100' : 'w-25 ms-2'" [(ngModel)]="gradeModel" (change)="getAllCounts_learningsession()">
                 <option value="" disabled>Select Grade</option>
                 <option *ngFor="let grade of allGrade" value="{{grade}}">
                     {{grade}}
                 </option>
             </select>
-            <select class="form-select w-25 ms-2" [(ngModel)]="mediumModel" (change)="getAllCounts_learningsession()">
+            <select class="form-select" [ngClass]="communicationServiceMobile ? 'w-100 my-2' : 'w-25 ms-2'" [(ngModel)]="mediumModel" (change)="getAllCounts_learningsession()">
                 <option value="" disabled>Select Medium</option>
                 <option *ngFor="let medium of allMedium" value="{{medium}}">
                     {{medium}}
                 </option>
             </select>
-            <select class="form-select w-25 ms-2" [(ngModel)]="subjectModel" (change)="getAllCounts_learningsession()">
+            <select class="form-select" [ngClass]="communicationServiceMobile ? 'w-100' : 'w-25 ms-2'" [(ngModel)]="subjectModel" (change)="getAllCounts_learningsession()">
                 <option value="" disabled>Select Subject</option>
                 <option *ngFor="let subject of allSubjects" value="{{subject}}">
                     {{subject}}

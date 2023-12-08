@@ -1,21 +1,21 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
 </ngx-spinner>
-<div class="d-flex mt-3 filter-box">
+<div class="mt-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
   <h2 class="fw-bold">Teacher</h2>
-  <div class="vr mx-3 opacity-100"></div>
-  <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
+  <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
+  <select class="form-select mb-1 mt-1 mx-1" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
     <option value="">All Districts</option>
     <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
       {{district.districtName}} ({{district.D_ID}})
     </option>
   </select>
-  <select class="form-select w-25 ms-2" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
-    <option value="" disabled>All Zones</option>
+  <select class="form-select mb-1 mt-1 mx-1" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
+    <option value="">All Zones</option>
     <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
       {{zone.Zone_Name}} ({{zone.Z_ID}})
     </option>
   </select>
-  <select class="form-select w-25 ms-2" [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
+  <select class="form-select mb-1 mt-1 mx-1" [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
     <option value="" disabled>All School</option>
     <option *ngFor="let school of allSchools" [ngValue]="school">
       {{school.School_Name}} - ({{school.Schoolid}})
@@ -65,18 +65,20 @@
   <div class="column text-center">
     <h5 class="header-bg p-2">Teachers Gender Ratio</h5>
     <apx-chart [series]="teacherGenderRatio?.series" [chart]="teacherGenderRatio?.chart"
-      [dataLabels]="teacherGenderRatio?.dataLabels" [plotOptions]="teacherGenderRatio?.plotOptions"
-      [legend]="teacherGenderRatio?.legend" [labels]="teacherGenderRatio?.labels" [colors]="teacherGenderRatio?.colors"
-      [grid]="teacherGenderRatio?.grid" [tooltip]="teacherGenderRatio?.tooltip"></apx-chart>
-      <h6 class="fw-bold">Total Teachers : {{teacherGenderRatio?.total}}</h6>
+      [dataLabels]="teacherGenderRatio?.dataLabels" [legend]="teacherGenderRatio?.legend"
+      [labels]="teacherGenderRatio?.labels" [colors]="teacherGenderRatio?.colors" [grid]="teacherGenderRatio?.grid"
+      [tooltip]="teacherGenderRatio?.tooltip"></apx-chart>
+    <h6 class="fw-bold">Total Teachers : {{teacherGenderRatio?.total}}</h6>
   </div>
-  <div class="column wide-height" style="height: auto;">
+
+  <div class="column" [ngClass]="communicationServiceMobile ? '' : 'wide-height'" style="height: auto;">
     <h5 class="header-bg p-2">Designation wise Teacher</h5>
     <apx-chart [series]="designation?.series" [chart]="designation?.chart" [dataLabels]="designation?.dataLabels"
       [plotOptions]="designation?.plotOptions" [xaxis]="designation?.xaxis" [yaxis]="designation?.yaxis"
       [labels]="designation?.labels" [legend]="designation?.legend" [colors]="designation?.colors"
       [grid]="designation?.grid" [fill]="designation?.fill"></apx-chart>
   </div>
+
   <!--  -->
   <div class="column">
     <h5 class="header-bg p-2">Shift wise Teacher</h5>
@@ -160,7 +162,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-xxl-down">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header" style="background-color: #b3d64d;">
         <h5 class="modal-title" *ngIf="configGender" id="exampleModalLabel">Teacher Details By Gender:
@@ -169,38 +171,45 @@
           Details By Designation:
           ({{allData.postdescWiseTeacherCounts[configDesignation]._id}}) </h5>
         <h5 class="modal-title" *ngIf="commonName" id="exampleModalLabel">Teacher Details By {{commonName}} </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" (click)="searchBox = ''" class="btn-close" data-bs-dismiss="modal"
+          aria-label="Close"></button>
       </div>
       <div class="modal-body">
-
-        <table class="table table-responsive table-hover table-bordered table-striped">
-          <thead class="thead-light">
-            <tr class="table-bordered ">
-              <th>Sr No</th>
-              <th>Name</th>
-              <th>Emp. Id</th>
-              <th style="width: 112px;">Joining Date</th>
-              <th>School</th>
-              <th>Designation</th>
-              <th>Gender</th>
-              <th>DOB</th>
-              <th>District</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let data of allTeacherData;let i = index">
-              <td>{{i+1}}</td>
-              <td>{{data.Name}}</td>
-              <td>{{data.empid}}</td>
-              <td>{{data.JoiningDate}}</td>
-              <td>{{data.schname}}</td>
-              <td>{{data.postdesc}}</td>
-              <td>{{data.gender}}</td>
-              <td>{{data.dob}}</td>
-              <td>{{data.districtname}}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="input-group mb-3 w-50">
+          <span class="input-group-text" id="basic-addon1">🔍</span>
+          <input class="form-control" type="search" [(ngModel)]="searchBox" placeholder="Search by name..." value=""
+            id="example-search-input">
+        </div>
+        <div class="table-responsive">
+          <table class="table table-responsive table-hover table-bordered table-striped">
+            <thead class="thead-light">
+              <tr class="table-bordered ">
+                <th>Sr No</th>
+                <th>Name</th>
+                <th>Emp. Id</th>
+                <th style="width: 112px;">Joining Date</th>
+                <th>School</th>
+                <th>Designation</th>
+                <th>Gender</th>
+                <th>DOB</th>
+                <th>District</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of allTeacherData | search:searchBox;let i = index">
+                <td>{{i+1}}</td>
+                <td>{{data.Name}}</td>
+                <td>{{data.empid}}</td>
+                <td>{{data.JoiningDate}}</td>
+                <td>{{data.schname}}</td>
+                <td>{{data.postdesc}}</td>
+                <td>{{data.gender}}</td>
+                <td>{{data.dob}}</td>
+                <td>{{data.districtname}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
     </div>

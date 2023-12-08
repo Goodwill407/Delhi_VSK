@@ -2,7 +2,7 @@
 </ngx-spinner>
 <section class="vh-100">
     <div class="container-fluid h-custom">
-        <div class="container pt-4">
+        <div class="container pt-4" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'">
             <div class="row delhi-logos d-flex justify-content-center align-items-center">
                 <div class="col-lg-4 col-xl-4 text-end">
                     <img src="../../assets/images/circle.png" width="100" class="img-fluid" alt="Sample image">
@@ -21,7 +21,7 @@
                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
                     class="img-fluid" alt="Sample image">
             </div>
-            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1" [ngClass]="communicationServiceMobile ? 'backImg' : 'd-block'">
 
                 <div class="d-flex mb-3">
                     <h5 class="d-flex align-items-center me-2">Select type:</h5>

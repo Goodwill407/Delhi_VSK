@@ -6,37 +6,37 @@
     </span>
 </marquee>
 
-<div class="d-flex mt-2 mt-4 filter-box">
+<div class="mt-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
     <h2 class="fw-bold">Regular </h2>
-    <div class="vr mx-3 opacity-100"></div>
-    <select class="form-select ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
+    <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
+    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
         <option value="">All District</option>
         <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
             {{district.districtName}} ({{district.D_ID}})
         </option>
     </select>
-    <select class="form-select ms-2" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
+    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
         <option value="">All Zones</option>
         <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
             {{zone.Zone_Name}} ({{zone.Z_ID}})
         </option>
     </select>
-    <select class="form-select ms-2" [(ngModel)]="shiftModel" (change)="getGraphsBySfhit()">
+    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="shiftModel" (change)="getGraphsBySfhit()">
         <option value="">Select Shift</option>
         <option *ngFor="let shift of allShift" value="{{shift}}">
             {{shift}}
         </option>
     </select>
-    <select class="form-select ms-2" [(ngModel)]="schoolModel" (change)="getGraphsBySchool()">
+    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="schoolModel" (change)="getGraphsBySchool()">
         <option value="">All School</option>
         <option *ngFor="let school of allSchools" [ngValue]="school">
             {{school.School_Name}} - ({{school.Schoolid}})
         </option>
     </select>
-    <input type="date" class="form-control  ms-2" [(ngModel)]="dateModel" (change)="getGraphsByDate(false)">
+    <input type="date" class="form-control  ms-2 mx-1 my-1" [(ngModel)]="dateModel" (change)="getGraphsByDate(false)">
 </div>
 
-<div class="d-flex justify-content-center filter-box mt-2"
+<div class="justify-content-center filter-box mt-2" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-flex'"
     *ngIf="districtModel || zoneModel || shiftModel || dateModel">
     <!-- <div class="text-center"> -->
     <h3 class="text-center mb-0" *ngIf="dateModel">{{ formattedDate }}&nbsp;</h3>
@@ -136,6 +136,15 @@
             [legend]="genderWiseNotMarked?.legend"></apx-chart>
     </div>
 
+    <div class="column">
+        <h5 class="header-bg p-2">Attendance Status Wise Count</h5>
+        <apx-chart [series]="attendanceStatusCount?.series" [chart]="attendanceStatusCount?.chart"
+            [labels]="attendanceStatusCount?.labels" [fill]="attendanceStatusCount?.fill"
+            [colors]="attendanceStatusCount?.colors" [dataLabels]="attendanceStatusCount?.dataLabels"
+            [plotOptions]="attendanceStatusCount?.plotOptions" [responsive]="attendanceStatusCount?.responsive"
+            [legend]="attendanceStatusCount?.legend"></apx-chart>
+    </div>
+
     <div class="column" *ngIf="!zoneModel && !districtModel">
         <h5 class="header-bg p-2">District wise top 5 attendance</h5>
         <apx-chart [series]="districtWiseTopFiveGraph?.series" [chart]="districtWiseTopFiveGraph?.chart"
@@ -203,4 +212,83 @@
             </span> Schools data not found</p>
     </div>
 
+</div>
+
+<!-- Button trigger modal -->
+<button #openModal data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal"
+    (click)="getAttendanceStatusCountClick(true)">
+
+</button>
+
+<!--  -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #b3d64d;">
+                <h5 class="modal-title" id="exampleModalLabel">Attendance Status Wise Details By
+                    {{attendanceStatusCount?.labels[indexNoConfig]}} </h5>
+                <button type="button" (click)="searchBox = ''" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-3 w-50">
+                    <span class="input-group-text" id="basic-addon1">🔍</span>
+                    <input class="form-control" type="search" [(ngModel)]="searchBox" placeholder="Search by name..."
+                        value="" id="example-search-input">
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-responsive table-hover table-bordered table-striped"
+                        *ngIf="allSchoolAttendance && allSchoolAttendance.length > 0">
+                        <thead class="thead-light">
+                            <tr class="table-bordered ">
+                                <th>Sr No</th>
+                                <th>Student ID</th>
+                                <th>Name</th>
+                                <th>Gender</th>
+                                <th>Class</th>
+                                <th>Section</th>
+                                <th>Shift</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of allSchoolAttendance | search:searchBox;let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{data.Student_ID}}</td>
+                                <td>{{data.Student_Name}}</td>
+                                <td>{{data.Gender}}</td>
+                                <td>{{data.CLASS}}</td>
+                                <td>{{data.section}}</td>
+                                <td>{{data.shift}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="table table-responsive table-hover table-bordered table-striped"
+                        *ngIf="allSchoolAttendanceStatus && allSchoolAttendanceStatus.length > 0">
+                        <thead class="thead-light">
+                            <tr class="table-bordered ">
+                                <th>Sr No</th>
+                                <th>School Id</th>
+                                <th>School</th>
+                                <th>Shift</th>
+                                <th>Date</th>
+                                <th>Attendance Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of allSchoolAttendanceStatus | search:searchBox;let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{data.School_ID}}</td>
+                                <td>{{data.school_name}}</td>
+                                <td>{{data.shift}}</td>
+                                <td>{{data.attendance_DATE | date: 'dd MMM yyyy'}}</td>
+                                <td>{{data.attendanceStatus}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
