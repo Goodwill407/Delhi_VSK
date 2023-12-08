@@ -305,3 +305,8 @@ span {
 .small-screen .nav-item{
    margin-left: 5px;
 }
+
+footer {
+    background-color: #3d9be9;
+    padding: 10px;
+}
