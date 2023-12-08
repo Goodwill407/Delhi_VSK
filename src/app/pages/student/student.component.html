@@ -166,32 +166,34 @@
           <input class="form-control" type="search" [(ngModel)]="searchBox" placeholder="Search by name..." value=""
             id="example-search-input">
         </div>
-        <table class="table table-responsive table-hover table-bordered table-striped">
-          <thead class="thead-light">
-            <tr class="table-bordered ">
-              <th>Sr No</th>
-              <th>Name</th>
-              <th style="width: 112px;">Class</th>
-              <th>School</th>
-              <!-- <th>Designation</th> -->
-              <th>Gender</th>
-              <th>DOB</th>
-              <th>District</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let data of allStudentData | search:searchBox;let i = index">
-              <td>{{i+1}}</td>
-              <td>{{data.Name}}</td>
-              <td>{{data.CLASS}}</td>
-              <td>{{data.SCHOOL_NAME}}</td>
-              <!-- <td>{{data.postdesc}}</td> -->
-              <td>{{data.Gender}}</td>
-              <td>{{data.Dob}}</td>
-              <td>{{data.District}}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="table table-responsive table-hover table-bordered table-striped">
+            <thead class="thead-light">
+              <tr class="table-bordered ">
+                <th>Sr No</th>
+                <th>Name</th>
+                <th style="width: 112px;">Class</th>
+                <th>School</th>
+                <!-- <th>Designation</th> -->
+                <th>Gender</th>
+                <th>DOB</th>
+                <th>District</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of allStudentData | search:searchBox;let i = index">
+                <td>{{i+1}}</td>
+                <td>{{data.Name}}</td>
+                <td>{{data.CLASS}}</td>
+                <td>{{data.SCHOOL_NAME}}</td>
+                <!-- <td>{{data.postdesc}}</td> -->
+                <td>{{data.Gender}}</td>
+                <td>{{data.Dob}}</td>
+                <td>{{data.District}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
     </div>
