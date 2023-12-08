@@ -424,9 +424,6 @@ export class AttendanceRegularComponent {
 
   getDataOfCommon(flash: any, apiPath: any, parameter: any) {
     this.allSchoolAttendanceStatus = [];
-    if (parameter.School_ID) {
-      delete parameter.School_ID;
-    }
     this.httpService.post(apiPath, parameter).subscribe((res: any) => {
       if (res && res.length > 0) {
         this.allSchoolAttendanceStatus = res;

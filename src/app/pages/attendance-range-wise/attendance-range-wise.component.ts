@@ -112,7 +112,10 @@ export class AttendanceRangeWiseComponent {
   }
 
   datePicker() {
-    if (this.dateModel1 && this.dateModel2) {
+    if(this.dateModel1 && this.dateModel2){
+      
+    }
+    else if(this.dateModel1 && this.dateModel2) {
       const obj: any = {
         "startDate": this.getDate(this.dateModel1),
         "endDate": this.getDate(this.dateModel2),
