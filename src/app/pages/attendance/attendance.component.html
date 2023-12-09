@@ -1,5 +1,6 @@
 <h4 class="d-block under-maintenance fw-1 mb-0 text-center">(Under-Maintenance)</h4>
-
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+</ngx-spinner>
 <!-- Aided -->
 <ul class="nav nav-pills mb-3 filter-box px-3 mt-3" id="pills-tab" role="tablist">
     <h2 class="fw-bold">Attendance type</h2>
@@ -10,7 +11,7 @@
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#unaided" type="button"
-            role="tab" aria-controls="pills-profile" aria-selected="false">Unaided</button>
+            role="tab" aria-controls="pills-profile" aria-selected="false">Aided</button>
     </li>
 </ul>
 
@@ -45,8 +46,54 @@
             </div>
         </div>
     </div>
+    <!-- Aided Code -->
     <div class="tab-pane fade show" id="unaided" role="tabpanel" aria-labelledby="pills-home-tab">
-        Datas
+
+        <div class="mt-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
+            <h2 class="fw-bold d-block">Aided Schools </h2>
+            <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
+            <input type="date" class="form-control w-25 ms-2" [(ngModel)]="dateModel"
+                (change)="getDataAidedSchool()">
+        </div>
+
+        <div class="justify-content-center filter-box mt-2" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-flex'"
+            *ngIf="dateModel">
+            <h3 class="text-center mb-0" *ngIf="dateModel">{{ formattedDate }}&nbsp;</h3>
+        </div>
+
+        <div class="container1">
+
+            <div class="column">
+                <h5 class="header-bg p-2">Delhi</h5>
+                <div class="d-flex justify-content-around mt-4">
+                    <img class="ms-2" src="../../../assets/images/Dashboard/attendance.png" style="height: 100px;"
+                        alt="">
+                    <div class="d-block ms-1 text-center">
+                        <h1 class="fw-bold">{{allData?.totalStudentCount}}</h1>
+                        <h3>Total Student</h3>
+                    </div>
+                </div>
+                <div class="mt-5">
+                    <div class="d-flex justify-content-around text-center mt-5">
+                        <div class="mt-5">
+                            <h3>Total Schools</h3>
+                        </div>
+                        <div class="mt-5">
+                            <h2 class="fw-bold">{{allData?.countofSchool}}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <h5 class="header-bg p-2">Aided Schools Data by Attendance</h5>
+                <apx-chart [series]="aided_graphData?.series" [chart]="aided_graphData?.chart"
+                    [labels]="aided_graphData?.labels" [fill]="aided_graphData?.fill" [colors]="aided_graphData?.colors"
+                    [dataLabels]="aided_graphData?.dataLabels" [plotOptions]="aided_graphData?.plotOptions"
+                    [responsive]="aided_graphData?.responsive" [legend]="aided_graphData?.legend"></apx-chart>
+            </div>
+        </div>
+
     </div>
 </div>
 
