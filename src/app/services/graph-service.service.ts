@@ -100,7 +100,7 @@ export class GraphService {
                     enabled: true
                 },
                 style: {
-                    
+
                 }
             },
             legend: {
@@ -225,20 +225,20 @@ export class GraphService {
                             show: true,
                             name: {
                                 formatter: () => {
-                                    return 'Total' +' '+ totalType
+                                    return 'Total' + ' ' + totalType
                                 }
-                              },
-                            total:{
+                            },
+                            total: {
                                 show: true,
-                                
+
                                 formatter: (w: any) => {
-                                    return w.globals.seriesTotals.reduce((a: any, b: any) => { 
+                                    return w.globals.seriesTotals.reduce((a: any, b: any) => {
                                         a = (a % 1 != 0) ? Number(a.toFixed(2)) : a;
                                         b = (b % 1 != 0) ? Number(b.toFixed(2)) : b;
                                         return a + b;
                                     }, 0)
                                 }
-                                
+
                             }
 
                         }
@@ -249,7 +249,9 @@ export class GraphService {
             legend: {
                 position: 'bottom',
                 formatter: function (val: any, opts: any) {
-                    return val + " - " + opts.w.globals.series[opts.seriesIndex].toFixed(2);
+                    opts.w.globals.series[opts.seriesIndex] = (opts.w.globals.series[opts.seriesIndex] % 1 != 0) ? Number(opts.w.globals.series[opts.seriesIndex].toFixed(2)) : opts.w.globals.series[opts.seriesIndex];
+
+                    return val + " - " + opts.w.globals.series[opts.seriesIndex];
                 },
             },
             responsive: [
