@@ -83,8 +83,8 @@
       </ul> -->
 
       <!-- Admin -->
-      <ul class="nav flex-column" *ngIf="user.role == 'admin'">
-        <li class="nav-item">
+      <ul class="nav flex-column" >
+        <li class="nav-item" *ngIf="user.role ==='admin'">
           <a class="nav-link" routerLink="content/admin-dashboard" routerLinkActive="active" href="#">
             <span class="image-icon">
               <img src="../assets/images/dashboard.png" alt="">

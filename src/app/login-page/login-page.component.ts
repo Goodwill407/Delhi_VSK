@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CommunicationService } from '../services/communication.service';
 
 export interface LoginClass {
-  email: string,
+  userName: string,
   password: string
 }
 @Component({
@@ -57,8 +57,6 @@ export class LoginPageComponent {
         this.router.navigateByUrl('content/admin-dashboard');
       } else if (user.role == "zone") {
         this.router.navigateByUrl('content/admin-dashboard');
-      } else if (user.role == "admin") {
-        this.router.navigateByUrl('/content/admin-dashboard');
       } else if (user.role == "admin") {
         this.router.navigateByUrl('/content/admin-dashboard');
       }

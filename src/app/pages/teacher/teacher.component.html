@@ -4,31 +4,29 @@
   <h2 class="fw-bold">Teacher</h2>
   <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
 
-  <div class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'" *ngIf="user.role !== 'district' && user.role !== 'zone' && user.role !== 'school'">
-  <select class="form-select mb-1 mt-1 mx-1" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
-    <option value="">All Districts</option>
-    <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
-      {{district.districtName}} ({{district.D_ID}})
-    </option>
-  </select>
-</div>
-<div class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'" *ngIf="user.role !== 'zone' && user.role !== 'school'">
-  <select class="form-select mb-1 mt-1 mx-1" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
-    <option value="">All Zones</option>
-    <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
-      {{zone.Zone_Name}} ({{zone.Z_ID}})
-    </option>
-  </select>
-</div>
-<div class="col-md-3 mx-1" *ngIf="user.role !== 'school'">
-  <select  class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'" [(ngModel)]="schoolModel" 
-  (change)="getGraphsBySchoolName()">
-    <option value="" disabled>All School</option>
-    <option *ngFor="let school of allSchools" [ngValue]="school">
-      {{school.School_Name}} - ({{school.Schoolid}})
-    </option>
-  </select>
-</div>
+  <select class="form-select mb-1 mt-1 mx-1"[ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'" *ngIf="user.role !== 'district' && user.role !== 'zone' && user.role !== 'school'"
+     [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
+        <option value="">All Districts</option>
+        <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
+            {{district.districtName}} ({{district.D_ID}})
+        </option>
+    </select>
+
+    <select  class="form-select mb-1 mt-1 mx-1"[ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'" *ngIf="user.role !== 'zone' && user.role !== 'school'" 
+    [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
+        <option value="">All Zones</option>
+        <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
+            {{zone.Zone_Name}} ({{zone.Z_ID}})
+        </option>
+    </select>
+
+    <select  class="form-select mb-1 mt-1 mx-1"  [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'" *ngIf="user.role != 'school'"
+    [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
+        <option value="" disabled>Select Schools</option>
+        <option *ngFor="let school of allSchools" [ngValue]="school">
+            {{school.School_Name}} - ({{school.Schoolid}})
+        </option>
+    </select>
 </div>
 
 <div class="d-flex justify-content-center filter-box mt-2" *ngIf="districtModel || zoneModel || schoolModel">
