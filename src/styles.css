@@ -28,6 +28,7 @@
     grid-column: span 2;
     /* grid-row: span 2; */
 }
+
 .container1 .wide-height {
     grid-column: span 2;
     grid-row: span 2;
@@ -134,15 +135,35 @@ apx-chart .apexcharts-toolbar {
     .filter-box {
         margin: 10px;
     }
+
     .large-screen {
-      display: none;
-    }    
-  }
-  @media only screen and (min-width: 415px) {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 415px) {
     .filter-box {
         margin: auto 10px;
     }
+
     .large-screen {
-      display: block;
+        display: block;
     }
-  }
+}
+
+.search-filter-box {
+    position: absolute;
+    z-index: 1;
+    top: 38px;
+}
+
+.search-filter-box .data-panel {
+    max-height: 200px;
+    overflow: auto;
+}
+
+.search-filter-box p:hover {
+    background-color: #348acb;
+    color: #fff;
+    cursor: pointer;
+}

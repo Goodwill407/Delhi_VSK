@@ -48,7 +48,11 @@ export class TeacherComponent {
   commonName: any;
   configDesignation: any;
   searchBox: any;
+  globalSearchBox: any;
   communicationServiceMobile: any;
+  teacherSearchData: any[] = [];
+  profileDetails: any;
+  searchLoader: boolean = false;
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
@@ -457,7 +461,27 @@ export class TeacherComponent {
     }
   }
 
-  downloadExcel(data:any): void {
+  downloadExcel(data: any): void {
     this.communicationService.exportToExcel(data, 'table_data', 'Sheet1');
   }
+
+  searchTeacher(data: any) {
+    this.teacherSearchData = [];
+    if (data && data.key) {
+      this.searchLoader = true;
+      this.httpService.post('teacher/search-teachers', { searchQuery: this.globalSearchBox }).subscribe((res: any) => {
+        if (res) {
+          this.teacherSearchData = res;
+        }
+        this.searchLoader = false;
+      })
+    }
+  }
+
+  viewProfileDetails(data: any) {
+    if (data) {
+      this.profileDetails = data;
+    }
+  }
+
 }

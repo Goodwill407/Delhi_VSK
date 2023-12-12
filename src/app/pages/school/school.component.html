@@ -3,19 +3,22 @@
 <div class="mt-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
     <h2 class="fw-bold mb-0 p-1">School</h2>
     <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
-    <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
+    <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
+        [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
         <option value="">All Districts</option>
         <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
             {{district.districtName}} ({{district.D_ID}})
         </option>
     </select>
-    <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
+    <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
+        [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
         <option value="">All Zones</option>
         <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
             {{zone.Zone_Name}} ({{zone.Z_ID}})
         </option>
     </select>
-    <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'" [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
+    <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
+        [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
         <option value="" disabled>Select Schools</option>
         <option *ngFor="let school of allSchools" [ngValue]="school">
             {{school.School_Name}} - ({{school.Schoolid}})
@@ -29,6 +32,7 @@
         {{schoolModel.School_Name}}
     </h3>
 </div>
+
 <div class="container1">
     <div class="column">
         <h5 *ngIf="!districtModel" class="header-bg p-2">Delhi</h5>
@@ -124,8 +128,8 @@
 
 <!--  -->
 <!-- Button trigger modal -->
-<button #openModal data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal" (click)="getTeachersByGender(true)"
-    (click)="getStudentByGender(true)">
+<button #openModal data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal"
+    (click)="getTeachersByGender(true)" (click)="getStudentByGender(true)">
 
 </button>
 
