@@ -5,3 +5,8 @@
 .container1 .column {
     min-height: 350px;
 }
+
+kendo-pdf-export {
+    font-family: "DejaVu Sans", "Arial", sans-serif;
+    font-size: 12px;
+}

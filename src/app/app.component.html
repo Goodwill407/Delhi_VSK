@@ -208,8 +208,9 @@
         <p routerLink="content/admin-dashboard" class="text-center text-white header-font mb-0"
           style="cursor: pointer;">Vidya
           Samiksha Kendra, Delhi</p>
-        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
-          aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false"
+          aria-label="Toggle navigation">
           <i class="bi bi-three-dots-vertical"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
@@ -240,7 +241,7 @@
           aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
           <i class="bi bi-three-dots-vertical"></i>
         </button> -->
-        
+
         <div>
           <div class="logo mt-3 me-3 d-flex">
             <span class="nav-item">
@@ -263,13 +264,14 @@
     <div class="small-screen" *ngIf="showFlag">
       <ul class="nav" *ngIf="user.role == 'admin'" style="width: 85px;">
         <li class="nav-item mt-2">
-          <a class="nav-link" (click)="sideBarNav()" routerLink="content/admin-dashboard" routerLinkActive="active" href="#">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="content/admin-dashboard" routerLinkActive="active"
+            href="#">
             <span>
               <img src="../assets/images/dashboard.png" alt="">
             </span>
           </a>
           <p class="mb-0">Dashboard</p>
-        </li> 
+        </li>
         <hr class="m-0 w-100">
 
         <li class="nav-item">
@@ -369,10 +371,10 @@
 
   </div>
 </div>
-<footer>
-  <p class="text-white text-center m-0">Copyright © 2023-24 Laboni Media Solutions, All Rights Reserved</p>
-</footer>
 <!-- Body content -->
 <!-- <router-outlet *ngIf="!isLogIn"></router-outlet> -->
 <app-login-page *ngIf="!isLogIn" (loginFlag)="loginFlagFunc($event)"></app-login-page>
+<footer class="site-footer">
+  <p class="text-white text-center m-0">Developed by Laboni Media Solutions LLP</p>
+</footer>
 <!-- Body content -->

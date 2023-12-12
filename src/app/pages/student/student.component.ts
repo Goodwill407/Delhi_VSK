@@ -58,11 +58,15 @@ export class StudentComponent {
   commonName: any;
   statusWise: any;
   searchBox: any;
+  globalSearchBox: any;
   communicationServiceMobile: any;
+  studentSearchData: any[] = [];
+  profileDetails: any;
+  searchLoader: boolean = false;
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private communicationService: CommunicationService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
-   }
+  }
 
   ngOnInit() {
     this.getStudentGraphData();
@@ -499,6 +503,25 @@ export class StudentComponent {
   
   exportToExcel(): void {
     this.communicationService.exportToExcel(this.allStudentData, 'table_data', 'Sheet1');
+  }
+
+  searchStudent(data: any) {
+    this.studentSearchData = [];
+    if (data && data.key) {
+      this.searchLoader = true;
+      this.httpService.post('student/search-students', { searchQuery: this.globalSearchBox }).subscribe((res: any) => {
+        if (res) {
+          this.studentSearchData = res;
+        }
+        this.searchLoader = false;
+      })
+    }
+  }
+
+  viewProfileDetails(data: any) {
+    if (data) {
+      this.profileDetails = data;
+    }
   }
 }
 

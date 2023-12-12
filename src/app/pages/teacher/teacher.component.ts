@@ -5,8 +5,6 @@ import { GraphService } from 'src/app/services/graph-service.service';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { CommunicationService } from 'src/app/services/communication.service';
-import jspdf, { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
 @Component({
   selector: 'app-teacher',
   templateUrl: './teacher.component.html',
@@ -51,7 +49,11 @@ export class TeacherComponent {
   commonName: any;
   configDesignation: any;
   searchBox: any;
+  globalSearchBox: any;
   communicationServiceMobile: any;
+  teacherSearchData: any[] = [];
+  profileDetails: any;
+  searchLoader: boolean = false;
   downloadPopOpen: boolean = false;
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService) {
@@ -461,17 +463,36 @@ export class TeacherComponent {
     }
   }
 
+  searchTeacher(data: any) {
+    this.teacherSearchData = [];
+    if (data && data.key) {
+      this.searchLoader = true;
+      this.httpService.post('teacher/search-teachers', { searchQuery: this.globalSearchBox }).subscribe((res: any) => {
+        if (res) {
+          this.teacherSearchData = res;
+        }
+        this.searchLoader = false;
+      })
+    }
+  }
+
+  viewProfileDetails(data: any) {
+    if (data) {
+      this.profileDetails = data;
+    }
+  }
+
   exportToCSV(): void {
     this.communicationService.exportToCSV(this.allTeacherData, 'table_data');
   }
-  
+
   public async captureScreen() {
     const data: any = document.getElementById('contentToConvert');
     this.communicationService.exportToPDF(data);
   }
-  
+
   exportToExcel(): void {
     this.communicationService.exportToExcel(this.allTeacherData, 'table_data', 'Sheet1');
   }
- 
+
 }
