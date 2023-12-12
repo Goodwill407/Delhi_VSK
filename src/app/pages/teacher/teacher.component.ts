@@ -1,11 +1,12 @@
-import { Component, Inject, SimpleChange, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, Output, SimpleChange, ViewChild } from '@angular/core';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { GraphService } from 'src/app/services/graph-service.service';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { CommunicationService } from 'src/app/services/communication.service';
-
+import jspdf, { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 @Component({
   selector: 'app-teacher',
   templateUrl: './teacher.component.html',
@@ -40,6 +41,8 @@ export class TeacherComponent {
   minorityWiseTeacher: any;
   allData: any;
   @ViewChild('openModal') openModal: any;
+  @ViewChild('tableElement') tableElement!: ElementRef;
+  @Output() downloadSelected = new EventEmitter<string>();
 
   itemCount: number | undefined;
   subscription: Subscription | undefined;
@@ -53,6 +56,7 @@ export class TeacherComponent {
   teacherSearchData: any[] = [];
   profileDetails: any;
   searchLoader: boolean = false;
+  downloadPopOpen: boolean = false;
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
@@ -461,10 +465,6 @@ export class TeacherComponent {
     }
   }
 
-  downloadExcel(data: any): void {
-    this.communicationService.exportToExcel(data, 'table_data', 'Sheet1');
-  }
-
   searchTeacher(data: any) {
     this.teacherSearchData = [];
     if (data && data.key) {
@@ -482,6 +482,19 @@ export class TeacherComponent {
     if (data) {
       this.profileDetails = data;
     }
+  }
+
+  exportToCSV(): void {
+    this.communicationService.exportToCSV(this.allTeacherData, 'table_data');
+  }
+
+  public async captureScreen() {
+    const data: any = document.getElementById('contentToConvert');
+    this.communicationService.exportToPDF(data);
+  }
+
+  exportToExcel(): void {
+    this.communicationService.exportToExcel(this.allTeacherData, 'table_data', 'Sheet1');
   }
 
 }

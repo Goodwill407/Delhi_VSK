@@ -492,8 +492,17 @@ export class StudentComponent {
     }
   }
 
-  downloadExcel(data: any): void {
-    this.communicationService.exportToExcel(data, 'table_data', 'Sheet1');
+  exportToCSV(): void {
+    this.communicationService.exportToCSV(this.allStudentData, 'table_data');
+  }
+  
+  public async captureScreen() {
+    const data: any = document.getElementById('contentToConvert');
+    this.communicationService.exportToPDF(data);
+  }
+  
+  exportToExcel(): void {
+    this.communicationService.exportToExcel(this.allStudentData, 'table_data', 'Sheet1');
   }
 
   searchStudent(data: any) {

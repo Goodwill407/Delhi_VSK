@@ -2,13 +2,17 @@ import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
 import * as L from 'leaflet';
 import * as XLSX from 'xlsx';
-
+import { saveAs } from 'file-saver';
+import jspdf, { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
+import { NgxSpinnerService } from "ngx-spinner";
 @Injectable({
     providedIn: 'root'
 })
 
 export class CommunicationService {
 
+    constructor(private spinner: NgxSpinnerService) { }
     statesData: any = {
         "type": "FeatureCollection",
         "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
@@ -243,5 +247,33 @@ export class CommunicationService {
         const wb: XLSX.WorkBook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, sheetName);
         XLSX.writeFile(wb, `${fileName}.xlsx`);
+    }
+
+    exportToCSV(data: any[], fileName: string): void {
+        const csvContent = this.convertArrayToCSV(data);
+        this.downloadFile(csvContent, `${fileName}.csv`, 'text/csv;charset=utf-8');
+    }
+
+    private convertArrayToCSV(array: any[]): string {
+        const header = Object.keys(array[0]).join(',');
+        const rows = array.map((row) => Object.values(row).join(','));
+        return `${header}\n${rows.join('\n')}`;
+    }
+
+    private downloadFile(content: any, fileName: string, mimeType: string): void {
+        const blob = new Blob([content], { type: mimeType });
+        saveAs(blob, fileName);
+    }
+
+    //  pdf
+    async exportToPDF(data: any) {
+        this.spinner.show();
+        const canvas = await html2canvas(data);
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgWidth = pdf.internal.pageSize.getWidth();
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, imgWidth, imgHeight);
+        pdf.save('application.pdf');
+        this.spinner.hide();
     }
 }

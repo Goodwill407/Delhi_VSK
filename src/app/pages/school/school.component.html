@@ -138,19 +138,27 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #b3d64d;">
-                <h5 class="modal-title" *ngIf="allTeacherData?.length > 0" id="exampleModalLabel">Teacher Details By
+                <h5 class="modal-title mx-auto" *ngIf="allTeacherData?.length > 0" id="exampleModalLabel">Teacher Details By
                     Gender: ({{teacherGender?.dataPointIndex == 0 ? 'Male' : 'Female'}}) </h5>
-                <h5 class="modal-title" *ngIf="allStudentData?.length > 0" id="exampleModalLabel">Student Details By
+                <h5 class="modal-title mx-auto" *ngIf="allStudentData?.length > 0" id="exampleModalLabel">Student Details By
                     Gender: ({{studGender?.dataPointIndex == 0 ? 'Boys' : (studGender?.dataPointIndex == 1 ? 'Girls' :
                     'Other')}}) </h5>
-                <button class="btn text-center text-danger ms-3"
-                    (click)="downloadExcel(allTeacherData?.length > 0 ? allTeacherData : allStudentData)"
-                    data-toggle="tooltip" data-placement="top" title="Download">
-                    <i class="bi bi-box-arrow-in-down h2"></i>
-                </button>
-                <!-- <h5 class="modal-title" *ngIf="commonName" id="exampleModalLabel" >Teacher Details By {{commonName}} </h5> -->
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                    (click)="searchBox = ''"></button>
+                <div class="dropdown">
+                    <span class="text-danger m-2"><img src="../../../assets/images/icons/downloads.png" width="25px"
+                            alt=""></span>
+                    <div class="dropdown-content">
+                        <button class="btn" (click)="exportToCSV()"><i class="bi bi-filetype-csv h2 text-warning"></i>
+                            CSV</button>
+                        <button class="btn" (click)="exportToExcel()"><i
+                                class="bi bi-file-earmark-excel h2 text-success"></i>
+                            Excel</button>
+                        <button class="btn" value="CPTURE" (click)="captureScreen()"><i
+                                class="bi bi-filetype-pdf h2 text-danger"></i>PDF</button>
+                    </div>
+                </div>
+                <!--  -->
+                <button type="button" (click)="searchBox = ''" class="btn-close m-2" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="input-group mb-3 w-50">
@@ -159,7 +167,7 @@
                         value="" id="example-search-input">
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-responsive table-hover table-bordered table-striped">
+                    <table class="table table-responsive table-hover table-bordered table-striped" id="contentToConvert">
                         <thead class="thead-light">
                             <tr class="table-bordered" *ngIf="allTeacherData?.length > 0">
                                 <th>Sr No</th>
