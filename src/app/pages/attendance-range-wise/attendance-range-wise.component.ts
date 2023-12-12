@@ -112,8 +112,8 @@ export class AttendanceRangeWiseComponent {
   }
 
   datePicker() {
-    if(this.dateModel1 && this.dateModel2){
-      
+    if(this.dateModel1 && this.dateModel2 && this.shiftModel){
+      this.getGraphsByShift();
     }
     else if(this.dateModel1 && this.dateModel2) {
       const obj: any = {
@@ -272,7 +272,7 @@ export class AttendanceRangeWiseComponent {
       this.dateRangeGraph.series[1].data.push(Number((data[i].maleAbsentPercentage + data[i].feMaleAbsentPercentage + data[i].otherAbsentPercentage).toFixed(2)));
       this.dateRangeGraph.series[2].data.push(Number((data[i].maleLeavePercentage + data[i].femaleLeavePercentage + data[i].otherLeavePercentage).toFixed(2)));
       this.dateRangeGraph.series[3].data.push(Number((data[i].maleNotMarkedPercentage + data[i].femaleNotMarkedPercentage + data[i].otherNotMarkedPercentage).toFixed(2)));
-      this.dateRangeGraph.xaxis.categories.push(data[i].attendance_DATE);
+      this.dateRangeGraph.xaxis.categories.push(data[i].attendance_DATE.substring(0, 10));
     }
   }
 }

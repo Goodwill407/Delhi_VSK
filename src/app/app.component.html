@@ -83,8 +83,8 @@
       </ul> -->
 
       <!-- Admin -->
-      <ul class="nav flex-column" >
-        <li class="nav-item" *ngIf="user.role === 'admin'">
+      <ul class="nav flex-column" *ngIf="user.role == 'admin'">
+        <li class="nav-item">
           <a class="nav-link" routerLink="content/admin-dashboard" routerLinkActive="active" href="#">
             <span class="image-icon">
               <img src="../assets/images/dashboard.png" alt="">
@@ -237,9 +237,10 @@
       <div class="container-fluid d-flex">
         <p routerLink="content/school-dashboard" class=" navbar-brand text-center text-white header-font mb-0">Vidya
           Samiksha Kendra, Delhi</p>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
-          aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <i class="bi bi-three-dots-vertical"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
           <ul class="navbar-nav logo">
@@ -259,13 +260,150 @@
         </div>
       </div>
     </nav>
+
+    <nav class="navbar navbar-expand-xl navbar-light small-screen">
+      <div class="container-fluid d-block">
+        <h3 routerLink="content/admin-dashboard" class="text-center header-font mb-0"
+          style="cursor: pointer; font-size:large;">Vidya
+          Samiksha Kendra, Delhi</h3>
+        <!-- <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+          aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="bi bi-three-dots-vertical"></i>
+        </button> -->
+
+        <div>
+          <div class="logo mt-3 me-3 d-flex">
+            <span class="nav-item">
+              <img src="../../../assets/images/delhi_board_logo.png" style="width: 70px;height:50px;">
+            </span>
+            <span class="nav-item">
+              <img src="../../../assets/images/vsk_logo.png" style="width: 70px;height:50px;">
+            </span>
+            <span class="nav-item">
+              <img src="../../../assets/images/SSA.png" style="width: 70px;height:50px;">
+            </span>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <h1 class="shadow-lg h2 btn small-screen fw-bold" style="position: absolute; top: 0" (click)="sideBarNav()">
+      ☰
+    </h1>
+    <div class="small-screen" *ngIf="showFlag">
+      <ul class="nav" *ngIf="user.role == 'admin'" style="width: 85px;">
+        <li class="nav-item mt-2">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="content/admin-dashboard" routerLinkActive="active"
+            href="#">
+            <span>
+              <img src="../assets/images/dashboard.png" alt="">
+            </span>
+          </a>
+          <p class="mb-0">Dashboard</p>
+        </li>
+        <hr class="m-0 w-100">
+
+        <li class="nav-item">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="school" routerLinkActive="active" href="#">
+            <span class="image-icon text-center">
+              <img src="../assets/images/Dashboard/school.png" alt="">
+            </span>
+          </a>
+          <p class="mb-0 ">School</p>
+        </li>
+        <hr class="m-0 w-100">
+
+        <li class="nav-item">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="teacher" routerLinkActive="active" href="#">
+            <span class="image-icon text-center justify-content-center">
+              <img src="../assets/images/Dashboard/teacher.png" alt="">
+            </span>
+          </a>
+          <p class="mb-0 ">Teacher</p>
+        </li>
+        <hr class="m-0 w-100">
+
+        <li class="nav-item">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="student" routerLinkActive="active" href="#">
+            <span class="image-icon text-center justify-content-center">
+              <img src="../assets/images/Dashboard/reading.png" alt="">
+            </span>
+          </a>
+          <p class="mb-0 ">Student</p>
+        </li>
+        <hr class="m-0 w-100">
+
+        <li class="nav-item">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="attendance" routerLinkActive="active" href="#">
+            <span class="image-icon text-center justify-content-center">
+              <img src="../assets/images/Dashboard/attendance.png" alt="">
+            </span>
+          </a>
+          <p class="mb-0 ">Attendance</p>
+        </li>
+        <hr class="m-0 w-100">
+
+        <li class="nav-item">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="nishtha" routerLinkActive="active" href="#">
+            <span class="image-icon">
+              <img src="../assets/images/Dashboard/nishtha.png" alt="">
+            </span>
+          </a>
+          <p class="mb-0 ">Nishtha</p>
+        </li>
+        <hr class="m-0 w-100">
+
+        <li class="nav-item">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="pgi" routerLinkActive="active">
+            <span class="image-icon">
+              <img src="../assets/images/Dashboard/pgi.png" alt="">
+            </span>
+          </a>
+          <p class="mb-0 text-center">PGI</p>
+        </li>
+        <hr class="m-0 w-100">
+
+        <li class="nav-item">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="udise" routerLinkActive="active">
+            <span class="image-icon">
+              <img src="../assets/images/UDISE.png" alt="">
+            </span>
+          </a>
+          <p class="mb-0 text-center">UDISE</p>
+        </li>
+        <hr class="m-0 w-100">
+
+        <li class="nav-item">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="nas" routerLinkActive="active">
+            <span class="image-icon">
+              <img src="../assets/images/Dashboard/unnamed.png" alt="">
+            </span>
+          </a>
+          <p class="mb-0 text-center">NAS</p>
+        </li>
+        <hr class="m-0 w-100">
+
+        <li class="nav-item">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="diksha" routerLinkActive="active">
+            <span class="image-icon">
+              <img src="../assets/images/ETB & E-Content.png" alt="">
+            </span>
+          </a>
+          <p class="mb-0 ">Diksha</p>
+        </li>
+        <hr class="m-0 w-100">
+
+      </ul>
+    </div>
     <router-outlet></router-outlet>
 
 
   </div>
 </div>
-
 <!-- Body content -->
 <!-- <router-outlet *ngIf="!isLogIn"></router-outlet> -->
 <app-login-page *ngIf="!isLogIn" (loginFlag)="loginFlagFunc($event)"></app-login-page>
+<footer class="site-footer">
+  <p class="text-white text-center m-0">Developed by Laboni Media Solutions LLP</p>
+</footer>
 <!-- Body content -->

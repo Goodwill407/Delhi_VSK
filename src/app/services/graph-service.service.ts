@@ -97,10 +97,10 @@ export class GraphService {
                     }
                 },
                 dropShadow: {
-                    enabled: true
+                    enabled: false
                 },
                 style: {
-                    
+                    colors: ["#36454F"]
                 }
             },
             legend: {
@@ -188,7 +188,9 @@ export class GraphService {
 
     getRandomColor(i: any) {
         // var color = "hsl(" + Math.random() * 360 + ", 100%, 70%)";
-        var color = ["#7ED7C1", "#F9B572", "#CBB279", "#73A9AD", "#DC8686",];
+        // var color = ["#E63946", "#EDAE49", "#3376BD", "#00798C", "#52489C"];
+        // var color = ["#063951", "#c13018", "#f36f13", "#ebcb38", "#a2b969"];
+        var color = ["#ed6f1b", "#1cbb9d", "#0890c0", "#435273", "#d63d51"];
         return color[i];
     }
 
@@ -225,20 +227,20 @@ export class GraphService {
                             show: true,
                             name: {
                                 formatter: () => {
-                                    return 'Total' +' '+ totalType
+                                    return 'Total' + ' ' + totalType
                                 }
-                              },
-                            total:{
+                            },
+                            total: {
                                 show: true,
-                                
+
                                 formatter: (w: any) => {
-                                    return w.globals.seriesTotals.reduce((a: any, b: any) => { 
+                                    return w.globals.seriesTotals.reduce((a: any, b: any) => {
                                         a = (a % 1 != 0) ? Number(a.toFixed(2)) : a;
                                         b = (b % 1 != 0) ? Number(b.toFixed(2)) : b;
                                         return a + b;
                                     }, 0)
                                 }
-                                
+
                             }
 
                         }
@@ -249,7 +251,9 @@ export class GraphService {
             legend: {
                 position: 'bottom',
                 formatter: function (val: any, opts: any) {
-                    return val + " - " + opts.w.globals.series[opts.seriesIndex].toFixed(2);
+                    opts.w.globals.series[opts.seriesIndex] = (opts.w.globals.series[opts.seriesIndex] % 1 != 0) ? Number(opts.w.globals.series[opts.seriesIndex].toFixed(2)) : opts.w.globals.series[opts.seriesIndex];
+
+                    return val + " - " + opts.w.globals.series[opts.seriesIndex];
                 },
             },
             responsive: [

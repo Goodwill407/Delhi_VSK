@@ -59,6 +59,8 @@ export class LoginPageComponent {
         this.router.navigateByUrl('content/admin-dashboard');
       } else if (user.role == "admin") {
         this.router.navigateByUrl('/content/admin-dashboard');
+      } else if (user.role == "admin") {
+        this.router.navigateByUrl('/content/admin-dashboard');
       }
     }
   }

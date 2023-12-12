@@ -1,11 +1,10 @@
-import { Component, Inject, SimpleChange, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, Output, SimpleChange, ViewChild } from '@angular/core';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { GraphService } from 'src/app/services/graph-service.service';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { CommunicationService } from 'src/app/services/communication.service';
-
 @Component({
   selector: 'app-teacher',
   templateUrl: './teacher.component.html',
@@ -39,6 +38,8 @@ export class TeacherComponent {
   minorityWiseTeacher: any;
   allData: any;
   @ViewChild('openModal') openModal: any;
+  @ViewChild('tableElement') tableElement!: ElementRef;
+  @Output() downloadSelected = new EventEmitter<string>();
 
   itemCount: number | undefined;
   subscription: Subscription | undefined;
@@ -47,9 +48,14 @@ export class TeacherComponent {
   commonName: any;
   configDesignation: any;
   searchBox: any;
+  globalSearchBox: any;
   communicationServiceMobile: any;
   user:any;
   schoolName: any;
+  teacherSearchData: any[] = [];
+  profileDetails: any;
+  searchLoader: boolean = false;
+  downloadPopOpen: boolean = false;
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
@@ -485,5 +491,36 @@ export class TeacherComponent {
     }
   }
 
+  searchTeacher(data: any) {
+    this.teacherSearchData = [];
+    if (data && data.key) {
+      this.searchLoader = true;
+      this.httpService.post('teacher/search-teachers', { searchQuery: this.globalSearchBox }).subscribe((res: any) => {
+        if (res) {
+          this.teacherSearchData = res;
+        }
+        this.searchLoader = false;
+      })
+    }
+  }
+
+  viewProfileDetails(data: any) {
+    if (data) {
+      this.profileDetails = data;
+    }
+  }
+
+  exportToCSV(): void {
+    this.communicationService.exportToCSV(this.allTeacherData, 'table_data');
+  }
+
+  public async captureScreen() {
+    const data: any = document.getElementById('contentToConvert');
+    this.communicationService.exportToPDF(data);
+  }
+
+  exportToExcel(): void {
+    this.communicationService.exportToExcel(this.allTeacherData, 'table_data', 'Sheet1');
+  }
 
 }

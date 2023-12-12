@@ -246,6 +246,7 @@ span {
 #content {
     background-image: url("../../src/assets/images/Dashboard/bg.png");
     background-size: 100% 100%;
+    margin-bottom: 30px;
 }
 
 #sidebarCollapse {
@@ -267,23 +268,27 @@ span {
 
 @media only screen and (max-width: 415px) {
     .small-screen {
-      display: block;
+        display: block;
     }
+
     .large-screen {
-      display: none;
-    } 
-    .logo img{
+        display: none;
+    }
+
+    .logo img {
         width: auto !important;
-    }   
-  }
-  @media only screen and (min-width: 415px) {
+    }
+}
+
+@media only screen and (min-width: 415px) {
     .small-screen {
-      display: none;
+        display: none;
     }
+
     .large-screen {
-      display: block;
+        display: block;
     }
-  }
+}
 
 #content {
     width: 100%;
@@ -293,15 +298,30 @@ span {
     /* margin-left: 60px; */
 }
 
-.small-screen{
+.small-screen {
     /* position: absolute; */
     z-index: 1;
     background: #fff;
 }
-.small-screen p{
-  font-size: small;
-  text-align: center;
+
+.small-screen p {
+    font-size: small;
+    text-align: center;
 }
-.small-screen .nav-item{
-   margin-left: 5px;
+
+.small-screen .nav-item {
+    margin-left: 5px;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #3d9be9;
+    padding: 3px;
+}
+
+footer p {
+    font-size: 0.9rem;
 }

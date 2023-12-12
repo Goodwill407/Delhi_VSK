@@ -212,6 +212,9 @@
             </span> Schools data not found</p>
     </div>
 
+    <!-- <div class="column wide" id="map" style="height: 400px;"></div> -->
+
+
 </div>
 
 <!-- Button trigger modal -->
@@ -227,6 +230,11 @@
             <div class="modal-header" style="background-color: #b3d64d;">
                 <h5 class="modal-title" id="exampleModalLabel">Attendance Status Wise Details By
                     {{attendanceStatusCount?.labels[indexNoConfig]}} </h5>
+                <button class="btn text-center text-danger ms-3"
+                    (click)="downloadExcel(allSchoolAttendanceStatus)"
+                    data-toggle="tooltip" data-placement="top" title="Download">
+                    <i class="bi bi-box-arrow-in-down h2"></i>
+                </button>
                 <button type="button" (click)="searchBox = ''" class="btn-close" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>

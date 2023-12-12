@@ -66,6 +66,9 @@ export class AttendanceRegularComponent {
   }
 
   ngOnInit() {
+
+    const map = this.communicationService.grographicalGraph();
+
     this.dateModel = new Date();
     this.dateModel.setDate(this.dateModel.getDate() - 1);
     this.formattedDate = this.datepipe.transform(this.dateModel, 'dd-MMM-yyyy');
@@ -624,4 +627,7 @@ export class AttendanceRegularComponent {
     this.schoolWiseBottomFiveGraph.dataLabels.dropShadow.enabled = false;
   }
 
+  downloadExcel(data:any): void {
+    this.communicationService.exportToExcel(data, 'table_data', 'Sheet1');
+  }
 }

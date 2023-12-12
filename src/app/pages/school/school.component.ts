@@ -6,6 +6,9 @@ import { GraphService } from 'src/app/services/graph-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription, finalize } from 'rxjs';
 import { CommunicationService } from 'src/app/services/communication.service';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import { PDFExportComponent } from '@progress/kendo-angular-pdf-export';
 
 @Component({
   selector: 'app-school',
@@ -13,7 +16,6 @@ import { CommunicationService } from 'src/app/services/communication.service';
   styleUrls: ['./school.component.css']
 })
 export class SchoolComponent {
-
   // Graphs
   teacherGenderRatio: any;
   studentsGenderRatio: any;
@@ -202,23 +204,23 @@ export class SchoolComponent {
   }
 
   getGraphsByZone() {
-    if(this.zoneModel){
-    this.spinner.show();
-    const zone = { zoneName: this.zoneModel };
-    this.getSchoolDataByZone();
-    this.httpService.post('zonegraph/school-student-teacher-graph-zonename', zone).subscribe((data: any) => {
-      if (data) {
-        this.setAllGraphs(data, false);
-        this.spinner.hide();
-        this.schoolModel = '';
-      }
-    }, (error) => {
-      this.toastr.error('', 'Something went wrong !');
-    })
-  }else{
-    this.allSchools = [];
-    this.getGraphsByDistrictName();
-  }
+    if (this.zoneModel) {
+      this.spinner.show();
+      const zone = { zoneName: this.zoneModel };
+      this.getSchoolDataByZone();
+      this.httpService.post('zonegraph/school-student-teacher-graph-zonename', zone).subscribe((data: any) => {
+        if (data) {
+          this.setAllGraphs(data, false);
+          this.spinner.hide();
+          this.schoolModel = '';
+        }
+      }, (error) => {
+        this.toastr.error('', 'Something went wrong !');
+      })
+    } else {
+      this.allSchools = [];
+      this.getGraphsByDistrictName();
+    }
   }
 
   getGraphsByDistrictName() {
@@ -238,7 +240,7 @@ export class SchoolComponent {
         this.toastr.error('', 'Something went wrong !');
       })
     } else {
-      this.allSchools= [];
+      this.allSchools = [];
       this.getAllSchoolGraph();
     }
     this.zoneModel = "";
@@ -455,4 +457,21 @@ export class SchoolComponent {
     return color;
   }
 
+  downloadExcel(data: any): void {
+    this.communicationService.exportToExcel(data, 'table_data', 'Sheet1');
+  }
+
+  exportToCSV(): void {
+    this.communicationService.exportToCSV(this.allTeacherData?.length > 0 ? this.allTeacherData : this.allStudentData, 'table_data');
+  }
+
+  public async captureScreen() {
+    this.spinner.show();
+    const data: any = document.getElementById('contentToConvert');
+    this.communicationService.exportToPDF(data);
+  }
+
+  exportToExcel(): void {
+    this.communicationService.exportToExcel(this.allTeacherData?.length > 0 ? this.allTeacherData : this.allStudentData, 'table_data', 'Sheet1');
+  }
 }

@@ -58,6 +58,7 @@ export class StudentComponent {
   commonName: any;
   statusWise: any;
   searchBox: any;
+  globalSearchBox: any;
   communicationServiceMobile: any;
   user:any
   schoolName:any
@@ -67,6 +68,11 @@ export class StudentComponent {
     // take user
     this.user = JSON.parse(sessionStorage.getItem('userProfile')!);
    }
+  studentSearchData: any[] = [];
+  profileDetails: any;
+  searchLoader: boolean = false;
+
+  
 
   ngOnInit() {
     // this.getStudentGraphData();
@@ -519,6 +525,37 @@ export class StudentComponent {
     }
   }
 
+  exportToCSV(): void {
+    this.communicationService.exportToCSV(this.allStudentData, 'table_data');
+  }
+  
+  public async captureScreen() {
+    const data: any = document.getElementById('contentToConvert');
+    this.communicationService.exportToPDF(data);
+  }
+  
+  exportToExcel(): void {
+    this.communicationService.exportToExcel(this.allStudentData, 'table_data', 'Sheet1');
+  }
+
+  searchStudent(data: any) {
+    this.studentSearchData = [];
+    if (data && data.key) {
+      this.searchLoader = true;
+      this.httpService.post('student/search-students', { searchQuery: this.globalSearchBox }).subscribe((res: any) => {
+        if (res) {
+          this.studentSearchData = res;
+        }
+        this.searchLoader = false;
+      })
+    }
+  }
+
+  viewProfileDetails(data: any) {
+    if (data) {
+      this.profileDetails = data;
+    }
+  }
 }
 
 
