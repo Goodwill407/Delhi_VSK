@@ -23,6 +23,7 @@ import { DikshaComponent } from './diksha/diksha.component';
 import { AttendanceRangeWiseComponent } from './attendance-range-wise/attendance-range-wise.component';
 import { AttendanceRegularComponent } from './attendance-regular/attendance-regular.component';
 import { SearchPipe } from '../pipes/search.pipe';
+import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { SearchPipe } from '../pipes/search.pipe';
     FormsModule,
     ReactiveFormsModule,
     NgApexchartsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    PDFExportModule
   ],
   providers: [DatePipe]
 })

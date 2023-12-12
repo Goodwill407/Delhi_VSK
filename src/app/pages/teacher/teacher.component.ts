@@ -5,8 +5,6 @@ import { GraphService } from 'src/app/services/graph-service.service';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { CommunicationService } from 'src/app/services/communication.service';
-import jspdf, { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
 @Component({
   selector: 'app-teacher',
   templateUrl: './teacher.component.html',

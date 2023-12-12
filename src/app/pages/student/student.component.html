@@ -167,26 +167,30 @@
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header" style="background-color: #b3d64d;">
-        <h5 class="modal-title mx-auto" *ngIf="configGender" id="exampleModalLabel"><span class="text-start"> Student Details By Gender:
-          ({{configGender?.dataPointIndex == 0 ? 'Male' : (this.configGender.dataPointIndex == 1) ? 'Female': 'Other'}})</span>
+        <h5 class="modal-title mx-auto" *ngIf="configGender" id="exampleModalLabel"><span class="text-start"> Student
+            Details By Gender:
+            ({{configGender?.dataPointIndex == 0 ? 'Male' : (this.configGender.dataPointIndex == 1) ? 'Female':
+            'Other'}})</span>
         </h5>
-        <h5 class="modal-title mx-auto" *ngIf="commonName" id="exampleModalLabel">Student Details By {{commonName}} </h5>
-        <h5 class="modal-title mx-auto" *ngIf="statusWise == 0 || statusWise " id="exampleModalLabel">Student Details By Status:
+        <h5 class="modal-title mx-auto" *ngIf="commonName" id="exampleModalLabel">Student Details By {{commonName}}
+        </h5>
+        <h5 class="modal-title mx-auto" *ngIf="statusWise == 0 || statusWise " id="exampleModalLabel">Student Details By
+          Status:
           {{allData.studentStatusCounts[this.statusWise]._id}} </h5>
-          <div class="dropdown">
-            <span class="text-danger m-2"><img src="../../../assets/images/icons/downloads.png" width="25px"
-                alt=""></span>
-            <div class="dropdown-content">
-              <button class="btn" (click)="exportToCSV()"><i class="bi bi-filetype-csv h2 text-warning"></i> CSV</button>
-              <button class="btn" (click)="exportToExcel()"><i class="bi bi-file-earmark-excel h2 text-success"></i>
-                Excel</button>
-              <button class="btn" value="CPTURE" (click)="captureScreen()"><i
-                  class="bi bi-filetype-pdf h2 text-danger"></i>PDF</button>
-            </div>
+        <div class="dropdown">
+          <span class="text-danger m-2"><img src="../../../assets/images/icons/downloads.png" width="25px"
+              alt=""></span>
+          <div class="dropdown-content">
+            <button class="btn" (click)="exportToCSV()"><i class="bi bi-filetype-csv h2 text-warning"></i> CSV</button>
+            <button class="btn" (click)="exportToExcel()"><i class="bi bi-file-earmark-excel h2 text-success"></i>
+              Excel</button>
+            <button class="btn" value="CPTURE" (click)="pdf.saveAs('Student data.pdf')"><i
+                class="bi bi-filetype-pdf h2 text-danger"></i>PDF</button>
           </div>
-          <!--  -->
-          <button type="button" (click)="searchBox = ''" class="btn-close m-2" data-bs-dismiss="modal"
-            aria-label="Close"></button>
+        </div>
+        <!--  -->
+        <button type="button" (click)="searchBox = ''" class="btn-close m-2" data-bs-dismiss="modal"
+          aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="input-group mb-3 w-50">
@@ -194,34 +198,36 @@
           <input class="form-control" type="search" [(ngModel)]="searchBox" placeholder="Search by name..." value=""
             id="example-search-input">
         </div>
-        <div class="table-responsive">
-          <table class="table table-responsive table-hover table-bordered table-striped" id="contentToConvert">
-            <thead class="thead-light">
-              <tr class="table-bordered ">
-                <th>Sr No</th>
-                <th>Name</th>
-                <th style="width: 112px;">Class</th>
-                <th>School</th>
-                <!-- <th>Designation</th> -->
-                <th>Gender</th>
-                <th>DOB</th>
-                <th>District</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let data of allStudentData | search:searchBox;let i = index">
-                <td>{{i+1}}</td>
-                <td>{{data.Name}}</td>
-                <td>{{data.CLASS}}</td>
-                <td>{{data.SCHOOL_NAME}}</td>
-                <!-- <td>{{data.postdesc}}</td> -->
-                <td>{{data.Gender}}</td>
-                <td>{{data.Dob}}</td>
-                <td>{{data.District}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <kendo-pdf-export #pdf paperSize="A3">
+          <div class="table-responsive">
+            <table class="table table-responsive table-hover table-bordered table-striped" id="contentToConvert">
+              <thead class="thead-light">
+                <tr class="table-bordered ">
+                  <th>Sr No</th>
+                  <th>Name</th>
+                  <th style="width: 112px;">Class</th>
+                  <th>School</th>
+                  <!-- <th>Designation</th> -->
+                  <th>Gender</th>
+                  <th>DOB</th>
+                  <th>District</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of allStudentData | search:searchBox;let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{data.Name}}</td>
+                  <td>{{data.CLASS}}</td>
+                  <td>{{data.SCHOOL_NAME}}</td>
+                  <!-- <td>{{data.postdesc}}</td> -->
+                  <td>{{data.Gender}}</td>
+                  <td>{{data.Dob}}</td>
+                  <td>{{data.District}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </kendo-pdf-export>
       </div>
 
     </div>

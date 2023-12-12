@@ -199,7 +199,7 @@
             <button class="btn" (click)="exportToCSV()"><i class="bi bi-filetype-csv h2 text-warning"></i> CSV</button>
             <button class="btn" (click)="exportToExcel()"><i class="bi bi-file-earmark-excel h2 text-success"></i>
               Excel</button>
-            <button class="btn" value="CPTURE" (click)="captureScreen()"><i
+            <button class="btn" value="CPTURE" (click)="pdf.saveAs('Teacher data.pdf')"><i
                 class="bi bi-filetype-pdf h2 text-danger"></i>PDF</button>
           </div>
         </div>
@@ -213,36 +213,38 @@
           <input class="form-control" type="search" [(ngModel)]="searchBox" placeholder="Search by name..." value=""
             id="example-search-input">
         </div>
-        <div class="table-responsive" id="pdfTable" #pdfTable>
-          <table class="table table-responsive table-hover table-bordered table-striped" id="contentToConvert">
-            <thead class="thead-light">
-              <tr class="table-bordered ">
-                <th>Sr No</th>
-                <th>Name</th>
-                <th>Emp. Id</th>
-                <th style="width: 112px;">Joining Date</th>
-                <th>School</th>
-                <th>Designation</th>
-                <th>Gender</th>
-                <th>DOB</th>
-                <th>District</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let data of allTeacherData | search:searchBox;let i = index">
-                <td>{{i+1}}</td>
-                <td>{{data.Name}}</td>
-                <td>{{data.empid}}</td>
-                <td>{{data.JoiningDate}}</td>
-                <td>{{data.schname}}</td>
-                <td>{{data.postdesc}}</td>
-                <td>{{data.gender}}</td>
-                <td>{{data.dob}}</td>
-                <td>{{data.districtname}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <kendo-pdf-export #pdf paperSize="A3">
+          <div class="table-responsive">
+            <table class="table table-responsive table-hover table-bordered table-striped" id="contentToConvert">
+              <thead class="thead-light">
+                <tr class="table-bordered ">
+                  <th>Sr No</th>
+                  <th>Name</th>
+                  <th>Emp. Id</th>
+                  <th style="width: 112px;">Joining Date</th>
+                  <th>School</th>
+                  <th>Designation</th>
+                  <th>Gender</th>
+                  <th>DOB</th>
+                  <th>District</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of allTeacherData | search:searchBox;let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{data.Name}}</td>
+                  <td>{{data.empid}}</td>
+                  <td>{{data.JoiningDate}}</td>
+                  <td>{{data.schname}}</td>
+                  <td>{{data.postdesc}}</td>
+                  <td>{{data.gender}}</td>
+                  <td>{{data.dob}}</td>
+                  <td>{{data.districtname}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </kendo-pdf-export>
       </div>
 
     </div>

@@ -6,6 +6,9 @@ import { GraphService } from 'src/app/services/graph-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { CommunicationService } from 'src/app/services/communication.service';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import { PDFExportComponent } from '@progress/kendo-angular-pdf-export';
 
 @Component({
   selector: 'app-school',
@@ -13,7 +16,6 @@ import { CommunicationService } from 'src/app/services/communication.service';
   styleUrls: ['./school.component.css']
 })
 export class SchoolComponent {
-
   // Graphs
   teacherGenderRatio: any;
   studentsGenderRatio: any;
@@ -426,13 +428,13 @@ export class SchoolComponent {
   exportToCSV(): void {
     this.communicationService.exportToCSV(this.allTeacherData?.length > 0 ? this.allTeacherData : this.allStudentData, 'table_data');
   }
-  
+
   public async captureScreen() {
     this.spinner.show();
     const data: any = document.getElementById('contentToConvert');
     this.communicationService.exportToPDF(data);
   }
-  
+
   exportToExcel(): void {
     this.communicationService.exportToExcel(this.allTeacherData?.length > 0 ? this.allTeacherData : this.allStudentData, 'table_data', 'Sheet1');
   }

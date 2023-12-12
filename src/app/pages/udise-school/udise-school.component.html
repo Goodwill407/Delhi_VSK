@@ -93,48 +93,48 @@
       <div class="modal-header" style="background-color: #b3d64d;">
         <h5 class="modal-title" *ngIf="SchoolType == 0 || SchoolType " id="exampleModalLabel">Type Wise School Data :
           ({{allData.schoolTypeCounts[this.SchoolType]._id}}) </h5>
-        <button class="btn text-center text-danger ms-3"
-          (click)="downloadExcel(allSchoolTypeData)" data-toggle="tooltip"
-          data-placement="top" title="Download">
+        <button class="btn text-center text-danger ms-3" (click)="downloadExcel(allSchoolTypeData)"
+          data-toggle="tooltip" data-placement="top" title="Download">
           <i class="bi bi-box-arrow-in-down h2"></i>
         </button>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered table-striped">
+            <thead class="thead-light">
+              <tr class="table-bordered ">
+                <th>Sr No</th>
+                <th>District</th>
+                <th>Zone</th>
+                <th>School ID</th>
+                <th>UDISE Code</th>
+                <th>School Name</th>
+                <th>Rural Or Urban</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Shift</th>
+                <th>SchoolLevel</th>
 
-        <table class="table table-responsive table-hover table-bordered table-striped">
-          <thead class="thead-light">
-            <tr class="table-bordered ">
-              <th>Sr No</th>
-              <th>District</th>
-              <th>Zone</th>
-              <th>School ID</th>
-              <th>UDISE Code</th>
-              <th>School Name</th>
-              <th>Rural Or Urban</th>
-              <th>Phone</th>
-              <th>Address</th>
-              <th>Shift</th>
-              <th>SchoolLevel</th>
-
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let data of allSchoolTypeData;let i = index">
-              <td>{{i+1}}</td>
-              <td>{{data.district}}</td>
-              <td>{{data.zone}}</td>
-              <td>{{data.SchoolID}}</td>
-              <td>{{data.Udise_Code}}</td>
-              <td>{{data.SchName}}</td>
-              <td>{{data.RuralUrban}}</td>
-              <td>{{data.SchAddress}}</td>
-              <td>{{data.School_Deatils_Landline_Phone}}</td>
-              <td>{{data.Shiftofschool}}</td>
-              <td>{{data.School_Level}}</td>
-            </tr>
-          </tbody>
-        </table>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of allSchoolTypeData;let i = index">
+                <td>{{i+1}}</td>
+                <td>{{data.district}}</td>
+                <td>{{data.zone}}</td>
+                <td>{{data.SchoolID}}</td>
+                <td>{{data.Udise_Code}}</td>
+                <td>{{data.SchName}}</td>
+                <td>{{data.RuralUrban}}</td>
+                <td>{{data.SchAddress}}</td>
+                <td>{{data.School_Deatils_Landline_Phone}}</td>
+                <td>{{data.Shiftofschool}}</td>
+                <td>{{data.School_Level}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
     </div>
