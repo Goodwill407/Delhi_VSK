@@ -11,13 +11,33 @@ import { HttpServiceService } from 'src/app/services/http-service.service';
 })
 export class DashboardComponent {
   allDistrictData: any = [];
+  user:any;
+  districtModel:any
+  zoneModel:any
 
   totalCount: any = [];
-  constructor(private spinner: NgxSpinnerService, private httpService: HttpServiceService, private toastr: ToastrService) { }
+  constructor(private spinner: NgxSpinnerService, private httpService: HttpServiceService, private toastr: ToastrService) {
+    this.user = JSON.parse(sessionStorage.getItem('userProfile')!);
+   }
 
   ngOnInit() {
-    this.getSchoolByDistrict();
-    this.allTotalCount();
+    this.showRoleWiseData()
+  }
+
+  showRoleWiseData(){
+    if(this.user.role == 'admin'){
+      this.getSchoolByDistrict();
+      this.allTotalCount();
+    }
+    else if(this.user.role == 'district'){
+      this.districtModel = this.user.userName.split('-')[0];
+      this.getDataByDistrictWise()
+    }
+    else if(this.user.role == 'zone'){
+      this.zoneModel =this.user.userName.split('_')[0];
+      this.getDataByZoneWise()
+    }
+    
   }
 
   getSchoolByDistrict() {
@@ -44,6 +64,16 @@ export class DashboardComponent {
       this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     })
+  }
+
+  // distric wise data
+  getDataByDistrictWise(){
+
+  }
+
+  // Zone wise data
+  getDataByZoneWise(){
+
   }
 }
 

@@ -22,23 +22,8 @@
                     class="img-fluid" alt="Sample image">
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1" [ngClass]="communicationServiceMobile ? 'backImg' : 'd-block'">
-
-                <div class="d-flex mb-3">
-                    <h5 class="d-flex align-items-center me-2">Select type:</h5>
-                    <div class="pe-2">
-                        <input type="radio" class="btn-check" name="options-outlined" id="success-outlined"
-                            autocomplete="off" value="admin" (change)="loginType($event)" checked>
-                        <label class="btn btn-outline-primary" for="success-outlined">Government</label>
-                    </div>
-                    <div class="ps-2">
-                        <input type="radio" class="btn-check" name="options-outlined" id="primary-outlined"
-                            autocomplete="off" value="school" (change)="loginType($event)">
-                        <label class="btn btn-outline-primary" for="primary-outlined">School</label>
-                    </div>
-                </div>
-
-                <hr>
-                <h3 class="text-center bg-primary text-white p-2">Vidya Samiksha Kendra Login</h3>
+                                
+                <h3 class="text-center bg-primary text-white p-2 mb-5">Vidya Samiksha Kendra Login</h3>
                 <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
 
                     <!-- Email input -->

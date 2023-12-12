@@ -52,12 +52,12 @@ export class LoginPageComponent {
     const user = JSON.parse(sessionStorage.getItem('userProfile') || '{}');
     if (user) {
       if (user.role == "school") {
-        this.router.navigateByUrl('/content/school-dashboard');
-      } else if (user.role == "teacher") {
-        this.router.navigateByUrl('/dashboard/teacher-dashboard');
-      } else if (user.role == "student") {
-        this.router.navigateByUrl('/dashboard/attend-quiz');
-      } else if (user.role == "user") {
+        this.router.navigateByUrl('contrnt/school');
+      } else if (user.role == "district") {
+        this.router.navigateByUrl('content/admin-dashboard');
+      } else if (user.role == "zone") {
+        this.router.navigateByUrl('content/admin-dashboard');
+      } else if (user.role == "admin") {
         this.router.navigateByUrl('/content/admin-dashboard');
       }
     }
@@ -71,11 +71,7 @@ export class LoginPageComponent {
       return;
     }
     else {
-      if (this.setLoginType == "admin") {
-        this.login();
-      } else if (this.setLoginType == "school") {
-        this.schoolLogin();
-      }
+      this.login();
     }
   }
 
@@ -85,8 +81,14 @@ export class LoginPageComponent {
       if (data) {
         this.toastr.success('', 'Logged in succesfully!');
         sessionStorage.setItem('userProfile', JSON.stringify(data.user));
+       if(data.user.role === 'admin'){
         this.router.navigateByUrl('/content/admin-dashboard');
         this.loginFlag.emit(true)
+      }
+      else if(data.user.role !== 'admin'){
+        this.router.navigateByUrl('/school');
+        this.loginFlag.emit(true)
+      }
       }
       this.spinner.hide();
     }, (error) => {
@@ -95,20 +97,5 @@ export class LoginPageComponent {
     })
   }
 
-  schoolLogin() {
-    if (this.loginForm.value.email == 'school' && this.loginForm.value.password == 'School@123') {
-      this.toastr.success('', 'Logged in succesfully!');
-      sessionStorage.setItem('userProfile', JSON.stringify({ name: 'New english', role: 'school' }));
-      this.router.navigateByUrl('/content/school-dashboard');
-      this.loginFlag.emit(true)
-    } else {
-      this.toastr.error('', 'Email Username or Password !');
-    }
-  }
-
-  loginType(event: any) {
-    if (event && event.target) {
-      this.setLoginType = event.target.value;
-    }
-  }
+  
 }

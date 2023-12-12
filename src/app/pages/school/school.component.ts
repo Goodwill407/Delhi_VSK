@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { GraphService } from 'src/app/services/graph-service.service';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
+import { Subscription, finalize } from 'rxjs';
 import { CommunicationService } from 'src/app/services/communication.service';
 
 @Component({
@@ -46,16 +46,26 @@ export class SchoolComponent {
   subscription: Subscription | undefined;
   searchBox: any;
   communicationServiceMobile: any;
+  user:any;
+  schoolName:any
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
+    this.user = JSON.parse(sessionStorage.getItem('userProfile')!);
+
+   
   }
 
   ngOnInit() {
     this.getAllDistricts();
-    this.getAllSchoolGraph();
+    // this.getAllSchoolGraph();
     this.getDistrictName();
     this.getAllZones();
+
+    this.showRoleWiseData()
+    
+
+  
 
     this.subscription = this.graphService
       .getItemCountObservable()
@@ -67,6 +77,27 @@ export class SchoolComponent {
           this.getStudentByGender(false);
         }
       });
+  }
+
+  showRoleWiseData(){
+    if(this.user.role == 'admin'){
+      this.getAllSchoolGraph();
+    }
+
+    else if(this.user.role == 'district'){
+      this.districtModel = this.user.userName.split('-')[0];
+      this.getGraphsByDistrictName()
+     
+    }
+    else if(this.user.role == 'zone'){
+      this.zoneModel =this.user.userName.split('_')[0];
+      this.getGraphsByZone()
+    }
+    else if(this.user.role == 'school'){
+      this.schoolModel =this.user.userName.split('_')[1];
+      this.schoolName =this.user.userName.split('_')[0];
+      this.getGraphsBySchoolName()
+    }
   }
 
   getAllDistricts() {
@@ -160,7 +191,7 @@ export class SchoolComponent {
   getAllSchoolGraph() {
     this.spinner.show();
     this.httpService.get('graphs/school-teacher-student-graph').subscribe((data: any) => {
-      if (data) {
+      if (data && this) {
         this.setAllGraphs(data, true);
         this.spinner.hide();
       }
@@ -216,8 +247,9 @@ export class SchoolComponent {
 
   getGraphsBySchoolName() {
     this.spinner.show();
+    const id = this.schoolModel?.Schoolid ? this.schoolModel?.Schoolid : this.schoolModel;
     const school = {
-      "schoolId": this.schoolModel.Schoolid
+      "schoolId": id
     }
     this.httpService.post('zonegraph/school-student-teacher-graph-schoolid', school).subscribe((data: any) => {
       if (data) {
@@ -229,7 +261,9 @@ export class SchoolComponent {
       this.toastr.error('', 'Something went wrong !');
     })
   }
+ 
 
+  
   getStudentsGenderRatio(studentsGender: any) {
     this.studentsGenderRatio = this.graphService.PieGraph('donut', 'Student');
     this.studentsGenderRatio.series = [studentsGender.totalBoys, studentsGender.totalGirls, studentsGender.Other];
@@ -246,9 +280,10 @@ export class SchoolComponent {
   getStudentByGender(flash: any) {
     if (!flash) {
       this.spinner.show();
+     const id = this.schoolModel?.Schoolid ? this.schoolModel?.Schoolid : this.schoolModel;
       const parameter = {
         "Gender": this.studGender.dataPointIndex == 0 ? 'M' : (this.studGender?.dataPointIndex == 1 ? 'F' : 'T'),
-        "Schoolid": this.schoolModel.Schoolid,
+        "Schoolid": id
       }
       this.httpService.post('student/studentcount/schoolname/gender', parameter).subscribe((res: any) => {
         this.allStudentData = res;
@@ -278,9 +313,10 @@ export class SchoolComponent {
 
   getTeachersByGender(flash: any) {
     if (!flash) {
+      const id = this.schoolModel?.Schoolid ? this.schoolModel?.Schoolid : this.schoolModel;
       const parameter = {
         "gender": this.teacherGender.dataPointIndex == 0 ? 'Male' : 'Female',
-        "schname": this.schoolModel.Schoolid
+        "schname": id
       }
       this.httpService.post('teacher/get-teachers-by-gender', parameter).subscribe((res: any) => {
         this.allTeacherData = res;

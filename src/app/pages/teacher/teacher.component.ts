@@ -32,7 +32,6 @@ export class TeacherComponent {
   zoneModel: any = "";
   allZones: any;
   districtName: any;
-  schoolName: any;
   allTeacherData: any;
   designation: any;
   teacherCategory: any;
@@ -49,15 +48,20 @@ export class TeacherComponent {
   configDesignation: any;
   searchBox: any;
   communicationServiceMobile: any;
+  user:any;
+  schoolName: any;
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
+    // take user
+    this.user = JSON.parse(sessionStorage.getItem('userProfile')!);
   }
 
   ngOnInit() {
-    this.getAllTeacherData();
+    // this.getAllTeacherData();
     this.getAllDistricts();
     this.getAllZones();
+    this.showRoleWiseData()
 
     this.subscription = this.graphService
       .getItemCountObservable()
@@ -69,6 +73,26 @@ export class TeacherComponent {
           this.getTeachersByDesignation(false);
         }
       });
+  }
+
+  showRoleWiseData(){
+    if(this.user.role == 'admin'){
+      this.getAllTeacherData();
+    }
+
+    else if(this.user.role == 'district'){
+      this.districtModel = this.user.userName.split('-')[0];
+      this.getGraphsByDistrictName()
+    }
+    else if(this.user.role == 'zone'){
+      this.zoneModel =this.user.userName.split('_')[0];
+      this.getGraphsByZone()
+    }
+    else if(this.user.role == 'school'){
+      this.schoolModel =this.user.userName.split('_')[1];
+      this.schoolName = this.user.userName.split('_')[0];
+      this.getGraphsBySchoolName()
+      }
   }
 
   getAllDistricts() {
@@ -231,8 +255,9 @@ export class TeacherComponent {
   }
 
   getGraphsBySchoolName() {
+    const id = this.schoolModel?.Schoolid ? this.schoolModel?.Schoolid : this.schoolModel;
     const school = {
-      schname: String(this.schoolModel.Schoolid)
+      schname: String(id)
     }
     this.spinner.show();
     this.httpService.post('teacher-graph/school-category-wise/school', school).subscribe((data: any) => {
@@ -271,9 +296,10 @@ export class TeacherComponent {
   }
 
   getTeachersByGender(flash: any) {
+    const id = this.schoolModel?.Schoolid ? this.schoolModel?.Schoolid : this.schoolModel;
     const parameter = {
       "gender": this.configGender.dataPointIndex == 0 ? 'Male' : 'Female',
-      "schname": this.schoolModel.Schoolid
+      "schname": id
     }
     this.httpService.post('teacher/get-teachers-by-gender', parameter).subscribe((res: any) => {
       this.allTeacherData = res;
@@ -391,9 +417,10 @@ export class TeacherComponent {
   }
 
   getTeachersByDesignation(flash: any) {
+    const id =this.schoolModel?.Schoolid ? this.schoolModel?.Schoolid :this.schoolModel
     const parameter = {
       "postdesc": this.allData.postdescWiseTeacherCounts[this.configDesignation]._id,
-      "schname": this.schoolModel.Schoolid
+      "schname": id
     }
     this.httpService.post('teacher-graph/postwisecount', parameter).subscribe((res: any) => {
       this.allTeacherData = res;
@@ -405,8 +432,9 @@ export class TeacherComponent {
 
   getTachersBySchoolName() {
     if (this.schoolModel) {
+     const id = this.schoolModel?.schoolid ? this.schoolModel?.schoolid :this.schoolModel;
       const parameter = {
-        "schname": this.schoolModel.Schoolid
+        "schname": id
       };
       this.teacherDataClear();
       this.httpService.post('teacher-graph/teachercount/schoolname', parameter).subscribe((res: any) => {

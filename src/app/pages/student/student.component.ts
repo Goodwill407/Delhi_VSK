@@ -59,15 +59,20 @@ export class StudentComponent {
   statusWise: any;
   searchBox: any;
   communicationServiceMobile: any;
+  user:any
+  schoolName:any
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private communicationService: CommunicationService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
+    // take user
+    this.user = JSON.parse(sessionStorage.getItem('userProfile')!);
    }
 
   ngOnInit() {
-    this.getStudentGraphData();
+    // this.getStudentGraphData();
     this.getAllDistricts();
     this.getAllZones();
+    this.showRoleWiseData()
 
     this.subscription = this.graphService
       .getItemCountObservable()
@@ -83,7 +88,25 @@ export class StudentComponent {
           this.getStudentByStatusWise(false);
         }
       });
+  }
+  showRoleWiseData(){
+    if(this.user.role === 'admin'){
+      this.getStudentGraphData();
+    }
 
+    else if(this.user.role === 'district'){
+      this.districtModel = this.user.userName.split('-')[0];
+      this.getGraphsByDistrictName()
+    }
+    else if(this.user.role === 'zone'){
+      this.ZoneModel = this.user.userName.split('_')[0];
+      this.getGraphsByZone()
+    }
+    else if(this.user.role === 'school'){
+      this.schoolModel = this.user.userName.split('_')[1];
+      this.schoolName = this.user.userName.split('_')[0];
+      this.getGraphsBySchoolName()
+    }
   }
   getAllDistricts() {
     this.httpService.get('school/districtNames').subscribe((data: any) => {
@@ -173,8 +196,9 @@ export class StudentComponent {
   }
 
   getGraphsBySchoolName() {
+    const id = this.schoolModel?.Schoolid ? this.schoolModel?.Schoolid : this.schoolModel;
     const school = {
-      schoolName: this.schoolModel.Schoolid.toString()
+      schoolName: String(id)
     }
     this.spinner.show();
     this.httpService.post('all-student-graph/student-graph-count-schoolName', school).subscribe((data: any) => {
@@ -214,8 +238,9 @@ export class StudentComponent {
   }
 
   getStudentBySchoolName() {
+    const id = this.schoolModel?.Schoolid ? this.schoolModel?.Schoolid : this.schoolModel;
     const parameter = {
-      "schoolName": this.schoolModel.Schoolid.toString()
+      "schoolName": id
     };
     // this.teacherDataClear();
     this.httpService.post('all-student-graph/student-graph-count-schoolName', parameter).subscribe((res: any) => {
@@ -355,8 +380,9 @@ export class StudentComponent {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         this.studentDataClear();
         this.commonName = `School Type : ( ${TypeOfStudSchool[0].typeOfSchool} School )`;
+        const id = this.schoolModel?.Schoolid ? this.schoolModel?.Schoolid : this.schoolModel;
         const parameter = {
-          "Schoolid": this.schoolModel
+          "Schoolid":id
         }
         this.graphService.addToCart();
       }
@@ -386,8 +412,9 @@ export class StudentComponent {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         this.studentDataClear();
         this.commonName = this.commonName = `Sift Wise : ( ${StudentShiftWiseCounts[0].shift} )`;
+        const id = this.schoolModel?.Schoolid ? this.schoolModel?.Schoolid : this.schoolModel;
         const parameter = {
-          "Schoolid": this.schoolModel
+          "Schoolid":id
         }
         this.graphService.addToCart();
       }
@@ -406,8 +433,9 @@ export class StudentComponent {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         this.studentDataClear();
         this.commonName = this.commonName = `Management Wise : ( ${StudentManagementWiseCounts[0].SchManagement} )`;
+        const id = this.schoolModel?.Schoolid ? this.schoolModel?.Schoolid : this.schoolModel;
         const parameter = {
-          "Schoolid": this.schoolModel
+          "Schoolid": id
         }
         this.graphService.addToCart();
       }
@@ -441,9 +469,10 @@ export class StudentComponent {
   getStudentByGender(flash: any) {
     if (!flash) {
       this.spinner.show();
+      const id = this.schoolModel?.Schoolid ? this.schoolModel?.Schoolid : this.schoolModel;
       const parameter = {
         "Gender": this.configGender?.dataPointIndex == 0 ? 'M' : (this.configGender?.dataPointIndex == 1) ? 'F' : 'T',
-        "Schoolid": this.schoolModel.Schoolid,
+        "Schoolid": id
       }
       this.httpService.post('student/studentcount/schoolname/gender', parameter).subscribe((res: any) => {
         this.allStudentData = res;
@@ -458,8 +487,9 @@ export class StudentComponent {
   getStudentCountBySchoolId(flash: any) {
     if (!flash) {
       this.spinner.show();
+      const id = this.schoolModel?.Schoolid ? this.schoolModel?.Schoolid : this.schoolModel;
       const parameter = {
-        "Schoolid": this.schoolModel.Schoolid,
+        "Schoolid": id
       }
       this.httpService.post('student/studentcount/schoolname', parameter).subscribe((res: any) => {
         this.allStudentData = res;
@@ -474,8 +504,9 @@ export class StudentComponent {
   getStudentByStatusWise(flash: any) {
     if (!flash) {
       this.spinner.show();
+      const id = this.schoolModel?.Schoolid ? this.schoolModel?.Schoolid : this.schoolModel;
       const parameter = {
-        "Schoolid": this.schoolModel.Schoolid,
+        "Schoolid": id,
         "status": this.allData.studentStatusCounts[this.statusWise]._id
       }
       this.httpService.post('student/studentcount/schoolId/status', parameter).subscribe((res: any) => {
