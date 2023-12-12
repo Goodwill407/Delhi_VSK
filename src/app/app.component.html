@@ -261,7 +261,7 @@
       ☰
     </h1>
     <div class="small-screen" *ngIf="showFlag">
-      <ul class="nav" *ngIf="user.role == 'user'" style="width: 85px;">
+      <ul class="nav" *ngIf="user.role == 'admin'" style="width: 85px;">
         <li class="nav-item mt-2">
           <a class="nav-link" (click)="sideBarNav()" routerLink="content/admin-dashboard" routerLinkActive="active" href="#">
             <span>

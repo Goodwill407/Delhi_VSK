@@ -36,7 +36,8 @@
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/apexcharts/dist/apexcharts.min.js",
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/leaflet/dist/leaflet.js"
+              "node_modules/leaflet/dist/leaflet.js",
+              "node_modules/@popperjs/core/dist/umd/popper.min.js"
             ]
           },
           "configurations": {
@@ -108,7 +109,10 @@
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/apexcharts/dist/apexcharts.min.js",
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/leaflet/dist/leaflet.js"
+              "node_modules/leaflet/dist/leaflet.js",
+              "node_modules/jspdf/dist/jspdf.min.js",
+              "node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.min.js",
+              "node_modules/@popperjs/core/dist/umd/popper.min.js"
             ]
           }
         }

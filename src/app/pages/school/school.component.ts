@@ -422,4 +422,18 @@ export class SchoolComponent {
   downloadExcel(data:any): void {
     this.communicationService.exportToExcel(data, 'table_data', 'Sheet1');
   }
+
+  exportToCSV(): void {
+    this.communicationService.exportToCSV(this.allTeacherData?.length > 0 ? this.allTeacherData : this.allStudentData, 'table_data');
+  }
+  
+  public async captureScreen() {
+    this.spinner.show();
+    const data: any = document.getElementById('contentToConvert');
+    this.communicationService.exportToPDF(data);
+  }
+  
+  exportToExcel(): void {
+    this.communicationService.exportToExcel(this.allTeacherData?.length > 0 ? this.allTeacherData : this.allStudentData, 'table_data', 'Sheet1');
+  }
 }
