@@ -272,7 +272,24 @@ export class CommunicationService {
         const pdf = new jsPDF('p', 'mm', 'a4');
         const imgWidth = pdf.internal.pageSize.getWidth();
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, imgWidth, imgHeight);
+        let yPos = 0;
+    
+        while (yPos < canvas.height) {
+            const newCanvas = document.createElement('canvas');
+            newCanvas.width = canvas.width;
+            newCanvas.height = Math.min(canvas.height - yPos, imgHeight);
+    
+            const ctx = newCanvas.getContext('2d');
+            ctx?.drawImage(canvas, 0, yPos, canvas.width, newCanvas.height, 0, 0, canvas.width, newCanvas.height);
+    
+            pdf.addImage(newCanvas.toDataURL('image/png'), 'PNG', 0, 0, imgWidth, imgHeight);
+            yPos += imgHeight;
+    
+            if (yPos < canvas.height) {
+                pdf.addPage();
+            }
+        }
+    
         pdf.save('application.pdf');
         this.spinner.hide();
     }
