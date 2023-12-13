@@ -261,7 +261,7 @@
     <h1 class="shadow-lg h2 btn small-screen fw-bold" style="position: absolute; top: 0" (click)="sideBarNav()">
       ☰
     </h1>
-    <div class="small-screen" *ngIf="showFlag">
+    <div class="small-screen position-absolute" *ngIf="showFlag" style="top: 40px">
       <ul class="nav" *ngIf="user.role == 'admin'" style="width: 85px;">
         <li class="nav-item mt-2">
           <a class="nav-link" (click)="sideBarNav()" routerLink="content/admin-dashboard" routerLinkActive="active"
@@ -374,7 +374,7 @@
 <!-- Body content -->
 <!-- <router-outlet *ngIf="!isLogIn"></router-outlet> -->
 <app-login-page *ngIf="!isLogIn" (loginFlag)="loginFlagFunc($event)"></app-login-page>
-<footer class="site-footer">
+<!-- <footer class="site-footer">
   <p class="text-white text-center m-0">Developed by Laboni Media Solutions LLP</p>
-</footer>
+</footer> -->
 <!-- Body content -->
