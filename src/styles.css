@@ -192,3 +192,6 @@ apx-chart .apexcharts-toolbar {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+.modal .modal-header{
+    background-color: #8ac3f1 !important;
+}
