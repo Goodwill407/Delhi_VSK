@@ -23,6 +23,7 @@ export class UdiseSchoolComponent {
   allZones: any;
   TypeOfSchool: any
   allData: any
+  searchBox: any;
 
   itemCount: number | undefined;
   subscription: Subscription | undefined;
@@ -354,8 +355,12 @@ export class UdiseSchoolComponent {
     }
   }
 
-  downloadExcel(data:any): void {
-    this.communicationService.exportToExcel(data, 'table_data', 'Sheet1');
+  exportToCSV(): void {
+    this.communicationService.exportToCSV(this.allSchoolTypeData, 'schoolType_data');
+  }
+
+  exportToExcel(): void {
+    this.communicationService.exportToExcel(this.allSchoolTypeData, 'schoolType_data', 'Sheet1');
   }
 
 }
