@@ -69,7 +69,7 @@
       [legend]="RuralUrbanCountsGraph?.legend"></apx-chart>
   </div>
 
-  <div class="column wide">
+  <div class="column" [ngClass]="communicationServiceMobile ? '' : 'wide-height'" style="height: auto;">
     <h5 class="header-bg p-2">School Type Wise Count</h5>
     <apx-chart [series]="SchoolTypeCountsGraph?.series" [chart]="SchoolTypeCountsGraph?.chart"
       [dataLabels]="SchoolTypeCountsGraph?.dataLabels" [plotOptions]="SchoolTypeCountsGraph?.plotOptions"
