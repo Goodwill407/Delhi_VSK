@@ -463,9 +463,9 @@ export class TeacherComponent {
     }
   }
 
-  searchTeacher(data: any) {
+  searchTeacher() {
     this.teacherSearchData = [];
-    if (data && data.key) {
+    if (this.globalSearchBox) {
       this.searchLoader = true;
       this.httpService.post('teacher/search-teachers', { searchQuery: this.globalSearchBox }).subscribe((res: any) => {
         if (res) {
@@ -473,6 +473,14 @@ export class TeacherComponent {
         }
         this.searchLoader = false;
       })
+    }
+  }
+
+  search() {
+    if (this.globalSearchBox) {
+      this.searchTeacher()
+    } else {
+      this.teacherSearchData = [];
     }
   }
 

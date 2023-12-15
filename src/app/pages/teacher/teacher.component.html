@@ -36,9 +36,9 @@
 </div>
 
 <div class="input-group float-end mt-2 me-2" style="width: 300px;">
-  <span class="input-group-text" id="basic-addon1">🔍</span>
   <input class="form-control" type="search" [(ngModel)]="globalSearchBox" placeholder="Search teacher..." value=""
-    id="example-search-input" (keyup)="searchTeacher($event)">
+    id="example-search-input" (search)="search()">
+  <span class="input-group-text" role="button" id="basic-addon1" (click)="searchTeacher()">🔍</span>
   <span class="search-filter-box bg-white w-100" *ngIf="globalSearchBox">
     <div class="d-flex justify-content-center" *ngIf="searchLoader">
       <div class="spinner-border m-2" role="status">
