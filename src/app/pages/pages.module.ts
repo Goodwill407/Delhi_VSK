@@ -24,6 +24,7 @@ import { AttendanceRangeWiseComponent } from './attendance-range-wise/attendance
 import { AttendanceRegularComponent } from './attendance-regular/attendance-regular.component';
 import { SearchPipe } from '../pipes/search.pipe';
 import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
+import { TeacherGuestComponent } from './teacher-guest/teacher-guest.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
     DikshaComponent,
     AttendanceRangeWiseComponent,
     AttendanceRegularComponent,
-    SearchPipe
+    SearchPipe,
+    TeacherGuestComponent
   ],
   imports: [
     CommonModule,
