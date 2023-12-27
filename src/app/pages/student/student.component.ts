@@ -493,21 +493,21 @@ export class StudentComponent {
   }
 
   exportToCSV(): void {
-    this.communicationService.exportToCSV(this.allStudentData, 'table_data');
+    this.communicationService.exportToCSV(this.allStudentData, 'Student Data');
   }
-  
+
   public async captureScreen() {
     const data: any = document.getElementById('contentToConvert');
     this.communicationService.exportToPDF(data);
   }
-  
+
   exportToExcel(): void {
-    this.communicationService.exportToExcel(this.allStudentData, 'table_data', 'Sheet1');
+    this.communicationService.exportToExcel(this.allStudentData, 'Student Data', 'Sheet1');
   }
 
-  searchStudent(data: any) {
+  searchStudent() {
     this.studentSearchData = [];
-    if (data && data.key) {
+    if (this.globalSearchBox) {
       this.searchLoader = true;
       this.httpService.post('student/search-students', { searchQuery: this.globalSearchBox }).subscribe((res: any) => {
         if (res) {
@@ -515,6 +515,14 @@ export class StudentComponent {
         }
         this.searchLoader = false;
       })
+    }
+  }
+
+  search() {
+    if (this.globalSearchBox) {
+      this.searchStudent()
+    } else {
+      this.studentSearchData = [];
     }
   }
 

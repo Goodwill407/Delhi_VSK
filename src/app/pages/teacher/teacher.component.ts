@@ -59,6 +59,9 @@ export class TeacherComponent {
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
   }
+  handleParentClick() {
+    this.communicationService.emitParentClick();
+  }
 
   ngOnInit() {
     this.getAllTeacherData();
@@ -463,9 +466,9 @@ export class TeacherComponent {
     }
   }
 
-  searchTeacher(data: any) {
+  searchTeacher() {
     this.teacherSearchData = [];
-    if (data && data.key) {
+    if (this.globalSearchBox) {
       this.searchLoader = true;
       this.httpService.post('teacher/search-teachers', { searchQuery: this.globalSearchBox }).subscribe((res: any) => {
         if (res) {
@@ -476,6 +479,14 @@ export class TeacherComponent {
     }
   }
 
+  search() {
+    if (this.globalSearchBox) {
+      this.searchTeacher()
+    } else {
+      this.teacherSearchData = [];
+    }
+  }
+
   viewProfileDetails(data: any) {
     if (data) {
       this.profileDetails = data;
@@ -483,7 +494,7 @@ export class TeacherComponent {
   }
 
   exportToCSV(): void {
-    this.communicationService.exportToCSV(this.allTeacherData, 'table_data');
+    this.communicationService.exportToCSV(this.allTeacherData, 'Teacher Data');
   }
 
   public async captureScreen() {
@@ -492,7 +503,7 @@ export class TeacherComponent {
   }
 
   exportToExcel(): void {
-    this.communicationService.exportToExcel(this.allTeacherData, 'table_data', 'Sheet1');
+    this.communicationService.exportToExcel(this.allTeacherData, 'Teacher Data', 'Sheet1');
   }
 
 }
