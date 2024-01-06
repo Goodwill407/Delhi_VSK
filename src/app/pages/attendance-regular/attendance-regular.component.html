@@ -227,15 +227,24 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <div class="modal-header" style="background-color: #b3d64d;">
-                <h5 class="modal-title" id="exampleModalLabel">Attendance Status Wise Details By
+            <div class="modal-header">
+                <h5 class="modal-title mx-auto" id="exampleModalLabel">Attendance Status Wise Details By
                     {{attendanceStatusCount?.labels[indexNoConfig]}} </h5>
-                <button class="btn text-center text-danger ms-3"
-                    (click)="downloadExcel(allSchoolAttendanceStatus)"
-                    data-toggle="tooltip" data-placement="top" title="Download">
-                    <i class="bi bi-box-arrow-in-down h2"></i>
-                </button>
-                <button type="button" (click)="searchBox = ''" class="btn-close" data-bs-dismiss="modal"
+                <div class="dropdown">
+                    <span class="text-danger m-2"><img src="../../../assets/images/icons/downloads.png" width="25px"
+                            alt=""></span>
+                    <div class="dropdown-content">
+                        <button class="btn" (click)="exportToCSV()"><i class="bi bi-filetype-csv h4 text-warning"></i>
+                            CSV</button>
+                        <button class="btn" (click)="exportToExcel()"><i
+                                class="bi bi-file-earmark-excel h4 text-success"></i>
+                            Excel</button>
+                        <button class="btn" value="CPTURE" (click)="pdf.saveAs('Student data.pdf')"><i
+                                class="bi bi-filetype-pdf h4 text-danger"></i>PDF</button>
+                    </div>
+                </div>
+                <!--  -->
+                <button type="button" (click)="searchBox = ''" class="btn-close m-2" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -244,57 +253,59 @@
                     <input class="form-control" type="search" [(ngModel)]="searchBox" placeholder="Search by name..."
                         value="" id="example-search-input">
                 </div>
-                <div class="table-responsive">
-                    <table class="table table-responsive table-hover table-bordered table-striped"
-                        *ngIf="allSchoolAttendance && allSchoolAttendance.length > 0">
-                        <thead class="thead-light">
-                            <tr class="table-bordered ">
-                                <th>Sr No</th>
-                                <th>Student ID</th>
-                                <th>Name</th>
-                                <th>Gender</th>
-                                <th>Class</th>
-                                <th>Section</th>
-                                <th>Shift</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let data of allSchoolAttendance | search:searchBox;let i = index">
-                                <td>{{i+1}}</td>
-                                <td>{{data.Student_ID}}</td>
-                                <td>{{data.Student_Name}}</td>
-                                <td>{{data.Gender}}</td>
-                                <td>{{data.CLASS}}</td>
-                                <td>{{data.section}}</td>
-                                <td>{{data.shift}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <kendo-pdf-export #pdf paperSize="A3">
+                    <div class="table-responsive">
+                        <table class="table table-responsive table-hover table-bordered table-striped"
+                            *ngIf="allSchoolAttendance && allSchoolAttendance.length > 0">
+                            <thead class="thead-light">
+                                <tr class="table-bordered ">
+                                    <th>Sr No</th>
+                                    <th>Student ID</th>
+                                    <th>Name</th>
+                                    <th>Gender</th>
+                                    <th>Class</th>
+                                    <th>Section</th>
+                                    <th>Shift</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of allSchoolAttendance | search:searchBox;let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{data.Student_ID}}</td>
+                                    <td>{{data.Student_Name}}</td>
+                                    <td>{{data.Gender}}</td>
+                                    <td>{{data.CLASS}}</td>
+                                    <td>{{data.section}}</td>
+                                    <td>{{data.shift}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                    <table class="table table-responsive table-hover table-bordered table-striped"
-                        *ngIf="allSchoolAttendanceStatus && allSchoolAttendanceStatus.length > 0">
-                        <thead class="thead-light">
-                            <tr class="table-bordered ">
-                                <th>Sr No</th>
-                                <th>School Id</th>
-                                <th>School</th>
-                                <th>Shift</th>
-                                <th>Date</th>
-                                <th>Attendance Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let data of allSchoolAttendanceStatus | search:searchBox;let i = index">
-                                <td>{{i+1}}</td>
-                                <td>{{data.School_ID}}</td>
-                                <td>{{data.school_name}}</td>
-                                <td>{{data.shift}}</td>
-                                <td>{{data.attendance_DATE | date: 'dd MMM yyyy'}}</td>
-                                <td>{{data.attendanceStatus}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                        <table class="table table-responsive table-hover table-bordered table-striped"
+                            *ngIf="allSchoolAttendanceStatus && allSchoolAttendanceStatus.length > 0">
+                            <thead class="thead-light">
+                                <tr class="table-bordered ">
+                                    <th>Sr No</th>
+                                    <th>School Id</th>
+                                    <th>School</th>
+                                    <th>Shift</th>
+                                    <th>Date</th>
+                                    <th>Attendance Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of allSchoolAttendanceStatus | search:searchBox;let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{data.School_ID}}</td>
+                                    <td>{{data.school_name}}</td>
+                                    <td>{{data.shift}}</td>
+                                    <td>{{data.attendance_DATE | date: 'dd MMM yyyy'}}</td>
+                                    <td>{{data.attendanceStatus}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </kendo-pdf-export>
             </div>
 
         </div>

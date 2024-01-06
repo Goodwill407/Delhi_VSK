@@ -627,7 +627,11 @@ export class AttendanceRegularComponent {
     this.schoolWiseBottomFiveGraph.dataLabels.dropShadow.enabled = false;
   }
 
-  downloadExcel(data:any): void {
-    this.communicationService.exportToExcel(data, 'table_data', 'Sheet1');
+  exportToCSV(): void {
+    this.communicationService.exportToCSV(this.allSchoolAttendanceStatus?.length > 0 ? this.allSchoolAttendanceStatus : this.allSchoolAttendance, 'data');
+  }
+
+  exportToExcel(): void {
+    this.communicationService.exportToExcel(this.allSchoolAttendanceStatus?.length > 0 ? this.allSchoolAttendanceStatus : this.allSchoolAttendance, 'data', 'Sheet1');
   }
 }

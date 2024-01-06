@@ -246,7 +246,6 @@ span {
 #content {
     background-image: url("../../src/assets/images/Dashboard/bg.png");
     background-size: 100% 100%;
-    margin-bottom: 30px;
 }
 
 #sidebarCollapse {
