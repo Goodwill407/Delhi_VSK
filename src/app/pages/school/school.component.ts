@@ -87,12 +87,13 @@ export class SchoolComponent {
     }
 
     else if(this.user.role == 'district'){
-      this.districtModel = this.user.userName.split('-')[0];
+      this.districtModel = 'East'
+      
       this.getGraphsByDistrictName()
      
     }
     else if(this.user.role == 'zone'){
-      this.zoneModel =this.user.userName.split('_')[0];
+      this.zoneModel = 'Zone-1'
       this.getGraphsByZone()
     }
     else if(this.user.role == 'school'){
@@ -145,7 +146,7 @@ export class SchoolComponent {
       if (data && data.ZoneSchool) {
         this.allSchools = data.ZoneSchool;
         this.allSchools = this.allSchools.sort((a: any, b: any) => a.Schoolid - b.Schoolid);
-        this.spinner.hide();
+        // this.spinner.hide();
       } else {
         this.allSchools = [];
         this.spinner.hide();
@@ -203,12 +204,13 @@ export class SchoolComponent {
     })
   }
 
-  getGraphsByZone() {
+ getGraphsByZone() {
     if (this.zoneModel) {
-      this.spinner.show();
       const zone = { zoneName: this.zoneModel };
+      this.spinner.show();
       this.getSchoolDataByZone();
-      this.httpService.post('zonegraph/school-student-teacher-graph-zonename', zone).subscribe((data: any) => {
+     
+    this.httpService.post('zonegraph/school-student-teacher-graph-zonename', zone).subscribe((data: any) => {
         if (data) {
           this.setAllGraphs(data, false);
           this.spinner.hide();

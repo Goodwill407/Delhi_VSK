@@ -8,7 +8,9 @@ import { CommunicationService } from '../services/communication.service';
 
 export interface LoginClass {
   userName: string,
-  password: string
+  Role: string
+
+  
 }
 @Component({
   selector: 'app-login-page',
@@ -18,11 +20,18 @@ export interface LoginClass {
 export class LoginPageComponent {
 
   loginForm!: FormGroup;
+  
   submitted: boolean = false;
   loginModel!: LoginClass;
   setLoginType: string = "admin";
   @Output() loginFlag = new EventEmitter<boolean>(); 
   communicationServiceMobile: any;
+
+  OtpFlag: boolean=false
+  enteredOTP: string = '';
+  Selected_Role:any=''
+  Mobile_number:any
+  
 
   constructor(private fb: FormBuilder, private httpService: HttpServiceService, private route: ActivatedRoute, private router: Router, private spinner: NgxSpinnerService, private toastr: ToastrService,private communicationService:CommunicationService) {
     const user: any = JSON.parse(sessionStorage.getItem('userProfile')!);
@@ -44,8 +53,9 @@ export class LoginPageComponent {
   initializeSaveFormValidations() {
     this.loginForm = this.fb.group({
       'userName': new FormControl(''),
-      'password': new FormControl(''),
-    });
+      'Role': new FormControl(''),
+      'enteredOTP': new FormControl(''),
+       });
   }
 
   checkIfAlreadyLogin() {
@@ -71,31 +81,100 @@ export class LoginPageComponent {
       return;
     }
     else {
-      this.login();
+      this.GetOtp();
     }
   }
 
-  login() {
-    this.spinner.show();
-    this.httpService.post('auth/login', this.loginForm.value).subscribe((data: any) => {
-      if (data) {
-        this.toastr.success('', 'Logged in succesfully!');
-        sessionStorage.setItem('userProfile', JSON.stringify(data.user));
-       if(data.user.role === 'admin'){
-        this.router.navigateByUrl('/content/admin-dashboard');
-        this.loginFlag.emit(true)
+ 
+  GetOtp() {
+      this.spinner.show();
+     
+      const userId=this.loginForm.value.userName;
+  
+      this.httpService.post('auth/send-otp?userId='+ userId, userId).subscribe((data: any) => {
+        if (data) {
+          this.Mobile_number =data
+          this.toastr.success('', 'Logged in succesfully!');
+          // sessionStorage.setItem('userProfile', JSON.stringify(this.loginForm.value.Role));
+          this.OtpFlag=true
+            
+        }
+        this.spinner.hide();
+      }, (error) => {
+        this.toastr.error('', 'Email Username or Password !');
+        this.spinner.hide();
+      })
+    }
+ 
+  
+
+    verifyOTP() {
+      const OTP=Number(this.loginForm.value.enteredOTP)
+     const postData = {
+      mobNo: this.Mobile_number.toString(),
+      otp: OTP
+    };
+    
+   
+    this.httpService.post('auth/verify-otp?mobNo=' + this.Mobile_number.toString() + '&otp=' + OTP,postData).subscribe((response:any) => {
+        if (response.message =="OTP Verified successfully") {
+        const  userRole={role:this.loginForm.value.Role}
+          sessionStorage.setItem('userProfile', JSON.stringify(userRole));
+          const user   =  JSON.parse(sessionStorage.getItem('userProfile') || '{}');
+         
+          if(user.role =='admin'){
+            this.router.navigateByUrl('/content/admin-dashboard');
+            this.loginFlag.emit(true)
+          }
+          else if(user.role !== 'admin'){
+            this.router.navigateByUrl('/school');
+            this.loginFlag.emit(true)
+          }
+          // console.log('success');
+          
+
+        }
+
+      }, (error)=> {
+        
+        // Handle error if necessary
+        console.error('Error verifying OTP:', error);
+      })
       }
-      else if(data.user.role !== 'admin'){
-        this.router.navigateByUrl('/school');
-        this.loginFlag.emit(true)
-      }
-      }
-      this.spinner.hide();
-    }, (error) => {
-      this.toastr.error('', 'Email Username or Password !');
-      this.spinner.hide();
-    })
-  }
+
+    // async verifyOTP() {
+    //   const OTP = Number(this.loginForm.value.enteredOTP);
+    //   const postData = {
+    //     mobNo: this.Mobile_number.toString(),
+    //     otp: OTP
+    //   };
+    //   const user = JSON.parse(sessionStorage.getItem('userProfile') || '{}');
+    
+    //   try {
+    //     const response = await this.httpService.post('auth/verify-otp?mobNo=' + this.Mobile_number.toString() + '&otp=' + OTP, postData).toPromise();
+    
+    //     if (response === "OTP Verify successfully") {
+    //       if (user.role === 'admin') {
+    //         this.router.navigateByUrl('/content/admin-dashboard');
+    //         this.loginFlag.emit(true);
+    //       } else if (user.role !== 'admin') {
+    //         this.router.navigateByUrl('/school');
+    //         this.loginFlag.emit(true);
+    //       }
+    //     }
+    //   } catch (error) {
+    //     // Handle error if necessary
+    //     console.error('Error verifying OTP:', error);
+    //   }
+    // }
+    
+ 
+
+ 
+  }        
+         
 
   
-}
+
+  
+

@@ -28,3 +28,9 @@ section {
     background-image: url("../../assets/images/bg_img.jpg");
     background-size: 100% 100%;
 }
+
+.form-select{
+    padding:0.5rem 1rem !important;
+    font-size: 1.25rem;
+    color:rgb(103, 101, 101) ;
+   }

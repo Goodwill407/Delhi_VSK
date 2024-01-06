@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, forkJoin } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -42,4 +43,5 @@ export class HttpServiceService {
   delete(url: string, id: any) {
     return this.http.delete<any>(this.apiURL + url + "/" + id);
   }
+ 
 }

@@ -101,7 +101,7 @@ export class StudentComponent {
     }
 
     else if(this.user.role === 'district'){
-      this.districtModel = this.user.userName.split('-')[0];
+      this.districtModel = 'East'
       this.getGraphsByDistrictName()
     }
     else if(this.user.role === 'zone'){

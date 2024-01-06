@@ -11,6 +11,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ToastrModule } from 'ngx-toastr';
     AppRoutingModule,
     ChartModule,
     ReactiveFormsModule,
+    FormsModule,
     PagesModule,
     NgxSpinnerModule,
     ToastrModule.forRoot()
