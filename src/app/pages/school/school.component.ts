@@ -19,6 +19,7 @@ export class SchoolComponent {
   // Graphs
   teacherGenderRatio: any;
   studentsGenderRatio: any;
+  genderWiseClass:any;
   typesOfSchools: any;
   shiftWiseSchools: any;
   schoolsByManagement: any;
@@ -190,11 +191,59 @@ export class SchoolComponent {
     }
   }
 
+  setClassGraph(data:any){
+    this.getGenderWiseClass(data)
+  }
+
+  getGenderWiseClass(data:any){
+    let stringArr:any[]=[];
+    let numArr:any[]=[];
+    for (let i = 0; i < data.length; i++) {
+      if(data[i].class === "Nursery"){
+        stringArr.push(data[i]);
+        console.log(data[i])
+      }
+      else if(data[i].class === "KG"){
+        stringArr.push(data[i])
+      }
+      else {
+        numArr.push(data[i]);
+      }    
+    }
+    numArr = numArr.sort((a: any, b: any) => a.class - b.class);
+    stringArr = stringArr.sort((a: any, b: any) => a.class - b.class);
+    data = [...stringArr,...numArr];
+    this.genderWiseClass = this.graphService.districtWiseGraph();
+    this.genderWiseClass.chart.stacked = false;
+    this.genderWiseClass.chart.height = 300;
+    this.genderWiseClass.series[0].name = "Male";
+    this.genderWiseClass.series[1].name = "Female";
+    this.genderWiseClass.series[2].name = "Transgender";
+    this.genderWiseClass.series.pop();
+    for (let i = 0; i < data.length; i++) {
+      this.genderWiseClass.series[0].data.push(data[i].M ? data[i].M:0);
+      this.genderWiseClass.series[1].data.push(data[i].F ? data[i].F:0);
+      this.genderWiseClass.series[2].data.push(data[i].T ? data[i].T:0);
+      this.genderWiseClass.xaxis.categories.push( data[i].class ? (data[i].class == "KG" || data[i].class == "Nursery" ? data[i].class :'Class'+' '+ data[i].class ):'Class NA');
+      this.genderWiseClass.dataLabels ={ enabled: false }
+    }
+  }
+
   getAllSchoolGraph() {
     this.spinner.show();
     this.httpService.get('graphs/school-teacher-student-graph').subscribe((data: any) => {
       if (data && this) {
         this.setAllGraphs(data, true);
+        this.spinner.hide();
+      }
+    }, (error) => {
+      this.spinner.hide();
+      this.toastr.error('', 'Something went wrong !');
+    });
+    // class All Data
+    this.httpService.get('class-student').subscribe((data: any) => {
+      if (data) {
+        this.setClassGraph(data);
         this.spinner.hide();
       }
     }, (error) => {
@@ -214,6 +263,15 @@ export class SchoolComponent {
           this.setAllGraphs(data, false);
           this.spinner.hide();
           this.schoolModel = '';
+        }
+      }, (error) => {
+        this.toastr.error('', 'Something went wrong !');
+      })
+      // for Class zone :
+      this.httpService.post('class-student/zone', {"zone": this.zoneModel}).subscribe((data: any) => {
+        if (data) {
+          this.setClassGraph(data);
+          this.spinner.hide();
         }
       }, (error) => {
         this.toastr.error('', 'Something went wrong !');
@@ -240,6 +298,16 @@ export class SchoolComponent {
         this.spinner.hide();
         this.toastr.error('', 'Something went wrong !');
       })
+      // for class District
+      this.httpService.post('class-student/district', {district:this.districtModel}).subscribe((data: any) => {
+        if (data) {
+          this.setClassGraph(data)
+          this.spinner.hide();
+        }
+      }, (error) => {
+        this.spinner.hide();
+        this.toastr.error('', 'Something went wrong !');
+      })
     } else {
       this.allSchools = [];
       this.getAllSchoolGraph();
@@ -257,6 +325,16 @@ export class SchoolComponent {
     this.httpService.post('zonegraph/school-student-teacher-graph-schoolid', school).subscribe((data: any) => {
       if (data) {
         this.setAllGraphs(data, false);
+        this.spinner.hide();
+      }
+    }, (error) => {
+      this.spinner.hide();
+      this.toastr.error('', 'Something went wrong !');
+    })
+    
+    this.httpService.post('class-student/school', {"Schoolid":Number(this.schoolModel.Schoolid)}).subscribe((data: any) => {
+      if (data) {
+        this.setClassGraph(data);
         this.spinner.hide();
       }
     }, (error) => {

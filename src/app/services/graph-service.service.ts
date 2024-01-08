@@ -11,21 +11,22 @@ export class GraphService {
         const graphData = {
             series: [
                 {
-                    name: "PRESENT",
+                    name: "",
                     data: []
                 },
                 {
-                    name: "ABSENT",
+                    name: "",
                     data: []
                 },
                 {
-                    name: "LEAVE",
+                    name: "",
                     data: []
                 },
                 {
-                    name: "NOT MARK",
+                    name: "",
                     data: []
-                }
+                },
+               
             ],
             chart: {
                 type: "bar",

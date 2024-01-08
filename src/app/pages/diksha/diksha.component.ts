@@ -37,7 +37,7 @@ export class DikshaComponent {
   averageResourceCountGraph: any;
   communicationServiceMobile: any;
 
-  constructor( private communicationService:CommunicationService,private httpService: HttpServiceService, private graphService: GraphService, private spinner: NgxSpinnerService) {
+  constructor(private communicationService: CommunicationService, private httpService: HttpServiceService, private graphService: GraphService, private spinner: NgxSpinnerService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
   }
 
@@ -86,7 +86,7 @@ export class DikshaComponent {
 
   getTotalAverage_no_of_playsGraph(all_Data: any) {
     const LableName = all_Data.map((item: any) => item._id)
-    const Average_no_of_playsCount = all_Data.map((item: any) => item.average_no_of_plays)
+    const Average_no_of_playsCount = all_Data.map((item: any) => item.average_no_of_plays == null ? 0 : item.average_no_of_plays);
     this.Average_no_of_playsGraph = this.graphService.PieGraph('donut', '');
     const series = Average_no_of_playsCount.map((item: any) => item);
     const labels = LableName
@@ -96,7 +96,7 @@ export class DikshaComponent {
 
   getTotalAverage_play_timeGraph(all_Data: any) {
     const LableName = all_Data.map((item: any) => item._id)
-    const Average_play_timeCounts = all_Data.map((item: any) => item.average_play_time)
+    const Average_play_timeCounts = all_Data.map((item: any) => item.average_play_time==null ? 0 : item.average_play_time);
     this.Average_play_timeGraph = this.graphService.PieGraph('donut', '');
     const series = Average_play_timeCounts.map((item: any) => item);
     const labels = LableName;

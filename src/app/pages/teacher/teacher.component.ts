@@ -457,6 +457,7 @@ export class TeacherComponent {
   }
 
   getSchoolTypeWiseCount(data: any) {
+    data = data.filter((item:any) => item.typeOfSchool !== null && item.typeOfSchool.trim() !== "");
     this.schoolTypeWiseCount = this.graphService.PolarGraph('Teachers');
     for (let i = 0; i < data.length; i++) {
       this.schoolTypeWiseCount.series.push(data[i].teacherTypeOfSchoolWiseCount);
