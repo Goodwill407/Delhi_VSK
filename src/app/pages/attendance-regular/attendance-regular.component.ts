@@ -48,6 +48,7 @@ export class AttendanceRegularComponent {
   districtWiseBottomFiveGraph: any;
   zoneWiseBottomFiveGraph: any;
   schoolWiseBottomFiveGraph: any;
+  user:any;
 
   allShift: any = ['Morning', 'General', 'Evening'];
   districtWiseAttendanceCount: any;
@@ -63,6 +64,7 @@ export class AttendanceRegularComponent {
 
   constructor(private communicationService: CommunicationService, private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, public datepipe: DatePipe, private toastr: ToastrService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
+    this.user=JSON.parse(sessionStorage.getItem('userProfile')!);
   }
 
   ngOnInit() {
@@ -72,9 +74,10 @@ export class AttendanceRegularComponent {
     this.dateModel = new Date();
     this.dateModel.setDate(this.dateModel.getDate() - 1);
     this.formattedDate = this.datepipe.transform(this.dateModel, 'dd-MMM-yyyy');
-    this.getGraphsByDate(true);
+    
     this.getAllDistricts();
     this.getAllZones();
+    this. showRoleWiseData()
 
     this.subscription = this.graphService
       .getItemCountObservable()
@@ -314,6 +317,27 @@ export class AttendanceRegularComponent {
       this.schoolWiseTopFive();
       this.schoolWiseBottomFive();
     }
+  }
+
+  // show graps Login- wise
+  showRoleWiseData(){
+    if(this.user.role == 'admin'){
+    this.getGraphsByDate(true);
+    }
+
+    else if(this.user.role == 'district'){
+      this.districtModel = this.user.userName
+      this.getGraphsByDistrictName()
+    }
+    else if(this.user.role == 'zone'){
+      this.zoneModel =this.user.userName
+      this.getGraphsByZone()
+    }
+    // else if(this.user.role == 'school'){
+    //   this.schoolModel =this.user.userName
+    //   this.schoolName = this.user.userName
+    //   this.getGraphsBySchoolName()
+    //   }
   }
 
   getGenderWisePresent(data: any) {

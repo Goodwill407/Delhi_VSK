@@ -79,27 +79,25 @@ export class SchoolComponent {
           this.getStudentByGender(false);
         }
       });
-      
   }
 
   showRoleWiseData(){
+    
     if(this.user.role == 'admin'){
       this.getAllSchoolGraph();
     }
-
     else if(this.user.role == 'district'){
-      this.districtModel = 'East'
-      
+      this.districtModel = this.user.userName
       this.getGraphsByDistrictName()
-     
+        
     }
     else if(this.user.role == 'zone'){
-      this.zoneModel = 'Zone-1'
+      this.zoneModel = this.user.userName
       this.getGraphsByZone()
     }
     else if(this.user.role == 'school'){
-      this.schoolModel =this.user.userName.split('_')[1];
-      this.schoolName =this.user.userName.split('_')[0];
+      this.schoolModel =this.user.userName
+      this.schoolName =this.user.userName
       this.getGraphsBySchoolName()
     }
   }
@@ -147,10 +145,10 @@ export class SchoolComponent {
       if (data && data.ZoneSchool) {
         this.allSchools = data.ZoneSchool;
         this.allSchools = this.allSchools.sort((a: any, b: any) => a.Schoolid - b.Schoolid);
-        // this.spinner.hide();
+        this.spinner.hide();
       } else {
         this.allSchools = [];
-        this.spinner.hide();
+        // this.spinner.hide();
       }
     }, (error) => {
       this.spinner.hide();
@@ -460,8 +458,18 @@ export class SchoolComponent {
     return color;
   }
 
+  downloadExcel(data: any): void {
+    this.communicationService.exportToExcel(data, 'table_data', 'Sheet1');
+  }
+
   exportToCSV(): void {
     this.communicationService.exportToCSV(this.allTeacherData?.length > 0 ? this.allTeacherData : this.allStudentData, 'table_data');
+  }
+
+  public async captureScreen() {
+    this.spinner.show();
+    const data: any = document.getElementById('contentToConvert');
+    this.communicationService.exportToPDF(data);
   }
 
   exportToExcel(): void {

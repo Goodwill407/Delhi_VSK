@@ -101,16 +101,16 @@ export class StudentComponent {
     }
 
     else if(this.user.role === 'district'){
-      this.districtModel = 'East'
+      this.districtModel = this.user.userName
       this.getGraphsByDistrictName()
     }
     else if(this.user.role === 'zone'){
-      this.ZoneModel = this.user.userName.split('_')[0];
+      this.ZoneModel = this.user.userName
       this.getGraphsByZone()
     }
     else if(this.user.role === 'school'){
-      this.schoolModel = this.user.userName.split('_')[1];
-      this.schoolName = this.user.userName.split('_')[0];
+      this.schoolModel = this.user.userName
+      this.schoolName = this.user.userName
       this.getGraphsBySchoolName()
     }
   }
@@ -128,12 +128,13 @@ export class StudentComponent {
     if (this.districtModel) {
       const district = { "District_name": this.districtModel };
       this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
-        this.allZones = res.ZoneSchool.map((zone: any) => ({ id: zone.Z_ID, name: zone.Zone_Name }));
+        this.allZones = res.ZoneSchool
       })
     } else {
       this.httpService.get('school/zonename').subscribe((res: any) => {
-        this.allZones = res.ZoneInfo.map((zone: any) => ({ id: zone.Z_ID, name: zone.Zone_Name }));
-        this.allZones = this.allZones.sort((a: any, b: any) => a.id - b.id);
+        this.allZones = res.ZoneInfo;
+        this.spinner.hide();
+        this.allZones = this.allZones.sort((a: any, b: any) => a.Z_ID - b.Z_ID);
       })
     }
   }
