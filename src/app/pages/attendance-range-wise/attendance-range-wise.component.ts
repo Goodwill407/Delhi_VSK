@@ -267,6 +267,10 @@ export class AttendanceRangeWiseComponent {
     this.DateWiseRange = data
     console.log(this.DateWiseRange.length)
     this.dateRangeGraph = this.graphService.districtWiseGraph();
+    this.dateRangeGraph.series[0].name = "Present";
+    this.dateRangeGraph.series[1].name = "Absent";
+    this.dateRangeGraph.series[2].name = "Leave";
+    this.dateRangeGraph.series[3].name = "Not Mark";
     for (let i = 0; i < data.length; i++) {
       this.dateRangeGraph.series[0].data.push(Number((data[i].malePresentPercentage + data[i].feMalePresentPercentage + data[i].otherPresentPercentage).toFixed(2)));
       this.dateRangeGraph.series[1].data.push(Number((data[i].maleAbsentPercentage + data[i].feMaleAbsentPercentage + data[i].otherAbsentPercentage).toFixed(2)));

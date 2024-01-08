@@ -173,7 +173,7 @@ export class AttendanceRegularComponent {
   }
 
   getAllSchools() {
-    if (this.districtModel && !this.zoneModel) {
+    if (this.districtModel && !this.zoneModel && !this.shiftModel) {
       const district = {
         District_name: this.districtModel
       }
@@ -185,7 +185,7 @@ export class AttendanceRegularComponent {
           this.allSchools = [];
         }
       });
-    } else if (this.zoneModel) {
+    } else if (this.zoneModel && !this.shiftModel) {
       const zone = {
         Zone_Name: this.zoneModel
       }
@@ -199,6 +199,40 @@ export class AttendanceRegularComponent {
         }
       });
     }
+    if (this.shiftModel) {
+      const shift = {
+        "District_name": this.districtModel,
+        "Zone_Name": this.zoneModel,
+        "shift": this.shiftModel
+      }
+      if (this.shiftModel && this.districtModel && this.zoneModel) {
+        this.getShiftWiseSchool(shift);
+      }
+      else if (this.shiftModel && this.districtModel) {
+        delete shift.Zone_Name;
+        this.getShiftWiseSchool(shift);
+      }
+      else if (this.shiftModel && this.zoneModel) {
+        delete shift.District_name;
+        this.getShiftWiseSchool(shift);
+      } else {
+        delete shift.District_name;
+        delete shift.Zone_Name;
+        this.getShiftWiseSchool(shift);
+      }
+    }
+  }
+
+  getShiftWiseSchool(data: any) {
+    this.httpService.post('school/get/school-by/district/zone/shift', data).subscribe(res => {
+      if (res && res.length > 0) {
+        this.allSchools = res;
+        this.allSchools = this.allSchools.sort((a: any, b: any) => a.Schoolid - b.Schoolid);
+        this.schoolModel = '';
+      } else {
+        this.allSchools = [];
+      }
+    });
   }
 
   getStudentAttendanceData() {
@@ -223,7 +257,7 @@ export class AttendanceRegularComponent {
     } else if (this.zoneModel && !this.schoolModel) {
       this.getGraphsByZone();
     } else if (this.shiftModel) {
-      this.getGraphsBySfhit();
+      this.getGraphsByShift();
     } else if (this.schoolModel) {
       this.getGraphsBySchool();
     } else {
@@ -248,10 +282,13 @@ export class AttendanceRegularComponent {
     }
   }
 
-  getGraphsBySfhit() {
+  getGraphsByShift() {
     if (this.shiftModel == "") {
       this.getGraphsByDate(false);
-    } else {
+    } else if (this.shiftModel && this.zoneModel || this.districtModel) {
+      this.getDataZoneOfShift()
+    }
+    else {
       this.spinner.show();
       const shift = {
         "shift": this.shiftModel,
@@ -259,17 +296,60 @@ export class AttendanceRegularComponent {
       }
       this.httpService.post('attendance/zone/shift/wise', shift).subscribe((data: any) => {
         if (data && data.Counts.length > 0) {
+          this.getAllSchools();
           this.setAllGraphs(data);
-          this.districtModel = '';
-          this.zoneModel = '';
-          this.getAllZones();
+          // this.districtModel = '';
+          // this.zoneModel = '';
+          // this.getAllZones();
         } else {
-          this.toastr.error('', 'Data not found for this shift or date')
+          this.toastr.error('', 'Data not found for this shift or date');
         }
         this.spinner.hide();
       }, (error) => {
         this.spinner.hide();
       });
+    }
+  }
+
+  getDataZoneOfShift() {
+    const obj = {
+      "zone": this.zoneModel,
+      "district": this.districtModel,
+      "shift": this.shiftModel,
+      "date": this.getDate(this.dateModel)
+    }
+    if (this.shiftModel && this.zoneModel) {
+      delete obj.district;
+      this.spinner.show();
+      this.httpService.post('attendance/zone/shift-zone-wise', obj).subscribe(
+        (res: any) => {
+          if (res) {
+            this.setAllGraphs(res);
+            this.getAllSchools();
+          } else {
+            this.toastr.error('', 'Data not found for this shift or date');
+          }
+          this.spinner.hide();
+        }, (error: any) => {
+          this.spinner.hide();
+        }
+      )
+    }
+    else {
+      delete obj.zone;
+      this.httpService.post('attendance/zone/shift-district-wise', obj).subscribe(
+        (res: any) => {
+          if (res) {
+            this.setAllGraphs(res);
+            this.getAllSchools();
+          } else {
+            this.toastr.error('', 'Data not found for this shift or date');
+          }
+          this.spinner.hide();
+        }, (error: any) => {
+          this.spinner.hide();
+        }
+      )
     }
   }
 

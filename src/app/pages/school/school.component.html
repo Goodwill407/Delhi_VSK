@@ -87,6 +87,7 @@
             [responsive]="schoolsByManagement?.responsive" [legend]="schoolsByManagement?.legend"
             [colors]="schoolsByManagement?.colors" [tooltip]="schoolsByManagement?.tooltip"></apx-chart>
     </div>
+
     <div class="column">
         <h5 class="header-bg p-2">Shift wise Schools</h5>
         <apx-chart [series]="shiftWiseSchools?.series" [chart]="shiftWiseSchools?.chart"
@@ -95,12 +96,21 @@
             [colors]="shiftWiseSchools?.colors" [yaxis]="shiftWiseSchools?.yaxis"
             [tooltip]="shiftWiseSchools?.tooltip"></apx-chart>
     </div>
+
     <div class="column">
         <h5 class="header-bg p-2">Types of schools</h5>
         <apx-chart [series]="typesOfSchools?.series" [chart]="typesOfSchools?.chart" [labels]="typesOfSchools?.labels"
             [fill]="typesOfSchools?.fill" [stroke]="typesOfSchools?.stroke" [responsive]="typesOfSchools?.responsive"
             [colors]="typesOfSchools?.colors" [legend]="typesOfSchools?.legend" [yaxis]="shiftWiseSchools?.yaxis"
             [tooltip]="typesOfSchools?.tooltip"></apx-chart>
+    </div>
+
+    <div class="column wide">
+        <h5 class="header-bg p-2">Class Wise Student</h5>
+        <apx-chart [series]="genderWiseClass.series" [chart]="genderWiseClass.chart" [dataLabels]="genderWiseClass.dataLabels"
+            [plotOptions]="genderWiseClass.plotOptions" [yaxis]="genderWiseClass.yaxis" [legend]="genderWiseClass.legend"
+            [fill]="genderWiseClass.fill" [stroke]="genderWiseClass.stroke" [tooltip]="genderWiseClass.tooltip"
+            [xaxis]="genderWiseClass.xaxis"></apx-chart>
     </div>
     <!-- <div class="column">
         <h5 class="header-bg p-2">Schools by minority</h5>
