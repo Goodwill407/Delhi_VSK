@@ -6,9 +6,6 @@ import { GraphService } from 'src/app/services/graph-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { CommunicationService } from 'src/app/services/communication.service';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
-import { PDFExportComponent } from '@progress/kendo-angular-pdf-export';
 
 @Component({
   selector: 'app-school',
@@ -74,15 +71,15 @@ export class SchoolComponent {
   }
 
   getAllDistricts() {
-    this.spinner.show();
+    // this.spinner.show();
     this.httpService.get('school/districtNames').subscribe((data: any) => {
       if (data && data.length > 0) {
         this.allDistricts = data;
-        this.spinner.hide();
+        // this.spinner.hide();
         this.allDistricts = this.allDistricts.sort((a: any, b: any) => a.D_ID - b.D_ID);
       }
     }, (error) => {
-      this.spinner.hide();
+      // this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     })
   }
@@ -200,17 +197,18 @@ export class SchoolComponent {
   }
 
   getAllSchoolGraph() {
-    this.spinner.show();
+    // this.spinner.show();
     this.httpService.get('graphs/school-teacher-student-graph').subscribe((data: any) => {
       if (data) {
         this.setAllGraphs(data, true);
-        this.spinner.hide();
+        // this.spinner.hide();
       }
     }, (error) => {
-      this.spinner.hide();
+      // this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     });
     // class All Data
+    this.spinner.show()
     this.httpService.get('class-student').subscribe((data: any) => {
       if (data) {
         this.setClassGraph(data);
