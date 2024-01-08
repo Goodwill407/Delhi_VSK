@@ -43,5 +43,9 @@ export class HttpServiceService {
   delete(url: string, id: any) {
     return this.http.delete<any>(this.apiURL + url + "/" + id);
   }
+
+  multipleRequests(requests: Array<Observable<any>>): Observable<any[]> {
+    return forkJoin(requests);
+  }
  
 }

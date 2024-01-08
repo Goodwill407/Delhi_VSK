@@ -90,16 +90,16 @@ export class TeacherComponent {
     }
 
     else if(this.user.role == 'district'){
-      this.districtModel = 'East'
+      this.districtModel = this.user.userName
       this.getGraphsByDistrictName()
     }
     else if(this.user.role == 'zone'){
-      this.zoneModel =this.user.userName.split('_')[0];
+      this.zoneModel =this.user.userName
       this.getGraphsByZone()
     }
     else if(this.user.role == 'school'){
-      this.schoolModel =this.user.userName.split('_')[1];
-      this.schoolName = this.user.userName.split('_')[0];
+      this.schoolModel =this.user.userName
+      this.schoolName = this.user.userName
       this.getGraphsBySchoolName()
       }
   }
@@ -119,11 +119,11 @@ export class TeacherComponent {
   }
 
   getAllTeacherData() {
-    this.spinner.show();
+    // this.spinner.show();
     this.httpService.get('teacher-graph/school-category-wise').subscribe((data: any) => {
       if (data) {
         this.setAllGraphs(data);
-        this.spinner.hide();
+        // this.spinner.hide();
       }
     }, (error) => {
       this.spinner.hide();
@@ -177,6 +177,7 @@ export class TeacherComponent {
     }
 
   }
+ 
 
   getAllZones() {
     this.spinner.show();

@@ -35,9 +35,11 @@ export class AttendanceRangeWiseComponent {
   allShift: any = ['Morning', 'General', 'Evening'];
   dataNotFound: boolean = false;
   communicationServiceMobile: any;
+  user:any;
 
   constructor(private toastr: ToastrService, private httpService: HttpServiceService, public datepipe: DatePipe, private spinner: NgxSpinnerService, private graphService: GraphService, private communicationService: CommunicationService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
+    this.user=JSON.parse(sessionStorage.getItem('userProfile')!);
   }
 
 

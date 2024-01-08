@@ -56,9 +56,13 @@ export class TeacherGuestComponent {
   profileDetails: any;
   searchLoader: boolean = false;
   downloadPopOpen: boolean = false;
+  user:any;
 
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService) {
+    // take user
+    this.user = JSON.parse(sessionStorage.getItem('userProfile')!);
+  
     this.communicationServiceMobile = this.communicationService.isMobile;
     this.subscription = this.communicationService.parentClick$.subscribe(() => {
      this.getAllGuestTeacherData();
@@ -72,9 +76,9 @@ export class TeacherGuestComponent {
     this.subscription.unsubscribe();
   }
   ngOnInit() {
-    this.getAllGuestTeacherData();
     this.getAllDistricts();
     this.getAllZones();
+    this.showRoleWiseData()
 
     this.subscription = this.graphService
       .getItemCountObservable()
@@ -125,6 +129,26 @@ export class TeacherGuestComponent {
     this.getSchoolTypeWiseCount(data.teacherTypeOfSchoolWiseCounts);
     // this.getStreamWiseCount(data.teacherStreamWiseCounts);
     // this.getMinorityWiseCount(data.teacherMinorityWiseCounts);
+  }
+
+   // show graps Login- wise
+   showRoleWiseData(){
+    if(this.user.role == 'admin'){
+    this.getAllGuestTeacherData();
+    }
+    else if(this.user.role == 'district'){
+      this.districtModel = this.user.userName
+      this.getGraphsByDistrictName()
+    }
+    else if(this.user.role == 'zone'){
+      this.zoneModel =this.user.userName
+      this.getGraphsByZone()
+    }
+    else if(this.user.role == 'school'){
+      this.schoolModel =this.user.userName
+      this.schoolName = this.user.userName
+      this.getGraphsBySchoolName()
+      }
   }
 
   getGraphsByDistrictName() {

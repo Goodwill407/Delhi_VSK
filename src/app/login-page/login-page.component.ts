@@ -30,7 +30,8 @@ export class LoginPageComponent {
   OtpFlag: boolean=false
   enteredOTP: string = '';
   Selected_Role:any=''
-  Mobile_number:any
+  Mobile_number:any;
+  user:any;
   
 
   constructor(private fb: FormBuilder, private httpService: HttpServiceService, private route: ActivatedRoute, private router: Router, private spinner: NgxSpinnerService, private toastr: ToastrService,private communicationService:CommunicationService) {
@@ -93,9 +94,10 @@ export class LoginPageComponent {
   
       this.httpService.post('auth/send-otp?userId='+ userId, userId).subscribe((data: any) => {
         if (data) {
-          this.Mobile_number =data
+          this.Mobile_number =data.mobNo;
+          this.user =data.user;
           this.toastr.success('', 'Logged in succesfully!');
-          // sessionStorage.setItem('userProfile', JSON.stringify(this.loginForm.value.Role));
+          sessionStorage.setItem('userProfile', JSON.stringify(data.user));
           this.OtpFlag=true
             
         }
@@ -118,7 +120,10 @@ export class LoginPageComponent {
    
     this.httpService.post('auth/verify-otp?mobNo=' + this.Mobile_number.toString() + '&otp=' + OTP,postData).subscribe((response:any) => {
         if (response.message =="OTP Verified successfully") {
-        const  userRole={role:this.loginForm.value.Role}
+        const  userRole={
+          role:this.loginForm.value.Role,
+          userName: this.user
+        }
           sessionStorage.setItem('userProfile', JSON.stringify(userRole));
           const user   =  JSON.parse(sessionStorage.getItem('userProfile') || '{}');
          
@@ -142,34 +147,7 @@ export class LoginPageComponent {
       })
       }
 
-    // async verifyOTP() {
-    //   const OTP = Number(this.loginForm.value.enteredOTP);
-    //   const postData = {
-    //     mobNo: this.Mobile_number.toString(),
-    //     otp: OTP
-    //   };
-    //   const user = JSON.parse(sessionStorage.getItem('userProfile') || '{}');
-    
-    //   try {
-    //     const response = await this.httpService.post('auth/verify-otp?mobNo=' + this.Mobile_number.toString() + '&otp=' + OTP, postData).toPromise();
-    
-    //     if (response === "OTP Verify successfully") {
-    //       if (user.role === 'admin') {
-    //         this.router.navigateByUrl('/content/admin-dashboard');
-    //         this.loginFlag.emit(true);
-    //       } else if (user.role !== 'admin') {
-    //         this.router.navigateByUrl('/school');
-    //         this.loginFlag.emit(true);
-    //       }
-    //     }
-    //   } catch (error) {
-    //     // Handle error if necessary
-    //     console.error('Error verifying OTP:', error);
-    //   }
-    // }
-    
- 
-
+   
  
   }        
          
