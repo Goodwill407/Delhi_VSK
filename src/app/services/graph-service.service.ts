@@ -295,8 +295,8 @@ export class GraphService {
             tooltip: {
                 y: {
                     title: {
-                        formatter: () => {
-                            return toolTipName + ':'
+                        formatter: (val: any) => {
+                            return val + ':'
                         }
                     }
                 }

@@ -59,20 +59,52 @@
                     style="width: 90px; height: 90px;" alt="">
             </div>
             <div class="vr mt-4 mb-5 text-white mx-3 opacity-100"></div>
-            <div class="pt-4">
-                <h1 class="display-6 mt-2 fw-bold text-white">{{totalCount?.totalStudents}}</h1>
-                <div class="d-flex justify-content-around ms-2">
-                    <div>
-                        <h5 class="mb-0">{{(totalCount?.totalBoys/totalCount?.totalStudents) * 100 | number :
-                            '1.2-2'}}&percnt;</h5>
+            <div class="pt-1">
+                <h1 class="display-6 fw-bold text-white mb-0 text-center">{{totalCount?.totalStudents}}</h1>
+                <table class="students-info-table">
+                    <thead>
+                        <tr class="text-center" style="border-bottom: 1px solid #fff;">
+                            <th></th>
+                            <th>Boys</th>
+                            <th>Girls</th>
+                            <th>Others</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="text-center" style="border-bottom: 1px solid #fff;">
+                            <th>Ratio</th>
+                            <td>{{(totalCount?.totalBoys/totalCount?.totalStudents) * 100 | number :
+                                '1.2-2'}}&percnt;</td>
+                            <td>{{(totalCount?.totalGirls/totalCount?.totalStudents) * 100 | number :
+                                '1.2-2'}}&percnt;</td>
+                            <td>{{(totalCount?.Other/totalCount?.totalStudents) * 100 | number :
+                                '1.2-4'}}&percnt;</td>
+                        </tr>
+                        <tr>
+                            <th>Count</th>
+                            <td>{{totalCount?.totalBoys}}</td>
+                            <td>{{totalCount?.totalGirls}}</td>
+                            <td>{{totalCount?.Other}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- <div class="d-flex justify-content-around">
+                    <div class="text-center">
+                        <h6 class="mb-0">{{(totalCount?.totalBoys/totalCount?.totalStudents) * 100 | number :
+                            '1.2-2'}}&percnt;</h6>
                         <h6 class="mb-0 text-white">Boys</h6>
                     </div>
-                    <div class="ms-4">
-                        <h5 class="mb-0">{{(totalCount?.totalGirls/totalCount?.totalStudents) * 100 | number :
-                            '1.2-2'}}&percnt;</h5>
+                    <div class="ms-2 text-center">
+                        <h6 class="mb-0">{{(totalCount?.totalGirls/totalCount?.totalStudents) * 100 | number :
+                            '1.2-2'}}&percnt;</h6>
                         <h6 class="mb-0 text-white">Girls</h6>
                     </div>
-                </div>
+                    <div class="ms-2 text-center">
+                        <h6 class="mb-0">{{(totalCount?.Other/totalCount?.totalStudents) * 100 | number :
+                            '1.2-4'}}&percnt;</h6>
+                        <h6 class="mb-0 text-white">Transgender</h6>
+                    </div>
+                </div> -->
             </div>
             <h3 class="text-center mt-1 mb-1 bg-white card-bottom-text">STUDENTS</h3>
         </div>
@@ -85,9 +117,9 @@
     <div class="column mt-3 ms-3 text-center" *ngFor="let data of allDistrictData" [routerLink]="['/school']"
         [queryParams]="{districtName : data.districtName}">
         <div class="header-dashboard">
-            <h4 class="fw-bold mb-0 p-2 text-white" >{{data?.districtName}}</h4>
+            <h4 class="fw-bold mb-0 p-2 text-white">{{data?.districtName}}</h4>
         </div>
-        
+
         <!-- <div class="glass"></div> -->
         <div class="content d-flex mt-4">
             <span class="text">Total Schools :</span>

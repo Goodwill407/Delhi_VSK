@@ -341,3 +341,12 @@
 .parent2:hover .card .logo .circle5 {
     transform: translate3d(0, 0, 120px);
 }
+
+.students-info-table tr td {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.students-info-table tr th {
+    padding: 5px;
+}
