@@ -75,6 +75,7 @@ export class AttendanceRegularComponent {
     this.getGraphsByDate(true);
     this.getAllDistricts();
     this.getAllZones();
+    this.getAllSchoolName();
 
     this.subscription = this.graphService
       .getItemCountObservable()
@@ -101,6 +102,16 @@ export class AttendanceRegularComponent {
       if (data && data.length > 0) {
         this.allDistricts = data;
         this.allDistricts = this.allDistricts.sort((a: any, b: any) => a.D_ID - b.D_ID);
+      }
+    })
+  }
+  
+  getAllSchoolName(){
+    this.httpService.get('school/get-all-school-name').subscribe((res:any)=>{
+      if(res){
+        this.allSchools = res;
+      }else{
+        this.allSchools = [];
       }
     })
   }

@@ -44,6 +44,7 @@ export class AttendanceRangeWiseComponent {
   ngOnInit() {
     this.getAllDistricts();
     this.getAllZones();
+    this.getAllSchoolName();
   }
 
   getAllDistricts() {
@@ -58,6 +59,16 @@ export class AttendanceRangeWiseComponent {
       // this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     });
+  }
+  
+  getAllSchoolName(){
+    this.httpService.get('school/get-all-school-name').subscribe((res:any)=>{
+      if(res){
+        this.allSchools = res;
+      }else{
+        this.allSchools = [];
+      }
+    })
   }
 
   getGraphsByShift() {

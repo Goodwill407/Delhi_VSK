@@ -67,7 +67,7 @@ export class TeacherComponent {
     this.getAllTeacherData();
     this.getAllDistricts();
     this.getAllZones();
-
+    this.getAllSchoolName();
     this.subscription = this.graphService
       .getItemCountObservable()
       .subscribe((count) => {
@@ -91,6 +91,16 @@ export class TeacherComponent {
     }, (error) => {
       this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
+    })
+  }
+  
+  getAllSchoolName(){
+    this.httpService.get('school/get-all-school-name').subscribe((res:any)=>{
+      if(res){
+        this.allSchools = res;
+      }else{
+        this.allSchools = [];
+      }
     })
   }
 
