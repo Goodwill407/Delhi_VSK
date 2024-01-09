@@ -376,7 +376,7 @@ export class AttendanceRegularComponent {
       this.httpService.post('attendance/school/date-wise', school).subscribe((data: any) => {
         if (data && data.Counts.length > 0) {
           this.setAllGraphs(data);
-          this.shiftModel = '';
+          this.shiftModel = data.shift;
         } else {
           this.toastr.error('', 'Data not found for this school or date')
         }
