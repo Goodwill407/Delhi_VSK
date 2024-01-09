@@ -44,7 +44,7 @@ export class StudentComponent {
   allZones: any;
   districtModel: any = ""
   ZoneModel: any = ""
-  AllSchool: any
+  allSchools: any
   schoolModel: any = ""
   allStudentData: any
   allData: any;
@@ -72,6 +72,7 @@ export class StudentComponent {
     this.getStudentGraphData();
     this.getAllDistricts();
     this.getAllZones();
+    this.getAllSchoolName();
 
     this.subscription = this.graphService
       .getItemCountObservable()
@@ -98,6 +99,15 @@ export class StudentComponent {
     })
   }
 
+  getAllSchoolName(){
+    this.httpService.get('school/get-all-school-name').subscribe((res:any)=>{
+      if(res){
+        this.allSchools = res;
+      }else{
+        this.allSchools = [];
+      }
+    })
+  }
 
   getAllZones() {
     if (this.districtModel) {
@@ -147,7 +157,7 @@ export class StudentComponent {
     } else {
       this.getAllZones()
       this.getAllSchools()
-      this.AllSchool = [];
+      this.allSchools = [];
       this.getStudentGraphData();
     }
   }
@@ -197,9 +207,9 @@ export class StudentComponent {
       }
       this.httpService.post('school/getDistrictSchool', district).subscribe((data: any) => {
         if (data && data.districtSchools) {
-          this.AllSchool = data.districtSchools;
+          this.allSchools = data.districtSchools;
         } else {
-          this.AllSchool = [];
+          this.allSchools = [];
         }
       });
     } else if (this.ZoneModel) {
@@ -208,10 +218,10 @@ export class StudentComponent {
       }
       this.httpService.post('school/getZoneSchool', zone).subscribe((data: any) => {
         if (data && data.ZoneSchool) {
-          this.AllSchool = data.ZoneSchool;
-          this.AllSchool = this.AllSchool.sort((a: any, b: any) => a.Schoolid - b.Schoolid);
+          this.allSchools = data.ZoneSchool;
+          this.allSchools = this.allSchools.sort((a: any, b: any) => a.Schoolid - b.Schoolid);
         } else {
-          this.AllSchool = [];
+          this.allSchools = [];
         }
       });
     }

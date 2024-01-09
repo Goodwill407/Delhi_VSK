@@ -56,6 +56,7 @@ export class SchoolComponent {
     this.getAllSchoolGraph();
     this.getDistrictName();
     this.getAllZones();
+    this.getAllSchoolName();
 
     this.subscription = this.graphService
       .getItemCountObservable()
@@ -81,6 +82,16 @@ export class SchoolComponent {
     }, (error) => {
       // this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
+    })
+  }
+
+  getAllSchoolName(){
+    this.httpService.get('school/get-all-school-name').subscribe((res:any)=>{
+      if(res){
+        this.allSchools = res;
+      }else{
+        this.allSchools = [];
+      }
     })
   }
 

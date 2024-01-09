@@ -75,6 +75,7 @@ export class TeacherGuestComponent {
     this.getAllGuestTeacherData();
     this.getAllDistricts();
     this.getAllZones();
+    this.getAllSchoolName();
 
     this.subscription = this.graphService
       .getItemCountObservable()
@@ -97,6 +98,16 @@ export class TeacherGuestComponent {
     }, (error) => {
       this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
+    })
+  }
+  
+  getAllSchoolName(){
+    this.httpService.get('school/get-all-school-name').subscribe((res:any)=>{
+      if(res){
+        this.allSchools = res;
+      }else{
+        this.allSchools = [];
+      }
     })
   }
 
@@ -400,6 +411,7 @@ export class TeacherGuestComponent {
   }
 
   getSchoolTypeWiseCount(data: any) {
+    data = data.filter((item:any) => item.typeOfSchool !== null && item.typeOfSchool.trim() !== "");
     this.schoolTypeWiseCount = this.graphService.PolarGraph('Teachers');
     for (let i = 0; i < data.length; i++) {
       this.schoolTypeWiseCount.series.push(data[i].teacherTypeOfSchoolWiseCount);

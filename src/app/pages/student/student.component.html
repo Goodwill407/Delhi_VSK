@@ -20,7 +20,7 @@
   <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
     [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
     <option value="">All School</option>
-    <option *ngFor="let school of AllSchool" [ngValue]="school">
+    <option *ngFor="let school of allSchools" [ngValue]="school">
       {{school.School_Name}} - ({{school.Schoolid}})
     </option>
   </select>
