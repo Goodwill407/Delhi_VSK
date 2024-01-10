@@ -145,7 +145,7 @@
             [legend]="attendanceStatusCount?.legend"></apx-chart>
     </div>
 
-    <div class="column" *ngIf="!zoneModel && !districtModel">
+    <div class="column" *ngIf="!zoneModel && !districtModel && !schoolModel">
         <h5 class="header-bg p-2">District wise top 5 attendance</h5>
         <apx-chart [series]="districtWiseTopFiveGraph?.series" [chart]="districtWiseTopFiveGraph?.chart"
             [dataLabels]="districtWiseTopFiveGraph?.dataLabels" [plotOptions]="districtWiseTopFiveGraph?.plotOptions"
@@ -156,7 +156,7 @@
             </span> Schools data not available</p>
     </div>
 
-    <div class="column" *ngIf="!zoneModel && !districtModel">
+    <div class="column" *ngIf="!zoneModel && !districtModel && !schoolModel">
         <h5 class="header-bg p-2">District wise bottom 5 attendance</h5>
         <apx-chart [series]="districtWiseBottomFiveGraph?.series" [chart]="districtWiseBottomFiveGraph?.chart"
             [dataLabels]="districtWiseBottomFiveGraph?.dataLabels"
