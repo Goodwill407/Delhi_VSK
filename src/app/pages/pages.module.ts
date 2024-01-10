@@ -25,6 +25,8 @@ import { AttendanceRegularComponent } from './attendance-regular/attendance-regu
 import { SearchPipe } from '../pipes/search.pipe';
 import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 import { TeacherGuestComponent } from './teacher-guest/teacher-guest.component';
+import { TabularComponent } from './attendance/tabular/tabular.component';
+import { GeographicalComponent } from './attendance/geographical/geographical.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { TeacherGuestComponent } from './teacher-guest/teacher-guest.component';
     AttendanceRangeWiseComponent,
     AttendanceRegularComponent,
     SearchPipe,
-    TeacherGuestComponent
+    TeacherGuestComponent,
+    TabularComponent,
+    GeographicalComponent
   ],
   imports: [
     CommonModule,

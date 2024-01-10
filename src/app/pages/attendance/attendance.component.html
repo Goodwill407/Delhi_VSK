@@ -31,6 +31,16 @@
                     type="button" role="tab" aria-controls="pills-profile" aria-selected="false"
                     (click)="handleParentClick()">Attendance Range Wise</button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-tabular-tab" data-bs-toggle="pill" data-bs-target="#pills-tabular"
+                    type="button" role="tab" aria-controls="pills-tabular" aria-selected="false"
+                    (click)="handleParentClick()">Tabular</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-geo-tab" data-bs-toggle="pill" data-bs-target="#pills-geo"
+                    type="button" role="tab" aria-controls="pills-geo" aria-selected="false"
+                    (click)="handleParentClick()">Geographical</button>
+            </li>
         </ul>
 
         <div class="tab-content" id="pills-tabContent">
@@ -43,6 +53,14 @@
             <!-- == 2 == -->
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                 <app-attendance-range-wise></app-attendance-range-wise>
+            </div>
+            <!-- == 3 == -->
+            <div class="tab-pane fade" id="pills-tabular" role="tabpanel" aria-labelledby="pills-tabular-tab">
+               <app-tabular></app-tabular>
+            </div>
+            <!-- == 4 == -->
+            <div class="tab-pane fade" id="pills-geo" role="tabpanel" aria-labelledby="pills-geo-tab">
+                <app-geographical></app-geographical>
             </div>
         </div>
     </div>

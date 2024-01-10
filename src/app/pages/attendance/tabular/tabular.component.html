@@ -1,0 +1,95 @@
+<div class="row">
+    <!-- first Colum -->
+    <div class="col-3" style="margin-top: 98px;">
+
+        <div class="responsive-table position-relative" style="overflow: scroll; height:100vh !important;">
+            <table class="table table-striped table-hover" >
+                <thead class="sticky-top top-0">
+                    <tr class="table-success">
+                        <th>S.No</th>
+                        <th>District</th>
+                        <th>Zone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of allDist;let i = index">
+                        <td>{{i+1}}</td>
+                        <td>{{data.districtName}}</td>
+                        <td>{{data.zoneName}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Second Colum -->
+    <div class="col-9">
+        <!-- dropdown -->
+        <div class="my-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
+            <!-- <h2 class="fw-bold">Regular </h2>
+            <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div> -->
+            <!-- <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="districtModel" >
+                <option value="">All District</option>
+                <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
+                    {{district.districtName}} ({{district.D_ID}})
+                </option>
+            </select> -->
+            <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="zoneModel" (change)="getTableData()" >
+                <option value="">All Zones</option>
+                <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
+                    {{zone.Zone_Name}} ({{zone.Z_ID}})
+                </option>
+            </select>
+            <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="shiftModel" (change)="getTableData()">
+                <option value="">Select Shift</option>
+                <option *ngFor="let shift of allShift" value="{{shift}}">
+                    {{shift}}
+                </option>
+            </select>
+            <!-- <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="schoolModel" (change)="getGraphsBySchool()">
+                <option value="">All School</option>
+                <option *ngFor="let school of allSchools" [ngValue]="school">
+                    {{school.School_Name}} - ({{school.Schoolid}})
+                </option>
+            </select> -->
+            <input type="date" class="form-control  ms-2 mx-1 my-1" [(ngModel)]="dateModel" (change)="getTableData()">
+        </div>
+        <!--  -->
+        <div class="responsive-table position-relative" style="overflow: scroll; height:100vh !important;">
+            <table class="table table-striped table-hover" >
+                <thead class="sticky-top top-0">
+                    <tr class="table-success">
+                        <th>S.No</th>
+                        <th>ID</th>
+                        <th>School Name</th>
+                        <th>Total</th>
+                        <th>Present</th>
+                        <th>Absent</th>
+                        <th>Leave</th>
+                        <th>NoExam</th>
+                        <th>Unmarked</th>
+                        <th>Percent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of allAttendanceData;let i=index">
+                        <td>{{i+1}}</td>
+                        <td>{{data.School_ID}}</td>
+                        <td>{{data.school_name}}</td>
+                        <td>{{data.totalStudentCount}}</td>
+                        <td>{{data.PresentCount}}</td>
+                        <td>{{data.AbsentCount}}</td>
+                        <td>{{data.totalLeaveCount}}</td>
+                        <td>0</td>
+                        <td>{{data.totalNotMarkedAttendanceCount}}</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">{{zoneModel}}</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

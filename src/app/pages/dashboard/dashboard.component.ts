@@ -38,7 +38,7 @@ export class DashboardComponent {
     this.httpService.get('graphs/school-teacher-student-graph').subscribe((data: any) => {
       if (data) {
         this.totalCount = data;
-        this.spinner.hide();
+        // this.spinner.hide();
       }
     }, (error) => {
       this.spinner.hide();
