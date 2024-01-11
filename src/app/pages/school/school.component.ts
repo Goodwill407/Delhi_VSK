@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { GraphService } from 'src/app/services/graph-service.service';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
+import { Subscription, forkJoin } from 'rxjs';
 import { CommunicationService } from 'src/app/services/communication.service';
 import * as L from 'leaflet';
 
@@ -210,27 +210,41 @@ export class SchoolComponent {
   }
 
   getAllSchoolGraph() {
-    // this.spinner.show();
-    this.httpService.get('graphs/school-teacher-student-graph').subscribe((data: any) => {
-      if (data) {
-        this.setAllGraphs(data, true);
-        // this.spinner.hide();
-      }
-    }, (error) => {
-      // this.spinner.hide();
-      this.toastr.error('', 'Something went wrong !');
-    });
-    // class All Data
-    this.spinner.show()
-    this.httpService.get('class-student').subscribe((data: any) => {
-      if (data) {
-        this.setClassGraph(data);
+    this.spinner.show();
+    const api1 = this.httpService.get('graphs/school-teacher-student-graph');
+    const api2 = this.httpService.get('class-student');
+
+    forkJoin([api1,api2]).subscribe(([res1,res2])=>{
+      this.setAllGraphs(res1, true);
+        this.setClassGraph(res2);
         this.spinner.hide();
+      },([err1,err2])=>{
+        if(err1||err2){
+          this.toastr.error('', 'Something went wrong !');
+          this.spinner.hide();
       }
-    }, (error) => {
-      this.spinner.hide();
-      this.toastr.error('', 'Something went wrong !');
     })
+    // 
+    // this.httpService.get('graphs/school-teacher-student-graph').subscribe((data: any) => {
+    //   if (data) {
+    //     this.setAllGraphs(data, true);
+    //     // this.spinner.hide();
+    //   }
+    // }, (error) => {
+    //   // this.spinner.hide();
+    //   this.toastr.error('', 'Something went wrong !');
+    // });
+    // // class All Data
+    // this.spinner.show()
+    // this.httpService.get('class-student').subscribe((data: any) => {
+    //   if (data) {
+    //     this.setClassGraph(data);
+    //     this.spinner.hide();
+    //   }
+    // }, (error) => {
+    //   this.spinner.hide();
+    //   this.toastr.error('', 'Something went wrong !');
+    // })
   }
 
   getSchoolByDistrict() {

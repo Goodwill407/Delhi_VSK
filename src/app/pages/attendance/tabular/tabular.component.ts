@@ -14,19 +14,22 @@ export class TabularComponent {
   allAttendanceData: any;
   zoneModel: any = '';
   allZones: any;
-  allShift: any = ['Morning', 'General', 'Evening'];
+  allShift: string[] = ['Morning', 'General', 'Evening'];
   shiftModel: any = '';
   dateModel: any;
   communicationServiceMobile: any;
   allDist: any;
-  allStudent: any = 0;
+  allTotalData: any = {};
+  maxDate: any = '2024-08-28';
+
   constructor(private httpService: HttpServiceService, public datepipe: DatePipe, private spinner: NgxSpinnerService, private toastr: ToastrService, private communicationService: CommunicationService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
   }
 
   ngOnInit() {
     this.dateModel = new Date();
-    this.dateModel.setDate(this.dateModel.getDate() - 1);
+    this.dateModel = this.getDate(this.dateModel.setDate(this.dateModel.getDate() - 1));
+    this.maxDate = this.getDate(this.dateModel);
     this.getTableData();
     this.getAllDistAndZone();
     this.getAllZone();
@@ -49,14 +52,12 @@ export class TabularComponent {
 
   getDate(date: any) {
     let Mdate: any;
-    // return Mdate = this.datepipe.transform(date, 'dd/MM/yyyy');
     return Mdate = this.datepipe.transform(date, 'yyyy-MM-dd');
   }
 
   getTableData() {
     const obj: any = {
       "Z_name": this.zoneModel,
-      // "School_ID": "",
       "shift": this.shiftModel,
       "attendance_DATE": this.getDate(this.dateModel)
     }
@@ -80,15 +81,25 @@ export class TabularComponent {
   }
 
   callAPIfun(obj: any) {
+    this.spinner.show();
     this.httpService.post('tabular-attendnace', obj).subscribe(
       (res: any) => {
         this.allAttendanceData = res;
+        this.allTotalData = {
+          allStudent: 0, allAbsent: 0, allPresent: 0, allLeave: 0, allUnmark: 0
+        };
         res.forEach((school: any) => {
-          this.allStudent += school.totalStudentCount;
+          this.allTotalData.allStudent += school.totalStudentCount;
+          this.allTotalData.allAbsent += school.AbsentCount;
+          this.allTotalData.allPresent += school.PresentCount;
+          this.allTotalData.allLeave += school.totalLeaveCount;
+          this.allTotalData.allUnmark += school.totalNotMarkedAttendanceCount;
         });
+        this.spinner.hide();
       },
       (error: any) => {
         this.toastr.error('', 'Something Went Wrong');
+        this.spinner.hide();
       }
     );
   }

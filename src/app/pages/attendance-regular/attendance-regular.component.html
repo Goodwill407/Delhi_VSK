@@ -33,13 +33,13 @@
             {{school.School_Name}} - ({{school.Schoolid}})
         </option>
     </select>
-    <input type="date" class="form-control  ms-2 mx-1 my-1" [(ngModel)]="dateModel" (change)="getGraphsByDate(false)">
+    <input type="date" [max]="maxDate | date:'yyyy-MM-dd'" class="form-control  ms-2 mx-1 my-1" [(ngModel)]="dateModel" (change)="getGraphsByDate(false)">
 </div>
 
 <div class="justify-content-center filter-box mt-2" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-flex'"
     *ngIf="districtModel || zoneModel || shiftModel || dateModel">
     <!-- <div class="text-center"> -->
-    <h3 class="text-center mb-0" *ngIf="dateModel">{{ formattedDate }}&nbsp;</h3>
+    <h3 class="text-center mb-0" *ngIf="dateModel">{{ dateModel | date}}&nbsp;</h3>
     <h3 class="text-center mb-0" *ngIf="districtModel"><span *ngIf="dateModel">|</span>&nbsp;{{districtModel}}&nbsp;
     </h3>
     <h3 class="text-center mb-0" *ngIf="zoneModel"><span
