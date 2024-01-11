@@ -53,25 +53,23 @@ export class AttendanceRegularComponent {
   districtWiseAttendanceCount: any;
   newDate: any
   @ViewChild('openModal') openModal: any;
-  formattedDate: any;
   itemCount: number | undefined;
   subscription: Subscription | undefined;
   searchBox: any;
   communicationServiceMobile: any;
   allAttendanceData: any;
   allSchoolAttendance: any = [];
+  maxDate: any = '2024-08-28';
 
   constructor(private communicationService: CommunicationService, private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, public datepipe: DatePipe, private toastr: ToastrService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
   }
 
   ngOnInit() {
-
     const map = this.communicationService.grographicalGraph();
-
     this.dateModel = new Date();
-    this.dateModel.setDate(this.dateModel.getDate() - 1);
-    this.formattedDate = this.datepipe.transform(this.dateModel, 'dd-MMM-yyyy');
+    this.dateModel = this.getDate(this.dateModel.setDate(this.dateModel.getDate() - 1));
+    this.maxDate = this.getDate(this.dateModel);
     this.getGraphsByDate(true);
     this.getAllDistricts();
     this.getAllZones();
@@ -93,7 +91,6 @@ export class AttendanceRegularComponent {
 
   getDate(date: any) {
     let Mdate: any;
-    // return Mdate = this.datepipe.transform(date, 'dd/MM/yyyy');
     return Mdate = this.datepipe.transform(date, 'yyyy-MM-dd');
   }
 
@@ -250,7 +247,7 @@ export class AttendanceRegularComponent {
     if (this.schoolModel && this.dateModel) {
       const data = {
         "Schoolid": this.schoolModel.Schoolid,
-        "Date": this.datepipe.transform(this.dateModel, 'dd/MM/yyyy')
+        "Date": this.getDate(this.dateModel)
       }
       this.httpService.post('student/student-attendance-data', data).subscribe((data) => {
         if (data && data.Cargo.length > 0) {
@@ -261,7 +258,6 @@ export class AttendanceRegularComponent {
   }
 
   getGraphsByDate(onload: boolean) {
-    // this.formattedDate = this.datepipe.transform(this.dateModel, 'dd-MMM-yyyy');
     this.getStudentAttendanceData();
     if (this.districtModel && !this.zoneModel && !this.schoolModel) {
       this.getGraphsByDistrictName();
@@ -282,8 +278,6 @@ export class AttendanceRegularComponent {
           this.toastr.error('', 'Data not found for this date')
         } else {
           this.setAllGraphs(data);
-          this.formattedDate = this.datepipe.transform(this.dateModel, 'dd-MMM-yyyy');
-          this.dateModel = this.formattedDate;
         }
         this.spinner.hide();
       }, error => {
@@ -309,9 +303,6 @@ export class AttendanceRegularComponent {
         if (data && data.Counts.length > 0) {
           this.getAllSchools();
           this.setAllGraphs(data);
-          // this.districtModel = '';
-          // this.zoneModel = '';
-          // this.getAllZones();
         } else {
           this.toastr.error('', 'Data not found for this shift or date');
         }
