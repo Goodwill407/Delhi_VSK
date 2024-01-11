@@ -34,6 +34,7 @@
 </div>
 
 <div class="container1">
+
     <div class="column">
         <h5 *ngIf="!districtModel" class="header-bg p-2">Delhi</h5>
         <h5 *ngIf="districtModel" class="header-bg p-2">{{districtModel}}</h5>
@@ -107,10 +108,10 @@
 
     <div class="column wide">
         <h5 class="header-bg p-2">Class Wise Student</h5>
-        <apx-chart [series]="genderWiseClass.series" [chart]="genderWiseClass.chart" [dataLabels]="genderWiseClass.dataLabels"
-            [plotOptions]="genderWiseClass.plotOptions" [yaxis]="genderWiseClass.yaxis" [legend]="genderWiseClass.legend"
-            [fill]="genderWiseClass.fill" [stroke]="genderWiseClass.stroke" [tooltip]="genderWiseClass.tooltip"
-            [xaxis]="genderWiseClass.xaxis"></apx-chart>
+        <apx-chart [series]="genderWiseClass?.series" [chart]="genderWiseClass?.chart" [dataLabels]="genderWiseClass?.dataLabels"
+            [plotOptions]="genderWiseClass?.plotOptions" [yaxis]="genderWiseClass?.yaxis" [legend]="genderWiseClass?.legend"
+            [fill]="genderWiseClass?.fill" [stroke]="genderWiseClass?.stroke" [tooltip]="genderWiseClass?.tooltip"
+            [xaxis]="genderWiseClass?.xaxis"></apx-chart>
     </div>
     <!-- <div class="column">
         <h5 class="header-bg p-2">Schools by minority</h5>

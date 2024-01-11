@@ -24,22 +24,22 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
                     type="button" role="tab" aria-controls="pills-home" aria-selected="true"
-                    (click)="handleParentClick()">Attendance Regular</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-                    type="button" role="tab" aria-controls="pills-profile" aria-selected="false"
-                    (click)="handleParentClick()">Attendance Range Wise</button>
+                    (click)="handleParentClick('regular')">Graphical view</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="pills-tabular-tab" data-bs-toggle="pill" data-bs-target="#pills-tabular"
                     type="button" role="tab" aria-controls="pills-tabular" aria-selected="false"
-                    (click)="handleParentClick()">Tabular</button>
+                    (click)="handleParentClick('tabular')">Tabular view</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="pills-geo-tab" data-bs-toggle="pill" data-bs-target="#pills-geo"
+                <button class="nav-link " id="pills-geo-tab" data-bs-toggle="pill" data-bs-target="#pills-geo"
                     type="button" role="tab" aria-controls="pills-geo" aria-selected="false"
-                    (click)="handleParentClick()">Geographical</button>
+                    (click)="handleParentClick('geographical')">Bird eye view</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
+                    type="button" role="tab" aria-controls="pills-profile" aria-selected="false"
+                    (click)="handleParentClick('range')">Range wise graphical view</button>
             </li>
         </ul>
 

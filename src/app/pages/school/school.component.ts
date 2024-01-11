@@ -6,6 +6,7 @@ import { GraphService } from 'src/app/services/graph-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { CommunicationService } from 'src/app/services/communication.service';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-school',
@@ -16,7 +17,7 @@ export class SchoolComponent {
   // Graphs
   teacherGenderRatio: any;
   studentsGenderRatio: any;
-  genderWiseClass:any;
+  genderWiseClass: any;
   typesOfSchools: any;
   shiftWiseSchools: any;
   schoolsByManagement: any;
@@ -57,6 +58,7 @@ export class SchoolComponent {
     this.getDistrictName();
     this.getAllZones();
     this.getAllSchoolName();
+    this.getSchoolByDistrict();
 
     this.subscription = this.graphService
       .getItemCountObservable()
@@ -68,7 +70,7 @@ export class SchoolComponent {
           this.getStudentByGender(false);
         }
       });
-      
+
   }
 
   getAllDistricts() {
@@ -85,11 +87,11 @@ export class SchoolComponent {
     })
   }
 
-  getAllSchoolName(){
-    this.httpService.get('school/get-all-school-name').subscribe((res:any)=>{
-      if(res){
+  getAllSchoolName() {
+    this.httpService.get('school/get-all-school-name').subscribe((res: any) => {
+      if (res) {
         this.allSchools = res;
-      }else{
+      } else {
         this.allSchools = [];
       }
     })
@@ -169,28 +171,28 @@ export class SchoolComponent {
     }
   }
 
-  setClassGraph(data:any){
+  setClassGraph(data: any) {
     this.getGenderWiseClass(data)
   }
 
-  getGenderWiseClass(data:any){
-    let stringArr:any[]=[];
-    let numArr:any[]=[];
+  getGenderWiseClass(data: any) {
+    let stringArr: any[] = [];
+    let numArr: any[] = [];
     for (let i = 0; i < data.length; i++) {
-      if(data[i].class === "Nursery"){
+      if (data[i].class === "Nursery") {
         stringArr.push(data[i]);
         console.log(data[i])
       }
-      else if(data[i].class === "KG"){
+      else if (data[i].class === "KG") {
         stringArr.push(data[i])
       }
       else {
         numArr.push(data[i]);
-      }    
+      }
     }
     numArr = numArr.sort((a: any, b: any) => a.class - b.class);
     stringArr = stringArr.sort((a: any, b: any) => a.class - b.class);
-    data = [...stringArr,...numArr];
+    data = [...stringArr, ...numArr];
     this.genderWiseClass = this.graphService.districtWiseGraph();
     this.genderWiseClass.chart.stacked = false;
     this.genderWiseClass.chart.height = 300;
@@ -199,11 +201,11 @@ export class SchoolComponent {
     this.genderWiseClass.series[2].name = "Transgender";
     this.genderWiseClass.series.pop();
     for (let i = 0; i < data.length; i++) {
-      this.genderWiseClass.series[0].data.push(data[i].M ? data[i].M:0);
-      this.genderWiseClass.series[1].data.push(data[i].F ? data[i].F:0);
-      this.genderWiseClass.series[2].data.push(data[i].T ? data[i].T:0);
-      this.genderWiseClass.xaxis.categories.push( data[i].class ? (data[i].class == "KG" || data[i].class == "Nursery" ? data[i].class :'Class'+' '+ data[i].class ):'Class NA');
-      this.genderWiseClass.dataLabels ={ enabled: false }
+      this.genderWiseClass.series[0].data.push(data[i].M ? data[i].M : 0);
+      this.genderWiseClass.series[1].data.push(data[i].F ? data[i].F : 0);
+      this.genderWiseClass.series[2].data.push(data[i].T ? data[i].T : 0);
+      this.genderWiseClass.xaxis.categories.push(data[i].class ? (data[i].class == "KG" || data[i].class == "Nursery" ? data[i].class : 'Class' + ' ' + data[i].class) : 'Class NA');
+      this.genderWiseClass.dataLabels = { enabled: false }
     }
   }
 
@@ -231,6 +233,18 @@ export class SchoolComponent {
     })
   }
 
+  getSchoolByDistrict() {
+    this.spinner.show();
+    this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
+      if (data) {
+        this.spinner.hide();
+      }
+    }, error => {
+      this.spinner.hide();
+      this.toastr.error('', 'Something went wrong !');
+    })
+  }
+
   getGraphsByZone() {
     if (this.zoneModel) {
       this.spinner.show();
@@ -246,7 +260,7 @@ export class SchoolComponent {
         this.toastr.error('', 'Something went wrong !');
       })
       // for Class zone :
-      this.httpService.post('class-student/zone', {"zone": this.zoneModel}).subscribe((data: any) => {
+      this.httpService.post('class-student/zone', { "zone": this.zoneModel }).subscribe((data: any) => {
         if (data) {
           this.setClassGraph(data);
           this.spinner.hide();
@@ -277,7 +291,7 @@ export class SchoolComponent {
         this.toastr.error('', 'Something went wrong !');
       })
       // for class District
-      this.httpService.post('class-student/district', {district:this.districtModel}).subscribe((data: any) => {
+      this.httpService.post('class-student/district', { district: this.districtModel }).subscribe((data: any) => {
         if (data) {
           this.setClassGraph(data)
           this.spinner.hide();
@@ -296,30 +310,30 @@ export class SchoolComponent {
 
   getGraphsBySchoolName() {
     this.spinner.show();
-    if(this.schoolModel){
-    const school = {
-      "schoolId": this.schoolModel.Schoolid
+    if (this.schoolModel) {
+      const school = {
+        "schoolId": this.schoolModel.Schoolid
+      }
+      this.httpService.post('zonegraph/school-student-teacher-graph-schoolid', school).subscribe((data: any) => {
+        if (data) {
+          this.setAllGraphs(data, false);
+          this.spinner.hide();
+        }
+      }, (error) => {
+        this.spinner.hide();
+        this.toastr.error('', 'Something went wrong !');
+      })
+
+      this.httpService.post('class-student/school', { "Schoolid": Number(this.schoolModel.Schoolid) }).subscribe((data: any) => {
+        if (data) {
+          this.setClassGraph(data);
+          this.spinner.hide();
+        }
+      }, (error) => {
+        this.spinner.hide();
+        this.toastr.error('', 'Something went wrong !');
+      })
     }
-    this.httpService.post('zonegraph/school-student-teacher-graph-schoolid', school).subscribe((data: any) => {
-      if (data) {
-        this.setAllGraphs(data, false);
-        this.spinner.hide();
-      }
-    }, (error) => {
-      this.spinner.hide();
-      this.toastr.error('', 'Something went wrong !');
-    })
-    
-    this.httpService.post('class-student/school', {"Schoolid":Number(this.schoolModel.Schoolid)}).subscribe((data: any) => {
-      if (data) {
-        this.setClassGraph(data);
-        this.spinner.hide();
-      }
-    }, (error) => {
-      this.spinner.hide();
-      this.toastr.error('', 'Something went wrong !');
-    })
-  }
   }
 
   getStudentsGenderRatio(studentsGender: any) {

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
+import { BehaviorSubject, Subject } from "rxjs";
 import * as L from 'leaflet';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
@@ -42,84 +42,43 @@ export class CommunicationService {
         this.parentClickSubject.next();
     }
 
-    grographicalGraph() {
+    allSchoolsData(mapObject: any, map: any) {
+        // Add a marker for Delhi
 
-        const map = L.map('map').setView([28.6450, 77.2090], 11);
+        var customIcon = L.icon({
+            iconUrl: '../../../assets/images/pin.png',  // URL to the icon image
+            iconSize: [20, 20],            // Size of the icon [width, height]
+            iconAnchor: [16, 32],          // Anchor point of the icon [x, y] relative to its top-left corner
+            popupAnchor: [0, -32]          // Popup anchor point [x, y] relative to the icon anchor
+        });
 
-        // ============= 1 ==============
-        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-            maxZoom: 0,
-            minZoom: 10,
-            id: 'mapbox.light'
+        var name = mapObject.School_Name;
+        mapObject.School_Name = L.marker([mapObject.Latitude, mapObject.Longitude], { icon: customIcon }).addTo(map);
+        mapObject.School_Name.bindPopup(`<span><strong>${name}</strong></span><br>
+        <hr style="margin-top:5px; margin-bottom: 5px">
+        <span>Total students: ${mapObject.totalStudentCount}</span><br>
+        <span>Present students: ${mapObject.PresentCount}</span><br>
+        <span>Absent students: ${mapObject.AbsentCount}</span><br>
+        <span>Leave students: ${mapObject.totalLeaveCount}</span><br>
+        <span>Not marked students: ${mapObject.totalNotMarkedAttendanceCount}</span><br>`);
+        // String(mapObject.PresentCount ? mapObject.PresentCount : 0)
+        mapObject.School_Name.on('mouseover', function () {
+            mapObject.School_Name.openPopup();
+        });
+        mapObject.School_Name.on('mouseout', function () {
+            mapObject.School_Name.closePopup();
+        });
+    }
+
+    grographicalGraph(mapData: any) {
+
+        var map = mapData;
+
+        // Add the base OpenStreetMap layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
         }).addTo(map);
-        // ============= 1 ==============
 
-        // ============= 2 ==============
-        var Central = L.divIcon({
-            iconSize: new L.Point(5, 5),
-            html: '<h6>Central<h6>'
-        });
-        L.marker([28.67, 77.1690], { icon: Central }).addTo(map);
-
-        var north = L.divIcon({
-            iconSize: new L.Point(5, 5),
-            html: '<h6>North<h6>'
-        });
-        L.marker([28.7950, 77.07], { icon: north }).addTo(map);
-
-        var NorthWest = L.divIcon({
-            iconSize: new L.Point(5, 5),
-            html: '<h6>North West<h6>'
-        });
-        L.marker([28.7450, 77.001], { icon: NorthWest }).addTo(map);
-
-        var west = L.divIcon({
-            iconSize: new L.Point(5, 5),
-            html: '<h6>West<h6>'
-        });
-        L.marker([28.6663, 77.0680], { icon: west }).addTo(map);
-
-        var SouthWest = L.divIcon({
-            iconSize: new L.Point(5, 5),
-            html: '<h6>South West<h6>'
-        });
-        L.marker([28.5983, 76.9273], { icon: SouthWest }).addTo(map);
-
-        var Newdelhi = L.divIcon({
-            iconSize: new L.Point(5, 5),
-            html: '<h6>New Delhi<h6>'
-        });
-        L.marker([28.6139, 77.1200], { icon: Newdelhi }).addTo(map);
-
-        var Southdelhi = L.divIcon({
-            iconSize: new L.Point(5, 5),
-            html: '<h6>South Delhi<h6>'
-        });
-        L.marker([28.4909, 77.1630], { icon: Southdelhi }).addTo(map);
-
-        var SouthEast = L.divIcon({
-            iconSize: new L.Point(5, 5),
-            html: '<h6>South East<h6>'
-        });
-        L.marker([28.5485, 77.2450], { icon: SouthEast }).addTo(map);
-
-        var east = L.divIcon({
-            iconSize: new L.Point(5, 5),
-            html: '<h6>East<h6>'
-        });
-        L.marker([28.6358, 77.2737], { icon: east }).addTo(map);
-
-        var Shahdara = L.divIcon({
-            iconSize: new L.Point(5, 5),
-            html: '<h6>Shahdara<h6>'
-        });
-        L.marker([28.6814, 77.2692], { icon: Shahdara }).addTo(map);
-
-        var NorthEast = L.divIcon({
-            iconSize: new L.Point(5, 5),
-            html: '<h6>North East<h6>'
-        });
-        L.marker([28.7247, 77.2278], { icon: NorthEast }).addTo(map);
         // ============= 2 ==============
 
         // ============= 3 ==============
@@ -132,13 +91,11 @@ export class CommunicationService {
         };
 
         info.update = function (props: any) {
-            this._div.innerHTML = '<h6>District</h6>' + (props ?
-                '<b>' + props.Dist_Name + '</b><br /> Total School: ' + props.Dist_Code
-                + '</b><br /> Total Student: ' + props.Dist_Code
-                + '</b><br /> Total Girls: ' + props.Dist_Code
-                + '</b><br /> Total Boys: ' + props.Dist_Code
-                + '</b><br /> Total Teacher: ' + props.Dist_Code
-                : 'Hover over a District');
+            // this._div.innerHTML = '<h6>District</h6>' + (props ?
+            //     '<b>' + props.Dist_Name + '</b><br /> Total School: ' + props.totalSchoolCount
+            //     + '</b><br /> Total Student: ' + props.totalStudentCount
+            //     + '</b><br /> Total Teachers: ' + props.totalTeachersCount
+            //     : 'Hover over a District');
         };
 
         info.addTo(map);
@@ -164,25 +121,25 @@ export class CommunicationService {
                 color: '#3d9be9',
                 dashArray: '3',
                 fillOpacity: 0.7,
-                fillColor: getColor(feature.properties.Dist_Code)
+                // fillColor: getColor(feature.properties.Dist_Code)
             };
         }
 
         function highlightFeature(e: any) {
-            var layer = e.target;
+            // var layer = e.target;
 
-            layer.setStyle({
-                weight: 5,
-                color: '#fff',
-                dashArray: '',
-                fillOpacity: 0.7
-            });
+            // layer.setStyle({
+            //     weight: 5,
+            //     color: '#fff',
+            //     dashArray: '',
+            //     fillOpacity: 0.7
+            // });
 
-            if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-                layer.bringToFront();
-            }
+            // if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+            //     layer.bringToFront();
+            // }
 
-            info.update(layer.feature.properties);
+            // info.update(layer.feature.properties);
         }
         // ============= 4 ==============
 
@@ -209,9 +166,10 @@ export class CommunicationService {
             style: style,
             onEachFeature: onEachFeature
         }).bindTooltip(function (layer: any) {
-            return '<h3>District:' + layer.feature.properties.Dist_Name + '</h3>' + 'Total School: ' + layer.feature.properties.Dist_Code + '<br />Total Student: ' + layer.feature.properties.Dist_Code
-                + '<br />Total Girls: ' + layer.feature.properties.Dist_Code + '<br />Total Boys: ' + layer.feature.properties.Dist_Code + '<br />Total Teacher: ' + layer.feature.properties.Dist_Code;
+            return layer
         }).openTooltip().addTo(map);
+        // '<h4>District:' + layer.feature.properties.Dist_Name + '</h4>' + 'Total School: ' + layer.feature.properties.totalSchoolCount + '<br />Total Student: ' + layer.feature.properties.totalStudentCount
+        //         + '<br />Total Teachers: ' + layer.feature.properties.totalTeachersCount;
         // ============= 5 ==============
 
 
@@ -273,24 +231,31 @@ export class CommunicationService {
         const imgWidth = pdf.internal.pageSize.getWidth();
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
         let yPos = 0;
-    
+
         while (yPos < canvas.height) {
             const newCanvas = document.createElement('canvas');
             newCanvas.width = canvas.width;
             newCanvas.height = Math.min(canvas.height - yPos, imgHeight);
-    
+
             const ctx = newCanvas.getContext('2d');
             ctx?.drawImage(canvas, 0, yPos, canvas.width, newCanvas.height, 0, 0, canvas.width, newCanvas.height);
-    
+
             pdf.addImage(newCanvas.toDataURL('image/png'), 'PNG', 0, 0, imgWidth, imgHeight);
             yPos += imgHeight;
-    
+
             if (yPos < canvas.height) {
                 pdf.addPage();
             }
         }
-    
+
         pdf.save('application.pdf');
         this.spinner.hide();
+    }
+
+    private sharedDataSubject = new BehaviorSubject<any>(null);
+    sharedData$ = this.sharedDataSubject.asObservable();
+
+    setSelectedTab(data: any) {
+        this.sharedDataSubject.next(data);
     }
 }
