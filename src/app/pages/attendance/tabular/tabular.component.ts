@@ -86,7 +86,7 @@ export class TabularComponent {
       (res: any) => {
         this.allAttendanceData = res;
         this.allTotalData = {
-          allStudent: 0, allAbsent: 0, allPresent: 0, allLeave: 0, allUnmark: 0
+          allStudent: 0, allAbsent: 0, allPresent: 0, allLeave: 0, allUnmark: 0,allPercent:0
         };
         res.forEach((school: any) => {
           this.allTotalData.allStudent += school.totalStudentCount;
@@ -94,6 +94,7 @@ export class TabularComponent {
           this.allTotalData.allPresent += school.PresentCount;
           this.allTotalData.allLeave += school.totalLeaveCount;
           this.allTotalData.allUnmark += school.totalNotMarkedAttendanceCount;
+          this.allTotalData.allPercent = ((this.allTotalData.allPresent / this.allTotalData.allStudent )*100).toFixed(2)
         });
         this.spinner.hide();
       },

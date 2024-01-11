@@ -16,7 +16,7 @@ export class SchoolComponent {
   // Graphs
   teacherGenderRatio: any;
   studentsGenderRatio: any;
-  genderWiseClass:any;
+  genderWiseClass: any;
   typesOfSchools: any;
   shiftWiseSchools: any;
   schoolsByManagement: any;
@@ -68,7 +68,7 @@ export class SchoolComponent {
           this.getStudentByGender(false);
         }
       });
-      
+
   }
 
   getAllDistricts() {
@@ -85,11 +85,11 @@ export class SchoolComponent {
     })
   }
 
-  getAllSchoolName(){
-    this.httpService.get('school/get-all-school-name').subscribe((res:any)=>{
-      if(res){
+  getAllSchoolName() {
+    this.httpService.get('school/get-all-school-name').subscribe((res: any) => {
+      if (res) {
         this.allSchools = res;
-      }else{
+      } else {
         this.allSchools = [];
       }
     })
@@ -169,28 +169,28 @@ export class SchoolComponent {
     }
   }
 
-  setClassGraph(data:any){
+  setClassGraph(data: any) {
     this.getGenderWiseClass(data)
   }
 
-  getGenderWiseClass(data:any){
-    let stringArr:any[]=[];
-    let numArr:any[]=[];
+  getGenderWiseClass(data: any) {
+    let stringArr: any[] = [];
+    let numArr: any[] = [];
     for (let i = 0; i < data.length; i++) {
-      if(data[i].class === "Nursery"){
+      if (data[i].class === "Nursery") {
         stringArr.push(data[i]);
         console.log(data[i])
       }
-      else if(data[i].class === "KG"){
+      else if (data[i].class === "KG") {
         stringArr.push(data[i])
       }
       else {
         numArr.push(data[i]);
-      }    
+      }
     }
     numArr = numArr.sort((a: any, b: any) => a.class - b.class);
     stringArr = stringArr.sort((a: any, b: any) => a.class - b.class);
-    data = [...stringArr,...numArr];
+    data = [...stringArr, ...numArr];
     this.genderWiseClass = this.graphService.districtWiseGraph();
     this.genderWiseClass.chart.stacked = false;
     this.genderWiseClass.chart.height = 300;
@@ -199,11 +199,11 @@ export class SchoolComponent {
     this.genderWiseClass.series[2].name = "Transgender";
     this.genderWiseClass.series.pop();
     for (let i = 0; i < data.length; i++) {
-      this.genderWiseClass.series[0].data.push(data[i].M ? data[i].M:0);
-      this.genderWiseClass.series[1].data.push(data[i].F ? data[i].F:0);
-      this.genderWiseClass.series[2].data.push(data[i].T ? data[i].T:0);
-      this.genderWiseClass.xaxis.categories.push( data[i].class ? (data[i].class == "KG" || data[i].class == "Nursery" ? data[i].class :'Class'+' '+ data[i].class ):'Class NA');
-      this.genderWiseClass.dataLabels ={ enabled: false }
+      this.genderWiseClass.series[0].data.push(data[i].M ? data[i].M : 0);
+      this.genderWiseClass.series[1].data.push(data[i].F ? data[i].F : 0);
+      this.genderWiseClass.series[2].data.push(data[i].T ? data[i].T : 0);
+      this.genderWiseClass.xaxis.categories.push(data[i].class ? (data[i].class == "KG" || data[i].class == "Nursery" ? data[i].class : 'Class' + ' ' + data[i].class) : 'Class NA');
+      this.genderWiseClass.dataLabels = { enabled: false }
     }
   }
 
@@ -212,62 +212,37 @@ export class SchoolComponent {
     const api1 = this.httpService.get('graphs/school-teacher-student-graph');
     const api2 = this.httpService.get('class-student');
 
-    forkJoin([api1,api2]).subscribe(([res1,res2])=>{
+    forkJoin([api1, api2]).subscribe(([res1, res2]) => {
       this.setAllGraphs(res1, true);
-        this.setClassGraph(res2);
+      this.setClassGraph(res2);
+      this.spinner.hide();
+    }, ([err1, err2]) => {
+      if (err1 || err2) {
+        this.toastr.error('', 'Something went wrong !');
         this.spinner.hide();
-      },([err1,err2])=>{
-        if(err1||err2){
-          this.toastr.error('', 'Something went wrong !');
-          this.spinner.hide();
       }
-    })
-    // 
-    // this.httpService.get('graphs/school-teacher-student-graph').subscribe((data: any) => {
-    //   if (data) {
-    //     this.setAllGraphs(data, true);
-    //     // this.spinner.hide();
-    //   }
-    // }, (error) => {
-    //   // this.spinner.hide();
-    //   this.toastr.error('', 'Something went wrong !');
-    // });
-    // // class All Data
-    // this.spinner.show()
-    // this.httpService.get('class-student').subscribe((data: any) => {
-    //   if (data) {
-    //     this.setClassGraph(data);
-    //     this.spinner.hide();
-    //   }
-    // }, (error) => {
-    //   this.spinner.hide();
-    //   this.toastr.error('', 'Something went wrong !');
-    // })
+    });
   }
 
   getGraphsByZone() {
     if (this.zoneModel) {
-      this.spinner.show();
       const zone = { zoneName: this.zoneModel };
-      this.getSchoolDataByZone();
-      this.httpService.post('zonegraph/school-student-teacher-graph-zonename', zone).subscribe((data: any) => {
-        if (data) {
-          this.setAllGraphs(data, false);
+      this.spinner.show();
+      const api1 = this.httpService.post('zonegraph/school-student-teacher-graph-zonename', zone);
+      const api2 = this.httpService.post('class-student/zone', { "zone": this.zoneModel });
+
+      forkJoin([api1, api2]).subscribe(([res1, res2]) => {
+        this.setClassGraph(res2);
+        this.setAllGraphs(res1, true);
+        this.schoolModel = '';
+        this.getSchoolDataByZone();
+        this.spinner.hide();
+      }, ([err1, err2]) => {
+        if (err1 || err2) {
+          this.toastr.error('', 'Something went wrong !');
           this.spinner.hide();
-          this.schoolModel = '';
         }
-      }, (error) => {
-        this.toastr.error('', 'Something went wrong !');
-      })
-      // for Class zone :
-      this.httpService.post('class-student/zone', {"zone": this.zoneModel}).subscribe((data: any) => {
-        if (data) {
-          this.setClassGraph(data);
-          this.spinner.hide();
-        }
-      }, (error) => {
-        this.toastr.error('', 'Something went wrong !');
-      })
+      });
     } else {
       this.allSchools = [];
       this.getGraphsByDistrictName();
@@ -280,26 +255,20 @@ export class SchoolComponent {
       const district = {
         districtName: this.districtModel
       }
-      this.httpService.post('zonegraph/school-student-teacher-graph-district', district).subscribe((data: any) => {
-        if (data) {
-          this.setAllGraphs(data, true);
-          this.getSchoolDataByDistrict();
+      this.spinner.show();
+      const api1 = this.httpService.post('zonegraph/school-student-teacher-graph-district', district);
+      const api2 = this.httpService.post('class-student/district', { district: this.districtModel });
+
+      forkJoin([api1, api2]).subscribe(([res1, res2]) => {
+        this.setAllGraphs(res1, true);
+        this.setClassGraph(res2);
+        this.spinner.hide();
+      }, ([err1, err2]) => {
+        if (err1 || err2) {
+          this.toastr.error('', 'Something went wrong !');
           this.spinner.hide();
         }
-      }, (error) => {
-        this.spinner.hide();
-        this.toastr.error('', 'Something went wrong !');
-      })
-      // for class District
-      this.httpService.post('class-student/district', {district:this.districtModel}).subscribe((data: any) => {
-        if (data) {
-          this.setClassGraph(data)
-          this.spinner.hide();
-        }
-      }, (error) => {
-        this.spinner.hide();
-        this.toastr.error('', 'Something went wrong !');
-      })
+      });
     } else {
       this.allSchools = [];
       this.getAllSchoolGraph();
@@ -310,30 +279,25 @@ export class SchoolComponent {
 
   getGraphsBySchoolName() {
     this.spinner.show();
-    if(this.schoolModel){
-    const school = {
-      "schoolId": this.schoolModel.Schoolid
+    if (this.schoolModel) {
+      const school = {
+        "schoolId": this.schoolModel.Schoolid
+      }
+      this.spinner.show();
+      const api1 = this.httpService.post('zonegraph/school-student-teacher-graph-schoolid', school);
+      const api2 = this.httpService.post('class-student/school', { "Schoolid": Number(this.schoolModel.Schoolid) });
+
+      forkJoin([api1, api2]).subscribe(([res1, res2]) => {
+        this.setAllGraphs(res1, true);
+        this.setClassGraph(res2);
+        this.spinner.hide();
+      }, ([err1, err2]) => {
+        if (err1 || err2) {
+          this.toastr.error('', 'Something went wrong !');
+          this.spinner.hide();
+        }
+      });
     }
-    this.httpService.post('zonegraph/school-student-teacher-graph-schoolid', school).subscribe((data: any) => {
-      if (data) {
-        this.setAllGraphs(data, false);
-        this.spinner.hide();
-      }
-    }, (error) => {
-      this.spinner.hide();
-      this.toastr.error('', 'Something went wrong !');
-    })
-    
-    this.httpService.post('class-student/school', {"Schoolid":Number(this.schoolModel.Schoolid)}).subscribe((data: any) => {
-      if (data) {
-        this.setClassGraph(data);
-        this.spinner.hide();
-      }
-    }, (error) => {
-      this.spinner.hide();
-      this.toastr.error('', 'Something went wrong !');
-    })
-  }
   }
 
   getStudentsGenderRatio(studentsGender: any) {
