@@ -1,237 +1,255 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
 </ngx-spinner>
-<div class="mt-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
-    <h2 class="fw-bold mb-0 p-1">School</h2>
-    <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
-    <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
-        [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
-        <option value="">All Districts</option>
-        <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
-            {{district.districtName}} ({{district.D_ID}})
-        </option>
-    </select>
-    <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
-        [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
-        <option value="">All Zones</option>
-        <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
-            {{zone.Zone_Name}} ({{zone.Z_ID}})
-        </option>
-    </select>
-    <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
-        [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
-        <option value="" disabled>Select Schools</option>
-        <option *ngFor="let school of allSchools" [ngValue]="school">
-            {{school.School_Name}} - ({{school.Schoolid}})
-        </option>
-    </select>
-</div>
-<div class="d-flex justify-content-center filter-box mt-2" *ngIf="districtModel || zoneModel || schoolModel">
-    <h3 class="text-center mb-0" *ngIf="districtModel">{{districtModel}}&nbsp; </h3>
-    <h3 class="text-center mb-0" *ngIf="zoneModel"> <span *ngIf="districtModel">|</span> {{zoneModel}}&nbsp; </h3>
-    <h3 class="text-center mb-0" *ngIf="schoolModel"> <span *ngIf="zoneModel || districtModel">|</span>
-        {{schoolModel.School_Name}}
-    </h3>
-</div>
+<!-- tab -->
+<nav>
+    <div class="nav nav-pills mb-3 filter-box px-3 mt-3" id="pills-tab" role="tablist">
+        <h2 class="fw-bold">School</h2>
+        <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
+        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
+            role="tab" aria-controls="nav-home" aria-selected="true">Graph</button>
+        <!-- <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"
+            role="tab" aria-controls="nav-profile" aria-selected="false">Tabular</button>
+        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button"
+            role="tab" aria-controls="nav-contact" aria-selected="false">Bird Eye</button> -->
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    <!-- tab1 -->
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 
-<div class="container1">
-    <div class="column">
-        <h5 *ngIf="!districtModel" class="header-bg p-2">Delhi</h5>
-        <h5 *ngIf="districtModel" class="header-bg p-2">{{districtModel}}</h5>
-        <div class="d-flex justify-content-around mt-4 ">
-            <img class="ms-2" src="../../../assets/images/Dashboard/school.png" style="height: 100px;" alt="">
-            <div class="d-block ms-1 ">
-                <h1 class="fw-bold">{{totalSchools}}</h1>
-                <h3>Total schools</h3>
-            </div>
+        <div class="mt-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
+            <h2 class="fw-bold mb-0 p-1">School</h2>
+            <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
+            <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
+                [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
+                <option value="">All Districts</option>
+                <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
+                    {{district.districtName}} ({{district.D_ID}})
+                </option>
+            </select>
+            <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
+                [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
+                <option value="">All Zones</option>
+                <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
+                    {{zone.Zone_Name}} ({{zone.Z_ID}})
+                </option>
+            </select>
+            <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
+                [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
+                <option value="" disabled>Select Schools</option>
+                <option *ngFor="let school of allSchools" [ngValue]="school">
+                    {{school.School_Name}} - ({{school.Schoolid}})
+                </option>
+            </select>
         </div>
-        <div class="d-flex justify-content-around text-center" style="position: absolute; bottom: 25px;left: 25px;">
-            <div>
-                <h3 class="fw-bold">{{averageTeacherOfSchool}}</h3>
-                <h5>Average Teachers</h5>
-            </div>
-            <div class="vr mx-3"></div>
-            <div>
-                <h3 class="fw-bold">{{averageStudentOfSchool}}</h3>
-                <h5>Average Students</h5>
-            </div>
+        <div class="d-flex justify-content-center filter-box mt-2" *ngIf="districtModel || zoneModel || schoolModel">
+            <h3 class="text-center mb-0" *ngIf="districtModel">{{districtModel}}&nbsp; </h3>
+            <h3 class="text-center mb-0" *ngIf="zoneModel"> <span *ngIf="districtModel">|</span> {{zoneModel}}&nbsp;
+            </h3>
+            <h3 class="text-center mb-0" *ngIf="schoolModel"> <span *ngIf="zoneModel || districtModel">|</span>
+                {{schoolModel.School_Name}}
+            </h3>
         </div>
-    </div>
-    <div class="column text-center">
-        <h5 class="header-bg p-2">Student & Teacher Ratio</h5>
-        <img class="img-fluid mt-5" width="120" src="../../../assets/images/Dashboard/education.png">
-        <h3 class="mt-5 fw-semibold teacher-ratio-count">{{teachersRatio | number:
-            '1.0-0'}} : 1 Teacher</h3>
-    </div>
 
-    <div class="column ">
-        <h5 class="header-bg p-2">Students Gender Ratio</h5>
-        <apx-chart [series]="studentsGenderRatio?.series" [chart]="studentsGenderRatio?.chart"
-            [labels]="studentsGenderRatio?.labels" [fill]="studentsGenderRatio?.fill"
-            [dataLabels]="studentsGenderRatio?.dataLabels" [plotOptions]="studentsGenderRatio?.plotOptions"
-            [responsive]="studentsGenderRatio?.responsive" [legend]="studentsGenderRatio?.legend"
-            [colors]="studentsGenderRatio?.colors" [tooltip]="studentsGenderRatio?.tooltip"></apx-chart>
-    </div>
-    <div class="column ">
-        <h5 class="header-bg p-2">Teachers Gender Ratio</h5>
-        <apx-chart [series]="teacherGenderRatio?.series" [chart]="teacherGenderRatio?.chart"
-            [labels]="teacherGenderRatio?.labels" [fill]="teacherGenderRatio?.fill"
-            [dataLabels]="teacherGenderRatio?.dataLabels" [plotOptions]="teacherGenderRatio?.plotOptions"
-            [responsive]="teacherGenderRatio?.responsive" [legend]="teacherGenderRatio?.legend"
-            [colors]="teacherGenderRatio?.colors" [tooltip]="teacherGenderRatio?.tooltip"></apx-chart>
-    </div>
-    <div class="column">
-        <h5 class="header-bg p-2">Schools By Management</h5>
-        <apx-chart [series]="schoolsByManagement?.series" [chart]="schoolsByManagement?.chart"
-            [labels]="schoolsByManagement?.labels" [fill]="schoolsByManagement?.fill"
-            [dataLabels]="schoolsByManagement?.dataLabels" [plotOptions]="schoolsByManagement?.plotOptions"
-            [responsive]="schoolsByManagement?.responsive" [legend]="schoolsByManagement?.legend"
-            [colors]="schoolsByManagement?.colors" [tooltip]="schoolsByManagement?.tooltip"></apx-chart>
-    </div>
-
-    <div class="column">
-        <h5 class="header-bg p-2">Shift wise Schools</h5>
-        <apx-chart [series]="shiftWiseSchools?.series" [chart]="shiftWiseSchools?.chart"
-            [labels]="shiftWiseSchools?.labels" [fill]="shiftWiseSchools?.fill" [stroke]="shiftWiseSchools?.stroke"
-            [responsive]="shiftWiseSchools?.responsive" [legend]="shiftWiseSchools?.legend"
-            [colors]="shiftWiseSchools?.colors" [yaxis]="shiftWiseSchools?.yaxis"
-            [tooltip]="shiftWiseSchools?.tooltip"></apx-chart>
-    </div>
-
-    <div class="column">
-        <h5 class="header-bg p-2">Types of schools</h5>
-        <apx-chart [series]="typesOfSchools?.series" [chart]="typesOfSchools?.chart" [labels]="typesOfSchools?.labels"
-            [fill]="typesOfSchools?.fill" [stroke]="typesOfSchools?.stroke" [responsive]="typesOfSchools?.responsive"
-            [colors]="typesOfSchools?.colors" [legend]="typesOfSchools?.legend" [yaxis]="shiftWiseSchools?.yaxis"
-            [tooltip]="typesOfSchools?.tooltip"></apx-chart>
-    </div>
-
-    <div class="column wide">
-        <h5 class="header-bg p-2">Class Wise Student</h5>
-        <apx-chart [series]="genderWiseClass.series" [chart]="genderWiseClass.chart" [dataLabels]="genderWiseClass.dataLabels"
-            [plotOptions]="genderWiseClass.plotOptions" [yaxis]="genderWiseClass.yaxis" [legend]="genderWiseClass.legend"
-            [fill]="genderWiseClass.fill" [stroke]="genderWiseClass.stroke" [tooltip]="genderWiseClass.tooltip"
-            [xaxis]="genderWiseClass.xaxis"></apx-chart>
-    </div>
-    <!-- <div class="column">
-        <h5 class="header-bg p-2">Schools by minority</h5>
-        <apx-chart [series]="minorityCount?.series" [chart]="minorityCount?.chart" [labels]="minorityCount?.labels"
-            [fill]="minorityCount?.fill" [dataLabels]="minorityCount?.dataLabels"
-            [plotOptions]="minorityCount?.plotOptions" [responsive]="minorityCount?.responsive"
-            [legend]="minorityCount?.legend"></apx-chart>
-    </div>
-    <div class="column">
-        <h5 class="header-bg p-2">Schools by Affiliation</h5>
-        <apx-chart [series]="affiliationCount?.series" [chart]="affiliationCount?.chart"
-            [labels]="affiliationCount?.labels" [fill]="affiliationCount?.fill"
-            [dataLabels]="affiliationCount?.dataLabels" [plotOptions]="affiliationCount?.plotOptions"
-            [responsive]="affiliationCount?.responsive" [legend]="affiliationCount?.legend"
-            [colors]="affiliationCount?.colors"></apx-chart>
-    </div>
-    <div class="column" style="height: auto;">
-        <h5 class="header-bg p-2">Schools by stream</h5>
-        <apx-chart [series]="streamCount?.series" [chart]="streamCount?.chart" [dataLabels]="streamCount?.dataLabels"
-            [plotOptions]="streamCount?.plotOptions" [xaxis]="streamCount?.xaxis" [yaxis]="streamCount?.yaxis"
-            [fill]="streamCount?.fill" [colors]="streamCount?.colors"></apx-chart>
-    </div> -->
-</div>
-
-<!-- Button trigger modal -->
-<button #openModal data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal"
-    (click)="getTeachersByGender(true)" (click)="getStudentByGender(true)">
-
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title mx-auto" *ngIf="allTeacherData?.length > 0" id="exampleModalLabel">Teacher
-                    Details By
-                    Gender: ({{teacherGender?.dataPointIndex == 0 ? 'Male' : 'Female'}}) </h5>
-                <h5 class="modal-title mx-auto" *ngIf="allStudentData?.length > 0" id="exampleModalLabel">Student
-                    Details By
-                    Gender: ({{studGender?.dataPointIndex == 0 ? 'Boys' : (studGender?.dataPointIndex == 1 ? 'Girls' :
-                    'Other')}}) </h5>
-                <div class="dropdown">
-                    <span class="text-danger m-2"><img src="../../../assets/images/icons/downloads.png" width="25px"
-                            alt=""></span>
-                    <div class="dropdown-content">
-                        <button class="btn" (click)="exportToCSV()"><i class="bi bi-filetype-csv h4 text-warning"></i>
-                            CSV</button>
-                        <button class="btn" (click)="exportToExcel()"><i
-                                class="bi bi-file-earmark-excel h4 text-success"></i>
-                            Excel</button>
-                        <button class="btn" value="CPTURE" (click)="pdf.saveAs('Student data.pdf')"><i
-                                class="bi bi-filetype-pdf h4 text-danger"></i>PDF</button>
+        <div class="container1">
+            <div class="column">
+                <h5 *ngIf="!districtModel" class="header-bg p-2">Delhi</h5>
+                <h5 *ngIf="districtModel" class="header-bg p-2">{{districtModel}}</h5>
+                <div class="d-flex justify-content-around mt-4 ">
+                    <img class="ms-2" src="../../../assets/images/Dashboard/school.png" style="height: 100px;" alt="">
+                    <div class="d-block ms-1 ">
+                        <h1 class="fw-bold">{{totalSchools}}</h1>
+                        <h3>Total schools</h3>
                     </div>
                 </div>
-                <!--  -->
-                <button type="button" (click)="searchBox = ''" class="btn-close m-2" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="input-group mb-3 w-50">
-                    <span class="input-group-text" id="basic-addon1">🔍</span>
-                    <input class="form-control" type="search" [(ngModel)]="searchBox" placeholder="Search by name..."
-                        value="" id="example-search-input">
-                </div>
-                <kendo-pdf-export #pdf paperSize="A3">
-                    <div class="table-responsive">
-                        <table class="table table-responsive table-hover table-bordered table-striped">
-                            <thead class="thead-light">
-                                <tr class="table-bordered" *ngIf="allTeacherData?.length > 0">
-                                    <th>Sr No</th>
-                                    <th>Name</th>
-                                    <th>Emp. Id</th>
-                                    <th style="width: 112px;">Joining Date</th>
-                                    <th>School</th>
-                                    <th>Designation</th>
-                                    <th>Gender</th>
-                                    <th>DOB</th>
-                                    <th>District</th>
-                                </tr>
-                                <tr class="table-bordered" *ngIf="allStudentData?.length > 0">
-                                    <th>Sr No</th>
-                                    <th>Name</th>
-                                    <th style="width: 112px;">Class</th>
-                                    <th>School</th>
-                                    <!-- <th>Designation</th> -->
-                                    <th>Gender</th>
-                                    <th>DOB</th>
-                                    <th>District</th>
-                                </tr>
-                            </thead>
-                            <tbody *ngIf="allTeacherData?.length > 0">
-                                <tr *ngFor="let data of allTeacherData | search:searchBox;let i = index">
-                                    <td>{{i+1}}</td>
-                                    <td>{{data.Name}}</td>
-                                    <td>{{data.empid}}</td>
-                                    <td>{{data.JoiningDate}}</td>
-                                    <td>{{data.schname}}</td>
-                                    <td>{{data.postdesc}}</td>
-                                    <td>{{data.gender}}</td>
-                                    <td>{{data.dob}}</td>
-                                    <td>{{data.districtname}}</td>
-                                </tr>
-                            </tbody>
-                            <tbody *ngIf="allStudentData?.length > 0">
-                                <tr *ngFor="let data of allStudentData | search:searchBox;let i = index">
-                                    <td>{{i+1}}</td>
-                                    <td>{{data.Name}}</td>
-                                    <td>{{data.CLASS}}</td>
-                                    <td>{{data.SCHOOL_NAME}}</td>
-                                    <!-- <td>{{data.postdesc}}</td> -->
-                                    <td>{{data.Gender}}</td>
-                                    <td>{{data.Dob}}</td>
-                                    <td>{{data.District}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="d-flex justify-content-around text-center"
+                    style="position: absolute; bottom: 25px;left: 25px;">
+                    <div>
+                        <h3 class="fw-bold">{{averageTeacherOfSchool}}</h3>
+                        <h5>Average Teachers</h5>
                     </div>
-                </kendo-pdf-export>
+                    <div class="vr mx-3"></div>
+                    <div>
+                        <h3 class="fw-bold">{{averageStudentOfSchool}}</h3>
+                        <h5>Average Students</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="column text-center">
+                <h5 class="header-bg p-2">Student & Teacher Ratio</h5>
+                <img class="img-fluid mt-5" width="120" src="../../../assets/images/Dashboard/education.png">
+                <h3 class="mt-5 fw-semibold teacher-ratio-count">{{teachersRatio | number:
+                    '1.0-0'}} : 1 Teacher</h3>
+            </div>
+
+            <div class="column ">
+                <h5 class="header-bg p-2">Students Gender Ratio</h5>
+                <apx-chart [series]="studentsGenderRatio?.series" [chart]="studentsGenderRatio?.chart"
+                    [labels]="studentsGenderRatio?.labels" [fill]="studentsGenderRatio?.fill"
+                    [dataLabels]="studentsGenderRatio?.dataLabels" [plotOptions]="studentsGenderRatio?.plotOptions"
+                    [responsive]="studentsGenderRatio?.responsive" [legend]="studentsGenderRatio?.legend"
+                    [colors]="studentsGenderRatio?.colors" [tooltip]="studentsGenderRatio?.tooltip"></apx-chart>
+            </div>
+            <div class="column ">
+                <h5 class="header-bg p-2">Teachers Gender Ratio</h5>
+                <apx-chart [series]="teacherGenderRatio?.series" [chart]="teacherGenderRatio?.chart"
+                    [labels]="teacherGenderRatio?.labels" [fill]="teacherGenderRatio?.fill"
+                    [dataLabels]="teacherGenderRatio?.dataLabels" [plotOptions]="teacherGenderRatio?.plotOptions"
+                    [responsive]="teacherGenderRatio?.responsive" [legend]="teacherGenderRatio?.legend"
+                    [colors]="teacherGenderRatio?.colors" [tooltip]="teacherGenderRatio?.tooltip"></apx-chart>
+            </div>
+            <div class="column">
+                <h5 class="header-bg p-2">Schools By Management</h5>
+                <apx-chart [series]="schoolsByManagement?.series" [chart]="schoolsByManagement?.chart"
+                    [labels]="schoolsByManagement?.labels" [fill]="schoolsByManagement?.fill"
+                    [dataLabels]="schoolsByManagement?.dataLabels" [plotOptions]="schoolsByManagement?.plotOptions"
+                    [responsive]="schoolsByManagement?.responsive" [legend]="schoolsByManagement?.legend"
+                    [colors]="schoolsByManagement?.colors" [tooltip]="schoolsByManagement?.tooltip"></apx-chart>
+            </div>
+
+            <div class="column">
+                <h5 class="header-bg p-2">Shift wise Schools</h5>
+                <apx-chart [series]="shiftWiseSchools?.series" [chart]="shiftWiseSchools?.chart"
+                    [labels]="shiftWiseSchools?.labels" [fill]="shiftWiseSchools?.fill"
+                    [stroke]="shiftWiseSchools?.stroke" [responsive]="shiftWiseSchools?.responsive"
+                    [legend]="shiftWiseSchools?.legend" [colors]="shiftWiseSchools?.colors"
+                    [yaxis]="shiftWiseSchools?.yaxis" [tooltip]="shiftWiseSchools?.tooltip"></apx-chart>
+            </div>
+
+            <div class="column">
+                <h5 class="header-bg p-2">Types of schools</h5>
+                <apx-chart [series]="typesOfSchools?.series" [chart]="typesOfSchools?.chart"
+                    [labels]="typesOfSchools?.labels" [fill]="typesOfSchools?.fill" [stroke]="typesOfSchools?.stroke"
+                    [responsive]="typesOfSchools?.responsive" [colors]="typesOfSchools?.colors"
+                    [legend]="typesOfSchools?.legend" [yaxis]="shiftWiseSchools?.yaxis"
+                    [tooltip]="typesOfSchools?.tooltip"></apx-chart>
+            </div>
+
+            <div class="column wide">
+                <h5 class="header-bg p-2">Class Wise Student</h5>
+                <apx-chart [series]="genderWiseClass.series" [chart]="genderWiseClass.chart"
+                    [dataLabels]="genderWiseClass.dataLabels" [plotOptions]="genderWiseClass.plotOptions"
+                    [yaxis]="genderWiseClass.yaxis" [legend]="genderWiseClass.legend" [fill]="genderWiseClass.fill"
+                    [stroke]="genderWiseClass.stroke" [tooltip]="genderWiseClass.tooltip"
+                    [xaxis]="genderWiseClass.xaxis"></apx-chart>
             </div>
 
         </div>
+
+        <!-- Button trigger modal -->
+        <button #openModal data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal"
+            (click)="getTeachersByGender(true)" (click)="getStudentByGender(true)">
+
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title mx-auto" *ngIf="allTeacherData?.length > 0" id="exampleModalLabel">
+                            Teacher
+                            Details By
+                            Gender: ({{teacherGender?.dataPointIndex == 0 ? 'Male' : 'Female'}}) </h5>
+                        <h5 class="modal-title mx-auto" *ngIf="allStudentData?.length > 0" id="exampleModalLabel">
+                            Student
+                            Details By
+                            Gender: ({{studGender?.dataPointIndex == 0 ? 'Boys' : (studGender?.dataPointIndex == 1 ?
+                            'Girls' :
+                            'Other')}}) </h5>
+                        <div class="dropdown">
+                            <span class="text-danger m-2"><img src="../../../assets/images/icons/downloads.png"
+                                    width="25px" alt=""></span>
+                            <div class="dropdown-content">
+                                <button class="btn" (click)="exportToCSV()"><i
+                                        class="bi bi-filetype-csv h4 text-warning"></i>
+                                    CSV</button>
+                                <button class="btn" (click)="exportToExcel()"><i
+                                        class="bi bi-file-earmark-excel h4 text-success"></i>
+                                    Excel</button>
+                                <button class="btn" value="CPTURE" (click)="pdf.saveAs('Student data.pdf')"><i
+                                        class="bi bi-filetype-pdf h4 text-danger"></i>PDF</button>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <button type="button" (click)="searchBox = ''" class="btn-close m-2" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3 w-50">
+                            <span class="input-group-text" id="basic-addon1">🔍</span>
+                            <input class="form-control" type="search" [(ngModel)]="searchBox"
+                                placeholder="Search by name..." value="" id="example-search-input">
+                        </div>
+                        <kendo-pdf-export #pdf paperSize="A3">
+                            <div class="table-responsive">
+                                <table class="table table-responsive table-hover table-bordered table-striped">
+                                    <thead class="thead-light">
+                                        <tr class="table-bordered" *ngIf="allTeacherData?.length > 0">
+                                            <th>Sr No</th>
+                                            <th>Name</th>
+                                            <th>Emp. Id</th>
+                                            <th style="width: 112px;">Joining Date</th>
+                                            <th>School</th>
+                                            <th>Designation</th>
+                                            <th>Gender</th>
+                                            <th>DOB</th>
+                                            <th>District</th>
+                                        </tr>
+                                        <tr class="table-bordered" *ngIf="allStudentData?.length > 0">
+                                            <th>Sr No</th>
+                                            <th>Name</th>
+                                            <th style="width: 112px;">Class</th>
+                                            <th>School</th>
+                                            <!-- <th>Designation</th> -->
+                                            <th>Gender</th>
+                                            <th>DOB</th>
+                                            <th>District</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="allTeacherData?.length > 0">
+                                        <tr *ngFor="let data of allTeacherData | search:searchBox;let i = index">
+                                            <td>{{i+1}}</td>
+                                            <td>{{data.Name}}</td>
+                                            <td>{{data.empid}}</td>
+                                            <td>{{data.JoiningDate}}</td>
+                                            <td>{{data.schname}}</td>
+                                            <td>{{data.postdesc}}</td>
+                                            <td>{{data.gender}}</td>
+                                            <td>{{data.dob}}</td>
+                                            <td>{{data.districtname}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody *ngIf="allStudentData?.length > 0">
+                                        <tr *ngFor="let data of allStudentData | search:searchBox;let i = index">
+                                            <td>{{i+1}}</td>
+                                            <td>{{data.Name}}</td>
+                                            <td>{{data.CLASS}}</td>
+                                            <td>{{data.SCHOOL_NAME}}</td>
+                                            <!-- <td>{{data.postdesc}}</td> -->
+                                            <td>{{data.Gender}}</td>
+                                            <td>{{data.Dob}}</td>
+                                            <td>{{data.District}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </kendo-pdf-export>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- tab2 -->
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <app-tabular-school></app-tabular-school>
+    </div>
+
+    <!-- tab3 -->
+    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+        <app-bird-eye-school></app-bird-eye-school>
     </div>
 </div>
+<!-- tab end -->

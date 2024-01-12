@@ -67,17 +67,15 @@ export class TabularComponent {
     }
     else if (this.zoneModel) {
       delete obj.shift;
-      this.callAPIfun(obj);
     }
     else if (this.shiftModel) {
       delete obj.Z_name;
-      this.callAPIfun(obj);
     }
     else {
       delete obj.Z_name;
       delete obj.shift;
-      this.callAPIfun(obj);
     }
+    this.callAPIfun(obj);
   }
 
   callAPIfun(obj: any) {

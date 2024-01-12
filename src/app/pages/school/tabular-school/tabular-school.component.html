@@ -1,0 +1,88 @@
+<!-- dropdown -->
+<div class="my-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
+    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="zoneModel" (change)="getTableData()" >
+        <option value="">All Zones</option>
+        <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
+            {{zone.Zone_Name}} ({{zone.Z_ID}})
+        </option>
+    </select>
+    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="schoolModel" (change)="getTableData()">
+        <option value="">Select School</option>
+        <option *ngFor="let School of allSchool" value="{{School}}">
+            {{School}}
+        </option>
+    </select>
+</div>
+
+<div class="row">
+    <!-- first Colum -->
+    <div class="col-3">
+
+        <div class="responsive-table position-relative" style="overflow: scroll; height:100vh !important;">
+            <table class="table table-striped table-hover" >
+                <thead class="sticky-top top-0">
+                    <tr class="table-success">
+                        <th>S.No</th>
+                        <th>District</th>
+                        <th>Zone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of allDist;let i = index">
+                        <td>{{i+1}}</td>
+                        <td>{{data.districtName}}</td>
+                        <td>{{data.zoneName}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Second Colum -->
+    <div class="col-9">
+        <!--  -->
+        <div class="responsive-table position-relative" style="overflow: scroll; height:100vh !important;">
+            <table class="table table-striped table-hover" >
+                <thead class="sticky-top top-0">
+                    <tr class="table-success">
+                        <!-- <th>S.No</th> -->
+                        <th>Total School</th>
+                        <th>Total Student</th>
+                        <th>Total Teacher</th>
+                        <th>Female T</th>
+                        <th>Male T</th>
+                        <th>Total Girl</th>
+                        <th>Total Boys</th>
+                        <th>Other</th>
+                        <!-- <th>Percent</th> -->
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr>
+                        <!-- <td>{{i+1}}</td> -->
+                        <td>{{allSchoolData?.totalSchools}}</td>
+                        <td>{{allSchoolData?.totalStudents}}</td>
+                        <td>{{allSchoolData?.totalTeachers}}</td>
+                        <td>{{allSchoolData?.totalFemaleTeachers}}</td>
+                        <td>{{allSchoolData?.totalMaleTeachers}}</td>
+                        <td>{{allSchoolData?.totalGirls}}</td>
+                        <td>{{allSchoolData?.totalBoys}}</td>
+                        <td>{{allSchoolData?.Other}}</td>
+                        <!-- <td>{{(data.PresentCount/data.totalStudentCount)*100 |number : '1.2-2'}}%</td> -->
+                    </tr>
+                    <!-- <tr class="sticky-bottom bottom-0 table-success fw-bold">
+                        <td>Total</td>
+                        <td colspan="2">{{zoneModel}}</td>
+                        <td>{{allTotalData?.allStudent}}</td>
+                        <td>{{allTotalData?.allPresent}}</td>
+                        <td>{{allTotalData?.allAbsent}}</td>
+                        <td>{{allTotalData?.allLeave}}</td>
+                        <td>0</td>
+                        <td>{{allTotalData?.allUnmark}}</td>
+                        <td>{{allTotalData?.allPercent}}%</td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
