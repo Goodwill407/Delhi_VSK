@@ -214,37 +214,16 @@ export class SchoolComponent {
     const api1 = this.httpService.get('graphs/school-teacher-student-graph');
     const api2 = this.httpService.get('class-student');
 
-    forkJoin([api1,api2]).subscribe(([res1,res2])=>{
+    forkJoin([api1, api2]).subscribe(([res1, res2]) => {
       this.setAllGraphs(res1, true);
-        this.setClassGraph(res2);
+      this.setClassGraph(res2);
+      this.spinner.hide();
+    }, ([err1, err2]) => {
+      if (err1 || err2) {
+        this.toastr.error('', 'Something went wrong !');
         this.spinner.hide();
-      },([err1,err2])=>{
-        if(err1||err2){
-          this.toastr.error('', 'Something went wrong !');
-          this.spinner.hide();
       }
-    })
-    // 
-    // this.httpService.get('graphs/school-teacher-student-graph').subscribe((data: any) => {
-    //   if (data) {
-    //     this.setAllGraphs(data, true);
-    //     // this.spinner.hide();
-    //   }
-    // }, (error) => {
-    //   // this.spinner.hide();
-    //   this.toastr.error('', 'Something went wrong !');
-    // });
-    // // class All Data
-    // this.spinner.show()
-    // this.httpService.get('class-student').subscribe((data: any) => {
-    //   if (data) {
-    //     this.setClassGraph(data);
-    //     this.spinner.hide();
-    //   }
-    // }, (error) => {
-    //   this.spinner.hide();
-    //   this.toastr.error('', 'Something went wrong !');
-    // })
+    });
   }
 
   getSchoolByDistrict() {
@@ -261,27 +240,23 @@ export class SchoolComponent {
 
   getGraphsByZone() {
     if (this.zoneModel) {
-      this.spinner.show();
       const zone = { zoneName: this.zoneModel };
-      this.getSchoolDataByZone();
-      this.httpService.post('zonegraph/school-student-teacher-graph-zonename', zone).subscribe((data: any) => {
-        if (data) {
-          this.setAllGraphs(data, false);
+      this.spinner.show();
+      const api1 = this.httpService.post('zonegraph/school-student-teacher-graph-zonename', zone);
+      const api2 = this.httpService.post('class-student/zone', { "zone": this.zoneModel });
+
+      forkJoin([api1, api2]).subscribe(([res1, res2]) => {
+        this.setClassGraph(res2);
+        this.setAllGraphs(res1, true);
+        this.schoolModel = '';
+        this.getSchoolDataByZone();
+        this.spinner.hide();
+      }, ([err1, err2]) => {
+        if (err1 || err2) {
+          this.toastr.error('', 'Something went wrong !');
           this.spinner.hide();
-          this.schoolModel = '';
         }
-      }, (error) => {
-        this.toastr.error('', 'Something went wrong !');
-      })
-      // for Class zone :
-      this.httpService.post('class-student/zone', { "zone": this.zoneModel }).subscribe((data: any) => {
-        if (data) {
-          this.setClassGraph(data);
-          this.spinner.hide();
-        }
-      }, (error) => {
-        this.toastr.error('', 'Something went wrong !');
-      })
+      });
     } else {
       this.allSchools = [];
       this.getGraphsByDistrictName();
@@ -294,26 +269,20 @@ export class SchoolComponent {
       const district = {
         districtName: this.districtModel
       }
-      this.httpService.post('zonegraph/school-student-teacher-graph-district', district).subscribe((data: any) => {
-        if (data) {
-          this.setAllGraphs(data, true);
-          this.getSchoolDataByDistrict();
+      this.spinner.show();
+      const api1 = this.httpService.post('zonegraph/school-student-teacher-graph-district', district);
+      const api2 = this.httpService.post('class-student/district', { district: this.districtModel });
+
+      forkJoin([api1, api2]).subscribe(([res1, res2]) => {
+        this.setAllGraphs(res1, true);
+        this.setClassGraph(res2);
+        this.spinner.hide();
+      }, ([err1, err2]) => {
+        if (err1 || err2) {
+          this.toastr.error('', 'Something went wrong !');
           this.spinner.hide();
         }
-      }, (error) => {
-        this.spinner.hide();
-        this.toastr.error('', 'Something went wrong !');
-      })
-      // for class District
-      this.httpService.post('class-student/district', { district: this.districtModel }).subscribe((data: any) => {
-        if (data) {
-          this.setClassGraph(data)
-          this.spinner.hide();
-        }
-      }, (error) => {
-        this.spinner.hide();
-        this.toastr.error('', 'Something went wrong !');
-      })
+      });
     } else {
       this.allSchools = [];
       this.getAllSchoolGraph();
@@ -328,25 +297,20 @@ export class SchoolComponent {
       const school = {
         "schoolId": this.schoolModel.Schoolid
       }
-      this.httpService.post('zonegraph/school-student-teacher-graph-schoolid', school).subscribe((data: any) => {
-        if (data) {
-          this.setAllGraphs(data, false);
-          this.spinner.hide();
-        }
-      }, (error) => {
-        this.spinner.hide();
-        this.toastr.error('', 'Something went wrong !');
-      })
+      this.spinner.show();
+      const api1 = this.httpService.post('zonegraph/school-student-teacher-graph-schoolid', school);
+      const api2 = this.httpService.post('class-student/school', { "Schoolid": Number(this.schoolModel.Schoolid) });
 
-      this.httpService.post('class-student/school', { "Schoolid": Number(this.schoolModel.Schoolid) }).subscribe((data: any) => {
-        if (data) {
-          this.setClassGraph(data);
+      forkJoin([api1, api2]).subscribe(([res1, res2]) => {
+        this.setAllGraphs(res1, true);
+        this.setClassGraph(res2);
+        this.spinner.hide();
+      }, ([err1, err2]) => {
+        if (err1 || err2) {
+          this.toastr.error('', 'Something went wrong !');
           this.spinner.hide();
         }
-      }, (error) => {
-        this.spinner.hide();
-        this.toastr.error('', 'Something went wrong !');
-      })
+      });
     }
   }
 

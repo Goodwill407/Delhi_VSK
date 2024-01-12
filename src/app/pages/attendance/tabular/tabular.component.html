@@ -69,7 +69,7 @@
                         <td>{{data.totalLeaveCount}}</td>
                         <td>0</td>
                         <td>{{data.totalNotMarkedAttendanceCount}}</td>
-                        <td>0</td>
+                        <td>{{(data.PresentCount/data.totalStudentCount)*100 |number : '1.2-2'}}%</td>
                     </tr>
                     <tr class="sticky-bottom bottom-0 table-success fw-bold">
                         <td>Total</td>
@@ -80,7 +80,7 @@
                         <td>{{allTotalData?.allLeave}}</td>
                         <td>0</td>
                         <td>{{allTotalData?.allUnmark}}</td>
-                        <td>0</td>
+                        <td>{{allTotalData?.allPercent}}%</td>
                     </tr>
                 </tbody>
             </table>
