@@ -29,55 +29,68 @@
 
                     <!-- UserName -->
                     <div *ngIf="!OtpFlag">
-                    <div  class="form-outline mb-4">
-                        <input type="text" id="form3Example3" formControlName="userName"
-                            class="form-control form-control-lg" placeholder="Enter UserName" />
+                        <div class="form-outline mb-4">
+                            <input type="text" id="form3Example3" formControlName="userName"
+                                class="form-control form-control-lg" placeholder="Enter User id"
+                                [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" />
+                                <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
+                                    <div *ngIf="f.userName.errors.required">UserName is required</div>
+                                </div>
+                        </div>
+
+                        <!-- Select Role -->
+                        <div class="form-outline mb-3">
+                            <select name="" id="" formControlName="Role" class="form-select form-control-lg"
+                            [ngClass]="{'is-invalid':submitted && f.Role.errors}">
+                                <option value="" disable>Select Role</option>
+                                <option value="admin">Admin</option>
+                                <option value="district">District</option>
+                                <option value="zone">Zone</option>
+                                <option value="school">School</option>
+                            </select>
+                            <div *ngIf="submitted && f.Role.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && f.Role.errors.required">Role is required</div>
+                                </div>
+                            </div>
+                        
+
+                        <div class="text-center text-lg-start mt-4 pt-2">
+                            <button type="button" class="btn btn-primary btn-lg"
+                                style="padding-left: 2.5rem; padding-right: 2.5rem;" (click)="submitForm()">GET
+                                OTP</button>
+                        </div>
 
                     </div>
 
-                    <!-- Select Role -->
-                    <div class="form-outline mb-3" >
-                        <select name="" id="" formControlName="Role" class="form-select form-control-lg">
-                            <option value="" disable>Select Role</option>
-                            <option value="admin">Admin</option>
-                            <option value="district">District</option>
-                            <option value="zone">Zone</option>
-                            <option value="school">School</option>
-                        </select>
+                    <div *ngIf="OtpFlag">
+                        <!-- enter OTP -->
+                        <div class="form-outline mb-3">
+                            <input type="text" id="otp" formControlName="enteredOTP" placeholder="Enter OTP"
+                                class="form-control form-control-lg" />
+                        </div>
+<!-- show buttons --> <div class="d-flex">
+                        <div  class="text-center text-lg-start mt-4 p-2">
+                            <button  type="button" [disabled]="resendOtpEnabled"  class="btn btn-primary btn-lg"
+                                style="padding-left: 2.5rem; padding-right: 2.5rem;" (click)="verifyOTP()">Verify
+                                OTP</button>
+                        </div>
+                        <!--  -->
+                        <div *ngIf="OtpFlag && resendOtpEnabled" class="text-center text-lg-start mt-4 p-2">
+                            <button type="button" class="btn btn-primary btn-lg"
+                                style="padding-left: 2.5rem; padding-right: 2.5rem;" (click)="resendOTP()">Resend
+                                OTP</button>
+                        </div>
+                    </div>
+                        <div *ngIf="countdownTimer > 0" class="mt-1 ms-2"><p style="color: black">Valid OTP time {{countdownTimer}}s</p></div>
                     </div>
 
-                    <div class="text-center text-lg-start mt-4 pt-2">
-                        <button type="button" class="btn btn-primary btn-lg"
-                            style="padding-left: 2.5rem; padding-right: 2.5rem;" (click)="submitForm()">GET OTP</button>
-                    </div>
+                    <!-- show Error Msg -->
+                    <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
 
-                </div>
-
-                <div *ngIf="OtpFlag">  
-               <!-- enter OTP -->
-                    <div  class="form-outline mb-3" >
-                        <input type="text" id="otp" formControlName="enteredOTP"  placeholder="Enter OTP"
-                        class="form-control form-control-lg"/>
-                   </div>
-                                     
-                       <div class="text-center text-lg-start mt-4 pt-2">
-                           <button type="button" class="btn btn-primary btn-lg"
-                               style="padding-left: 2.5rem; padding-right: 2.5rem;" (click)="verifyOTP()">Verify OTP</button>
-                       </div>
-                </div>
-                            
                 </form>
-            
 
-                  <div *ngIf="OtpFlag">
-                    <form  (ngSubmit)="verifyOTP">
-                    <!-- send OTP -->
-                  
-                    </form>
-                </div>
-                     
 
-               
+
             </div>
         </div>
     </div>

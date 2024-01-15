@@ -109,8 +109,8 @@ export class StudentComponent {
       this.getGraphsByZone()
     }
     else if(this.user.role === 'school'){
-      this.schoolModel = this.user.userName
-      this.schoolName = this.user.userName
+      this.schoolModel = this.user.userName.split('-')[0];
+      this.schoolName = this.user.userName.split('-')[1];
       this.getGraphsBySchoolName()
     }
   }

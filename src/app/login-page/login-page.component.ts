@@ -7,34 +7,31 @@ import { ToastrService } from 'ngx-toastr';
 import { CommunicationService } from '../services/communication.service';
 
 export interface LoginClass {
-  userName: string,
-  Role: string
 
-  
 }
+
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent {
-
-  loginForm!: FormGroup;
-  
+  loginForm:any=FormGroup;
   submitted: boolean = false;
   loginModel!: LoginClass;
-  setLoginType: string = "admin";
-  @Output() loginFlag = new EventEmitter<boolean>(); 
+  setLoginType: string = "";
+  @Output() loginFlag = new EventEmitter<boolean>();
   communicationServiceMobile: any;
-
-  OtpFlag: boolean=false
+  OtpFlag: boolean = false;
   enteredOTP: string = '';
-  Selected_Role:any=''
-  Mobile_number:any;
-  user:any;
-  
+  Selected_Role: any = '';
+  Mobile_number: any;
+  user: any;
+  resendOtpEnabled: boolean = false;
+  countdownTimer: number = 120;
+  error:any;
 
-  constructor(private fb: FormBuilder, private httpService: HttpServiceService, private route: ActivatedRoute, private router: Router, private spinner: NgxSpinnerService, private toastr: ToastrService,private communicationService:CommunicationService) {
+  constructor(private fb: FormBuilder, private httpService: HttpServiceService, private route: ActivatedRoute, private router: Router, private spinner: NgxSpinnerService, private toastr: ToastrService, private communicationService: CommunicationService) {
     const user: any = JSON.parse(sessionStorage.getItem('userProfile')!);
     if (user) {
       this.router.navigateByUrl('/dashboard');
@@ -53,10 +50,10 @@ export class LoginPageComponent {
 
   initializeSaveFormValidations() {
     this.loginForm = this.fb.group({
-      'userName': new FormControl(''),
-      'Role': new FormControl(''),
-      'enteredOTP': new FormControl(''),
-       });
+      userName: ['', Validators.required],
+      Role: ['', Validators.required],
+      // enteredOTP: ['', Validators.required],
+    });
   }
 
   checkIfAlreadyLogin() {
@@ -64,11 +61,7 @@ export class LoginPageComponent {
     if (user) {
       if (user.role == "school") {
         this.router.navigateByUrl('contrnt/school');
-      } else if (user.role == "district") {
-        this.router.navigateByUrl('content/admin-dashboard');
-      } else if (user.role == "zone") {
-        this.router.navigateByUrl('content/admin-dashboard');
-      } else if (user.role == "admin") {
+      } else if (user.role == "district" || user.role == "zone" || user.role == "admin") {
         this.router.navigateByUrl('/content/admin-dashboard');
       }
     }
@@ -80,79 +73,87 @@ export class LoginPageComponent {
     this.submitted = true;
     if (this.loginForm.invalid) {
       return;
-    }
-    else {
+    } else {
       this.GetOtp();
+      this.startCountdown()
     }
   }
 
- 
   GetOtp() {
-      this.spinner.show();
-     
-      const userId=this.loginForm.value.userName;
-  
-      this.httpService.post('auth/send-otp?userId='+ userId, userId).subscribe((data: any) => {
-        if (data) {
-          this.Mobile_number =data.mobNo;
-          this.user =data.user;
-          this.toastr.success('', 'Logged in succesfully!');
-          sessionStorage.setItem('userProfile', JSON.stringify(data.user));
-          this.OtpFlag=true
-            
-        }
-        this.spinner.hide();
-      }, (error) => {
-        this.toastr.error('', 'Email Username or Password !');
-        this.spinner.hide();
-      })
-    }
- 
-  
+    this.spinner.show();
+    const userId = this.loginForm.value.userName;
+    this.httpService.post('auth/send-otp?userId=' + userId, userId).subscribe((data: any) => {
+      if (data) {
+        this.Mobile_number = data.mobNo;
+        this.user = data.user;
+             
+        this.OtpFlag = true;
+      }
+      this.spinner.hide();
+    }, (error) => {
+      this.error = 'Invalid User Id'
+      this.toastr.error('', 'Email Username or Password!');
+      this.spinner.hide();
+    });
+  }
 
-    verifyOTP() {
-      const OTP=Number(this.loginForm.value.enteredOTP)
-     const postData = {
+  verifyOTP() {
+    const OTP = Number(this.loginForm.value.enteredOTP);
+    const postData = {
       mobNo: this.Mobile_number.toString(),
       otp: OTP
     };
-    
-   
-    this.httpService.post('auth/verify-otp?mobNo=' + this.Mobile_number.toString() + '&otp=' + OTP,postData).subscribe((response:any) => {
-        if (response.message =="OTP Verified successfully") {
-        const  userRole={
-          role:this.loginForm.value.Role,
+
+    this.httpService.post('auth/verify-otp?mobNo=' + this.Mobile_number.toString() + '&otp=' + OTP, postData).subscribe((response: any) => {
+      if (response.message == "OTP Verified successfully") {
+        const userRole = {
+          role: this.loginForm.value.Role,
           userName: this.user
-        }
-          sessionStorage.setItem('userProfile', JSON.stringify(userRole));
-          const user   =  JSON.parse(sessionStorage.getItem('userProfile') || '{}');
-         
-          if(user.role =='admin'){
-            this.router.navigateByUrl('/content/admin-dashboard');
-            this.loginFlag.emit(true)
-          }
-          else if(user.role !== 'admin'){
-            this.router.navigateByUrl('/school');
-            this.loginFlag.emit(true)
-          }
-          // console.log('success');
-          
+        };
+        sessionStorage.setItem('userProfile', JSON.stringify(userRole));
+     
+        const user = JSON.parse(sessionStorage.getItem('userProfile') || '{}');
 
+        if (user.role == 'admin') {
+          this.router.navigateByUrl('/content/admin-dashboard');
+          this.loginFlag.emit(true);
+        } else if (user.role !== 'admin') {
+          this.router.navigateByUrl('/school');
+          this.loginFlag.emit(true);
         }
-
-      }, (error)=> {
-        
-        // Handle error if necessary
-        console.error('Error verifying OTP:', error);
-      })
       }
-
-   
- 
-  }        
-         
-
-  
-
-  
-
+    }, (error) => {
+      this.error = error
+      this.toastr.error('OTP does not Match !!')
+    });
+  }
+// start resend otp stopwatch
+  startCountdown() {
+    this.resendOtpEnabled = false;
+    this.countdownTimer = 120; // Reset the countdown timer
+    const countdownInterval = setInterval(() => {
+      this.countdownTimer--;
+      if (this.countdownTimer <= 0) {
+        clearInterval(countdownInterval);
+        this.resendOtpEnabled = true;
+      }
+    }, 1000);
+  }
+  // Function to resend OTP
+  resendOTP() {
+    // this.GetOtp()
+    const userId = this.loginForm.value.userName;
+    this.httpService.post('auth/send-otp?userId=' + userId, userId).subscribe((data: any) => {
+      if (data) {
+        this.Mobile_number = data.mobNo;
+        this.user = data.user;
+             
+        this.OtpFlag = true;
+      }
+      this.resendOtpEnabled = false;
+    this.startCountdown();
+    })
+    // Disable the resend OTP button again
+    
+  }
+}

@@ -16,13 +16,13 @@
       {{zone.Zone_Name}} ({{zone.Z_ID}})
     </option>
   </select>
-  <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'" [(ngModel)]="shiftModel" (change)="getGraphsByShift()">
+  <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'" [(ngModel)]="shiftModel" (change)="getGraphsByShift()"  *ngIf="user.role !== 'school'">
     <option value="" disabled>Select Shift</option>
     <option *ngFor="let shift of allShift" value="{{shift}}">
       {{shift}}
     </option>
   </select>
-  <select class="form-select ms-2" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'" [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
+  <select class="form-select ms-2" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'" [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()" *ngIf="user.role !== 'school'">
     <option value="">All School</option>
     <option *ngFor="let school of allSchools" [ngValue]="school">
       {{school.School_Name}} - ({{school.Schoolid}})

@@ -61,9 +61,11 @@ export class TeacherComponent {
     this.communicationServiceMobile = this.communicationService.isMobile;
     // take user
     this.user = JSON.parse(sessionStorage.getItem('userProfile')!);
+ 
   }
   handleParentClick() {
     this.communicationService.emitParentClick();
+    
   }
 
   ngOnInit() {
@@ -98,8 +100,8 @@ export class TeacherComponent {
       this.getGraphsByZone()
     }
     else if(this.user.role == 'school'){
-      this.schoolModel =this.user.userName
-      this.schoolName = this.user.userName
+      this.schoolModel =this.user.userName.split('-')[0];
+      this.schoolName = this.user.userName.split('-')[1];
       this.getGraphsBySchoolName()
       }
   }

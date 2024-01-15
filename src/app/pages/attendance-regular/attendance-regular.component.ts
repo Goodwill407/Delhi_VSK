@@ -64,6 +64,10 @@ export class AttendanceRegularComponent {
 
   constructor(private communicationService: CommunicationService, private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, public datepipe: DatePipe, private toastr: ToastrService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
+    this.subscription = this.communicationService.parentClick$.subscribe(() => {
+      //  this.getAllGuestTeacherData();
+      this.getGraphsBySchool()
+      });
     this.user=JSON.parse(sessionStorage.getItem('userProfile')!);
   }
 
@@ -277,12 +281,13 @@ export class AttendanceRegularComponent {
   }
 
   getGraphsBySchool() {
+    const id = this.schoolModel?.Schoolid ? this.schoolModel?.Schoolid : this.schoolModel;
     if (this.schoolModel == "") {
       this.getGraphsByDate(false);
     } else {
       this.spinner.show();
       const school = {
-        "School_ID": String(this.schoolModel.Schoolid),
+        "School_ID": String(id),
         "date": this.getDate(this.dateModel)
       }
       this.httpService.post('attendance/school/date-wise', school).subscribe((data: any) => {
@@ -333,11 +338,11 @@ export class AttendanceRegularComponent {
       this.zoneModel =this.user.userName
       this.getGraphsByZone()
     }
-    // else if(this.user.role == 'school'){
-    //   this.schoolModel =this.user.userName
-    //   this.schoolName = this.user.userName
-    //   this.getGraphsBySchoolName()
-    //   }
+    else if(this.user.role == 'school'){
+      this.schoolModel =this.user.userName.split('-')[0];
+      // this.schoolName = this.user.userName.split('-')[0];
+      this.getGraphsBySchool()
+      }
   }
 
   getGenderWisePresent(data: any) {

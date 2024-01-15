@@ -65,7 +65,20 @@ export class TeacherGuestComponent {
   
     this.communicationServiceMobile = this.communicationService.isMobile;
     this.subscription = this.communicationService.parentClick$.subscribe(() => {
-     this.getAllGuestTeacherData();
+      if(this.user.role == 'admin'){
+        this.getAllGuestTeacherData();
+      }
+     else if(this.user.role == 'district'){
+        this.getGraphsByDistrictName()
+      }
+      else if(this.user.role == 'zone'){
+        this.getGraphsByZone()
+      }
+      else if(this.user.role == 'school'){
+        this.getGraphsBySchoolName()
+      }
+     
+    
     });
   }
   handleParentClick() {
@@ -145,8 +158,8 @@ export class TeacherGuestComponent {
       this.getGraphsByZone()
     }
     else if(this.user.role == 'school'){
-      this.schoolModel =this.user.userName
-      this.schoolName = this.user.userName
+      this.schoolModel =this.user.userName.split('-')[0];
+      this.schoolName = this.user.userName.split('-')[0];
       this.getGraphsBySchoolName()
       }
   }
@@ -266,8 +279,9 @@ export class TeacherGuestComponent {
   }
 
   getGraphsBySchoolName() {
+    const id = this.schoolModel?.Schoolid ? this.schoolModel?.Schoolid : this.schoolModel;
     const school = {
-      Schoolid: String(this.schoolModel.Schoolid)
+      Schoolid: String(id)
     }
     this.spinner.show();
     this.httpService.post('guest-teacher/school-wise/stats', school).subscribe((data: any) => {

@@ -21,13 +21,13 @@
             {{zone.Zone_Name}} ({{zone.Z_ID}})
         </option>
     </select>
-    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="shiftModel" (change)="getGraphsBySfhit()">
+    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="shiftModel"  (change)="getGraphsBySfhit()" *ngIf="user.role !== 'school'">
         <option value="">Select Shift</option>
         <option *ngFor="let shift of allShift" value="{{shift}}">
             {{shift}}
         </option>
     </select>
-    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="schoolModel" (change)="getGraphsBySchool()">
+    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="schoolModel" (change)="getGraphsBySchool()" *ngIf="user.role !== 'school'">
         <option value="">All School</option>
         <option *ngFor="let school of allSchools" [ngValue]="school">
             {{school.School_Name}} - ({{school.Schoolid}})
