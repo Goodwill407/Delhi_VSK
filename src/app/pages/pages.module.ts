@@ -27,6 +27,8 @@ import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 import { TeacherGuestComponent } from './teacher-guest/teacher-guest.component';
 import { TabularComponent } from './attendance/tabular/tabular.component';
 import { GeographicalComponent } from './attendance/geographical/geographical.component';
+import { TabularSchoolComponent } from './school/tabular-school/tabular-school.component';
+import { BirdEyeSchoolComponent } from './school/bird-eye-school/bird-eye-school.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { GeographicalComponent } from './attendance/geographical/geographical.co
     SearchPipe,
     TeacherGuestComponent,
     TabularComponent,
-    GeographicalComponent
+    GeographicalComponent,
+    TabularSchoolComponent,
+    BirdEyeSchoolComponent
   ],
   imports: [
     CommonModule,
