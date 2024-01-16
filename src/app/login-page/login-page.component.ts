@@ -23,7 +23,7 @@ export class LoginPageComponent {
   @Output() loginFlag = new EventEmitter<boolean>();
   communicationServiceMobile: any;
   OtpFlag: boolean = false;
-  enteredOTP: string = '';
+  EnterOtp: string = '';
   Selected_Role: any = '';
   Mobile_number: any;
   user: any;
@@ -50,9 +50,8 @@ export class LoginPageComponent {
 
   initializeSaveFormValidations() {
     this.loginForm = this.fb.group({
-      userName: ['', Validators.required],
+      userId: ['', Validators.required],
       Role: ['', Validators.required],
-      // enteredOTP: ['', Validators.required],
     });
   }
 
@@ -81,7 +80,7 @@ export class LoginPageComponent {
 
   GetOtp() {
     this.spinner.show();
-    const userId = this.loginForm.value.userName;
+    const userId = this.loginForm.value.userId;
     this.httpService.post('auth/send-otp?userId=' + userId, userId).subscribe((data: any) => {
       if (data) {
         this.Mobile_number = data.mobNo;
@@ -98,7 +97,7 @@ export class LoginPageComponent {
   }
 
   verifyOTP() {
-    const OTP = Number(this.loginForm.value.enteredOTP);
+    const OTP = Number(this.EnterOtp);
     const postData = {
       mobNo: this.Mobile_number.toString(),
       otp: OTP
