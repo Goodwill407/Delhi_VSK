@@ -6,6 +6,7 @@ import { GraphService } from 'src/app/services/graph-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription, forkJoin } from 'rxjs';
 import { CommunicationService } from 'src/app/services/communication.service';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-school',
@@ -57,6 +58,7 @@ export class SchoolComponent {
     this.getDistrictName();
     this.getAllZones();
     this.getAllSchoolName();
+    this.getSchoolByDistrict();
 
     this.subscription = this.graphService
       .getItemCountObservable()
@@ -222,6 +224,18 @@ export class SchoolComponent {
         this.spinner.hide();
       }
     });
+  }
+
+  getSchoolByDistrict() {
+    this.spinner.show();
+    this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
+      if (data) {
+        this.spinner.hide();
+      }
+    }, error => {
+      this.spinner.hide();
+      this.toastr.error('', 'Something went wrong !');
+    })
   }
 
   getGraphsByZone() {

@@ -66,23 +66,26 @@ export class AttendanceRegularComponent {
   }
 
   ngOnInit() {
-    const map = this.communicationService.grographicalGraph();
-    this.dateModel = new Date();
-    this.dateModel = this.getDate(this.dateModel.setDate(this.dateModel.getDate() - 1));
-    this.maxDate = this.getDate(this.dateModel);
-    this.getGraphsByDate(true);
-    this.getAllDistricts();
-    this.getAllZones();
-    this.getAllSchoolName();
+    this.communicationService.sharedData$.subscribe(data => {
+      if (data == "regular") {
+        this.dateModel = new Date();
+        this.dateModel.setDate(this.dateModel.getDate() - 1);
+        this.maxDate = this.getDate(this.dateModel);
+        this.getGraphsByDate(true);
+        this.getAllDistricts();
+        this.getAllZones();
+        this.getAllSchoolName();
+      }
+    })
 
-    this.subscription = this.graphService
-      .getItemCountObservable()
-      .subscribe((count) => {
-        this.itemCount = count;
-        if (this.itemCount && this.indexNoConfig == this.indexNoConfig || 0) {
-          this.getAttendanceStatusCountClick(false);
-        }
-      });
+    // this.subscription = this.graphService
+    //   .getItemCountObservable()
+    //   .subscribe((count) => {
+    //     this.itemCount = count;
+    //     if (this.itemCount && this.indexNoConfig == this.indexNoConfig || 0) {
+    //       this.getAttendanceStatusCountClick(false);
+    //     }
+    //   });
   }
 
   handleParentClick() {
@@ -102,12 +105,12 @@ export class AttendanceRegularComponent {
       }
     })
   }
-  
-  getAllSchoolName(){
-    this.httpService.get('school/get-all-school-name').subscribe((res:any)=>{
-      if(res){
+
+  getAllSchoolName() {
+    this.httpService.get('school/get-all-school-name').subscribe((res: any) => {
+      if (res) {
         this.allSchools = res;
-      }else{
+      } else {
         this.allSchools = [];
       }
     })
@@ -259,11 +262,11 @@ export class AttendanceRegularComponent {
 
   getGraphsByDate(onload: boolean) {
     this.getStudentAttendanceData();
-    if (this.districtModel && !this.zoneModel && !this.schoolModel) {
+    if (this.districtModel && !this.zoneModel && !this.shiftModel && !this.schoolModel) {
       this.getGraphsByDistrictName();
-    } else if (this.zoneModel && !this.schoolModel) {
+    } else if (this.zoneModel && !this.shiftModel && !this.schoolModel) {
       this.getGraphsByZone();
-    } else if (this.shiftModel) {
+    } else if (this.shiftModel && !this.schoolModel) {
       this.getGraphsByShift();
     } else if (this.schoolModel) {
       this.getGraphsBySchool();

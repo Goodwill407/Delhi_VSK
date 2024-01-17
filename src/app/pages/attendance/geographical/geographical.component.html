@@ -1,1 +1,23 @@
-<p>geographical works!</p>
+<div class="my-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
+    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="districtModel" (change)="getTableData('district')">
+        <option value="">All District</option>
+        <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
+            {{district.districtName}} ({{district.D_ID}})
+        </option>
+    </select>
+    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="zoneModel" (change)="getTableData('zone')">
+        <option value="">All Zones</option>
+        <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
+            {{zone.Zone_Name}} ({{zone.Z_ID}})
+        </option>
+    </select>
+    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="shiftModel" (change)="getTableData('shift')">
+        <option value="">Select Shift</option>
+        <option *ngFor="let shift of allShift" value="{{shift}}">
+            {{shift}}
+        </option>
+    </select>
+    <input type="date" class="form-control  ms-2 mx-1 my-1" [(ngModel)]="dateModel" (change)="getTableData('date')">
+</div>
+
+<div id="map" style="height: 600px;"></div>

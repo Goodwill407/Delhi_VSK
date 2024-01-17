@@ -30,15 +30,17 @@ export class AttendanceComponent {
     this.dateModel.setDate(this.dateModel.getDate() - 1);
     this.formattedDate = this.datepipe.transform(this.dateModel, 'dd-MMM-yyyy');
     this.getDataAidedSchool();
+    this.handleParentClick('regular')
   }
 
   getDate(date: any) {
     let Mdate: any;
     return Mdate = this.datepipe.transform(date, 'yyyy-MM-dd');
   }
-  handleParentClick() {
-    this.communicationService.emitParentClick();
+  handleParentClick(name: any) {
+    this.communicationService.setSelectedTab(name);
   }
+
 
   getDataAidedSchool(){
     this.formattedDate = this.datepipe.transform(this.dateModel, 'dd-MMM-yyyy');
