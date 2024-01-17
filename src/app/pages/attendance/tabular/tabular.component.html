@@ -1,6 +1,6 @@
 <!-- dropdown -->
 <div class="my-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
-    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="zoneModel" (change)="getTableData()" >
+    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="zoneModel" (change)="getTableData()"  >
         <option value="">All Zones</option>
         <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
             {{zone.Zone_Name}} ({{zone.Z_ID}})
@@ -13,6 +13,7 @@
         </option>
     </select>
     <input type="date" [max]="maxDate | date:'yyyy-MM-dd'" class="form-control  ms-2 mx-1 my-1" [(ngModel)]="dateModel" (change)="getTableData()">
+    <button class="btn btn-primary ms-2 mx-1 my-1 d-flex" (click)="exportToExcel()">Download <i class="bi bi-box-arrow-in-down ms-1 fw-bold"></i></button>
 </div>
 
 <div class="row">
@@ -69,7 +70,7 @@
                         <td>{{data.totalLeaveCount}}</td>
                         <td>0</td>
                         <td>{{data.totalNotMarkedAttendanceCount}}</td>
-                        <td>{{(data.PresentCount/data.totalStudentCount)*100 |number : '1.2-2'}}%</td>
+                        <td class="fw-bold" [ngClass]="(data.percent >= 0 && data.percent <= 5 ? 'text-success':(data.percent > 5 && data.percent <= 10 ? 'text-orange':'text-danger'))">{{data.percent |number : '1.2-2'}}%</td>
                     </tr>
                     <tr class="sticky-bottom bottom-0 table-success fw-bold">
                         <td>Total</td>

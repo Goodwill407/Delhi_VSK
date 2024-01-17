@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnChanges, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { CommunicationService } from 'src/app/services/communication.service';
@@ -10,7 +10,7 @@ import { HttpServiceService } from 'src/app/services/http-service.service';
   templateUrl: './tabular.component.html',
   styleUrls: ['./tabular.component.css']
 })
-export class TabularComponent {
+export class TabularComponent implements OnInit {
   allAttendanceData: any;
   zoneModel: any = '';
   allZones: any;
@@ -22,7 +22,7 @@ export class TabularComponent {
   allTotalData: any = {};
   maxDate: any = '2024-08-28';
 
-  constructor(private httpService: HttpServiceService, public datepipe: DatePipe, private spinner: NgxSpinnerService, private toastr: ToastrService, private communicationService: CommunicationService) {
+  constructor(private httpService: HttpServiceService, public datepipe: DatePipe, private spinner: NgxSpinnerService, private toastr: ToastrService, private communicationService: CommunicationService, private cdRef: ChangeDetectorRef) {
     this.communicationServiceMobile = this.communicationService.isMobile;
   }
 
@@ -83,6 +83,10 @@ export class TabularComponent {
     this.httpService.post('tabular-attendnace', obj).subscribe(
       (res: any) => {
         this.allAttendanceData = res;
+        for(let i = 0; i<this.allAttendanceData.length; i++){
+          this.allAttendanceData[i].percent = (this.allAttendanceData[i].totalNotMarkedAttendanceCount / this.allAttendanceData[i].totalStudentCount)*100;
+        }
+
         this.allTotalData = {
           allStudent: 0, allAbsent: 0, allPresent: 0, allLeave: 0, allUnmark: 0,allPercent:0
         };
@@ -92,8 +96,9 @@ export class TabularComponent {
           this.allTotalData.allPresent += school.PresentCount;
           this.allTotalData.allLeave += school.totalLeaveCount;
           this.allTotalData.allUnmark += school.totalNotMarkedAttendanceCount;
-          this.allTotalData.allPercent = ((this.allTotalData.allPresent / this.allTotalData.allStudent )*100).toFixed(2)
+          this.allTotalData.allPercent = ((this.allTotalData.allUnmark / this.allTotalData.allStudent )*100).toFixed(2)
         });
+        this.cdRef.detectChanges();
         this.spinner.hide();
       },
       (error: any) => {
@@ -101,5 +106,8 @@ export class TabularComponent {
         this.spinner.hide();
       }
     );
+  }
+  exportToExcel(): void {
+    this.communicationService.exportToExcel(this.allAttendanceData, 'data', 'Sheet1');
   }
 }
