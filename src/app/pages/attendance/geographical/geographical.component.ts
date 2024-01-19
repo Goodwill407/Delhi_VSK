@@ -5,7 +5,6 @@ import { ToastrService } from 'ngx-toastr';
 import { CommunicationService } from 'src/app/services/communication.service';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import * as L from 'leaflet';
-import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-geographical',
@@ -43,6 +42,18 @@ export class GeographicalComponent {
         this.mapData = L.map('map').setView([28.6139, 77.2090], 11);
       }
     });
+  }
+
+  mapClick() {
+    this.spinner.show();
+    const previousDistrict = sessionStorage.getItem('DistrictName');
+    setTimeout(() => {
+      const name = sessionStorage.getItem('DistrictName');
+      if (previousDistrict != name) {
+        this.districtModel = name;
+        this.getTableData('district');
+      }
+    }, 1000)
   }
 
   getAllZone() {

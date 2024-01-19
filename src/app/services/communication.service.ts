@@ -80,7 +80,7 @@ export class CommunicationService {
         }).addTo(map);
 
         // ============= 2 ==============
-        
+
         // ============= 3 ==============
         var info: any = new Lmap.Control();
 
@@ -152,6 +152,7 @@ export class CommunicationService {
 
         function zoomToFeature(e: any) {
             map.fitBounds(e.target.getBounds());
+            sessionStorage.setItem('DistrictName', e.target.feature.properties.Dist_Name);
         }
 
         function onEachFeature(feature: any, layer: any) {
