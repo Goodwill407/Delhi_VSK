@@ -42,9 +42,13 @@ export class AttendanceRangeWiseComponent {
 
 
   ngOnInit() {
-    this.getAllDistricts();
-    this.getAllZones();
-    this.getAllSchoolName();
+    this.communicationService.sharedData$.subscribe(data => {
+      if (data == "range") {
+        this.getAllDistricts();
+        this.getAllZones();
+        this.getAllSchoolName();
+      }
+    });
   }
 
   getAllDistricts() {
@@ -60,12 +64,12 @@ export class AttendanceRangeWiseComponent {
       this.toastr.error('', 'Something went wrong !');
     });
   }
-  
-  getAllSchoolName(){
-    this.httpService.get('school/get-all-school-name').subscribe((res:any)=>{
-      if(res){
+
+  getAllSchoolName() {
+    this.httpService.get('school/get-all-school-name').subscribe((res: any) => {
+      if (res) {
         this.allSchools = res;
-      }else{
+      } else {
         this.allSchools = [];
       }
     })
@@ -79,12 +83,12 @@ export class AttendanceRangeWiseComponent {
       "districtName": this.districtModel,
       "shift": this.shiftModel,
     };
-    if(this.zoneModel){
+    if (this.zoneModel) {
       delete obj.districtName;
-    }else{
+    } else {
       delete obj.zoneName;
     }
-    if(!this.districtModel){
+    if (!this.districtModel) {
       delete obj.districtName
     }
 
@@ -123,10 +127,10 @@ export class AttendanceRangeWiseComponent {
   }
 
   datePicker() {
-    if(this.dateModel1 && this.dateModel2 && this.shiftModel){
+    if (this.dateModel1 && this.dateModel2 && this.shiftModel) {
       this.getGraphsByShift();
     }
-    else if(this.dateModel1 && this.dateModel2) {
+    else if (this.dateModel1 && this.dateModel2) {
       const obj: any = {
         "startDate": this.getDate(this.dateModel1),
         "endDate": this.getDate(this.dateModel2),

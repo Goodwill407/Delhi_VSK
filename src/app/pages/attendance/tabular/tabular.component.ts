@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { ChangeDetectorRef, Component, OnChanges, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { CommunicationService } from 'src/app/services/communication.service';
@@ -12,7 +12,7 @@ import { HttpServiceService } from 'src/app/services/http-service.service';
 })
 export class TabularComponent implements OnInit {
   allAttendanceData: any;
-  zoneModel: any = '';
+  zoneModel: any = { "Zone_Name": "Zone-01", "Z_ID": 1001 };
   allZones: any;
   allShift: string[] = ['Morning', 'General', 'Evening'];
   shiftModel: any = '';
@@ -27,18 +27,23 @@ export class TabularComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dateModel = new Date();
-    this.dateModel = this.getDate(this.dateModel.setDate(this.dateModel.getDate() - 1));
-    this.maxDate = this.getDate(this.dateModel);
-    this.getTableData();
-    this.getAllDistAndZone();
-    this.getAllZone();
+    this.communicationService.sharedData$.subscribe(data => {
+      if (data == "tabular") {
+        this.dateModel = new Date();
+        this.dateModel = this.getDate(this.dateModel.setDate(this.dateModel.getDate() - 1));
+        this.maxDate = this.getDate(this.dateModel);
+        this.getTableData();
+        this.getAllDistAndZone();
+        this.getAllZone();
+      }
+    });
   }
 
   getAllZone() {
     this.httpService.get('school/zonename').subscribe((res: any) => {
       this.allZones = res.ZoneInfo;
       this.allZones = this.allZones.sort((a: any, b: any) => a.Z_ID - b.Z_ID);
+      this.zoneModel = this.allZones[0];
     })
   }
 
@@ -57,38 +62,34 @@ export class TabularComponent implements OnInit {
 
   getTableData() {
     const obj: any = {
-      "Z_name": this.zoneModel,
-      "shift": this.shiftModel,
-      "attendance_DATE": this.getDate(this.dateModel)
+      "zone": this.zoneModel.Z_ID,
+      "date": this.getDate(this.dateModel)
     }
 
-    if (this.zoneModel && this.shiftModel) {
-      this.callAPIfun(obj);
-    }
-    else if (this.zoneModel) {
-      delete obj.shift;
-    }
-    else if (this.shiftModel) {
-      delete obj.Z_name;
-    }
-    else {
-      delete obj.Z_name;
-      delete obj.shift;
-    }
     this.callAPIfun(obj);
   }
 
   callAPIfun(obj: any) {
     this.spinner.show();
-    this.httpService.post('tabular-attendnace', obj).subscribe(
+    this.httpService.post('tabular-attendnace/live-school-attendance', obj).subscribe(
       (res: any) => {
-        this.allAttendanceData = res;
-        for(let i = 0; i<this.allAttendanceData.length; i++){
-          this.allAttendanceData[i].percent = (this.allAttendanceData[i].totalNotMarkedAttendanceCount / this.allAttendanceData[i].totalStudentCount)*100;
+        if(this.shiftModel){
+         this.allAttendanceData = res.filter((item:any)=>{
+         
+          console.log(item.shift, this.shiftModel);
+          return  item.shift.toLowerCase() === this.shiftModel;
+        
+        });
+        }else{
+          this.allAttendanceData = res;
+        }
+
+        for (let i = 0; i < this.allAttendanceData.length; i++) {
+          this.allAttendanceData[i].percent = (this.allAttendanceData[i].totalNotMarkedAttendanceCount / this.allAttendanceData[i].totalStudentCount) * 100;
         }
 
         this.allTotalData = {
-          allStudent: 0, allAbsent: 0, allPresent: 0, allLeave: 0, allUnmark: 0,allPercent:0
+          allStudent: 0, allAbsent: 0, allPresent: 0, allLeave: 0, allUnmark: 0, allPercent: 0
         };
         res.forEach((school: any) => {
           this.allTotalData.allStudent += school.totalStudentCount;
@@ -96,7 +97,7 @@ export class TabularComponent implements OnInit {
           this.allTotalData.allPresent += school.PresentCount;
           this.allTotalData.allLeave += school.totalLeaveCount;
           this.allTotalData.allUnmark += school.totalNotMarkedAttendanceCount;
-          this.allTotalData.allPercent = ((this.allTotalData.allUnmark / this.allTotalData.allStudent )*100).toFixed(2)
+          this.allTotalData.allPercent = ((this.allTotalData.allUnmark / this.allTotalData.allStudent) * 100).toFixed(2)
         });
         this.cdRef.detectChanges();
         this.spinner.hide();
@@ -107,6 +108,15 @@ export class TabularComponent implements OnInit {
       }
     );
   }
+
+  dataByShift(){
+    if(this.shiftModel){
+
+    }else{
+
+    }
+  }
+
   exportToExcel(): void {
     this.communicationService.exportToExcel(this.allAttendanceData, 'data', 'Sheet1');
   }

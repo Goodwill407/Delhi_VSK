@@ -1,6 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, SimpleChange, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { CommunicationService } from 'src/app/services/communication.service';
@@ -10,8 +9,7 @@ import { HttpServiceService } from 'src/app/services/http-service.service';
 @Component({
   selector: 'app-attendance',
   templateUrl: './attendance.component.html',
-  styleUrls: ['./attendance.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./attendance.component.css']
 })
 export class AttendanceComponent {
   communicationServiceMobile: any;

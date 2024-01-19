@@ -69,7 +69,7 @@ export class AttendanceRegularComponent {
     this.communicationService.sharedData$.subscribe(data => {
       if (data == "regular") {
         this.dateModel = new Date();
-        this.dateModel.setDate(this.dateModel.getDate() - 1);
+        this.dateModel = this.getDate(this.dateModel.setDate(this.dateModel.getDate() - 1));
         this.maxDate = this.getDate(this.dateModel);
         this.getGraphsByDate(true);
         this.getAllDistricts();
