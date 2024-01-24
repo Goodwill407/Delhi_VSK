@@ -30,7 +30,7 @@ export class TabularComponent implements OnInit {
     this.communicationService.sharedData$.subscribe(data => {
       if (data == "tabular") {
         this.dateModel = new Date();
-        this.dateModel = this.getDate(this.dateModel.setDate(this.dateModel.getDate() - 1));
+        this.dateModel = this.getDate(this.dateModel.setDate(this.dateModel.getDate()));
         this.maxDate = this.getDate(this.dateModel);
         this.getTableData();
         this.getAllDistAndZone();
