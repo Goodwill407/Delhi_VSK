@@ -76,30 +76,45 @@ export class AttendanceRangeWiseComponent {
   }
 
   getGraphsByShift() {
-    let obj: any = {
-      "startDate": this.getDate(this.dateModel1),
-      "endDate": this.getDate(this.dateModel2),
-      "zoneName": this.zoneModel,
-      "districtName": this.districtModel,
-      "shift": this.shiftModel,
-    };
-    if (this.zoneModel) {
-      delete obj.districtName;
-    } else {
-      delete obj.zoneName;
+    const data = {
+      District_name: this.districtModel,
+      Zone_Name: this.zoneModel,
+      shift: this.shiftModel
     }
-    if (!this.districtModel) {
-      delete obj.districtName
-    }
+    this.httpService.post('school/get/school-by/district/zone/shift', data).subscribe(res => {
+      if (res && res.length > 0) {
+        this.allSchools = res;
+        this.allSchools = this.allSchools.sort((a: any, b: any) => a.Schoolid - b.Schoolid);
+        this.schoolModel = '';
+      } else {
+        this.allSchools = [];
+      }
+      this.datePicker();
+    });
+    // let obj: any = {
+    //   "startDate": this.getDate(this.dateModel1),
+    //   "endDate": this.getDate(this.dateModel2),
+    //   "zoneName": this.zoneModel,
+    //   "districtName": this.districtModel,
+    //   "shift": this.shiftModel,
+    // };
+    // if (this.zoneModel) {
+    //   delete obj.districtName;
+    // } else {
+    //   delete obj.zoneName;
+    // }
+    // if (!this.districtModel) {
+    //   delete obj.districtName
+    // }
 
-    this.spinner.show();
-    this.httpService.post('attendance/attendancepercentage/range/parameter/shift', obj).subscribe(res => {
-      this.setAllGraphs(res);
-      this.spinner.hide();
-    }, error => {
-      this.spinner.hide();
-      this.toastr.error('', 'Something went wrong !');
-    })
+    // this.spinner.show();
+    // this.httpService.post('attendance/attendancepercentage/range/parameter/shift', obj).subscribe(res => {
+    //   this.setAllGraphs(res);
+    //   this.spinner.hide();
+    // }, error => {
+    //   this.spinner.hide();
+    //   this.toastr.error('', 'Something went wrong !');
+    // })
   }
 
   getGraphsByDistrictName() {
@@ -127,15 +142,13 @@ export class AttendanceRangeWiseComponent {
   }
 
   datePicker() {
-    if (this.dateModel1 && this.dateModel2 && this.shiftModel) {
-      this.getGraphsByShift();
-    }
-    else if (this.dateModel1 && this.dateModel2) {
+    if (this.dateModel1 && this.dateModel2) {
       const obj: any = {
         "startDate": this.getDate(this.dateModel1),
         "endDate": this.getDate(this.dateModel2),
         "zoneName": this.zoneModel,
-        "districtName": this.districtModel
+        "districtName": this.districtModel,
+        "shift": this.shiftModel
       };
 
       if (this.schoolModel) {
@@ -147,15 +160,19 @@ export class AttendanceRangeWiseComponent {
       if (!this.zoneModel) {
         delete obj.zoneName;
       };
+      if (!this.shiftModel) {
+        delete obj.shift;
+      };
       this.spinner.show();
-      this.httpService.post('attendance/attendancepercentage/range/parameter', obj).subscribe((res: any) => {
+      this.httpService.post('attendance/attendancepercentage/range/parameter/shift', obj).subscribe((res: any) => {
         if (res.dateWisePercentage.length > 0) {
-          this.shiftModel = '';
+          // this.shiftModel = '';
           this.setAllGraphs(res);
           this.spinner.hide();
         } else {
           this.spinner.hide();
           this.toastr.error('', 'Data not found between this range !');
+          this.setAllGraphs(res);
           if (!this.genderWisePresent && !this.genderWiseAbsent && !this.genderWiseLeave && !this.genderWiseNotMarked) {
             this.dataNotFound = true;
           }
@@ -208,7 +225,8 @@ export class AttendanceRangeWiseComponent {
       if (data && data.ZoneSchool) {
         this.allSchools = data.ZoneSchool;
         this.allSchools = this.allSchools.sort((a: any, b: any) => a.Schoolid - b.Schoolid);
-        this.schoolModel = ''
+        this.schoolModel = '';
+        this.shiftModel = '';
         this.spinner.hide();
       } else {
         this.allSchools = [];
@@ -251,28 +269,28 @@ export class AttendanceRangeWiseComponent {
   }
 
   getGenderWisePresent(present: any) {
-    this.genderWisePresent = this.graphService.PieGraph('donut', "Students");
+    this.genderWisePresent = this.graphService.PieGraph('donut', "Students", 'percentage');
     let series = [present.malePresentPercentage, present.feMalePresentPercentage, present.otherPresentPercentage];
     this.genderWisePresent.series = series.map((item: any) => (item !== undefined ? Number(item == 0 ? 0 : item?.toFixed(2)) : 0));
     this.genderWisePresent.labels = ["Boys", "Girls", "Others"];
   }
 
   getGenderWiseAbsent(absent: any) {
-    this.genderWiseAbsent = this.graphService.PieGraph('donut', "Students");
+    this.genderWiseAbsent = this.graphService.PieGraph('donut', "Students", 'percentage');
     let series = [absent.maleAbsentPercentage, absent.feMaleAbsentPercentage, absent.otherAbsentPercentage];
     this.genderWiseAbsent.series = series.map((item: any) => (item !== undefined ? Number(item == 0 ? 0 : item?.toFixed(2)) : 0));
     this.genderWiseAbsent.labels = ["Boys", "Girls", "Others"];
   }
 
   getGenderWiseLeave(leave: any) {
-    this.genderWiseLeave = this.graphService.PieGraph('donut', "Students");
+    this.genderWiseLeave = this.graphService.PieGraph('donut', "Students", 'percentage');
     let series = [leave.maleLeavePercentage, leave.feMaleLeavePercentage, leave.otherLeavePercentage];
     this.genderWiseLeave.series = series.map((item: any) => (item !== undefined ? Number(item == 0 ? 0 : item?.toFixed(2)) : 0));
     this.genderWiseLeave.labels = ["Boys", "Girls", "Others"];
   }
 
   getGenderWiseNotMarked(notMark: any) {
-    this.genderWiseNotMarked = this.graphService.PieGraph('donut', "Students");
+    this.genderWiseNotMarked = this.graphService.PieGraph('donut', "Students", 'percentage');
     let series = [notMark.maleNotMarkedPercentage, notMark.feMaleNotMarkedPercentage, notMark.otherNotMarkedPercentage];
     this.genderWiseNotMarked.series = series.map((item: any) => (item !== undefined ? Number(item == 0 ? 0 : item?.toFixed(2)) : 0));
     this.genderWiseNotMarked.labels = ["Boys", "Girls", "Others"];

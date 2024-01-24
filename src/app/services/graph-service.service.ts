@@ -26,7 +26,7 @@ export class GraphService {
                     name: "",
                     data: []
                 },
-               
+
             ],
             chart: {
                 type: "bar",
@@ -196,7 +196,7 @@ export class GraphService {
         return color[i];
     }
 
-    PieGraph(chartType: any, totalType?: any) {
+    PieGraph(chartType: any, totalType?: any, sumType?: any) {
         let colors = [];
         for (let i = 0; i < 5; i++) {
             colors.push(this.getRandomColor(i))
@@ -213,13 +213,7 @@ export class GraphService {
                 colors: colors
             },
             tooltip: {
-                y: {
-                    title: {
-                        formatter: () => {
-                            return totalType + ':'
-                        }
-                    }
-                }
+                
             },
             colors: colors,
             plotOptions: {
@@ -236,11 +230,16 @@ export class GraphService {
                                 show: true,
 
                                 formatter: (w: any) => {
-                                    return w.globals.seriesTotals.reduce((a: any, b: any) => {
+                                    const sum = w.globals.seriesTotals.reduce((a: any, b: any) => {
                                         a = (a % 1 != 0) ? Number(a.toFixed(2)) : a;
                                         b = (b % 1 != 0) ? Number(b.toFixed(2)) : b;
                                         return a + b;
-                                    }, 0)
+                                    }, 0);
+                                    if (sumType == 'percentage') {
+                                        return sum + '%';
+                                    } else {
+                                        return sum;
+                                    }
                                 }
 
                             }
