@@ -402,7 +402,7 @@ export class AttendanceRegularComponent {
   }
 
   getGenderWisePresent(data: any) {
-    this.genderWisePresent = this.graphService.PieGraph('donut', ' Students');
+    this.genderWisePresent = this.graphService.PieGraph('donut', 'Students');
     this.genderWisePresent.series = [data.Counts[0].malePresentCount, data.Counts[0].feMalePresentCount, data.Counts[0].otherPresentCount];
     this.genderWisePresent.labels = ['Male', 'Female', 'Others'];
     this.genderWisePresent.chart.events = {
@@ -474,7 +474,7 @@ export class AttendanceRegularComponent {
   }
 
   getAttendanceStatusCount(data: any) {
-    this.attendanceStatusCount = this.graphService.PieGraph('donut', ' School');
+    this.attendanceStatusCount = this.graphService.PieGraph('donut', ' Schools');
     for (let i = 0; i < data.length; i++) {
       this.attendanceStatusCount.series.push(data[i].count);
       this.attendanceStatusCount.labels.push(data[i]._id);

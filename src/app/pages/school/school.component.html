@@ -6,7 +6,7 @@
         <h2 class="fw-bold">SCHOOL</h2>
         <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
         <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
-            role="tab" aria-controls="nav-home" aria-selected="true">GRAPH VIEW</button>
+            role="tab" aria-controls="nav-home" aria-selected="true">GRAPHICAL VIEW</button>
         <!-- <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"
             role="tab" aria-controls="nav-profile" aria-selected="false">Tabular</button>
         <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button"
@@ -76,10 +76,14 @@
                 </div>
             </div>
             <div class="column text-center">
-                <h5 class="header-bg p-2">Student & Teacher Ratio</h5>
-                <img class="img-fluid mt-5" width="120" src="../../../assets/images/Dashboard/education.png">
-                <h3 class="mt-5 fw-semibold teacher-ratio-count">{{teachersRatio | number:
+                <h5 class="header-bg p-2">Studying Student & Teacher Ratio</h5>
+                <img class="img-fluid mt-3" width="120" src="../../../assets/images/Dashboard/education.png">
+                <h3 class=" fw-semibold" style="margin-top: 56px;">{{teachersRatio | number:
                     '1.0-0'}} : 1 Teacher</h3>
+                <div class="obj-data-ration">Studying - {{ratioDataObj?.Studying}} &nbsp; Long Absent - {{ratioDataObj?.Long_Absent}} &nbsp; 
+                    NSO - {{ratioDataObj?.NSO}} <br> Out of Directorate - {{ratioDataObj?.Out_of_Directorate}} &nbsp;
+                    Under Transfer - {{ratioDataObj?.Under_Transfer}} &nbsp; other - {{ratioDataObj?.other}}
+                </div>
             </div>
 
             <div class="column ">

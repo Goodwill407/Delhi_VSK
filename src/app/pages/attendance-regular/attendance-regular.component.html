@@ -108,7 +108,7 @@
         <apx-chart [series]="genderWisePresent?.series" [chart]="genderWisePresent?.chart"
             [labels]="genderWisePresent?.labels" [fill]="genderWisePresent?.fill" [colors]="genderWisePresent?.colors"
             [dataLabels]="genderWisePresent?.dataLabels" [plotOptions]="genderWisePresent?.plotOptions"
-            [responsive]="genderWisePresent?.responsive" [legend]="genderWisePresent?.legend"></apx-chart>
+            [responsive]="genderWisePresent?.responsive" [tooltip]="genderWisePresent?.tooltip" [legend]="genderWisePresent?.legend"></apx-chart>
     </div>
 
     <div class="column">
@@ -116,7 +116,7 @@
         <apx-chart [series]="genderWiseAbsent?.series" [chart]="genderWiseAbsent?.chart"
             [labels]="genderWiseAbsent?.labels" [fill]="genderWiseAbsent?.fill" [colors]="genderWiseAbsent?.colors"
             [dataLabels]="genderWiseAbsent?.dataLabels" [plotOptions]="genderWiseAbsent?.plotOptions"
-            [responsive]="genderWiseAbsent?.responsive" [legend]="genderWiseAbsent?.legend"></apx-chart>
+            [responsive]="genderWiseAbsent?.responsive" [tooltip]="genderWiseAbsent?.tooltip" [legend]="genderWiseAbsent?.legend"></apx-chart>
     </div>
 
     <div class="column">
@@ -124,14 +124,14 @@
         <apx-chart [series]="genderWiseLeave?.series" [chart]="genderWiseLeave?.chart"
             [labels]="genderWiseLeave?.labels" [fill]="genderWiseLeave?.fill" [colors]="genderWiseLeave?.colors"
             [dataLabels]="genderWiseLeave?.dataLabels" [plotOptions]="genderWiseLeave?.plotOptions"
-            [responsive]="genderWiseLeave?.responsive" [legend]="genderWiseLeave?.legend"></apx-chart>
+            [responsive]="genderWiseLeave?.responsive" [tooltip]="genderWiseLeave?.tooltip" [legend]="genderWiseLeave?.legend"></apx-chart>
     </div>
 
     <div class="column">
         <h5 class="header-bg p-2">Gender Wise Not Marked</h5>
         <apx-chart [series]="genderWiseNotMarked?.series" [chart]="genderWiseNotMarked?.chart"
             [labels]="genderWiseNotMarked?.labels" [fill]="genderWiseNotMarked?.fill"
-            [colors]="genderWiseNotMarked?.colors" [dataLabels]="genderWiseNotMarked?.dataLabels"
+            [colors]="genderWiseNotMarked?.colors" [dataLabels]="genderWiseNotMarked?.dataLabels" [tooltip]="genderWiseNotMarked?.tooltip"
             [plotOptions]="genderWiseNotMarked?.plotOptions" [responsive]="genderWiseNotMarked?.responsive"
             [legend]="genderWiseNotMarked?.legend"></apx-chart>
     </div>
@@ -142,7 +142,7 @@
             [labels]="attendanceStatusCount?.labels" [fill]="attendanceStatusCount?.fill"
             [colors]="attendanceStatusCount?.colors" [dataLabels]="attendanceStatusCount?.dataLabels"
             [plotOptions]="attendanceStatusCount?.plotOptions" [responsive]="attendanceStatusCount?.responsive"
-            [legend]="attendanceStatusCount?.legend"></apx-chart>
+            [legend]="attendanceStatusCount?.legend" [tooltip]="attendanceStatusCount?.tooltip"></apx-chart>
     </div>
 
     <div class="column" *ngIf="!zoneModel && !districtModel && !schoolModel">

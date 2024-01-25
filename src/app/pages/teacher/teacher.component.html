@@ -9,11 +9,13 @@
       <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
       <li class="nav-item" role="presentation">
         <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-          type="button" role="tab" aria-controls="pills-home" aria-selected="true" (click)="handleParentClick()" >REGULAR TEACHER</button>
+          type="button" role="tab" aria-controls="pills-home" aria-selected="true" (click)="handleParentClick()">REGULAR
+          TEACHERS</button>
       </li>
       <li class="nav-item" role="presentation">
         <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-          type="button" role="tab" aria-controls="pills-profile" aria-selected="false" (click)="handleParentClick()" >GUEST TEACHER</button>
+          type="button" role="tab" aria-controls="pills-profile" aria-selected="false"
+          (click)="handleParentClick()">GUEST TEACHERS</button>
       </li>
     </ul>
 
@@ -58,8 +60,8 @@
         </div>
 
         <div class="input-group float-end mt-2 me-2" style="width: 300px;">
-          <input class="form-control" type="search" [(ngModel)]="globalSearchBox" placeholder="Search teacher..." value=""
-            id="example-search-input" (search)="search()">
+          <input class="form-control" type="search" [(ngModel)]="globalSearchBox" placeholder="Search teacher..."
+            value="" id="example-search-input" (search)="search()">
           <span class="input-group-text" role="button" id="basic-addon1" (click)="searchTeacher()">🔍</span>
           <span class="search-filter-box bg-white w-100" *ngIf="globalSearchBox">
             <div class="d-flex justify-content-center" *ngIf="searchLoader">
@@ -99,7 +101,7 @@
 
 
           <div class="column text-center">
-            <h5 class="header-bg p-2">Student & Teacher Ratio</h5>
+            <h5 class="header-bg p-2">Studying Student & Teacher Ratio</h5>
             <img class="img-fluid mt-5" width="120" src="../../../assets/images/Dashboard/education.png"><br>
             <h3 class="mt-5 fw-semibold teacher-ratio-count">{{allData?.teacherStudentRatio | number: '1.0-0'}} : 1
               Teacher</h3>
@@ -114,15 +116,6 @@
             <h6 class="fw-bold">Total Teachers : {{teacherGenderRatio?.total}}</h6>
           </div>
 
-          <div class="column" [ngClass]="communicationServiceMobile ? '' : 'wide-height'" style="height: auto;">
-            <h5 class="header-bg p-2">Designation wise Teacher</h5>
-            <apx-chart [series]="designation?.series" [chart]="designation?.chart"
-              [dataLabels]="designation?.dataLabels" [plotOptions]="designation?.plotOptions"
-              [xaxis]="designation?.xaxis" [yaxis]="designation?.yaxis" [labels]="designation?.labels"
-              [legend]="designation?.legend" [colors]="designation?.colors" [grid]="designation?.grid"
-              [fill]="designation?.fill"></apx-chart>
-          </div>
-
           <!--  -->
           <div class="column">
             <h5 class="header-bg p-2">Shift wise Teacher</h5>
@@ -131,6 +124,16 @@
               [responsive]="shiftWiseSchools?.responsive" [legend]="shiftWiseSchools?.legend"
               [colors]="shiftWiseSchools?.colors" [tooltip]="shiftWiseSchools?.tooltip"></apx-chart>
           </div>
+
+          <div class="column" [ngClass]="communicationServiceMobile ? '' : 'wide-height'" style="height: auto;">
+            <h5 class="header-bg p-2">Designation wise Teacher</h5>
+            <apx-chart [series]="designation?.series" [chart]="designation?.chart"
+              [dataLabels]="designation?.dataLabels" [plotOptions]="designation?.plotOptions"
+              [xaxis]="designation?.xaxis" [yaxis]="designation?.yaxis" [labels]="designation?.labels"
+              [legend]="designation?.legend" [colors]="designation?.colors" [grid]="designation?.grid"
+              [title]="designation?.title" [fill]="designation?.fill"></apx-chart>
+          </div>
+
           <!--  -->
           <div class="column">
             <h5 class="header-bg p-2">Schools Management Wise Teacher</h5>
@@ -306,7 +309,8 @@
                     <div class="vr h-100"></div>
                   </div>
                   <div class="col-md-6">
-                    <h6>Joining date in present school : <span class="float-end"> {{profileDetails?.JoiningDate}}</span></h6>
+                    <h6>Joining date in present school : <span class="float-end"> {{profileDetails?.JoiningDate}}</span>
+                    </h6>
                     <h6>Designation :<span class="float-end"> {{profileDetails?.postdesc}}</span></h6>
                     <h6>School ID :<span class="float-end"> {{profileDetails?.schoolid}}</span></h6>
                     <h6>School name :<span class="float-end"> {{profileDetails?.schname}}</span></h6>

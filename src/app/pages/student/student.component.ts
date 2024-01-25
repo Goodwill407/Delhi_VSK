@@ -391,7 +391,7 @@ export class StudentComponent {
   getStudentShiftWiseCounts(StudentShiftWiseCounts: any) {
     const shift = StudentShiftWiseCounts.map((item: any) => item.shift)
     const StudCount = StudentShiftWiseCounts.map((item: any) => item.count)
-    this.StudentShiftWiseCounts = this.graphService.PolarGraph('Students');
+    this.StudentShiftWiseCounts = this.graphService.PolarGraph('Shift Students');
     const series = StudCount;
     const labels = shift
     this.StudentShiftWiseCounts.series = [...series];
@@ -411,7 +411,7 @@ export class StudentComponent {
   getStudentManagementWiseCounts(StudentManagementWiseCounts: any) {
     const SchManagement = StudentManagementWiseCounts.map((item: any) => item.SchManagement)
     const StudCount = StudentManagementWiseCounts.map((item: any) => item.count)
-    this.StudentManagementWiseCounts = this.graphService.PieGraph('donut', ' Students');
+    this.StudentManagementWiseCounts = this.graphService.PieGraph('donut', ' School Students');
     const series = StudCount;
     const labels = SchManagement
     this.StudentManagementWiseCounts.series = [...series];

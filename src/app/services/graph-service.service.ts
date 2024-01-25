@@ -207,13 +207,19 @@ export class GraphService {
                 type: chartType
             },
             dataLabels: {
-                enabled: false
+                enabled: false,
             },
             fill: {
                 colors: colors
             },
             tooltip: {
-                
+                y: {
+                    title: {
+                        formatter: (val: any) => {
+                            return val + ' ' + totalType + ':'
+                        }
+                    }
+                }
             },
             colors: colors,
             plotOptions: {
@@ -242,10 +248,10 @@ export class GraphService {
                                     }
                                 }
 
-                            }
+                            },
 
                         }
-                    }
+                    },
                 }
             },
             labels: [],
@@ -295,7 +301,7 @@ export class GraphService {
                 y: {
                     title: {
                         formatter: (val: any) => {
-                            return val + ':'
+                            return val + ' ' + toolTipName + ':'
                         }
                     }
                 }

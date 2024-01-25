@@ -10,3 +10,10 @@ kendo-pdf-export {
     font-family: "DejaVu Sans", "Arial", sans-serif;
     font-size: 12px;
 }
+.obj-data-ration{
+    color: rgb(55, 61, 63);
+    font-size: 12px;
+    font-weight: 400;
+    font-family: Helvetica, Arial, sans-serif;
+
+}

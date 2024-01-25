@@ -85,14 +85,15 @@ export class TabularComponent implements OnInit {
         }
 
         for (let i = 0; i < this.allAttendanceData.length; i++) {
-          this.allAttendanceData[i].percent = (this.allAttendanceData[i].totalNotMarkedAttendanceCount / this.allAttendanceData[i].totalStudentCount) * 100;
+          this.allAttendanceData[i].percent = (this.allAttendanceData[i].totalNotMarkedAttendanceCount / this.allAttendanceData[i].studyingStudentCount) * 100;
         }
 
         this.allTotalData = {
-          allStudent: 0, allAbsent: 0, allPresent: 0, allLeave: 0, allUnmark: 0, allPercent: 0
+          allStudent: 0,allStudyingStudent: 0, allAbsent: 0, allPresent: 0, allLeave: 0, allUnmark: 0, allPercent: 0
         };
         res.forEach((school: any) => {
           this.allTotalData.allStudent += school.totalStudentCount;
+          this.allTotalData.allStudyingStudent += school.studyingStudentCount;
           this.allTotalData.allAbsent += school.AbsentCount;
           this.allTotalData.allPresent += school.PresentCount;
           this.allTotalData.allLeave += school.totalLeaveCount;

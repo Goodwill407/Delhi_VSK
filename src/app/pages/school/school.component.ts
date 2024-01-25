@@ -47,6 +47,7 @@ export class SchoolComponent {
   subscription: Subscription | undefined;
   searchBox: any;
   communicationServiceMobile: any;
+  ratioDataObj: any;
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
@@ -138,6 +139,8 @@ export class SchoolComponent {
   }
 
   setAllGraphs(data: any, zone: any) {
+    let objData = this.transformStudentStatusCounts(data.studentStatusCounts);
+    this.ratioDataObj = objData.studentStatusCounts;
     this.teachersRatio = data.teacherStudentRatio?.toFixed(2);
     this.totalSchools = data.totalSchools;
     this.averageStudentOfSchool = data.averageStudentOfSchool?.toFixed(2);
@@ -315,7 +318,7 @@ export class SchoolComponent {
   }
 
   getStudentsGenderRatio(studentsGender: any) {
-    this.studentsGenderRatio = this.graphService.PieGraph('donut', 'student');
+    this.studentsGenderRatio = this.graphService.PieGraph('donut', 'Students');
     this.studentsGenderRatio.series = [studentsGender.totalBoys, studentsGender.totalGirls, studentsGender.Other];
     this.studentsGenderRatio.labels = ["Boys", "Girls", "Other"];
     this.studentsGenderRatio.chart.events = {
@@ -392,7 +395,7 @@ export class SchoolComponent {
   }
 
   getShiftWiseSchools(shiftWiseCount: any) {
-    this.shiftWiseSchools = this.graphService.PolarGraph('Schools');
+    this.shiftWiseSchools = this.graphService.PolarGraph('Shift');
     const entries = Object.entries(shiftWiseCount);
     entries.forEach(([key, value]) => {
       if (Number(value) > 0) {
@@ -405,6 +408,16 @@ export class SchoolComponent {
         this.shiftWiseSchools.yaxis.show = false;
       }
     }
+    shiftWiseCount.tooltip= {
+      y: {
+          title: {
+              formatter: (val: any) => {
+                  return 'Shit ' + val + ':'
+              }
+          }
+      }
+  }
+    
   }
 
   getLowClassHighClass(lowClassHighClass: any) {
@@ -509,5 +522,16 @@ export class SchoolComponent {
 
   exportToExcel(): void {
     this.communicationService.exportToExcel(this.allTeacherData?.length > 0 ? this.allTeacherData : this.allStudentData, 'table_data', 'Sheet1');
+  }
+
+  transformStudentStatusCounts(response: any[]): any {
+    const result: any = {};
+    for (const statusCount of response) {
+      let status = statusCount._id || "other";
+      // Replace spaces with underscores (you can choose a different approach if needed)
+      status = status.replace(/\s+/g, '_');
+      result[status] = statusCount.count;
+    }
+    return { studentStatusCounts: result };
   }
 }

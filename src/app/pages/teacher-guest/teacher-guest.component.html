@@ -53,32 +53,35 @@
 <div class="container1">
     <div class="column">
         <h5 class="header-bg p-2">Total Teacher</h5>
-        <div class="d-flex justify-content-around mt-4">
+        <div class="d-flex justify-content-around mt-4" (click)="getTachersBySchoolName()">
             <img class="ms-2" src="../../../assets/images/Dashboard/teacher.png" style="height: 100px;" alt="">
             <div class="d-block ms-1 text-center">
+                <h1 class="fw-bold">{{allData?.totalGuestTeacher}}</h1>
+                <h3>Total Teacher</h3>
+            </div>
+        </div>
+        <div class="d-flex justify-content-around text-center ratio-data">
+            <div style="width: 45%;">
                 <h1 class="fw-bold">{{allData?.totalSchool}}</h1>
                 <h5>Total School</h5>
             </div>
-        </div>
-        <div class="d-flex justify-content-around text-center ratio-data" (click)="getTachersBySchoolName()">
-            <div >
-                <h1 class="fw-bold">{{allData?.totalGuestTeacher}}</h1>
-                <h3>Total&nbsp;Teacher</h3>
+            <div class="vr mx-3"></div>
+            <div style="width: 45%;">
+                <h1 class="fw-bold">{{allData?.averageTeachers?.toFixed(1)}}</h1>
+                <h5>Average Teacher</h5>
             </div>
         </div>
     </div>
 
-    <div class="column" [ngClass]="communicationServiceMobile ? '' : 'wide-height'" style="height: auto;">
-        <h5 class="header-bg p-2">Designation wise Teacher</h5>
-        <apx-chart [series]="designationGuest?.series" [chart]="designationGuest?.chart"
-            [dataLabels]="designationGuest?.dataLabels" [plotOptions]="designationGuest?.plotOptions"
-            [xaxis]="designationGuest?.xaxis" [yaxis]="designationGuest?.yaxis" [labels]="designationGuest?.labels"
-            [legend]="designationGuest?.legend" [colors]="designationGuest?.colors" [grid]="designationGuest?.grid"
-            [fill]="designationGuest?.fill"></apx-chart>
+    <div class="column text-center">
+        <h5 class="header-bg p-2">Studying Student & Teacher Ratio</h5>
+        <img class="img-fluid mt-5" width="120" src="../../../assets/images/Dashboard/education.png"><br>
+        <h3 class="mt-5 fw-semibold teacher-ratio-count">{{allData?.studentRatio | number: '1.0-0'}} : 1
+            Teacher</h3>
     </div>
 
-    <!--  -->
-    <div class="column">
+      <!--  -->
+      <div class="column">
         <h5 class="header-bg p-2">Shift wise Teacher</h5>
         <apx-chart [series]="shiftWiseSchoolsGuest?.series" [chart]="shiftWiseSchoolsGuest?.chart"
             [labels]="shiftWiseSchoolsGuest?.labels" [fill]="shiftWiseSchoolsGuest?.fill"
@@ -97,6 +100,15 @@
             [responsive]="schoolsManagementWiseTeacherGuest?.responsive"
             [legend]="schoolsManagementWiseTeacherGuest?.legend"
             [tooltip]="schoolsManagementWiseTeacherGuest?.tooltip"></apx-chart>
+    </div>
+
+    <div class="column" [ngClass]="communicationServiceMobile ? '' : 'wide-height'" style="height: auto;">
+        <h5 class="header-bg p-2">Designation wise Teacher</h5>
+        <apx-chart [series]="designationGuest?.series" [chart]="designationGuest?.chart"
+            [dataLabels]="designationGuest?.dataLabels" [plotOptions]="designationGuest?.plotOptions"
+            [xaxis]="designationGuest?.xaxis" [yaxis]="designationGuest?.yaxis" [labels]="designationGuest?.labels"
+            [legend]="designationGuest?.legend" [colors]="designationGuest?.colors" [grid]="designationGuest?.grid"
+            [fill]="designationGuest?.fill"></apx-chart>
     </div>
 
     <div class="column">
@@ -208,8 +220,7 @@
                 <div class="row">
                     <div class="col-md-5">
                         <div class="d-flex align-items-center">
-                            <img class="img-fluid mb-2" width="90"
-                                src="../../../assets/images/icons/user.png">
+                            <img class="img-fluid mb-2" width="90" src="../../../assets/images/icons/user.png">
                             <h4 class="fw-bold ms-2">{{profileDetails?.Name}}</h4>
                         </div>
                         <h6>Application ID :<span class="float-end"> {{profileDetails?.ApplicationId}}</span></h6>

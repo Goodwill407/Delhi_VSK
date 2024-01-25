@@ -292,7 +292,7 @@ export class TeacherGuestComponent {
       }
     }
     const series = [Morning, Afternoon, Evening, General]
-    this.shiftWiseSchoolsGuest = this.graphService.PolarGraph('Teachers');
+    this.shiftWiseSchoolsGuest = this.graphService.PolarGraph('Shift Teachers');
     this.shiftWiseSchoolsGuest.series = [...series];
     this.shiftWiseSchoolsGuest.labels = ['Morning', 'Afternoon', 'Evening', 'General'];
     this.shiftWiseSchoolsGuest.chart.events = {
@@ -371,7 +371,10 @@ export class TeacherGuestComponent {
     // this.designationGuest.plotOptions.bar.horizontal = false;
     this.designationGuest.xaxis.title.text = "Designation";
     this.designationGuest.yaxis.title.text = "Teachers";
-    this.designationGuest.dataLabels.enabled = false;
+    // this.designationGuest.dataLabels.enabled = false;
+    this.designationGuest.plotOptions.bar.dataLabels={
+      position: 'start', // Set data label position to start
+  }
     this.designationGuest.chart.height = "660px"
     this.designationGuest.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
@@ -412,7 +415,7 @@ export class TeacherGuestComponent {
 
   getSchoolTypeWiseCount(data: any) {
     data = data.filter((item:any) => item.typeOfSchool !== null && item.typeOfSchool.trim() !== "");
-    this.schoolTypeWiseCount = this.graphService.PolarGraph('Teachers');
+    this.schoolTypeWiseCount = this.graphService.PolarGraph('School Teachers');
     for (let i = 0; i < data.length; i++) {
       this.schoolTypeWiseCount.series.push(data[i].teacherTypeOfSchoolWiseCount);
       this.schoolTypeWiseCount.labels.push(data[i].typeOfSchool);
