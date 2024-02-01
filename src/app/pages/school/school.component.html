@@ -76,11 +76,11 @@
                 </div>
             </div>
             <div class="column text-center">
-                <h5 class="header-bg p-2">Studying Student & Teacher Ratio</h5>
+                <h5 class="header-bg p-2">Students & Teacher Ratio</h5>
                 <img class="img-fluid mt-3" width="120" src="../../../assets/images/Dashboard/education.png">
-                <h3 class=" fw-semibold" style="margin-top: 56px;">{{teachersRatio | number:
-                    '1.0-0'}} : 1 Teacher</h3>
-                <div class="obj-data-ration">Studying - {{ratioDataObj?.Studying}} &nbsp; Long Absent - {{ratioDataObj?.Long_Absent}} &nbsp; 
+                <h2 class=" fw-semibold" style="margin-top: 56px;">{{teachersRatio | number:
+                    '1.0-0'}} : 1 Teacher</h2>
+                <div class="obj-data-ration mt-3">Studying - {{ratioDataObj?.Studying}} &nbsp; Long Absent - {{ratioDataObj?.Long_Absent}} &nbsp; 
                     NSO - {{ratioDataObj?.NSO}} <br> Out of Directorate - {{ratioDataObj?.Out_of_Directorate}} &nbsp;
                     Under Transfer - {{ratioDataObj?.Under_Transfer}} &nbsp; other - {{ratioDataObj?.other}}
                 </div>
@@ -101,6 +101,14 @@
                     [dataLabels]="teacherGenderRatio?.dataLabels" [plotOptions]="teacherGenderRatio?.plotOptions"
                     [responsive]="teacherGenderRatio?.responsive" [legend]="teacherGenderRatio?.legend"
                     [colors]="teacherGenderRatio?.colors" [tooltip]="teacherGenderRatio?.tooltip"></apx-chart>
+            </div>
+            <div class="column ">
+                <h5 class="header-bg p-2">Total Teachers</h5>
+                <apx-chart [series]="allTeacher?.series" [chart]="allTeacher?.chart"
+                    [labels]="allTeacher?.labels" [fill]="allTeacher?.fill"
+                    [dataLabels]="allTeacher?.dataLabels" [plotOptions]="allTeacher?.plotOptions"
+                    [responsive]="allTeacher?.responsive" [legend]="allTeacher?.legend"
+                    [colors]="allTeacher?.colors" [tooltip]="allTeacher?.tooltip"></apx-chart>
             </div>
             <div class="column">
                 <h5 class="header-bg p-2">Schools By Management</h5>

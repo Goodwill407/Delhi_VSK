@@ -204,7 +204,8 @@ export class GraphService {
         const graphData = {
             series: [],
             chart: {
-                type: chartType
+                type: chartType,
+                height:'330px'
             },
             dataLabels: {
                 enabled: false,
@@ -228,8 +229,8 @@ export class GraphService {
                         labels: {
                             show: true,
                             name: {
-                                formatter: () => {
-                                    return 'Total' + ' ' + totalType
+                                formatter: (val:any) => {
+                                    return val + ' ' + totalType
                                 }
                             },
                             total: {
@@ -285,7 +286,8 @@ export class GraphService {
         const graphData = {
             series: [],
             chart: {
-                type: "polarArea"
+                type: "polarArea",
+                height:'340px'
             },
             fill: {
                 colors: colors,

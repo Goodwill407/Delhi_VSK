@@ -411,7 +411,7 @@ export class StudentComponent {
   getStudentManagementWiseCounts(StudentManagementWiseCounts: any) {
     const SchManagement = StudentManagementWiseCounts.map((item: any) => item.SchManagement)
     const StudCount = StudentManagementWiseCounts.map((item: any) => item.count)
-    this.StudentManagementWiseCounts = this.graphService.PieGraph('donut', ' School Students');
+    this.StudentManagementWiseCounts = this.graphService.PieGraph('donut', 'Students');
     const series = StudCount;
     const labels = SchManagement
     this.StudentManagementWiseCounts.series = [...series];

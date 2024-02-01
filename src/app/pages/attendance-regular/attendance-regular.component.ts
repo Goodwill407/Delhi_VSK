@@ -553,10 +553,15 @@ export class AttendanceRegularComponent {
       this.districtWiseTopFiveGraph.xaxis.categories.push(data[i].district_name);
       this.districtWiseTopFiveGraph.notFound += data[i].schoolsDataNotFoundCount;
     }
+    this.districtWiseTopFiveGraph.xaxis.labels = {
+      rotate: -45, // Adjust the rotation angle as needed
+      style: {
+        fontSize: '8px'
+      }}
     this.districtWiseTopFiveGraph.series = [...series];
     // this.districtWiseTopFiveGraph.plotOptions.bar.isFunnel = false;
     this.districtWiseTopFiveGraph.legend.show = false;
-    this.districtWiseTopFiveGraph.chart.height = 200;
+    // this.districtWiseTopFiveGraph.chart.height = 200;
     let colors = ["#36454F"]
     this.districtWiseTopFiveGraph.dataLabels.style.colors = [...colors];
     this.districtWiseTopFiveGraph.dataLabels.dropShadow.enabled = false;
@@ -583,8 +588,13 @@ export class AttendanceRegularComponent {
       this.districtWiseBottomFiveGraph.xaxis.categories.push(data[i].district_name);
       this.districtWiseBottomFiveGraph.notFound += data[i].schoolsDataNotFoundCount;
     }
+    this.districtWiseBottomFiveGraph.xaxis.labels = {
+      rotate: -45, // Adjust the rotation angle as needed
+      style: {
+        fontSize: '8px'
+      }}
     this.districtWiseBottomFiveGraph.series = [...series];
-    this.districtWiseBottomFiveGraph.chart.height = 200;
+    // this.districtWiseBottomFiveGraph.chart.height = 200;
     // this.districtWiseBottomFiveGraph.plotOptions.bar.isFunnel = true;
     this.districtWiseBottomFiveGraph.legend.show = false;
     let colors = ["#36454F"]
@@ -613,8 +623,13 @@ export class AttendanceRegularComponent {
       this.zoneWiseTopFiveGraph.xaxis.categories.push(data[i].zone_name);
       this.zoneWiseTopFiveGraph.notFound += data[i].schoolsDataNotFoundCount;
     }
+    this.zoneWiseTopFiveGraph.xaxis.labels = {
+      rotate: -45, // Adjust the rotation angle as needed
+      style: {
+        fontSize: '8px'
+      }}
     this.zoneWiseTopFiveGraph.series = [...series];
-    this.zoneWiseTopFiveGraph.chart.height = 200;
+    // this.zoneWiseTopFiveGraph.chart.height = 200;
     // this.zoneWiseTopFiveGraph.plotOptions.bar.isFunnel = true;
     this.zoneWiseTopFiveGraph.legend.show = false;
     let colors = ["#36454F"]
@@ -643,8 +658,13 @@ export class AttendanceRegularComponent {
       this.zoneWiseBottomFiveGraph.xaxis.categories.push(data[i].zone_name);
       this.zoneWiseBottomFiveGraph.notFound += data[i].schoolsDataNotFoundCount;
     }
+    this.zoneWiseBottomFiveGraph.xaxis.labels = {
+      rotate: -45, // Adjust the rotation angle as needed
+      style: {
+        fontSize: '8px'
+      }}
     this.zoneWiseBottomFiveGraph.series = [...series];
-    this.zoneWiseBottomFiveGraph.chart.height = 200;
+    // this.zoneWiseBottomFiveGraph.chart.height = 200;
     // this.zoneWiseBottomFiveGraph.plotOptions.bar.isFunnel = true;
     this.zoneWiseBottomFiveGraph.legend.show = false;
     let colors = ["#36454F"]
@@ -673,8 +693,13 @@ export class AttendanceRegularComponent {
       this.schoolWiseTopFiveGraph.xaxis.categories.push(data[i].schoolName);
       this.schoolWiseTopFiveGraph.notFound += data[i].schoolsDataNotFoundCount;
     }
+    this.schoolWiseTopFiveGraph.xaxis.labels = {
+      rotate: -45, // Adjust the rotation angle as needed
+      style: {
+        fontSize: '8px'
+      }}
     this.schoolWiseTopFiveGraph.series = [...series];
-    this.schoolWiseTopFiveGraph.chart.height = 200;
+    // this.schoolWiseTopFiveGraph.chart.height = 200;
     // this.schoolWiseTopFiveGraph.plotOptions.bar.isFunnel = true;
     this.schoolWiseTopFiveGraph.legend.show = false;
     let colors = ["#36454F"]
@@ -704,7 +729,12 @@ export class AttendanceRegularComponent {
       this.schoolWiseBottomFiveGraph.xaxis.categories.push(data[i].schoolName);
       this.schoolWiseBottomFiveGraph.notFound += data[i].schoolsDataNotFoundCount;
     }
-    this.schoolWiseBottomFiveGraph.chart.height = 200;
+    this.schoolWiseBottomFiveGraph.xaxis.labels = {
+      rotate: -45, // Adjust the rotation angle as needed
+      style: {
+        fontSize: '8px'
+      }}
+    // this.schoolWiseBottomFiveGraph.chart.height = 200;
     // this.schoolWiseBottomFiveGraph.plotOptions.bar.isFunnel = true;
     this.schoolWiseBottomFiveGraph.legend.show = false;
     let colors = ["#36454F"]

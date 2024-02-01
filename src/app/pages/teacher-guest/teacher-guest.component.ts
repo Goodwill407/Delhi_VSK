@@ -39,7 +39,7 @@ export class TeacherGuestComponent {
   streamWiseTeacher: any;
   minorityWiseTeacher: any;
   allData: any;
-  @ViewChild('openModal') openModal: any;
+  @ViewChild('openModalGuest') openModalGuest: any;
   @ViewChild('tableElement') tableElement!: ElementRef;
   @Output() downloadSelected = new EventEmitter<string>();
 
@@ -333,6 +333,11 @@ export class TeacherGuestComponent {
       series[0].data.push(data[i].teacherCount);
       this.teacherCategoryGuest.xaxis.categories.push(data[i].SchCategory);
     }
+    this.teacherCategoryGuest.xaxis.labels = {
+      rotate: -45, // Adjust the rotation angle as needed
+      style: {
+        fontSize: '9px'
+      }}
     this.teacherCategoryGuest.series = [...series];
     this.teacherCategoryGuest.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
@@ -393,7 +398,7 @@ export class TeacherGuestComponent {
     this.httpService.post('guest-teacher/school/post-wise/teacher-list', parameter).subscribe((res: any) => {
       this.allTeacherData = res;
       if (!flash) {
-        this.openModal.nativeElement.click();
+        this.openModalGuest.nativeElement.click();
       }
     })
   }
@@ -407,7 +412,7 @@ export class TeacherGuestComponent {
       this.httpService.post('guest-teacher/school/teacher-list', parameter).subscribe((res: any) => {
         this.allTeacherData = res;
         if (this.schoolModel) {
-          this.openModal.nativeElement.click();
+          this.openModalGuest.nativeElement.click();
         }
       });
     }

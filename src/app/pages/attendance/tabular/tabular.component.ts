@@ -85,7 +85,7 @@ export class TabularComponent implements OnInit {
         }
 
         for (let i = 0; i < this.allAttendanceData.length; i++) {
-          this.allAttendanceData[i].percent = (this.allAttendanceData[i].totalNotMarkedAttendanceCount / this.allAttendanceData[i].studyingStudentCount) * 100;
+          this.allAttendanceData[i].percent = (this.allAttendanceData[i].totalNotMarkedAttendanceCount / this.allAttendanceData[i].totalStudentCount) * 100;
         }
 
         this.allTotalData = {

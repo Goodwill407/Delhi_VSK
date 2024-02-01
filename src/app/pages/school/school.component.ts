@@ -40,6 +40,7 @@ export class SchoolComponent {
   allSchools: any;
   teacherGender: any;
   studGender: any;
+  allTeacher: any;
   allTeacherData: any;
   allStudentData: any;
   @ViewChild('openModal') openModal: any;
@@ -164,7 +165,8 @@ export class SchoolComponent {
       lowClassCount: data.lowClassCount,
       highClassCount: data.highClassCount
     }
-    this.getLowClassHighClass(lowClassHighClass);
+    const teacherType = {guestTeachers:data.guestTeachers,regularTeachers:data.regularTeachers};
+    this.getallTeachers(teacherType);
     this.getTypesOfSchools(data.typeOfSchoolCounts);
     // this.getStreamCount(data.streamCounts);
     // this.getMinorityCount(data.minorityCounts);
@@ -361,6 +363,12 @@ export class SchoolComponent {
         this.graphService.addToCart();
       }
     }
+  }
+
+  getallTeachers(teacherType: any) {
+    this.allTeacher = this.graphService.PieGraph('donut', ' Teachers');
+    this.allTeacher.series = [teacherType.regularTeachers, teacherType.guestTeachers];
+    this.allTeacher.labels = ["Regular", "Guest"];
   }
 
   getTeachersByGender(flash: any) {

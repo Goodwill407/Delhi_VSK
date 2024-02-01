@@ -60,7 +60,7 @@
                 <h3>Total Teacher</h3>
             </div>
         </div>
-        <div class="d-flex justify-content-around text-center ratio-data">
+        <div class="d-flex justify-content-around text-center ratio-data-Guest">
             <div style="width: 45%;">
                 <h1 class="fw-bold">{{allData?.totalSchool}}</h1>
                 <h5>Total School</h5>
@@ -132,21 +132,21 @@
 </div>
 
 <!-- Button trigger modal -->
-<button #openModal data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal1"
+<button #openModalGuest data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal1" data-bs-backdrop="static" 
     (click)="getTeachersByDesignation(true)">
 
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title m-auto" *ngIf="configDesignation == 0 || configDesignation"
-                    id="exampleModalLabel">
+                    id="exampleModalLabel1">
                     Guest Teacher Details By Designation:
                     ({{allData.postdescWiseTeacherCounts[configDesignation]._id}}) </h5>
-                <h5 class="modal-title m-auto" *ngIf="schoolModel" id="exampleModalLabel">
+                <h5 class="modal-title m-auto" *ngIf="schoolModel" id="exampleModalLabel1">
                     Guest Teacher Details By School:
                     ({{schoolModel.School_Name}}) </h5>
                 <div class="dropdown">
