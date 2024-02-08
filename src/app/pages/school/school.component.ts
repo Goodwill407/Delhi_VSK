@@ -50,6 +50,12 @@ export class SchoolComponent {
   communicationServiceMobile: any;
   ratioDataObj: any;
 
+  searchLoader: boolean = false;
+  profileDetails: any;
+  schoolSearchData: any[] = [];
+  globalSearchBox: any;
+
+
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
   }
@@ -542,4 +548,32 @@ export class SchoolComponent {
     }
     return { studentStatusCounts: result };
   }
+
+  searchSchool() {
+    this.schoolSearchData = [];
+    if (this.globalSearchBox) {
+      this.searchLoader = true;
+      this.httpService.post('school/search-school', { searchQuery: this.globalSearchBox }).subscribe((res: any) => {
+        if (res) {
+          this.schoolSearchData = res;
+        }
+        this.searchLoader = false;
+      })
+    }
+  }
+
+  search() {
+    if (this.globalSearchBox) {
+      this.searchSchool()
+    } else {
+      this.schoolSearchData = [];
+    }
+  }
+
+  viewProfileDetails(data: any) {
+    if (data) {
+      this.profileDetails = data;
+    }
+  }
+
 }

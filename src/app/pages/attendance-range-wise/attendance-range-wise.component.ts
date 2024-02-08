@@ -43,10 +43,18 @@ export class AttendanceRangeWiseComponent {
 
   ngOnInit() {
     this.communicationService.sharedData$.subscribe(data => {
+      debugger;
       if (data == "range") {
         this.getAllDistricts();
         this.getAllZones();
         this.getAllSchoolName();
+      }
+      else {
+        this.districtModel = "";
+        this.shiftModel = "";
+        this.dateModel1 = "";
+        this.dateModel2 = "";
+        this.zoneModel = "";
       }
     });
   }

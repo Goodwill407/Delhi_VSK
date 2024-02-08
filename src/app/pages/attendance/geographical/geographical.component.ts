@@ -33,6 +33,7 @@ export class GeographicalComponent {
 
   ngOnInit() {
     this.communicationService.sharedData$.subscribe(data => {
+      debugger;
       if (data == "geographical") {
         this.dateModel = new Date();
         this.dateModel.setDate(this.dateModel.getDate() - 1);
@@ -40,6 +41,12 @@ export class GeographicalComponent {
         this.getAllDistricts();
         this.getAllZone();
         this.mapData = L.map('map').setView([28.6139, 77.2090], 11);
+      }
+      else {
+        this.districtModel = "";
+        this.shiftModel = "";
+        this.dateModel = "";
+        this.zoneModel = "";
       }
     });
   }

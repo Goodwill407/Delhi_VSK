@@ -85,7 +85,7 @@ export class TabularComponent implements OnInit {
         }
 
         for (let i = 0; i < this.allAttendanceData.length; i++) {
-          this.allAttendanceData[i].percent = (this.allAttendanceData[i].totalNotMarkedAttendanceCount / this.allAttendanceData[i].totalStudentCount) * 100;
+          this.allAttendanceData[i].percent = (this.allAttendanceData[i].totalNotMarkedAttendanceCount / this.allAttendanceData[i].studyingStudentCount) * 100;
         }
 
         this.allTotalData = {
@@ -98,7 +98,7 @@ export class TabularComponent implements OnInit {
           this.allTotalData.allPresent += school.PresentCount;
           this.allTotalData.allLeave += school.totalLeaveCount;
           this.allTotalData.allUnmark += school.totalNotMarkedAttendanceCount;
-          this.allTotalData.allPercent = ((this.allTotalData.allUnmark / this.allTotalData.allStudent) * 100).toFixed(2)
+          this.allTotalData.allPercent = ((this.allTotalData.allUnmark / this.allTotalData.allStudyingStudent) * 100).toFixed(2)
         });
         this.cdRef.detectChanges();
         this.spinner.hide();

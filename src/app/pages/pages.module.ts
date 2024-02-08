@@ -29,6 +29,8 @@ import { TabularComponent } from './attendance/tabular/tabular.component';
 import { GeographicalComponent } from './attendance/geographical/geographical.component';
 import { TabularSchoolComponent } from './school/tabular-school/tabular-school.component';
 import { BirdEyeSchoolComponent } from './school/bird-eye-school/bird-eye-school.component';
+import { RegularTeacherComponent } from './teacher/regular-teacher/regular-teacher.component';
+import { TotalTeacherComponent } from './teacher/total-teacher/total-teacher.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { BirdEyeSchoolComponent } from './school/bird-eye-school/bird-eye-school
     TabularComponent,
     GeographicalComponent,
     TabularSchoolComponent,
-    BirdEyeSchoolComponent
+    BirdEyeSchoolComponent,
+    RegularTeacherComponent,
+    TotalTeacherComponent
   ],
   imports: [
     CommonModule,

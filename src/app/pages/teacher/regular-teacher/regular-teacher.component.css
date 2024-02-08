@@ -1,0 +1,39 @@
+.ratio-data {
+    position: absolute;
+    bottom: 25px;
+    width: 100%;
+  }
+  
+  .container1 .column {
+    min-height: 350px;
+  }
+  
+  kendo-pdf-export {
+    font-family: "DejaVu Sans", "Arial", sans-serif;
+    font-size: 12px;
+  }
+  .filter-box-Teacher {
+    margin: auto 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .search-regular {
+    position: absolute;
+    z-index: 1;
+    top: 38px;
+}
+
+.search-regular .data-panel {
+    max-height: 200px;
+    overflow: auto;
+}
+
+.search-regular p:hover {
+    background-color: #348acb;
+    color: #fff;
+    cursor: pointer;
+}

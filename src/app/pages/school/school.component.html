@@ -51,6 +51,23 @@
             </h3>
         </div>
 
+        <div class="input-group float-end mt-2 me-2" style="width: 300px;">
+            <input class="form-control" type="search" [(ngModel)]="globalSearchBox" placeholder="Search School..."
+                value="" id="example-search-input" (search)="search()">
+            <span class="input-group-text" role="button" id="basic-addon1" (click)="searchSchool()">🔍</span>
+            <span class="search-filter-box bg-white w-100" *ngIf="globalSearchBox">
+                <div class="d-flex justify-content-center" *ngIf="searchLoader">
+                    <div class="spinner-border m-2" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <div class="data-panel" *ngIf="schoolSearchData && schoolSearchData.length > 0">
+                    <p class="mb-0 p-1 ps-2" *ngFor="let data of schoolSearchData" (click)="viewProfileDetails(data)"
+                        data-bs-toggle="modal" data-bs-target="#staticBackdrop2">{{data.School_Name}}</p>
+                </div>
+            </span>
+        </div>
+
         <div class="container1">
             <div class="column">
                 <h5 *ngIf="!districtModel" class="header-bg p-2">Delhi</h5>
@@ -80,7 +97,8 @@
                 <img class="img-fluid mt-3" width="120" src="../../../assets/images/Dashboard/education.png">
                 <h2 class=" fw-semibold" style="margin-top: 56px;">{{teachersRatio | number:
                     '1.0-0'}} : 1 Teacher</h2>
-                <div class="obj-data-ration mt-3">Studying - {{ratioDataObj?.Studying}} &nbsp; Long Absent - {{ratioDataObj?.Long_Absent}} &nbsp; 
+                <div class="obj-data-ration mt-3">Studying - {{ratioDataObj?.Studying}} &nbsp; Long Absent -
+                    {{ratioDataObj?.Long_Absent}} &nbsp;
                     NSO - {{ratioDataObj?.NSO}} <br> Out of Directorate - {{ratioDataObj?.Out_of_Directorate}} &nbsp;
                     Under Transfer - {{ratioDataObj?.Under_Transfer}} &nbsp; other - {{ratioDataObj?.other}}
                 </div>
@@ -104,11 +122,11 @@
             </div>
             <div class="column ">
                 <h5 class="header-bg p-2">Total Teachers</h5>
-                <apx-chart [series]="allTeacher?.series" [chart]="allTeacher?.chart"
-                    [labels]="allTeacher?.labels" [fill]="allTeacher?.fill"
-                    [dataLabels]="allTeacher?.dataLabels" [plotOptions]="allTeacher?.plotOptions"
-                    [responsive]="allTeacher?.responsive" [legend]="allTeacher?.legend"
-                    [colors]="allTeacher?.colors" [tooltip]="allTeacher?.tooltip"></apx-chart>
+                <apx-chart [series]="allTeacher?.series" [chart]="allTeacher?.chart" [labels]="allTeacher?.labels"
+                    [fill]="allTeacher?.fill" [dataLabels]="allTeacher?.dataLabels"
+                    [plotOptions]="allTeacher?.plotOptions" [responsive]="allTeacher?.responsive"
+                    [legend]="allTeacher?.legend" [colors]="allTeacher?.colors"
+                    [tooltip]="allTeacher?.tooltip"></apx-chart>
             </div>
             <div class="column">
                 <h5 class="header-bg p-2">Schools By Management</h5>
@@ -147,111 +165,6 @@
             </div>
 
         </div>
-
-        <!-- Button trigger modal -->
-        <button #openModal data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal"
-            (click)="getTeachersByGender(true)" (click)="getStudentByGender(true)">
-
-        </button>
-
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title mx-auto" *ngIf="allTeacherData?.length > 0" id="exampleModalLabel">
-                            Teacher
-                            Details By
-                            Gender: ({{teacherGender?.dataPointIndex == 0 ? 'Male' : 'Female'}}) </h5>
-                        <h5 class="modal-title mx-auto" *ngIf="allStudentData?.length > 0" id="exampleModalLabel">
-                            Student
-                            Details By
-                            Gender: ({{studGender?.dataPointIndex == 0 ? 'Boys' : (studGender?.dataPointIndex == 1 ?
-                            'Girls' :
-                            'Other')}}) </h5>
-                        <div class="dropdown">
-                            <span class="text-danger m-2"><img src="../../../assets/images/icons/downloads.png"
-                                    width="25px" alt=""></span>
-                            <div class="dropdown-content">
-                                <button class="btn" (click)="exportToCSV()"><i
-                                        class="bi bi-filetype-csv h4 text-warning"></i>
-                                    CSV</button>
-                                <button class="btn" (click)="exportToExcel()"><i
-                                        class="bi bi-file-earmark-excel h4 text-success"></i>
-                                    Excel</button>
-                                <button class="btn" value="CPTURE" (click)="pdf.saveAs('Student data.pdf')"><i
-                                        class="bi bi-filetype-pdf h4 text-danger"></i>PDF</button>
-                            </div>
-                        </div>
-                        <!--  -->
-                        <button type="button" (click)="searchBox = ''" class="btn-close m-2" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="input-group mb-3 w-50">
-                            <span class="input-group-text" id="basic-addon1">🔍</span>
-                            <input class="form-control" type="search" [(ngModel)]="searchBox"
-                                placeholder="Search by name..." value="" id="example-search-input">
-                        </div>
-                        <kendo-pdf-export #pdf paperSize="A3">
-                            <div class="table-responsive">
-                                <table class="table table-responsive table-hover table-bordered table-striped">
-                                    <thead class="thead-light">
-                                        <tr class="table-bordered" *ngIf="allTeacherData?.length > 0">
-                                            <th>Sr No</th>
-                                            <th>Name</th>
-                                            <th>Emp. Id</th>
-                                            <th style="width: 112px;">Joining Date</th>
-                                            <th>School</th>
-                                            <th>Designation</th>
-                                            <th>Gender</th>
-                                            <th>DOB</th>
-                                            <th>District</th>
-                                        </tr>
-                                        <tr class="table-bordered" *ngIf="allStudentData?.length > 0">
-                                            <th>Sr No</th>
-                                            <th>Name</th>
-                                            <th style="width: 112px;">Class</th>
-                                            <th>School</th>
-                                            <!-- <th>Designation</th> -->
-                                            <th>Gender</th>
-                                            <th>DOB</th>
-                                            <th>District</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody *ngIf="allTeacherData?.length > 0">
-                                        <tr *ngFor="let data of allTeacherData | search:searchBox;let i = index">
-                                            <td>{{i+1}}</td>
-                                            <td>{{data.Name}}</td>
-                                            <td>{{data.empid}}</td>
-                                            <td>{{data.JoiningDate}}</td>
-                                            <td>{{data.schname}}</td>
-                                            <td>{{data.postdesc}}</td>
-                                            <td>{{data.gender}}</td>
-                                            <td>{{data.dob}}</td>
-                                            <td>{{data.districtname}}</td>
-                                        </tr>
-                                    </tbody>
-                                    <tbody *ngIf="allStudentData?.length > 0">
-                                        <tr *ngFor="let data of allStudentData | search:searchBox;let i = index">
-                                            <td>{{i+1}}</td>
-                                            <td>{{data.Name}}</td>
-                                            <td>{{data.CLASS}}</td>
-                                            <td>{{data.SCHOOL_NAME}}</td>
-                                            <!-- <td>{{data.postdesc}}</td> -->
-                                            <td>{{data.Gender}}</td>
-                                            <td>{{data.Dob}}</td>
-                                            <td>{{data.District}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </kendo-pdf-export>
-                    </div>
-
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- tab2 -->
@@ -265,3 +178,145 @@
     </div>
 </div>
 <!-- tab end -->
+
+<!-- Button trigger modal -->
+<button #openModal data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal"
+    (click)="getTeachersByGender(true)" (click)="getStudentByGender(true)">
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mx-auto" *ngIf="allTeacherData?.length > 0" id="exampleModalLabel">
+                    Teacher
+                    Details By
+                    Gender: ({{teacherGender?.dataPointIndex == 0 ? 'Male' : 'Female'}}) </h5>
+                <h5 class="modal-title mx-auto" *ngIf="allStudentData?.length > 0" id="exampleModalLabel">
+                    Student
+                    Details By
+                    Gender: ({{studGender?.dataPointIndex == 0 ? 'Boys' : (studGender?.dataPointIndex == 1 ?
+                    'Girls' :
+                    'Other')}}) </h5>
+                <div class="dropdown">
+                    <span class="text-danger m-2"><img src="../../../assets/images/icons/downloads.png" width="25px"
+                            alt=""></span>
+                    <div class="dropdown-content">
+                        <button class="btn" (click)="exportToCSV()"><i class="bi bi-filetype-csv h4 text-warning"></i>
+                            CSV</button>
+                        <button class="btn" (click)="exportToExcel()"><i
+                                class="bi bi-file-earmark-excel h4 text-success"></i>
+                            Excel</button>
+                        <button class="btn" value="CPTURE" (click)="pdf.saveAs('Student data.pdf')"><i
+                                class="bi bi-filetype-pdf h4 text-danger"></i>PDF</button>
+                    </div>
+                </div>
+                <!--  -->
+                <button type="button" (click)="searchBox = ''" class="btn-close m-2" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-3 w-50">
+                    <span class="input-group-text" id="basic-addon1">🔍</span>
+                    <input class="form-control" type="search" [(ngModel)]="searchBox" placeholder="Search by name..."
+                        value="" id="example-search-input">
+                </div>
+                <kendo-pdf-export #pdf paperSize="A3">
+                    <div class="table-responsive">
+                        <table class="table table-responsive table-hover table-bordered table-striped">
+                            <thead class="thead-light">
+                                <tr class="table-bordered" *ngIf="allTeacherData?.length > 0">
+                                    <th>Sr No</th>
+                                    <th>Name</th>
+                                    <th>Emp. Id</th>
+                                    <th style="width: 112px;">Joining Date</th>
+                                    <th>School</th>
+                                    <th>Designation</th>
+                                    <th>Gender</th>
+                                    <th>DOB</th>
+                                    <th>District</th>
+                                </tr>
+                                <tr class="table-bordered" *ngIf="allStudentData?.length > 0">
+                                    <th>Sr No</th>
+                                    <th>Name</th>
+                                    <th style="width: 112px;">Class</th>
+                                    <th>School</th>
+                                    <!-- <th>Designation</th> -->
+                                    <th>Gender</th>
+                                    <th>DOB</th>
+                                    <th>District</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="allTeacherData?.length > 0">
+                                <tr *ngFor="let data of allTeacherData | search:searchBox;let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{data.Name}}</td>
+                                    <td>{{data.empid}}</td>
+                                    <td>{{data.JoiningDate}}</td>
+                                    <td>{{data.schname}}</td>
+                                    <td>{{data.postdesc}}</td>
+                                    <td>{{data.gender}}</td>
+                                    <td>{{data.dob}}</td>
+                                    <td>{{data.districtname}}</td>
+                                </tr>
+                            </tbody>
+                            <tbody *ngIf="allStudentData?.length > 0">
+                                <tr *ngFor="let data of allStudentData | search:searchBox;let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{data.Name}}</td>
+                                    <td>{{data.CLASS}}</td>
+                                    <td>{{data.SCHOOL_NAME}}</td>
+                                    <!-- <td>{{data.postdesc}}</td> -->
+                                    <td>{{data.Gender}}</td>
+                                    <td>{{data.Dob}}</td>
+                                    <td>{{data.District}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </kendo-pdf-export>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- View profile -->
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">School Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex align-items-center ms-5">
+                    <img class="img-fluid mb-2" width="90" src="../../../assets/images/Dashboard//schoolpopUp.png">
+                    <h4 class="fw-bold ms-5">{{profileDetails?.School_Name}}</h4>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-5">
+                        <h6>School ID :<span class="float-end"> {{profileDetails?.Schoolid}}</span></h6>
+                        <h6>District :<span class="float-end"> {{profileDetails?.District_name}}</span></h6>
+                        <h6>Zone :<span class="float-end"> {{profileDetails?.Zone_Name}}</span></h6>
+
+                    </div>
+                    <div class="col-md-1 text-center pb-3">
+                        <div class="vr h-100"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- <h6>Joining date in present school : <span class="float-end">
+                                {{profileDetails?.JoiningDate}}</span>
+                        </h6>
+                        <h6>Designation :<span class="float-end"> {{profileDetails?.postdesc}}</span></h6> -->
+                        <h6>School Category :<span class="float-end"> {{profileDetails?.SchCategory}}</span></h6>
+                        <h6>Management Type :<span class="float-end"> {{profileDetails?.SchManagement}}</span></h6>
+                        <h6>Shift :<span class="float-end"> {{profileDetails?.shift}}</span></h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
