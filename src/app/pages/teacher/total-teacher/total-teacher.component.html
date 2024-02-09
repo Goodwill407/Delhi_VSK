@@ -118,6 +118,15 @@
             [title]="teacherCategory?.title" [legend]="teacherCategory?.legend"
             [fill]="teacherCategory?.fill"></apx-chart>
     </div>
+
+    <div class="column">
+        <h5 class="header-bg p-2">Schools Type Wise Teacher</h5>
+        <apx-chart [series]="schoolTypeWiseCount?.series" [chart]="schoolTypeWiseCount?.chart"
+            [labels]="schoolTypeWiseCount?.labels" [fill]="schoolTypeWiseCount?.fill"
+            [dataLabels]="schoolTypeWiseCount?.dataLabels" [plotOptions]="schoolTypeWiseCount?.plotOptions"
+            [responsive]="schoolTypeWiseCount?.responsive" [legend]="schoolTypeWiseCount?.legend"
+            [colors]="schoolTypeWiseCount?.colors" [tooltip]="schoolTypeWiseCount?.tooltip"></apx-chart>
+    </div>
 </div>
 
 <!-- Button trigger modal -->

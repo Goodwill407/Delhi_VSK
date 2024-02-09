@@ -139,6 +139,14 @@
             [legend]="TypeOfStudSchool?.legend" [tooltip]="TypeOfStudSchool?.tooltip"></apx-chart>
     </div> -->
 
+    <div class="column">
+      <h5 class="header-bg p-2">Schools Type Wise Teacher</h5>
+      <apx-chart [series]="TypeOfStudSchool?.series" [chart]="TypeOfStudSchool?.chart"
+          [labels]="TypeOfStudSchool?.labels" [fill]="TypeOfStudSchool?.fill"
+          [dataLabels]="TypeOfStudSchool?.dataLabels" [plotOptions]="TypeOfStudSchool?.plotOptions"
+          [responsive]="TypeOfStudSchool?.responsive" [legend]="TypeOfStudSchool?.legend"
+          [colors]="TypeOfStudSchool?.colors" [tooltip]="TypeOfStudSchool?.tooltip"></apx-chart>
+  </div>
   <!-- <div class="column">
         <h5 class="header-bg p-2">Student By minority Wise</h5>
         <apx-chart [series]="MinorityWiseStudCount?.series" [chart]="MinorityWiseStudCount?.chart"

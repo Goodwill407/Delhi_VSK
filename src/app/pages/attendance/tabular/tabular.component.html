@@ -7,9 +7,9 @@
     </select>
     <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="shiftModel" (change)="getTableData()">
         <option value="">Select Shift</option>
-        <option value="m">Morning</option>
-        <option value="b">General</option>
-        <option value="e">Evening</option>
+        <option value="Morning">Morning</option>
+        <option value="General">General</option>
+        <option value="Evening">Evening</option>
         <!-- <option *ngFor="let shift of allShift" value="{{shift}}">
             {{shift}}
         </option> -->
@@ -54,8 +54,8 @@
                         <th>S.No</th>
                         <th>ID</th>
                         <th>School Name</th>
-                        <th>Total Student</th>
                         <th>Total Studying Student</th>
+                        <!-- <th>Total Studying Student</th> -->
                         <th>Present</th>
                         <th>Absent</th>
                         <th>Leave</th>
@@ -71,7 +71,7 @@
                         <td>{{data.School_ID}}</td>
                         <td class="text-start">{{data.school_name | slice:8:200}}</td>
                         <td>{{data.totalStudentCount}}</td>
-                        <td>{{data.studyingStudentCount}}</td>
+                        <!-- <td>{{data.studyingStudentCount}}</td> -->
                         <td>{{data.PresentCount}}</td>
                         <td>{{data.AbsentCount}}</td>
                         <td>{{data.totalLeaveCount}}</td>
@@ -85,7 +85,7 @@
                         <td>Total</td>
                         <td colspan="2">{{zoneModel.Zone_Name}}</td>
                         <td>{{allTotalData?.allStudent}}</td>
-                        <td>{{allTotalData?.allStudyingStudent}}</td>
+                        <!-- <td>{{allTotalData?.allStudyingStudent}}</td> -->
                         <td>{{allTotalData?.allPresent}}</td>
                         <td>{{allTotalData?.allAbsent}}</td>
                         <td>{{allTotalData?.allLeave}}</td>

@@ -62,8 +62,9 @@ export class TabularComponent implements OnInit {
 
   getTableData() {
     const obj: any = {
-      "zone": this.zoneModel.Z_ID,
-      "date": this.getDate(this.dateModel)
+      "Z_name": this.zoneModel.Zone_Name,
+      "attendance_DATE": this.getDate(this.dateModel),
+      "shift": this.shiftModel,
     }
 
     this.callAPIfun(obj);
@@ -71,21 +72,22 @@ export class TabularComponent implements OnInit {
 
   callAPIfun(obj: any) {
     this.spinner.show();
-    this.httpService.post('tabular-attendnace/live-school-attendance', obj).subscribe(
+    this.httpService.post('tabular-attendnace', obj).subscribe(
       (res: any) => {
-        if(this.shiftModel){
-         this.allAttendanceData = res.filter((item:any)=>{
+        // if(this.shiftModel){
+        //  this.allAttendanceData = res.filter((item:any)=>{
          
-          console.log(item.shift, this.shiftModel);
-          return  item.shift.toLowerCase() === this.shiftModel;
+        //   console.log(item.shift, this.shiftModel);
+        //   return  item.shift.toLowerCase() === this.shiftModel;
         
-        });
-        }else{
-          this.allAttendanceData = res;
-        }
+        // });
+        // }else{
+        //   this.allAttendanceData = res;
+        // }
+        this.allAttendanceData = res;
 
         for (let i = 0; i < this.allAttendanceData.length; i++) {
-          this.allAttendanceData[i].percent = (this.allAttendanceData[i].totalNotMarkedAttendanceCount / this.allAttendanceData[i].studyingStudentCount) * 100;
+          this.allAttendanceData[i].percent = (this.allAttendanceData[i].totalNotMarkedAttendanceCount / this.allAttendanceData[i].totalStudentCount) * 100;
         }
 
         this.allTotalData = {
@@ -93,14 +95,13 @@ export class TabularComponent implements OnInit {
         };
         res.forEach((school: any) => {
           this.allTotalData.allStudent += school.totalStudentCount;
-          this.allTotalData.allStudyingStudent += school.studyingStudentCount;
+          // this.allTotalData.allStudyingStudent += school.studyingStudentCount;
           this.allTotalData.allAbsent += school.AbsentCount;
           this.allTotalData.allPresent += school.PresentCount;
           this.allTotalData.allLeave += school.totalLeaveCount;
           this.allTotalData.allUnmark += school.totalNotMarkedAttendanceCount;
-          this.allTotalData.allPercent = ((this.allTotalData.allUnmark / this.allTotalData.allStudyingStudent) * 100).toFixed(2)
+          this.allTotalData.allPercent = ((this.allTotalData.allUnmark / this.allTotalData.allStudent) * 100).toFixed(2)
         });
-        this.cdRef.detectChanges();
         this.spinner.hide();
       },
       (error: any) => {

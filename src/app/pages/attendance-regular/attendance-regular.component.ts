@@ -67,7 +67,6 @@ export class AttendanceRegularComponent {
 
   ngOnInit() {
     this.communicationService.sharedData$.subscribe(data => {
-      debugger;
       if (data == "regular") {
         this.dateModel = new Date();
         this.dateModel = this.getDate(this.dateModel.setDate(this.dateModel.getDate() - 1));

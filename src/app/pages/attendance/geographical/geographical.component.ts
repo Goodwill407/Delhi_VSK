@@ -33,7 +33,6 @@ export class GeographicalComponent {
 
   ngOnInit() {
     this.communicationService.sharedData$.subscribe(data => {
-      debugger;
       if (data == "geographical") {
         this.dateModel = new Date();
         this.dateModel.setDate(this.dateModel.getDate() - 1);

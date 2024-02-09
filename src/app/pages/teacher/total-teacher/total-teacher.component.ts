@@ -136,7 +136,7 @@ export class TotalTeacherComponent {
     let newData = data.totalTeacherCategoryWiseCounts.sort((a: any, b: any) => a.totalTeacherCount - b.totalTeacherCount);
     this.getCategoryWiseTeacher(newData);
     // this.getExperianceOfTeachers(data.experianceOfTeachers);
-    // this.getSchoolTypeWiseCount(data.teacherTypeOfSchoolWiseCounts);
+    this.getSchoolTypeWiseCount(data.teacherTypeOfSchoolWiseCounts);
   }
 
   getGraphsByDistrictName() {
@@ -453,7 +453,7 @@ export class TotalTeacherComponent {
     data = data.filter((item: any) => item.typeOfSchool !== null && item.typeOfSchool.trim() !== "");
     this.schoolTypeWiseCount = this.graphService.PolarGraph('School Teachers');
     for (let i = 0; i < data.length; i++) {
-      this.schoolTypeWiseCount.series.push(data[i].teacherTypeOfSchoolWiseCount);
+      this.schoolTypeWiseCount.series.push(data[i].totalTeacherCount);
       this.schoolTypeWiseCount.labels.push(data[i].typeOfSchool);
     };
     this.schoolTypeWiseCount.chart.events = {

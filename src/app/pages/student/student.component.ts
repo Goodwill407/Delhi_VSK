@@ -250,7 +250,7 @@ export class StudentComponent {
     const catogoryWiseStudentCount = data.studentStats[0].SchCategory
     // const StreanWiseCount = data.studentStats[0].
     // const AffiliationWiseCount = data.affiliationWiseCount
-    const TypeOfStudSchool = data.studentStats[1].typeOfSchool
+    const TypeOfStudSchool = data.studentStats[1].gender
     // const MinorityWiseStudCount = data.minortyWiseCount
     const StudentShiftWiseCounts = data.studentStats[2].shift
     const StudentManagementWiseCounts = data.studentStats[3].SchManagement
@@ -357,14 +357,14 @@ export class StudentComponent {
   }
 
   getTypeOfStudSchool(TypeOfStudSchool: any) {
-    const TypeOfSchool = TypeOfStudSchool.map((item: any) => item.typeOfSchool !== "" ? item.typeOfSchool : "Not Identified")
+    TypeOfStudSchool = TypeOfStudSchool.filter((item: any) => item.gender !== null && item.gender.trim() !== "");
+    const TypeOfSchool = TypeOfStudSchool.map((item: any) => item.gender !== "" ? item.gender : "Not Identified")
     const TypeOfStudCount = TypeOfStudSchool.map((item: any) => item.count)
-    this.TypeOfStudSchool = this.graphService.PieGraph('pie', ' Students');
+    this.TypeOfStudSchool = this.graphService.PolarGraph('School Students');
     const series = TypeOfStudCount;
     const labels = TypeOfSchool
     this.TypeOfStudSchool.series = [...series];
     this.TypeOfStudSchool.labels = [...labels]
-    this.TypeOfStudSchool.chart.type = "pie";
     this.TypeOfStudSchool.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         this.studentDataClear();
