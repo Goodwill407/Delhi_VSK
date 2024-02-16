@@ -423,7 +423,7 @@ export class TotalTeacherComponent {
 
   getTeachersByDesignation(flash: any) {
     const parameter = {
-      "postdesc": this.allData.postdescWiseTeacherCounts[this.configDesignation]._id,
+      "postdesc": this.allData.totalPostWiseTeachers[this.configDesignation]._id,
       "schname": this.schoolModel.Schoolid
     }
     this.httpService.post('teacher-graph/postwisecount', parameter).subscribe((res: any) => {
