@@ -1,88 +1,73 @@
 <!-- dropdown -->
-<div class="my-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
-    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="zoneModel" (change)="getTableData()" >
-        <option value="">All Zones</option>
-        <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
-            {{zone.Zone_Name}} ({{zone.Z_ID}})
-        </option>
-    </select>
-    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="schoolModel" (change)="getTableData()">
-        <option value="">Select School</option>
-        <option *ngFor="let School of allSchool" value="{{School}}">
-            {{School}}
-        </option>
-    </select>
-</div>
-
-<div class="row">
-    <!-- first Colum -->
-    <div class="col-3">
-
-        <div class="responsive-table position-relative" style="overflow: scroll; height:100vh !important;">
-            <table class="table table-striped table-hover" >
-                <thead class="sticky-top top-0">
-                    <tr class="table-success">
-                        <th>S.No</th>
-                        <th>District</th>
-                        <th>Zone</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let data of allDist;let i = index">
-                        <td>{{i+1}}</td>
-                        <td>{{data.districtName}}</td>
-                        <td>{{data.zoneName}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+<div class="filter-box">
+    <div class="filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
+        <input class="form-control w-25 ms-auto" type="text" [(ngModel)]="SearchBox" placeholder="School Id" value=""
+            id="example-search-input">
+        <button class="btn btn-success mx-2" (click)="searchSchool()">Search</button>
     </div>
 
-    <!-- Second Colum -->
-    <div class="col-9">
-        <!--  -->
-        <div class="responsive-table position-relative" style="overflow: scroll; height:100vh !important;">
-            <table class="table table-striped table-hover" >
-                <thead class="sticky-top top-0">
-                    <tr class="table-success">
-                        <!-- <th>S.No</th> -->
-                        <th>Total School</th>
-                        <th>Total Student</th>
-                        <th>Total Teacher</th>
-                        <th>Female T</th>
-                        <th>Male T</th>
-                        <th>Total Girl</th>
-                        <th>Total Boys</th>
-                        <th>Other</th>
-                        <!-- <th>Percent</th> -->
-                    </tr>
-                </thead>
-                <tbody class="text-center">
-                    <tr>
-                        <!-- <td>{{i+1}}</td> -->
-                        <td>{{allSchoolData?.totalSchools}}</td>
-                        <td>{{allSchoolData?.totalStudents}}</td>
-                        <td>{{allSchoolData?.totalTeachers}}</td>
-                        <td>{{allSchoolData?.totalFemaleTeachers}}</td>
-                        <td>{{allSchoolData?.totalMaleTeachers}}</td>
-                        <td>{{allSchoolData?.totalGirls}}</td>
-                        <td>{{allSchoolData?.totalBoys}}</td>
-                        <td>{{allSchoolData?.Other}}</td>
-                        <!-- <td>{{(data.PresentCount/data.totalStudentCount)*100 |number : '1.2-2'}}%</td> -->
-                    </tr>
-                    <!-- <tr class="sticky-bottom bottom-0 table-success fw-bold">
-                        <td>Total</td>
-                        <td colspan="2">{{zoneModel}}</td>
-                        <td>{{allTotalData?.allStudent}}</td>
-                        <td>{{allTotalData?.allPresent}}</td>
-                        <td>{{allTotalData?.allAbsent}}</td>
-                        <td>{{allTotalData?.allLeave}}</td>
-                        <td>0</td>
-                        <td>{{allTotalData?.allUnmark}}</td>
-                        <td>{{allTotalData?.allPercent}}%</td>
-                    </tr> -->
-                </tbody>
-            </table>
-        </div>
+    <div class="mt-5 table-container" style="overflow-x: auto; width: 90vw; height: 99vh;" *ngIf="allSchoolData && allSchoolData.length > 0">
+        <table class="table table-striped table-hover" style="min-width: 1200px;">
+            <!-- Setting min-width to maintain the width of the table -->
+            <thead class="sticky-top top-0">
+                <tr class="table-success">
+                    <!-- <th>S.No</th> -->
+                    <th>Year</th>
+                    <th>Class</th>
+                    <th>Phase</th>
+                    <th>English Absent</th>
+                    <th>English Advance Story</th>
+                    <th>English Beginner</th>
+                    <th>English Charecter</th>
+                    <th>English Paragraph</th>
+                    <th>English Story</th>
+                    <th>English Words</th>
+                    <th>Hindi Absent</th>
+                    <th>Hindi Advance Story</th>
+                    <th>Hindi Beginner</th>
+                    <th>Hindi Charecter</th>
+                    <th>Hindi Paragraph</th>
+                    <th>Hindi Story</th>
+                    <th>Hindi Words</th>
+                    <th>Maths Absent</th>
+                    <th>Maths Beginner</th>
+                    <th>Maths Division</th>
+                    <th>Maths Subtraction</th>
+                    <th>No. recog (0-9)</th>
+                    <th>No. recog (10-99)</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                <tr *ngFor="let data of allSchoolData">
+                    <!-- <td>{{i+1}}</td> -->
+                    <td>{{data?.Year}}</td>
+                    <td>{{data?.class}}</td>
+                    <td>{{data?.Phase}}</td>
+                    <td>{{data?.English_Absent}}</td>
+                    <td>{{data?.English_Advance_Story}}</td>
+                    <td>{{data?.English_Beginner}}</td>
+                    <td>{{data?.English_Charecter}}</td>
+                    <td>{{data?.English_Paragraph}}</td>
+                    <td>{{data?.English_Story}}</td>
+                    <td>{{data?.English_Words}}</td>
+                    <td>{{data?.Hindi_Absent}}</td>
+                    <td>{{data?.Hindi_Advance_Story}}</td>
+                    <td>{{data?.Hindi_Beginner}}</td>
+                    <td>{{data?.Hindi_Charecter}}</td>
+                    <td>{{data?.Hindi_Paragraph}}</td>
+                    <td>{{data?.Hindi_Story}}</td>
+                    <td>{{data?.Hindi_Words}}</td>
+                    <td>{{data?.Maths_Absent}}</td>
+                    <td>{{data?.Maths_Beginner}}</td>
+                    <td>{{data?.Maths_Division}}</td>
+                    <td>{{data?.Maths_Subtraction}}</td>
+                    <td>{{data?.['No. recog (0-9)']}}</td>
+                    <td>{{data?.['No. recog (10-99)']}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+    <div class="bg-primary m-4" *ngIf="allSchoolData && allSchoolData.length <= 0">
+        <h2 class="text-center text-white fst-italic p-2">Please Search School Id...</h2>
+      </div>
 </div>
