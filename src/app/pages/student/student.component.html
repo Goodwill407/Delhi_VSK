@@ -263,7 +263,8 @@
                 src="../../../assets/images/icons/woman.png">
               <h4 class="fw-bold ms-2">{{profileDetails?.Name}}</h4>
             </div>
-            <h6>Student ID :<span class="float-end"> {{profileDetails?.S_ID}}</span></h6>
+            <h6>Height :<span class="float-end"> {{profileDetails?.Height}}</span></h6>
+            <h6>Weight :<span class="float-end"> {{profileDetails?.Weight}}</span></h6>
             <h6>Date of birth :<span class="float-end"> {{profileDetails?.Dob}}</span></h6>
             <h6>Gender: <span class="float-end">{{ profileDetails?.Gender == 'M' ? 'Male' : 'Female' }}</span></h6>
           </div>
@@ -271,11 +272,12 @@
             <div class="vr h-100"></div>
           </div>
           <div class="col-md-6">
+            <h6>Student ID :<span class="float-end"> {{profileDetails?.S_ID}}</span></h6>
             <h6>Class : <span class="float-end"> {{profileDetails?.CLASS}}, {{profileDetails?.section}}</span></h6>
-            <h6>School :<span class="float-end"> {{profileDetails?.SCHOOL_NAME}}</span></h6>
             <h6>Zone :<span class="float-end"> {{profileDetails?.z_name}}</span></h6>
             <h6>District :<span class="float-end"> {{profileDetails?.District}}</span></h6>
             <h6>Status :<span class="float-end"> {{profileDetails?.status}}</span></h6>
+            <h6>School :<span class="float-end"> {{profileDetails?.SCHOOL_NAME}}</span></h6>
           </div>
         </div>
       </div>
