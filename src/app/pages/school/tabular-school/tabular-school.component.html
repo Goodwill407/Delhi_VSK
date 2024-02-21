@@ -3,14 +3,14 @@
     <div class="filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
         <input class="form-control w-25 ms-auto" type="text" [(ngModel)]="SearchBox" placeholder="School Id" value=""
             id="example-search-input">
-        <button class="btn btn-success mx-2" (click)="searchSchool()">Search</button>
+        <button class="btn btn-search mx-2" (click)="searchSchool()">Search</button>
     </div>
 
-    <div class="mt-5 table-container" style="overflow-x: auto; width: 90vw; height: 99vh;" *ngIf="allSchoolData && allSchoolData.length > 0">
+    <div class="mt-5 table-container" style="overflow-x: auto; width: 90vw; height: 90vh;" *ngIf="allSchoolData && allSchoolData.length > 0">
         <table class="table table-striped table-hover" style="min-width: 1200px;">
             <!-- Setting min-width to maintain the width of the table -->
             <thead class="sticky-top top-0">
-                <tr class="table-success">
+                <tr class="table-success align-middle">
                     <!-- <th>S.No</th> -->
                     <th>Year</th>
                     <th>Class</th>
@@ -68,6 +68,6 @@
         </table>
     </div>
     <div class="bg-primary m-4" *ngIf="allSchoolData && allSchoolData.length <= 0">
-        <h2 class="text-center text-white fst-italic p-2">Please Search School Id...</h2>
+        <h2 class="text-center text-white fst-italic p-2">Please Search By School Id...</h2>
       </div>
 </div>

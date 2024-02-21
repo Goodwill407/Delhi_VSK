@@ -1,0 +1,60 @@
+<div class="filter-box">
+    <div class="filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
+        <input class="form-control w-25 ms-auto" type="text" [(ngModel)]="SearchBox" placeholder="Student Id" value=""
+            id="example-search-input">
+        <button class="btn btn-search mx-2" (click)="searchSchool()">Search</button>
+    </div>
+
+    <div class="mt-5 table-container" style="overflow-x: auto; width: 90vw; height: 99vh;"
+        *ngIf="studentData && studentData.length > 0">
+        <table class="table table-striped table-hover table-bordered" style="min-width: 1200px;">
+            <thead class="sticky-top top-0">
+                <tr class="table-success text-center table-borderless">
+                    <th>Class</th>
+                    <th>Session Year</th>
+                    <th>Subject</th>
+                    <th>Total Mark</th>
+                    <th>Grand Total</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                <tr>
+                    <td rowspan="7" class="align-middle fw-bold">{{studentData[0]?.class_desc}}</td>
+                    <td rowspan="7" class="align-middle fw-bold">{{studentData[0]?.session}}</td>
+                    <td>{{studentData[0]?.Sub1}}</td>
+                    <td>{{studentData[0]?.Total1}}</td>
+                    <td rowspan="7" class="align-middle fw-bold">{{studentData[0]?.Grand_Total}}</td>
+                    <td rowspan="7" class="align-middle fw-bold">{{studentData[0]?.Result}}</td>
+                </tr>
+                <tr>
+                    <td>{{studentData[0]?.Sub2}}</td>
+                    <td>{{studentData[0]?.Total2}}</td>
+                </tr>
+                <tr>
+                    <td>{{studentData[0]?.Sub3}}</td>
+                    <td>{{studentData[0]?.Total3}}</td>
+                </tr>
+                <tr>
+                    <td>{{studentData[0]?.Sub4}}</td>
+                    <td>{{studentData[0]?.Total4}}</td>
+                </tr>
+                <tr>
+                    <td>{{studentData[0]?.Sub5}}</td>
+                    <td>{{studentData[0]?.Total5}}</td>
+                </tr>
+                <tr>
+                    <td>{{studentData[0]?.Sub6}}</td>
+                    <td>{{studentData[0]?.Total6}}</td>
+                </tr>
+                <tr>
+                    <td>{{studentData[0]?.Sub7}}</td>
+                    <td>{{studentData[0]?.Total7}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="bg-primary m-4" *ngIf="studentData && studentData.length <= 0">
+        <h2 class="text-center text-white fst-italic p-2">Please Search By Student Id...</h2>
+    </div>
+</div>

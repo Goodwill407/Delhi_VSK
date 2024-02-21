@@ -1,0 +1,3 @@
+.table-bordered>:not(caption)>*>* {
+    border-width: 1 var(--bs-border-width) !important;
+}

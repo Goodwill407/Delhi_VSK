@@ -12,6 +12,10 @@ import { PgiComponent } from './pgi/pgi.component';
 import { UdiseComponent } from './udise/udise.component';
 import { NasComponent } from './nas/nas.component';
 import { DikshaComponent } from './diksha/diksha.component';
+import { TeacherAttendanceComponent } from './teacher-attendance/teacher-attendance.component';
+import { NipunComponent } from './nipun/nipun.component';
+import { MissionBuniyaadComponent } from './mission-buniyaad/mission-buniyaad.component';
+import { AboutComponent } from './about/about.component';
 
 const routes: Routes = [
   { path: 'admin-dashboard', component: DashboardComponent },
@@ -26,6 +30,10 @@ const routes: Routes = [
   { path: 'nas', component: NasComponent },
   { path: 'udise', component: UdiseComponent },
   { path: 'diksha', component: DikshaComponent },
+  { path: 'teacher-attendance', component: TeacherAttendanceComponent },
+  { path: 'nipun', component: NipunComponent },
+  { path: 'mission-buniyaad', component: MissionBuniyaadComponent },
+  { path: 'about', component: AboutComponent },
 ];
 
 @NgModule({

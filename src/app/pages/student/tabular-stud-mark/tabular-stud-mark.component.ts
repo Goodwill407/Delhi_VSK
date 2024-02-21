@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -6,17 +5,16 @@ import { CommunicationService } from 'src/app/services/communication.service';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 
 @Component({
-  selector: 'app-tabular-school',
-  templateUrl: './tabular-school.component.html',
-  styleUrls: ['./tabular-school.component.css']
+  selector: 'app-tabular-stud-mark',
+  templateUrl: './tabular-stud-mark.component.html',
+  styleUrls: ['./tabular-stud-mark.component.css']
 })
-export class TabularSchoolComponent {
-  allSchoolData: any[] = [];
+export class TabularStudMarkComponent {
+  studentData: any[] = [];
   communicationServiceMobile: any;
-  maxDate: any = '2024-08-28';
   SearchBox: any;
 
-  constructor(private http: HttpServiceService, public datepipe: DatePipe, private spinner: NgxSpinnerService, private toastr: ToastrService, private communicationService: CommunicationService) {
+  constructor(private http: HttpServiceService, private spinner: NgxSpinnerService, private toastr: ToastrService, private communicationService: CommunicationService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
   }
 
@@ -27,10 +25,9 @@ export class TabularSchoolComponent {
   searchSchool() {
     this.spinner.show();
     if (this.SearchBox) {
-      this.http.get('mission-buniyad/'+this.SearchBox).subscribe((res:any)=>{
+      this.http.get('student-marks/'+this.SearchBox).subscribe((res:any)=>{
         if(res && res.length > 0){
-          res.sort((a:any, b:any) => a.class - b.class);
-          this.allSchoolData = res;
+          this.studentData = res;
         }
         else{
           this.toastr.warning('Data Not Found');
@@ -45,4 +42,3 @@ export class TabularSchoolComponent {
    
   }
 }
-

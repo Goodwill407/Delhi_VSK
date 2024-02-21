@@ -1,0 +1,136 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+</ngx-spinner>
+<ul class="nav nav-pills mb-3 filter-box px-3 mt-3" id="pills-tab" role="tablist">
+    <h2 class="fw-bold">MISSION BUNIYAAD</h2>
+    <div class="vr mx-3 opacity-100"></div>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+            type="button" role="tab" aria-controls="pills-home" aria-selected="true">PHASES</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
+            type="button" role="tab" aria-controls="pills-profile" aria-selected="false">ABOUT</button>
+    </li>
+    <a href="https://www.edudel.nic.in/welcome_folder/mission_buniyad_2018.htm" class="ms-auto"><img height="50px" width="150px"
+            src="../../../assets/images/Dashboard/missitionBuniyaad.jpeg" alt="">
+    </a>
+</ul>
+<div class="tab-content" id="pills-tabContent">
+    <!-- == 1 == -->
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+        <div class="filter-box">
+            <div class="filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
+                <input class="form-control w-25 ms-auto" type="text" [(ngModel)]="SearchBox" placeholder="School Id" value=""
+                    id="example-search-input">
+                <button class="btn btn-search mx-2" (click)="searchSchool()">Search</button>
+            </div>
+        
+            <div class="mt-5 table-container" style="overflow-x: auto; width: 90vw; height: 90vh;" *ngIf="allSchoolData && allSchoolData.length > 0">
+                <table class="table table-striped table-hover" style="min-width: 1200px;">
+                    <!-- Setting min-width to maintain the width of the table -->
+                    <thead class="sticky-top top-0">
+                        <tr class="table-success align-middle">
+                            <!-- <th>S.No</th> -->
+                            <th>Year</th>
+                            <th>Class</th>
+                            <th>Phase</th>
+                            <th>English Absent</th>
+                            <th>English Advance Story</th>
+                            <th>English Beginner</th>
+                            <th>English Charecter</th>
+                            <th>English Paragraph</th>
+                            <th>English Story</th>
+                            <th>English Words</th>
+                            <th>Hindi Absent</th>
+                            <th>Hindi Advance Story</th>
+                            <th>Hindi Beginner</th>
+                            <th>Hindi Charecter</th>
+                            <th>Hindi Paragraph</th>
+                            <th>Hindi Story</th>
+                            <th>Hindi Words</th>
+                            <th>Maths Absent</th>
+                            <th>Maths Beginner</th>
+                            <th>Maths Division</th>
+                            <th>Maths Subtraction</th>
+                            <th>No. recog (0-9)</th>
+                            <th>No. recog (10-99)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        <tr *ngFor="let data of allSchoolData">
+                            <!-- <td>{{i+1}}</td> -->
+                            <td>{{data?.Year}}</td>
+                            <td>{{data?.class}}</td>
+                            <td>{{data?.Phase}}</td>
+                            <td>{{data?.English_Absent}}</td>
+                            <td>{{data?.English_Advance_Story}}</td>
+                            <td>{{data?.English_Beginner}}</td>
+                            <td>{{data?.English_Charecter}}</td>
+                            <td>{{data?.English_Paragraph}}</td>
+                            <td>{{data?.English_Story}}</td>
+                            <td>{{data?.English_Words}}</td>
+                            <td>{{data?.Hindi_Absent}}</td>
+                            <td>{{data?.Hindi_Advance_Story}}</td>
+                            <td>{{data?.Hindi_Beginner}}</td>
+                            <td>{{data?.Hindi_Charecter}}</td>
+                            <td>{{data?.Hindi_Paragraph}}</td>
+                            <td>{{data?.Hindi_Story}}</td>
+                            <td>{{data?.Hindi_Words}}</td>
+                            <td>{{data?.Maths_Absent}}</td>
+                            <td>{{data?.Maths_Beginner}}</td>
+                            <td>{{data?.Maths_Division}}</td>
+                            <td>{{data?.Maths_Subtraction}}</td>
+                            <td>{{data?.['No. recog (0-9)']}}</td>
+                            <td>{{data?.['No. recog (10-99)']}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="bg-primary m-4" *ngIf="allSchoolData && allSchoolData.length <= 0">
+                <h2 class="text-center text-white fst-italic p-2">Please Search By School Id...</h2>
+              </div>
+        </div>
+    </div>
+
+    <!-- == 2 == -->
+    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+        <div class="mx-3 mt-5 fs-6">
+            <p>Mission Buniyad is a comprehensive initiative aimed at transforming the educational landscape in the
+                capital city of India. Rooted in the vision of fostering holistic development and ensuring quality
+                education for all, Mission Buniyad endeavors to address the foundational learning needs of students
+                across various socio-economic strata.
+            </p>
+            <p> At its core, Mission Buniyad is committed to enhancing the basic literacy and numeracy skills of
+                children, particularly in government schools and underserved communities. Through a multifaceted
+                approach, the mission seeks to identify and rectify gaps in foundational learning, laying a strong
+                educational groundwork for students to thrive academically and beyond</p><br>
+
+            <h5>Key components of Mission Buniyad include:</h5><br>
+
+            <h6> 1. Curriculum Enhancement:</h6>
+            <p> The mission aims to revamp the curriculum to prioritize foundational skills in literacy and numeracy,
+                ensuring that students receive a strong educational foundation from the outset.
+            </p>
+            <h6>2. Teacher Training and Capacity Building:</h6>
+            <p> Recognizing the pivotal role of educators, Mission Buniyad invests in comprehensive training programs to
+                equip teachers with innovative pedagogical techniques and strategies tailored to improve foundational
+                learning outcomes.</p>
+            <h6>3. Assessment and Monitoring:</h6>
+            <p> Rigorous assessment mechanisms are put in place to gauge student progress and identify areas of
+                improvement. Continuous monitoring and evaluation help track the effectiveness of interventions and
+                inform data-driven decision-making.
+            </p>
+            <h6>4. Community Engagement:</h6>
+            <p> Mission Buniyad  fosters partnerships with local communities, parents, and stakeholders to garner support and participation in educational initiatives. Community involvement is pivotal in ensuring the sustained success and relevance of the mission.
+            </p>
+            <h6>5. Technology Integration:</h6>
+            <p> Leveraging the power of technology, the mission integrates digital tools and resources to enhance teaching and learning experiences, making education more accessible and engaging for students.
+            </p>
+            <h6>6. Inclusive Approach: </h6>
+            <p> With a commitment to inclusivity, Mission Buniyad  prioritizes reaching marginalized and vulnerable populations, ensuring that every child, regardless of background, has access to quality education and equal opportunities for growth and development.
+            </p>
+            <p>By addressing the foundational learning needs of students and fostering a culture of excellence in education, Mission Buniyad  aspires to pave the way for a brighter future, where every child in  can realize their full potential and contribute meaningfully to society.</p>
+
+        </div>
+    </div>
+</div>

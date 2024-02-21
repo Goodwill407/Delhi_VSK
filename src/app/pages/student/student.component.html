@@ -1,111 +1,127 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
 </ngx-spinner>
-<div class="mt-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
-  <h2 class="fw-bold">STUDENT</h2>
-  <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
-  <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
-    [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
-    <option value="">All Districts</option>
-    <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
-      {{district.districtName}} ({{district.D_ID}})
-    </option>
-  </select>
-  <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'" [(ngModel)]="ZoneModel"
-    (change)="getGraphsByZone()">
-    <option value="">All Zone</option>
-    <option *ngFor="let zone of allZones" value="{{zone.name}}">
-      {{zone.name}} ({{zone.id}})
-    </option>
-  </select>
-  <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
-    [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
-    <option value="">All School</option>
-    <option *ngFor="let school of allSchools" [ngValue]="school">
-      {{school.School_Name}} - ({{school.Schoolid}})
-    </option>
-  </select>
-</div>
+<nav>
+  <div class="nav nav-pills mb-3 filter-box px-3 mt-3" id="pills-tab" role="tablist">
+    <h2 class="fw-bold">STUDENT</h2>
+    <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
+    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
+      role="tab" aria-controls="nav-home" aria-selected="true">GRAPHICAL VIEW</button>
+    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"
+      role="tab" aria-controls="nav-profile" aria-selected="false">STUDENT ACADEMICS</button>
+    <!-- <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button"
+          role="tab" aria-controls="nav-contact" aria-selected="false">Bird Eye</button> -->
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <!-- tab1 -->
+  <div class="tab-pane fade show active filter-box" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 
-<section class="filter-box mt-3">
-<div class="d-flex justify-content-center filter-box mt-2" *ngIf="districtModel || ZoneModel || schoolModel">
-  <h3 class="text-center mb-0" *ngIf="districtModel">{{districtModel}}&nbsp; </h3>
-  <h3 class="text-center mb-0" *ngIf="ZoneModel"> <span *ngIf="districtModel">|</span> {{ZoneModel}}&nbsp; </h3>
-  <h3 class="text-center mb-0" *ngIf="schoolModel"> <span *ngIf="ZoneModel || districtModel">|</span>
-    {{schoolModel.School_Name}}</h3>
-</div>
+    <div class="mt-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
+      <h2 class="fw-bold">STUDENT</h2>
+      <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
+      <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
+        [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
+        <option value="">All Districts</option>
+        <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
+          {{district.districtName}} ({{district.D_ID}})
+        </option>
+      </select>
+      <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
+        [(ngModel)]="ZoneModel" (change)="getGraphsByZone()">
+        <option value="">All Zone</option>
+        <option *ngFor="let zone of allZones" value="{{zone.name}}">
+          {{zone.name}} ({{zone.id}})
+        </option>
+      </select>
+      <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
+        [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
+        <option value="">All School</option>
+        <option *ngFor="let school of allSchools" [ngValue]="school">
+          {{school.School_Name}} - ({{school.Schoolid}})
+        </option>
+      </select>
+    </div>
 
-<div class="input-group float-end mt-2 me-2" style="width: 300px;">
-  <input class="form-control" type="search" [(ngModel)]="globalSearchBox" placeholder="Search student..." value=""
-    id="example-search-input" (search)="search()">
-  <span class="input-group-text" id="basic-addon1" role="button" (click)="searchStudent()">🔍</span>
-  <span class="search-filter-box bg-white w-100" *ngIf="globalSearchBox">
-    <div class="d-flex justify-content-center" *ngIf="searchLoader">
-      <div class="spinner-border m-2" role="status">
-        <span class="visually-hidden">Loading...</span>
+    <section class="filter-box mt-3">
+      <div class="d-flex justify-content-center filter-box mt-2" *ngIf="districtModel || ZoneModel || schoolModel">
+        <h3 class="text-center mb-0" *ngIf="districtModel">{{districtModel}}&nbsp; </h3>
+        <h3 class="text-center mb-0" *ngIf="ZoneModel"> <span *ngIf="districtModel">|</span> {{ZoneModel}}&nbsp; </h3>
+        <h3 class="text-center mb-0" *ngIf="schoolModel"> <span *ngIf="ZoneModel || districtModel">|</span>
+          {{schoolModel.School_Name}}</h3>
       </div>
-    </div>
-    <div class="data-panel" *ngIf="studentSearchData && studentSearchData.length > 0">
-      <p class="mb-0 p-1 ps-2" *ngFor="let data of studentSearchData" (click)="viewProfileDetails(data)"
-        data-bs-toggle="modal" data-bs-target="#staticBackdrop2">{{data.Name}}</p>
-    </div>
-  </span>
-</div>
 
-<div class="container1">
-  <div class="column text-center">
-    <h5 class="header-bg p-2">Delhi</h5>
-    <!-- <div>
+      <div class="input-group float-end mt-2 me-2" style="width: 300px;">
+        <input class="form-control" type="search" [(ngModel)]="globalSearchBox" placeholder="Search student..." value=""
+          id="example-search-input" (search)="search()">
+        <span class="input-group-text" id="basic-addon1" role="button" (click)="searchStudent()">🔍</span>
+        <span class="search-filter-box bg-white w-100" *ngIf="globalSearchBox">
+          <div class="d-flex justify-content-center" *ngIf="searchLoader">
+            <div class="spinner-border m-2" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+          <div class="data-panel" *ngIf="studentSearchData && studentSearchData.length > 0">
+            <p class="mb-0 p-1 ps-2" *ngFor="let data of studentSearchData" (click)="viewProfileDetails(data)"
+              data-bs-toggle="modal" data-bs-target="#staticBackdrop2">{{data.Name}}</p>
+          </div>
+        </span>
+      </div>
+
+      <div class="container1">
+        <div class="column text-center">
+          <h5 class="header-bg p-2">Delhi</h5>
+          <!-- <div>
       <img class="img-fluid mt-2" width="160" src="../../../assets/images/Dashboard/reading.png">
     </div> -->
-    <img class="mt-4" src="../../../assets/images/Dashboard/reading.png" style="height: 100px;" alt="">
-    <div class="d-flex justify-content-around text-center ratio-data">
-      <div style="width: 45%;">
-        <h2 class="fw-bold">{{totalStudent}}</h2>
-        <h5>Total Student</h5>
-      </div>
-      <div class="vr ms-2"></div>
-      <div style="width: 45%;">
-        <h2 class="fw-bold">{{averageStudentOfSchool?.toFixed(1)}} : 1</h2>
-        <h5>Average Student Per School</h5>
-      </div>
-    </div>
-  </div>
+          <img class="mt-4" src="../../../assets/images/Dashboard/reading.png" style="height: 100px;" alt="">
+          <div class="d-flex justify-content-around text-center ratio-data">
+            <div style="width: 45%;">
+              <h2 class="fw-bold">{{totalStudent}}</h2>
+              <h5>Total Student</h5>
+            </div>
+            <div class="vr ms-2"></div>
+            <div style="width: 45%;">
+              <h2 class="fw-bold">{{averageStudentOfSchool?.toFixed(1)}} : 1</h2>
+              <h5>Average Student Per School</h5>
+            </div>
+          </div>
+        </div>
 
-  <div class="column">
-    <h5 class="header-bg p-2">Student By Status </h5>
-    <apx-chart [series]="StudentStatusWiseCounts?.series" [chart]="StudentStatusWiseCounts?.chart"
-      [labels]="StudentStatusWiseCounts?.labels" [fill]="StudentStatusWiseCounts?.fill"
-      [dataLabels]="StudentStatusWiseCounts?.dataLabels" [plotOptions]="StudentStatusWiseCounts?.plotOptions"
-      [responsive]="StudentStatusWiseCounts?.responsive" [legend]="StudentStatusWiseCounts?.legend"
-      [colors]="StudentStatusWiseCounts?.colors" [tooltip]="StudentStatusWiseCounts?.tooltip"></apx-chart>
-  </div>
+        <div class="column">
+          <h5 class="header-bg p-2">Student By Status </h5>
+          <apx-chart [series]="StudentStatusWiseCounts?.series" [chart]="StudentStatusWiseCounts?.chart"
+            [labels]="StudentStatusWiseCounts?.labels" [fill]="StudentStatusWiseCounts?.fill"
+            [dataLabels]="StudentStatusWiseCounts?.dataLabels" [plotOptions]="StudentStatusWiseCounts?.plotOptions"
+            [responsive]="StudentStatusWiseCounts?.responsive" [legend]="StudentStatusWiseCounts?.legend"
+            [colors]="StudentStatusWiseCounts?.colors" [tooltip]="StudentStatusWiseCounts?.tooltip"></apx-chart>
+        </div>
 
-  <div class="column text-center">
-    <h5 class="header-bg p-2">Studying Students & Teacher Ratio</h5>
-    <img class="img-fluid mt-5" width="120" src="../../../assets/images/Dashboard/education.png">
-    <h3 class="mt-5 fw-semibold teacher-ratio-count">{{teacherStudentRatio | number: '1.0-0'}}
-      : 1 Teacher</h3>
-  </div>
+        <div class="column text-center">
+          <h5 class="header-bg p-2">Studying Students & Teacher Ratio</h5>
+          <img class="img-fluid mt-5" width="120" src="../../../assets/images/Dashboard/education.png">
+          <h3 class="mt-5 fw-semibold teacher-ratio-count">{{teacherStudentRatio | number: '1.0-0'}}
+            : 1 Teacher</h3>
+        </div>
 
-  <div class="column">
-    <h5 class="header-bg p-2">Student Gender Ratio</h5>
-    <apx-chart [series]="studentsGenderRatio?.series" [chart]="studentsGenderRatio?.chart"
-      [labels]="studentsGenderRatio?.labels" [fill]="studentsGenderRatio?.fill"
-      [dataLabels]="studentsGenderRatio?.dataLabels" [plotOptions]="studentsGenderRatio?.plotOptions"
-      [responsive]="studentsGenderRatio?.responsive" [legend]="studentsGenderRatio?.legend"
-      [colors]="studentsGenderRatio?.colors" [tooltip]="studentsGenderRatio?.tooltip"></apx-chart>
-  </div>
+        <div class="column">
+          <h5 class="header-bg p-2">Student Gender Ratio</h5>
+          <apx-chart [series]="studentsGenderRatio?.series" [chart]="studentsGenderRatio?.chart"
+            [labels]="studentsGenderRatio?.labels" [fill]="studentsGenderRatio?.fill"
+            [dataLabels]="studentsGenderRatio?.dataLabels" [plotOptions]="studentsGenderRatio?.plotOptions"
+            [responsive]="studentsGenderRatio?.responsive" [legend]="studentsGenderRatio?.legend"
+            [colors]="studentsGenderRatio?.colors" [tooltip]="studentsGenderRatio?.tooltip"></apx-chart>
+        </div>
 
-  <div class="column">
-    <h5 class="header-bg p-2">Shift Wise Student </h5>
-    <apx-chart [series]="StudentShiftWiseCounts?.series" [chart]="StudentShiftWiseCounts?.chart"
-      [labels]="StudentShiftWiseCounts?.labels" [fill]="StudentShiftWiseCounts?.fill"
-      [stroke]="StudentShiftWiseCounts?.stroke" [responsive]="StudentShiftWiseCounts?.responsive"
-      [legend]="StudentShiftWiseCounts?.legend" [colors]="StudentShiftWiseCounts?.colors"
-      [tooltip]="StudentShiftWiseCounts?.tooltip"></apx-chart>
-  </div>
+        <div class="column">
+          <h5 class="header-bg p-2">Shift Wise Student </h5>
+          <apx-chart [series]="StudentShiftWiseCounts?.series" [chart]="StudentShiftWiseCounts?.chart"
+            [labels]="StudentShiftWiseCounts?.labels" [fill]="StudentShiftWiseCounts?.fill"
+            [stroke]="StudentShiftWiseCounts?.stroke" [responsive]="StudentShiftWiseCounts?.responsive"
+            [legend]="StudentShiftWiseCounts?.legend" [colors]="StudentShiftWiseCounts?.colors"
+            [tooltip]="StudentShiftWiseCounts?.tooltip"></apx-chart>
+        </div>
 
-  <!-- <div class="column">
+        <!-- <div class="column">
         <h5 class="header-bg p-2">Stream Wise Student</h5>
         <apx-chart [series]="StreamWiseStudent?.series" [chart]="StreamWiseStudent?.chart"
             [dataLabels]="StreamWiseStudent?.dataLabels" [plotOptions]="StreamWiseStudent?.plotOptions"
@@ -114,16 +130,17 @@
             [fill]="StreamWiseStudent?.fill"></apx-chart>
     </div> -->
 
-  <div class="column">
-    <h5 class="header-bg p-2">Student By Management Wise </h5>
-    <apx-chart [series]="StudentManagementWiseCounts?.series" [chart]="StudentManagementWiseCounts?.chart"
-      [labels]="StudentManagementWiseCounts?.labels" [fill]="StudentManagementWiseCounts?.fill"
-      [dataLabels]="StudentManagementWiseCounts?.dataLabels" [plotOptions]="StudentManagementWiseCounts?.plotOptions"
-      [responsive]="StudentManagementWiseCounts?.responsive" [legend]="StudentManagementWiseCounts?.legend"
-      [colors]="StudentManagementWiseCounts?.colors" [tooltip]="StudentManagementWiseCounts?.tooltip"></apx-chart>
-  </div>
+        <div class="column">
+          <h5 class="header-bg p-2">Student By Management Wise </h5>
+          <apx-chart [series]="StudentManagementWiseCounts?.series" [chart]="StudentManagementWiseCounts?.chart"
+            [labels]="StudentManagementWiseCounts?.labels" [fill]="StudentManagementWiseCounts?.fill"
+            [dataLabels]="StudentManagementWiseCounts?.dataLabels"
+            [plotOptions]="StudentManagementWiseCounts?.plotOptions"
+            [responsive]="StudentManagementWiseCounts?.responsive" [legend]="StudentManagementWiseCounts?.legend"
+            [colors]="StudentManagementWiseCounts?.colors" [tooltip]="StudentManagementWiseCounts?.tooltip"></apx-chart>
+        </div>
 
-  <!-- <div class="column">
+        <!-- <div class="column">
         <h5 class="header-bg p-2">Affiliation Wise Student</h5>
         <apx-chart [series]="AffiliationWiseStudent?.series" [chart]="AffiliationWiseStudent?.chart"
             [labels]="AffiliationWiseStudent?.labels" [fill]="AffiliationWiseStudent?.fill"
@@ -132,40 +149,52 @@
             [colors]="AffiliationWiseStudent?.colors"></apx-chart>
     </div> -->
 
-  <!-- <div class="column">
+        <!-- <div class="column">
         <h5 class="header-bg p-2">Student By Type Wise</h5>
         <apx-chart [series]="TypeOfStudSchool?.series" [chart]="TypeOfStudSchool?.chart"
             [labels]="TypeOfStudSchool?.labels" [responsive]="TypeOfStudSchool?.responsive"
             [legend]="TypeOfStudSchool?.legend" [tooltip]="TypeOfStudSchool?.tooltip"></apx-chart>
     </div> -->
 
-    <div class="column">
-      <h5 class="header-bg p-2">Schools Type Wise Teacher</h5>
-      <apx-chart [series]="TypeOfStudSchool?.series" [chart]="TypeOfStudSchool?.chart"
-          [labels]="TypeOfStudSchool?.labels" [fill]="TypeOfStudSchool?.fill"
-          [dataLabels]="TypeOfStudSchool?.dataLabels" [plotOptions]="TypeOfStudSchool?.plotOptions"
-          [responsive]="TypeOfStudSchool?.responsive" [legend]="TypeOfStudSchool?.legend"
-          [colors]="TypeOfStudSchool?.colors" [tooltip]="TypeOfStudSchool?.tooltip"></apx-chart>
-  </div>
-  <!-- <div class="column">
+        <div class="column">
+          <h5 class="header-bg p-2">Schools Type Wise Teacher</h5>
+          <apx-chart [series]="TypeOfStudSchool?.series" [chart]="TypeOfStudSchool?.chart"
+            [labels]="TypeOfStudSchool?.labels" [fill]="TypeOfStudSchool?.fill"
+            [dataLabels]="TypeOfStudSchool?.dataLabels" [plotOptions]="TypeOfStudSchool?.plotOptions"
+            [responsive]="TypeOfStudSchool?.responsive" [legend]="TypeOfStudSchool?.legend"
+            [colors]="TypeOfStudSchool?.colors" [tooltip]="TypeOfStudSchool?.tooltip"></apx-chart>
+        </div>
+        <!-- <div class="column">
         <h5 class="header-bg p-2">Student By minority Wise</h5>
         <apx-chart [series]="MinorityWiseStudCount?.series" [chart]="MinorityWiseStudCount?.chart"
             [labels]="MinorityWiseStudCount?.labels" [responsive]="MinorityWiseStudCount?.responsive"
             [legend]="MinorityWiseStudCount?.legend"></apx-chart>
     </div> -->
 
-  <div class="column" [ngClass]="communicationServiceMobile ? '' : 'wide'">
-    <h5 class="header-bg p-2">Student By School Category</h5>
-    <apx-chart [series]="StudentCatogoryWiseCount?.series" [chart]="StudentCatogoryWiseCount?.chart"
-      [dataLabels]="StudentCatogoryWiseCount?.dataLabels" [plotOptions]="StudentCatogoryWiseCount?.plotOptions"
-      [xaxis]="StudentCatogoryWiseCount?.xaxis" [yaxis]="StudentCatogoryWiseCount?.yaxis"
-      [colors]="StudentCatogoryWiseCount?.colors" [title]="StudentCatogoryWiseCount?.title"
-      [legend]="StudentCatogoryWiseCount?.legend" [fill]="StudentCatogoryWiseCount?.fill"></apx-chart>
+        <div class="column" [ngClass]="communicationServiceMobile ? '' : 'wide'">
+          <h5 class="header-bg p-2">Student By School Category</h5>
+          <apx-chart [series]="StudentCatogoryWiseCount?.series" [chart]="StudentCatogoryWiseCount?.chart"
+            [dataLabels]="StudentCatogoryWiseCount?.dataLabels" [plotOptions]="StudentCatogoryWiseCount?.plotOptions"
+            [xaxis]="StudentCatogoryWiseCount?.xaxis" [yaxis]="StudentCatogoryWiseCount?.yaxis"
+            [colors]="StudentCatogoryWiseCount?.colors" [title]="StudentCatogoryWiseCount?.title"
+            [legend]="StudentCatogoryWiseCount?.legend" [fill]="StudentCatogoryWiseCount?.fill"></apx-chart>
+        </div>
+      </div>
+    </section>
   </div>
 
+  <!-- tab2 -->
+  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+    <app-tabular-stud-mark></app-tabular-stud-mark>
+  </div>
 
+  <!-- tab3 -->
+  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+
+  </div>
 </div>
-</section>
+<!-- tab end -->
+
 
 <!-- Button trigger modal -->
 <button #openModal data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal"
@@ -266,13 +295,13 @@
             <h6>Height :<span class="float-end"> {{profileDetails?.Height}}</span></h6>
             <h6>Weight :<span class="float-end"> {{profileDetails?.Weight}}</span></h6>
             <h6>Date of birth :<span class="float-end"> {{profileDetails?.Dob}}</span></h6>
-            <h6>Gender: <span class="float-end">{{ profileDetails?.Gender == 'M' ? 'Male' : 'Female' }}</span></h6>
           </div>
           <div class="col-md-1 text-center pb-3">
             <div class="vr h-100"></div>
           </div>
           <div class="col-md-6">
             <h6>Student ID :<span class="float-end"> {{profileDetails?.S_ID}}</span></h6>
+            <h6>Gender: <span class="float-end">{{ profileDetails?.Gender == 'M' ? 'Male' : 'Female' }}</span></h6>
             <h6>Class : <span class="float-end"> {{profileDetails?.CLASS}}, {{profileDetails?.section}}</span></h6>
             <h6>Zone :<span class="float-end"> {{profileDetails?.z_name}}</span></h6>
             <h6>District :<span class="float-end"> {{profileDetails?.District}}</span></h6>

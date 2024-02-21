@@ -134,6 +134,16 @@
         </li>
 
         <li class="nav-item">
+          <a class="nav-link" routerLink="teacher-attendance" routerLinkActive="active" href="#">
+            <span class="image-icon text-center justify-content-center">
+              <img src="../assets/images/Dashboard/immigration.png" alt="">
+            </span>
+            <span class="ms-2"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Teacher Attendance</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
           <a class="nav-link" routerLink="nishtha" routerLinkActive="active" href="#">
             <span class="image-icon">
               <img src="../assets/images/Dashboard/nishtha.png" alt="">
@@ -177,6 +187,36 @@
             </span>
             <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">
               Diksha</span>
+          </a>
+        </li>
+        
+        <li class="nav-item mt-2">
+          <a class="nav-link" routerLink="nipun" routerLinkActive="active">
+            <span class="image-icon">
+              <img src="../assets/images/Nipun Bharat Logo-01.png" alt="">
+            </span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">
+              Nipun</span>
+          </a>
+        </li>
+        
+        <li class="nav-item mt-2">
+          <a class="nav-link" routerLink="mission-buniyaad" routerLinkActive="active">
+            <span class="image-icon">
+              <img src="../assets/images/Dashboard/missionBuniyaad.png" alt="">
+            </span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">
+              Mission Buniyaad</span>
+          </a>
+        </li>
+        
+        <li class="nav-item mt-2">
+          <a class="nav-link" routerLink="about" routerLinkActive="active">
+            <span class="image-icon">
+              <img src="../assets/images/Dashboard/info.png" width="25px" alt="">
+            </span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">
+              About</span>
           </a>
         </li>
 
@@ -311,6 +351,16 @@
             </span>
           </a>
           <p class="mb-0 ">Attendance</p>
+        </li>
+        <hr class="m-0 w-100">
+        
+        <li class="nav-item">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="teacher-attendance" routerLinkActive="active" href="#">
+            <span class="image-icon text-center justify-content-center">
+              <img src="../assets/images/Dashboard/attendance.png" alt="">
+            </span>
+          </a>
+          <p class="mb-0 ">Attendance Teacher</p>
         </li>
         <hr class="m-0 w-100">
 

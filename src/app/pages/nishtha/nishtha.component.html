@@ -1,8 +1,9 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
 </ngx-spinner>
+<div class="filter-box mt-3">
+    <h3 class="d-flex"><span class="fw-bold">NISHTHA</span> <div class="vr mx-3 opacity-100"></div> National Initiative for School Heads' and Teachers' Holistic Advancement</h3>
+</div>
 <ul class="nav nav-pills mb-3 filter-box px-3 mt-3" id="pills-tab" role="tablist">
-    <h2 class="fw-bold">NISHTHA</h2>
-    <div class="vr mx-3 opacity-100"></div>
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
             type="button" role="tab" aria-controls="pills-home" aria-selected="true" (click)="getAllData()">Percentage
@@ -25,6 +26,13 @@
             type="button" role="tab" aria-controls="pills-contact" aria-selected="false"
             (click)="getCourse_MediumData()">Course Medium</button>
     </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-about-tab" data-bs-toggle="pill" data-bs-target="#pills-about" type="button"
+            role="tab" aria-controls="pills-about" aria-selected="false" (click)="getCourse_MediumData()">About</button>
+    </li>
+    <a href="https://itpd.ncert.gov.in/" class="ms-auto"><img height="45px" class="" width="290px" src="../../../assets/images/Dashboard/nishtaNew.png"
+            alt="">
+    </a>
 </ul>
 <div class="tab-content" id="pills-tabContent">
 
@@ -68,8 +76,8 @@
                 <h5 class="header-bg p-2">Local Body </h5>
                 <apx-chart [series]="Total_Local_body?.series" [chart]="Total_Local_body?.chart"
                     [labels]="Total_Local_body?.labels" [responsive]="Total_Local_body?.responsive"
-                    [legend]="Total_Local_body?.legend" [fill]="Total_Local_body?.fill" [dataLabels]="Total_Local_body?.dataLabels"
-                    [plotOptions]="Total_Local_body?.plotOptions"
+                    [legend]="Total_Local_body?.legend" [fill]="Total_Local_body?.fill"
+                    [dataLabels]="Total_Local_body?.dataLabels" [plotOptions]="Total_Local_body?.plotOptions"
                     [colors]="Total_Local_body?.colors"></apx-chart>
             </div>
         </div>
@@ -170,8 +178,8 @@
                 <h5 class="header-bg p-2">Total Courses </h5>
                 <apx-chart [series]="Total_CoursesGraph?.series" [chart]="Total_CoursesGraph?.chart"
                     [labels]="Total_CoursesGraph?.labels" [responsive]="Total_CoursesGraph?.responsive"
-                    [legend]="Total_CoursesGraph?.legend" [fill]="Total_CoursesGraph?.fill" [dataLabels]="Total_CoursesGraph?.dataLabels"
-                    [plotOptions]="Total_CoursesGraph?.plotOptions"
+                    [legend]="Total_CoursesGraph?.legend" [fill]="Total_CoursesGraph?.fill"
+                    [dataLabels]="Total_CoursesGraph?.dataLabels" [plotOptions]="Total_CoursesGraph?.plotOptions"
                     [colors]="Total_CoursesGraph?.colors"></apx-chart>
             </div>
 
@@ -186,6 +194,47 @@
         </div>
 
 
+    </div>
+
+    <!-- == 5 == -->
+    <div class="tab-pane fade" id="pills-about" role="tabpanel" aria-labelledby="pills-about-tab">
+        <div class="mx-3 mt-5">
+            <p class="fs-6"> NISHTHA, which stands for the National Initiative for School Heads' and Teachers' Holistic
+                Advancement, is a
+                program recommended by the National Education Policy (NEP) 2020. It mandates that every teacher and head
+                teacher
+            </p>
+            <p class="fs-6"> engagein a minimum of 50 hours of Continuous Professional Development (CPD) annually,
+                driven by their own
+                professional interests. These CPD sessions are structured to cover essential pedagogical topics,
+                including
+                foundational literacy</p>
+            <p class="fs-6">and numeracy, formative and adaptive assessment strategies, competency-based learning
+                methodologies, and
+                various
+                related approaches such as experiential learning, arts integration, sports integration, and storytelling
+                techniques.</p>
+
+            <h5>The NISHTHA program is structured into different modules:</h5><br>
+            <h6>1. NISHTHA 1.0 for Elementary level (Classes I-VIII)</h6><br>
+            <h6>2. NISHTHA 2.0 for Secondary level (Classes IX-XII)</h6><br>
+            <h6>3. NISHTHA 3.0 for NIPUN Bharat (Early Childhood Care and Education to Class V)</h6><br>
+
+            <h5>NISHTHA offers several modes of training:</h5>
+            <div>
+                <p class="fs-6">- Face-to-Face Training</p>
+                <p class="fs-6">- Online Subject Refresher Group (SRG) Training</p>
+                <p class="fs-6">- Online Training available through DIKSHA platform</p>
+            </div>
+            <br>
+            <p class="fs-6">These initiatives aim to enhance the professional competencies of teachers and school
+                leaders across
+                different
+                educational levels, fostering a holistic approach to education in line with the objectives outlined in
+                NEP
+                2020.</p>
+
+        </div>
     </div>
 
 </div>

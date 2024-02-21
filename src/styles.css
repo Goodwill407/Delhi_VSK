@@ -195,3 +195,7 @@ apx-chart .apexcharts-toolbar {
 .modal .modal-header{
     background-color: #8ac3f1 !important;
 }
+.btn-search{
+    background-color: #0d6efd !important;
+    color: #fff !important;
+}

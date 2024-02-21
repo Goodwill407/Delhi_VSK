@@ -1,6 +1,8 @@
+<div class="filter-box mt-3">
+    <h3 class="d-flex"><span class="fw-bold">DIKSHA</span> <div class="vr mx-3 opacity-100"></div>  Digital Infrastructure for Knowledge Sharing</h3>
+</div>
 <ul class="nav nav-pills mb-3 filter-box px-3 mt-3" id="pills-tab" role="tablist">
-    <h2 class="fw-bold">DIKSHA</h2>
-    <div class="vr mx-3 opacity-100"></div>
+
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
             type="button" role="tab" aria-controls="pills-home" aria-selected="true"
@@ -16,6 +18,13 @@
             (click)="getAllCounts_learningsession()" type="button" role="tab" aria-controls="pills-course"
             aria-selected="false">ETB LEARNING SESSION</button>
     </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-about-tab" data-bs-toggle="pill" data-bs-target="#pills-about" type="button"
+            role="tab" aria-controls="pills-about" aria-selected="false"
+            (click)="getAllCounts_learningsession()">ABOUT</button>
+    </li>
+    <a href="https://diksha.gov.in/explore?board=CBSE%2FNCERT&selectedTab=home&gradeLevel=Class%201&gradeLevel=Class%202&id=ncert_k-12" class="ms-auto"><img height="50px" width="290px" src="../../../assets/images/Dashboard/DikshaNew.png" alt="">
+    </a>
 </ul>
 
 <div class="tab-content" id="pills-tabContent">
@@ -23,15 +32,15 @@
     <!-- == 1 == -->
     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
         <div class="mt-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
-            <select class="form-select" [ngClass]="communicationServiceMobile ? 'w-100' : 'w-25 ms-2'" [(ngModel)]="gradeModel"
-                (change)="getAllAverageQRCodeCoverageStatus()">
+            <select class="form-select" [ngClass]="communicationServiceMobile ? 'w-100' : 'w-25 ms-2'"
+                [(ngModel)]="gradeModel" (change)="getAllAverageQRCodeCoverageStatus()">
                 <option value="" disabled>Select Grade</option>
                 <option *ngFor="let grade of allGrade" value="{{grade}}">
                     {{grade}}
                 </option>
             </select>
-            <select class="form-select" [ngClass]="communicationServiceMobile ? 'w-100 mt-2' : 'w-25 ms-2'" [(ngModel)]="mediumModel"
-                (change)="getAllAverageQRCodeCoverageStatus()">
+            <select class="form-select" [ngClass]="communicationServiceMobile ? 'w-100 mt-2' : 'w-25 ms-2'"
+                [(ngModel)]="mediumModel" (change)="getAllAverageQRCodeCoverageStatus()">
                 <option value="" disabled>Select Medium</option>
                 <option *ngFor="let medium of allMedium" value="{{medium}}">
                     {{medium}}
@@ -61,13 +70,15 @@
     <!-- == 2 == -->
     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
         <div class="mt-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
-            <select class="form-select" [ngClass]="communicationServiceMobile ? 'w-100 mb-2' : 'w-25 ms-2'" [(ngModel)]="gradeModel" (change)="getAllAverageQRCodeCoverage()">
+            <select class="form-select" [ngClass]="communicationServiceMobile ? 'w-100 mb-2' : 'w-25 ms-2'"
+                [(ngModel)]="gradeModel" (change)="getAllAverageQRCodeCoverage()">
                 <option value="" disabled>Select Grade</option>
                 <option *ngFor="let grade of allGrade" value="{{grade}}">
                     {{grade}}
                 </option>
             </select>
-            <select class="form-select" [ngClass]="communicationServiceMobile ? 'w-100' : 'w-25 ms-2'" [(ngModel)]="mediumModel" (change)="getAllAverageQRCodeCoverage()">
+            <select class="form-select" [ngClass]="communicationServiceMobile ? 'w-100' : 'w-25 ms-2'"
+                [(ngModel)]="mediumModel" (change)="getAllAverageQRCodeCoverage()">
                 <option value="" disabled>Select Medium</option>
                 <option *ngFor="let medium of allMedium" value="{{medium}}">
                     {{medium}}
@@ -111,19 +122,22 @@
     <div class="tab-pane fade" id="pills-course" role="tabpanel" aria-labelledby="pills-course-tab">
 
         <div class="mt-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
-            <select class="form-select" [ngClass]="communicationServiceMobile ? 'w-100' : 'w-25 ms-2'" [(ngModel)]="gradeModel" (change)="getAllCounts_learningsession()">
+            <select class="form-select" [ngClass]="communicationServiceMobile ? 'w-100' : 'w-25 ms-2'"
+                [(ngModel)]="gradeModel" (change)="getAllCounts_learningsession()">
                 <option value="" disabled>Select Grade</option>
                 <option *ngFor="let grade of allGrade" value="{{grade}}">
                     {{grade}}
                 </option>
             </select>
-            <select class="form-select" [ngClass]="communicationServiceMobile ? 'w-100 my-2' : 'w-25 ms-2'" [(ngModel)]="mediumModel" (change)="getAllCounts_learningsession()">
+            <select class="form-select" [ngClass]="communicationServiceMobile ? 'w-100 my-2' : 'w-25 ms-2'"
+                [(ngModel)]="mediumModel" (change)="getAllCounts_learningsession()">
                 <option value="" disabled>Select Medium</option>
                 <option *ngFor="let medium of allMedium" value="{{medium}}">
                     {{medium}}
                 </option>
             </select>
-            <select class="form-select" [ngClass]="communicationServiceMobile ? 'w-100' : 'w-25 ms-2'" [(ngModel)]="subjectModel" (change)="getAllCounts_learningsession()">
+            <select class="form-select" [ngClass]="communicationServiceMobile ? 'w-100' : 'w-25 ms-2'"
+                [(ngModel)]="subjectModel" (change)="getAllCounts_learningsession()">
                 <option value="" disabled>Select Subject</option>
                 <option *ngFor="let subject of allSubjects" value="{{subject}}">
                     {{subject}}
@@ -163,3 +177,45 @@
         </div>
 
     </div>
+
+    <!-- == 4 == -->
+    <div class="tab-pane fade" id="pills-about" role="tabpanel" aria-labelledby="pills-about-tab">
+        <div class="mx-3 mt-5 fs-6">
+            <p>At Diksha, we strive to revolutionize learning by fostering a dynamic educational
+                environment that empowers students for success in the 21st century. Our vision is to redefine education
+                delivery through technology and innovation,
+            </p>
+            <p> transcending traditional methods.</p> 
+            <p>We provide a comprehensive learning platform accessible to students and educators
+                nationwide, supporting proficiency in 36 Indian languages. Our key features include:</p>
+
+            <h6>- E-Textbooks</h6>
+            <h6>- Explanation Resources</h6>
+            <h6>- Practice Resources</h6>
+            <h6>- Learning Resources</h6>
+            <h6>- Teacher-Centric Resources</h6> <br>
+            <h5>Notable offerings include:</h5><br>
+            <h6>
+                <p>- Energized Textbooks (ETB): Transitioning from physical to 'phygital' textbooks.</p>
+            </h6>
+            <h6>
+                <p>- PM eVidya: Unifying digital, online, and broadcast education efforts for inclusive access.</p>
+            </h6>
+            <h6>
+                <p>- Digital Teacher Training: A nationwide initiative enhancing the quality of school education through
+                    integrated training.</p>
+            </h6>
+            <h6>
+                <p>- Content Sourcing: Curating high-quality content in a controlled manner.</p>
+            </h6>
+
+            <br>
+            <p>Diksha serves as a customizable National Digital Infrastructure for states to implement teacher-centric
+                initiatives. Educators can utilize Diksha to access and create top-tier teaching, learning, and
+                assessment resources </p> 
+            <p>across all subjects and levels in various Indian languages. Our mission is to bolster the capabilities of
+                our teachers, recognizing them as the backbone of our educational system. </p>
+
+        </div>
+    </div>
+</div>
