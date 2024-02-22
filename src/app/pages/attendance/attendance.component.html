@@ -70,7 +70,7 @@
         <div class="mt-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
             <h2 class="fw-bold d-block">AIDED SCHOOLS </h2>
             <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
-            <input type="date" class="form-control w-25 ms-2" [(ngModel)]="dateModel"
+            <input type="date" class="form-control ms-2" [ngClass]="communicationServiceMobile ? 'w-100' : 'w-25'" [(ngModel)]="dateModel"
                 (change)="getDataAidedSchool()">
         </div>
 

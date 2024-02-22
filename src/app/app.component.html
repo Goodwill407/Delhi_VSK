@@ -272,9 +272,9 @@
       </div>
     </nav>
 
-    <nav class="navbar navbar-expand-xl navbar-light small-screen">
+    <nav class="navbar navbar-expand-xl navbar-light small-screen" style="background-color: #3d9be9;">
       <div class="container-fluid d-block">
-        <h3 routerLink="content/admin-dashboard" class="text-center header-font mb-0"
+        <h3 routerLink="content/admin-dashboard" class="text-center text-white header-font mb-0"
           style="cursor: pointer; font-size:large;">Vidya
           Samiksha Kendra, Delhi</h3>
         <!-- <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
@@ -293,12 +293,16 @@
             <span class="nav-item">
               <img src="../../../assets/images/SSA.png" style="width: 70px;height:50px;">
             </span>
+            <span class="nav-item">
+              <i class="bi bi-box-arrow-right h1 text-white pt-2" (click)="logout()"></i>
+            </span>
           </div>
         </div>
       </div>
     </nav>
 
-    <h1 class="shadow-lg h2 btn small-screen fw-bold" style="position: absolute; top: 0" (click)="sideBarNav()">
+    <h1 class="shadow-lg h2 btn small-screen fw-bold" style="position: absolute; top: 0;background-color: #b3d64d;
+    color: #fff;" (click)="sideBarNav()">
       ☰
     </h1>
     <div class="small-screen position-absolute" *ngIf="showFlag" style="top: 40px">

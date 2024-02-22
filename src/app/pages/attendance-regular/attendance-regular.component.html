@@ -85,7 +85,7 @@
                 <h3 class="fw-bold">{{allData?.Counts[0]?.PresentCount}}</h3>
                 <h5 class="fw-semibold">Total present</h5>
             </div>
-            <div class="col-md-6" style="border-left: 1px solid #000;">
+            <div class="col-md-6" [ngStyle]="{'border-left': communicationServiceMobile ? '' : '1px solid #000'}">
                 <h3 class="fw-bold">{{allData?.Counts[0]?.AbsentCount}}</h3>
                 <h5 class="fw-semibold">Total absent</h5>
             </div>
@@ -96,7 +96,7 @@
                 <h3 class="fw-bold">{{allData?.Counts[0]?.totalLeaveCount}}</h3>
                 <h5 class="fw-semibold">Total leave</h5>
             </div>
-            <div class="col-md-6" style="border-left: 1px solid #000;">
+            <div class="col-md-6" [ngStyle]="{'border-left': communicationServiceMobile ? '' : '1px solid #000'}">
                 <h3 class="fw-bold">{{allData?.Counts[0]?.totalNotMarkedAttendanceCount}}</h3>
                 <h5 class="fw-semibold">Not marked</h5>
             </div>
