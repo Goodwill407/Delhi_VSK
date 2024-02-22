@@ -1,0 +1,55 @@
+<div class="filter-box-total">
+    <div class="filter-box-total" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
+        <h2 class="fw-bold">HOME</h2>
+        <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
+        <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
+            [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
+            <option value="">All Districts</option>
+            <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
+                {{district.districtName}} ({{district.D_ID}})
+            </option>
+        </select>
+        <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
+            [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
+            <option value="">All Zones</option>
+            <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
+                {{zone.Zone_Name}} ({{zone.Z_ID}})
+            </option>
+        </select>
+        <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
+            [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
+            <option value="" disabled>All School</option>
+            <option *ngFor="let school of allSchools" [ngValue]="school">
+                {{school.School_Name}} - ({{school.Schoolid}})
+            </option>
+        </select>
+    </div>
+
+    <div class="d-flex justify-content-center filter-box-total mt-2"
+        *ngIf="districtModel || zoneModel || schoolModel.School_Name">
+        <h3 class="text-center mb-0" *ngIf="districtModel">{{districtModel}}&nbsp; </h3>
+        <h3 class="text-center mb-0" *ngIf="zoneModel"> <span *ngIf="districtModel">|</span> {{zoneModel}}&nbsp; </h3>
+        <h3 class="text-center mb-0" *ngIf="schoolModel.School_Name"> <span *ngIf="zoneModel || districtModel">|</span>
+            {{schoolModel.School_Name}}
+        </h3>
+    </div>
+    <div class="container1 mt-2">
+        <div class="column">
+            <h5 class="header-bg p-2">Student Orientation</h5>
+            <apx-chart [series]="studentOrientation?.series" [chart]="studentOrientation?.chart"
+                [labels]="studentOrientation?.labels" [fill]="studentOrientation?.fill"
+                [colors]="studentOrientation?.colors" [dataLabels]="studentOrientation?.dataLabels"
+                [plotOptions]="studentOrientation?.plotOptions" [responsive]="studentOrientation?.responsive"
+                [legend]="studentOrientation?.legend"></apx-chart>
+        </div>
+        
+        <div class="column">
+            <h5 class="header-bg p-2">Student Training</h5>
+            <apx-chart [series]="studentTraining?.series" [chart]="studentTraining?.chart"
+                [labels]="studentTraining?.labels" [fill]="studentTraining?.fill"
+                [colors]="studentTraining?.colors" [dataLabels]="studentTraining?.dataLabels"
+                [plotOptions]="studentTraining?.plotOptions" [responsive]="studentTraining?.responsive"
+                [legend]="studentTraining?.legend"></apx-chart>
+        </div>
+    </div>
+</div>

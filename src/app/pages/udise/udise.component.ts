@@ -9,9 +9,12 @@ import { CommunicationService } from 'src/app/services/communication.service';
 export class UdiseComponent {
 
   constructor(private communicationService: CommunicationService) { }
+  ngOnInit(){
+    this.handleParentClick('home');
+  }
 
-  handleParentClick() {
-    this.communicationService.emitParentClick();
+  handleParentClick(data:any) {
+    this.communicationService.setSelectedTab(data);
   }
 
 }

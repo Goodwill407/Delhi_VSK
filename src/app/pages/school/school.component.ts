@@ -494,10 +494,6 @@ export class SchoolComponent {
   }
 
   getAllZones() {
-    // this.allZones = this.graphService.TreeGraph();
-    // for (let i = 0; i < allZones.length; i++) {
-    //   this.allZones.series[0].data.push({ x: allZones[i].zone, y: allZones[i].count });
-    // }
     if (this.districtModel) {
       const district = { "District_name": this.districtModel };
       this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {

@@ -29,7 +29,11 @@ export class UdiseDataComponent {
   }
 
   ngOnInit() {
-    this.getAllUdiseData();
+    this.communicationService.sharedData$.subscribe(data => {
+      if(data == 'udise'){
+        this.getAllUdiseData();
+      }
+    });
   }
 
   ngOnDestroy() {

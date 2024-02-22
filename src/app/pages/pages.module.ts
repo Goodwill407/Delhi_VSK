@@ -36,6 +36,7 @@ import { TeacherAttendanceComponent } from './teacher-attendance/teacher-attenda
 import { NipunComponent } from './nipun/nipun.component';
 import { MissionBuniyaadComponent } from './mission-buniyaad/mission-buniyaad.component';
 import { AboutComponent } from './about/about.component';
+import { UdiseHomeComponent } from './udise/udise-home/udise-home.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { AboutComponent } from './about/about.component';
     TeacherAttendanceComponent,
     NipunComponent,
     MissionBuniyaadComponent,
-    AboutComponent
+    AboutComponent,
+    UdiseHomeComponent
   ],
   imports: [
     CommonModule,

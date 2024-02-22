@@ -52,24 +52,28 @@ export class UdiseSchoolComponent {
   }
 
   ngOnInit() {
-    this.getAllDistricts();
-    this.getAllZones();
-    this.getAllUdiseSchoolData();
+    this.communicationService.sharedData$.subscribe(data => {
+      if (data == 'udise-school') {
+        this.getAllDistricts();
+        this.getAllZones();
+        this.getAllUdiseSchoolData();
 
-    this.subscription = this.graphService
-      .getItemCountObservable()
-      .subscribe((count) => {
-        this.itemCount = count;
-        if (this.itemCount && (this.SchoolType == this.SchoolType || this.SchoolType == 0) && !this.districtModel && !this.zoneModel) {
-          this.getTypeWiseSchoolName(false);
-        }
-        else if (this.itemCount && this.districtModel && !this.zoneModel) {
-          this.getTypeWiseSchoolNameOfDistrict(false);
-        }
-        else if (this.itemCount && this.zoneModel || this.districtModel) {
-          this.getTypeWiseSchoolNameOfZone(false);
-        }
-      });
+        this.subscription = this.graphService
+          .getItemCountObservable()
+          .subscribe((count) => {
+            this.itemCount = count;
+            if (this.itemCount && (this.SchoolType == this.SchoolType || this.SchoolType == 0) && !this.districtModel && !this.zoneModel) {
+              this.getTypeWiseSchoolName(false);
+            }
+            else if (this.itemCount && this.districtModel && !this.zoneModel) {
+              this.getTypeWiseSchoolNameOfDistrict(false);
+            }
+            else if (this.itemCount && this.zoneModel || this.districtModel) {
+              this.getTypeWiseSchoolNameOfZone(false);
+            }
+          });
+      }
+    });
   }
 
   // ngOnDestroy() {
