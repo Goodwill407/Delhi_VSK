@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -33,7 +33,7 @@ export class UdiseHomeComponent {
   itemCount: number | undefined;
   subscription: Subscription | undefined;
 
-  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService) {
+  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService, private cdr:ChangeDetectorRef) {
     this.communicationServiceMobile = this.communicationService.isMobile;
   }
 
@@ -319,13 +319,12 @@ export class UdiseHomeComponent {
         this.seriesData = seriesData[this.dataPointIndex];
         console.log(this.dataPointIndex,'data',this.seriesData);
         this.graphService.addToCart();
-        // this.openModal.nativeElement.click();
+        this.cdr.detectChanges();
       }
       
     }
   }
   openModalData(){
-    // this.seriesData[this.dataPointIndex];
     this.openModal.nativeElement.click();
   }
 

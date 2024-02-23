@@ -34,7 +34,7 @@
         </h3>
     </div>
     <div class="container1 mt-2">
-        <div class="column">
+        <!-- <div class="column">
             <h5 class="header-bg p-2">Student Orientation</h5>
             <apx-chart [series]="studentOrientation?.series" [chart]="studentOrientation?.chart"
                 [labels]="studentOrientation?.labels" [fill]="studentOrientation?.fill"
@@ -77,7 +77,7 @@
                 [colors]="freeBook?.colors" [dataLabels]="freeBook?.dataLabels"
                 [plotOptions]="freeBook?.plotOptions" [responsive]="freeBook?.responsive"
                 [legend]="freeBook?.legend"></apx-chart>
-        </div>
+        </div> -->
     </div>
     <div class="d-flex justify-content-center">
         <div class="w-100  column">
@@ -100,14 +100,15 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title m-auto" *ngIf="seriesData" id="exampleModalLabel">Schools Details By Received Training: </h5>
-                <!-- <h5 class="modal-title m-auto" *ngIf="configDesignation == 0 || configDesignation"
-                    id="exampleModalLabel">
-                    Teacher
-                    Details By Designation:
-                    ({{allData.postdescWiseTeacherCounts[configDesignation]._id}}) </h5>
-                <h5 class="modal-title m-auto" *ngIf="commonName" id="exampleModalLabel">Teacher Details By
-                    {{commonName}} </h5> -->
+                <h5 class="modal-title m-auto" *ngIf="dataPointIndex == 0" id="exampleModalLabel">Schools Details By
+                    Student Orientation </h5>
+                <h5 class="modal-title m-auto" *ngIf="dataPointIndex == 1" id="exampleModalLabel">Schools Details By
+                    Student Received
+                    Training </h5>
+                <h5 class="modal-title m-auto" *ngIf="dataPointIndex == 2 || dataPointIndex == 3 || dataPointIndex == 4"
+                    id="exampleModalLabel">Schools Details By Availability of {{ dataPointIndex == 2?'Play Master':
+                    dataPointIndex == 3 ? 'Free Uniform' : 'Free Text Book'}} </h5>
+               
                 <div class="dropdown">
                     <span class="text-danger m-2"><img src="../../../assets/images/icons/downloads.png" width="25px"
                             alt=""></span>
@@ -117,7 +118,7 @@
                         <button class="btn" (click)="exportToExcel()"><i
                                 class="bi bi-file-earmark-excel h2 text-success"></i>
                             Excel</button>
-                        <button class="btn" value="CPTURE" (click)="pdf.saveAs('Teacher data.pdf')"><i
+                        <button class="btn" value="CPTURE" (click)="pdf.saveAs('School data.pdf')"><i
                                 class="bi bi-filetype-pdf h2 text-danger"></i>PDF</button>
                     </div>
                 </div>
@@ -134,16 +135,18 @@
                 <kendo-pdf-export #pdf paperSize="A3">
                     <div class="table-responsive">
                         <table class="table table-responsive table-hover table-bordered table-striped"
-                            id="contentToConvert" *ngIf="">
+                            id="contentToConvert"
+                            *ngIf="dataPointIndex == 0 || dataPointIndex== 1 && dataPointIndex != 3 && dataPointIndex != 4 && dataPointIndex != 2">
                             <thead class="thead-light">
                                 <tr class="table-bordered">
                                     <th rowspan="2">Sr No</th>
                                     <th rowspan="2">District</th>
                                     <th rowspan="2">Zone</th>
-                                    <th rowspan="2">Emp. Id</th>
+                                    <th rowspan="2">School Id</th>
                                     <th rowspan="2">School</th>
                                     <th rowspan="2">Type</th>
-                                    <th colspan="12" class="fw-bold text-center">Cyber Safety</th>
+                                    <th colspan="12" class="fw-bold text-center">{{dataPointIndex == 0 ? 'Cyber Safety'
+                                        : 'Students Received Training'}}</th>
                                 </tr>
                                 <tr>
                                     <th>1</th>
@@ -161,6 +164,68 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <tr *ngFor="let data of seriesData | search:searchBox; let i = index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{ data.district }}</td>
+                                    <td>{{ data.zone }}</td>
+                                    <td>{{ data.SchoolID }}</td>
+                                    <td>{{ data.SchName }}</td>
+                                    <td>{{ data.Sch_Type }}</td>
+                                    <ng-container *ngIf="dataPointIndex == 0; else training">
+                                        <td>{{ data.cybersafety_1 }}</td>
+                                        <td>{{ data.cybersafety_2 }}</td>
+                                        <td>{{ data.cybersafety_3 }}</td>
+                                        <td>{{ data.cybersafety_4 }}</td>
+                                        <td>{{ data.cybersafety_5 }}</td>
+                                        <td>{{ data.cybersafety_6 }}</td>
+                                        <td>{{ data.cybersafety_7 }}</td>
+                                        <td>{{ data.cybersafety_8 }}</td>
+                                        <td>{{ data.cybersafety_9 }}</td>
+                                        <td>{{ data.cybersafety_10 }}</td>
+                                        <td>{{ data.cybersafety_11 }}</td>
+                                        <td>{{ data.cybersafety_12 }}</td>
+                                    </ng-container>
+                                    <ng-template #training>
+                                        <td>{{ data.trainingpsycosocialaspects_1 }}</td>
+                                        <td>{{ data.trainingpsycosocialaspects_2 }}</td>
+                                        <td>{{ data.trainingpsycosocialaspects_3 }}</td>
+                                        <td>{{ data.trainingpsycosocialaspects_4 }}</td>
+                                        <td>{{ data.trainingpsycosocialaspects_5 }}</td>
+                                        <td>{{ data.trainingpsycosocialaspects_6 }}</td>
+                                        <td>{{ data.trainingpsycosocialaspects_7 }}</td>
+                                        <td>{{ data.trainingpsycosocialaspects_8 }}</td>
+                                        <td>{{ data.trainingpsycosocialaspects_9 }}</td>
+                                        <td>{{ data.trainingpsycosocialaspects_10 }}</td>
+                                        <td>{{ data.trainingpsycosocialaspects_11 }}</td>
+                                        <td>{{ data.trainingpsycosocialaspects_12 }}</td>
+                                    </ng-template>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-responsive table-hover table-bordered table-striped"
+                            id="contentToConvert"
+                            *ngIf="dataPointIndex == 2 || dataPointIndex == 3 || dataPointIndex == 4">
+                            <thead class="thead-light">
+                                <tr class="table-bordered">
+                                    <th rowspan="2">Sr No</th>
+                                    <th rowspan="2">District</th>
+                                    <th rowspan="2">Zone</th>
+                                    <th rowspan="2">School Id</th>
+                                    <th rowspan="2">School</th>
+                                    <th rowspan="2">Type</th>
+                                    <th colspan="5" class="fw-bold text-center">
+                                        {{ dataPointIndex == 2?'Play Master': dataPointIndex == 3 ? 'Free Uniform' :
+                                        'Free Text Book'}}</th>
+                                </tr>
+                                <tr>
+                                    <th>{{dataPointIndex == 4?'cpp tot' : 'Pre Primary'}}</th>
+                                    <th>Primary</th>
+                                    <th>Upper Primary</th>
+                                    <th>Secondary</th>
+                                    <th>Higher Secondary</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 <tr *ngFor="let data of seriesData | search:searchBox;let i = index">
                                     <td>{{i+1}}</td>
                                     <td>{{data.district}}</td>
@@ -168,23 +233,25 @@
                                     <td>{{data.SchoolID}}</td>
                                     <td>{{data.SchName}}</td>
                                     <td>{{data.Sch_Type}}</td>
-                                    <td>{{data.cybersafety_1}}</td>
-                                    <td>{{data.cybersafety_2}}</td>
-                                    <td>{{data.cybersafety_3}}</td>
-                                    <td>{{data.cybersafety_4}}</td>
-                                    <td>{{data.cybersafety_5}}</td>
-                                    <td>{{data.cybersafety_6}}</td>
-                                    <td>{{data.cybersafety_7}}</td>
-                                    <td>{{data.cybersafety_8}}</td>
-                                    <td>{{data.cybersafety_9}}</td>
-                                    <td>{{data.cybersafety_10}}</td>
-                                    <td>{{data.cybersafety_11}}</td>
-                                    <td>{{data.cybersafety_12}}</td>
+                                    <td *ngIf="dataPointIndex == 2">{{ data.PlayMater_Prepri || 'No' }}</td>
+                                    <td *ngIf="dataPointIndex == 2">{{ data.PlayMater_Pri || 'No' }}</td>
+                                    <td *ngIf="dataPointIndex == 2">{{ data.PlayMater_Upperpri || 'No' }}</td>
+                                    <td *ngIf="dataPointIndex == 2">{{ data.PlayMater_Sec || 'No' }}</td>
+                                    <td *ngIf="dataPointIndex == 2">{{ data.PlayMater_HSec || 'No' }}</td>
+                                    <td *ngIf="dataPointIndex == 3">{{ data.uniform_Prepri || 'No' }}</td>
+                                    <td *ngIf="dataPointIndex == 3">{{ data.uniform_Pri || 'No' }}</td>
+                                    <td *ngIf="dataPointIndex == 3">{{ data.uniform_Upperpri || 'No' }}</td>
+                                    <td *ngIf="dataPointIndex == 3">{{ data.uniform_Sec || 'No' }}</td>
+                                    <td *ngIf="dataPointIndex == 3">{{ data.uniform_HSec || 'No' }}</td>
+                                    <td *ngIf="dataPointIndex == 4">{{ data.cpp_tot || 'No' }}</td>
+                                    <td *ngIf="dataPointIndex == 4">{{ data.Txtbook_Pri || 'No' }}</td>
+                                    <td *ngIf="dataPointIndex == 4">{{ data.Txtbook_Upperpri || 'No' }}</td>
+                                    <td *ngIf="dataPointIndex == 4">{{ data.Txtbook_Sec || 'No' }}</td>
+                                    <td *ngIf="dataPointIndex == 4">{{ data.Txtbook_HSec || 'No' }}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    {{seriesData|json}}
                 </kendo-pdf-export>
             </div>
 
