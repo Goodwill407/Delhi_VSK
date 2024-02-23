@@ -86,7 +86,7 @@
     <!-- == 2 == -->
     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
         <h6 class="ms-2">Select District</h6>
-        <select class="form-select w-25 ms-2" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName($event)">
+        <select class="form-select ms-2" [ngClass]="communicationServiceMobile ? 'w-100' : 'w-25'" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName($event)">
             <option value="" disabled>Select District</option>
             <option *ngFor="let district of allDistrictsName" value="{{district}}">
                 {{district}}
@@ -136,7 +136,7 @@
     <!-- == 3 == -->
     <div class="tab-pane fade" id="pills-course" role="tabpanel" aria-labelledby="pills-course-tab">
         <h6 class="ms-2">Select Program</h6>
-        <select class="form-select w-25 ms-2" [(ngModel)]="courseModel" (change)="getConsumptionByCourseName($event)">
+        <select class="form-select ms-2" [ngClass]="communicationServiceMobile ? 'w-100' : 'w-25'" [(ngModel)]="courseModel" (change)="getConsumptionByCourseName($event)">
             <option value="" disabled>Select Program</option>
             <option value="NISHTHA 1.0">NISHTHA 1.0</option>
             <option value="NISHTHA 2.0">NISHTHA 2.0</option>

@@ -3,9 +3,9 @@
 <!-- tab -->
 <nav>
     <div class="nav nav-pills mb-3 filter-box px-3 mt-3" id="pills-tab" role="tablist">
-        <h2 class="fw-bold">SCHOOL</h2>
+        <h2 class="fw-bold mb-0">SCHOOL</h2>
         <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
-        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
+        <button class="nav-link active" [ngClass]="communicationServiceMobile ? 'ms-2' : ''" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
             role="tab" aria-controls="nav-home" aria-selected="true">GRAPHICAL VIEW</button>
         <!-- <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"
             role="tab" aria-controls="nav-profile" aria-selected="false">MISSION BUNIYAAD</button> -->
@@ -155,13 +155,13 @@
                     [tooltip]="typesOfSchools?.tooltip"></apx-chart>
             </div>
 
-            <div class="column wide">
+            <div class="column" [ngClass]="communicationServiceMobile ? '' : 'wide'">
                 <h5 class="header-bg p-2">Class Wise Student</h5>
-                <apx-chart [series]="genderWiseClass.series" [chart]="genderWiseClass.chart"
-                    [dataLabels]="genderWiseClass.dataLabels" [plotOptions]="genderWiseClass.plotOptions"
-                    [yaxis]="genderWiseClass.yaxis" [legend]="genderWiseClass.legend" [fill]="genderWiseClass.fill"
-                    [stroke]="genderWiseClass.stroke" [tooltip]="genderWiseClass.tooltip"
-                    [xaxis]="genderWiseClass.xaxis"></apx-chart>
+                <apx-chart [series]="genderWiseClass?.series" [chart]="genderWiseClass?.chart"
+                    [dataLabels]="genderWiseClass?.dataLabels" [plotOptions]="genderWiseClass?.plotOptions"
+                    [yaxis]="genderWiseClass?.yaxis" [legend]="genderWiseClass?.legend" [fill]="genderWiseClass?.fill"
+                    [stroke]="genderWiseClass?.stroke" [tooltip]="genderWiseClass?.tooltip"
+                    [xaxis]="genderWiseClass?.xaxis"></apx-chart>
             </div>
 
         </div>
