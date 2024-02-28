@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
-// import * as L from 'leaflet';
+import * as L from 'leaflet';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import jspdf, { jsPDF } from 'jspdf';
@@ -42,19 +42,19 @@ export class CommunicationService {
         this.parentClickSubject.next();
     }
 
-    allSchoolsData(mapObject: any, map: any, Lmap: any) {
+    allSchoolsData(mapObject: any, map: any) {
         // Add a marker for Delhi
 
-        var customIcon = Lmap.icon({
+        var customIcon = L.icon({
             iconUrl: '../../../assets/images/pin.png',  // URL to the icon image
             iconSize: [20, 20],            // Size of the icon [width, height]
             iconAnchor: [16, 32],          // Anchor point of the icon [x, y] relative to its top-left corner
             popupAnchor: [0, -32]          // Popup anchor point [x, y] relative to the icon anchor
         });
 
-        var name = mapObject.school_name;
-        mapObject.school_name = Lmap.marker([mapObject.Latitude, mapObject.Longitude], { icon: customIcon }).addTo(map);
-        mapObject.school_name.bindPopup(`<span><strong>${name}</strong></span><br>
+        var name = mapObject.School_Name;
+        mapObject.School_Name = L.marker([mapObject.Latitude, mapObject.Longitude], { icon: customIcon }).addTo(map);
+        mapObject.School_Name.bindPopup(`<span><strong>${name}</strong></span><br>
         <hr style="margin-top:5px; margin-bottom: 5px">
         <span>Total students: ${mapObject.totalStudentCount}</span><br>
         <span>Present students: ${mapObject.PresentCount}</span><br>
@@ -62,30 +62,30 @@ export class CommunicationService {
         <span>Leave students: ${mapObject.totalLeaveCount}</span><br>
         <span>Not marked students: ${mapObject.totalNotMarkedAttendanceCount}</span><br>`);
         // String(mapObject.PresentCount ? mapObject.PresentCount : 0)
-        mapObject.school_name.on('mouseover', function () {
-            mapObject.school_name.openPopup();
+        mapObject.School_Name.on('mouseover', function () {
+            mapObject.School_Name.openPopup();
         });
-        mapObject.school_name.on('mouseout', function () {
-            mapObject.school_name.closePopup();
+        mapObject.School_Name.on('mouseout', function () {
+            mapObject.School_Name.closePopup();
         });
     }
 
-    grographicalGraph(mapData: any, Lmap: any) {
+    grographicalGraph(mapData: any) {
 
         var map = mapData;
 
         // Add the base OpenStreetMap layer
-        Lmap.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
         // ============= 2 ==============
 
         // ============= 3 ==============
-        var info: any = new Lmap.Control();
+        var info: any = new L.Control();
 
         info.onAdd = function (map: any) {
-            this._div = Lmap.DomUtil.create('div', 'info');
+            this._div = L.DomUtil.create('div', 'info');
             this.update();
             return this._div;
         };
@@ -135,7 +135,7 @@ export class CommunicationService {
             //     fillOpacity: 0.7
             // });
 
-            // if (!Lmap.Browser.ie && !Lmap.Browser.opera && !Lmap.Browser.edge) {
+            // if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
             //     layer.bringToFront();
             // }
 
@@ -152,7 +152,6 @@ export class CommunicationService {
 
         function zoomToFeature(e: any) {
             map.fitBounds(e.target.getBounds());
-            sessionStorage.setItem('DistrictName', e.target.feature.properties.Dist_Name);
         }
 
         function onEachFeature(feature: any, layer: any) {
@@ -163,7 +162,7 @@ export class CommunicationService {
             });
         }
 
-        geojson = Lmap.geoJson(this.statesData, {
+        geojson = L.geoJson(this.statesData, {
             style: style,
             onEachFeature: onEachFeature
         }).bindTooltip(function (layer: any) {
@@ -175,26 +174,26 @@ export class CommunicationService {
 
 
         // ============= 6 ==============
-        var legend: any = new Lmap.Control({ position: 'bottomright' });
+        var legend: any = new L.Control({ position: 'bottomright' });
 
         legend.onAdd = function (map: any) {
 
-            // var div = Lmap.DomUtil.create('div', 'info legend'),
-            //     grades = [0, 10, 20, 30, 40, 50, 60, 70, 1000],
-            //     labels = [],
-            //     from, to;
+            var div = L.DomUtil.create('div', 'info legend'),
+                grades = [0, 10, 20, 30, 40, 50, 60, 70, 1000],
+                labels = [],
+                from, to;
 
-            // for (var i = 0; i < grades.length; i++) {
-            //     from = grades[i];
-            //     to = grades[i + 1];
+            for (var i = 0; i < grades.length; i++) {
+                from = grades[i];
+                to = grades[i + 1];
 
-            //     labels.push(
-            //         '<i style="background:' + getColor(from + 1) + '"></i> ' +
-            //         from + (to ? '&ndash;' + to : '+'));
-            // }
+                labels.push(
+                    '<i style="background:' + getColor(from + 1) + '"></i> ' +
+                    from + (to ? '&ndash;' + to : '+'));
+            }
 
-            // div.innerHTML = labels.join('<br>');
-            // return div;
+            div.innerHTML = labels.join('<br>');
+            return div;
         };
 
         legend.addTo(map);

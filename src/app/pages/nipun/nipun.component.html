@@ -1,7 +1,8 @@
 <div class="filter-box mt-3">
-    <h3 class="d-flex"><h2 class="fw-bold">NIPUN</h2> <div class="vr mx-3 opacity-100"></div> National Initiative for Proficiency in Reading with Understanding and Numeracy</h3>
+    <h3 class="d-flex"><h2 class="fw-bold">NIPUN</h2>
+         <div class="vr mx-3 opacity-100"></div> National Initiative for Proficiency in Reading with Understanding and Numeracy</h3>
 </div>
-<ul class="nav nav-pills mb-3 filter-box px-3 mt-3" id="pills-tab" role="tablist">
+<ul class="nav nav-pills mb-3 filter-box px-3 mt-3" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'" id="pills-tab" role="tablist">
     
     
     <li class="nav-item" role="presentation">
@@ -13,7 +14,7 @@
             type="button" role="tab" aria-controls="pills-profile" aria-selected="false"
             >ETB QR COVERAGE</button>
     </li> -->
-    <a href="https://diksha.gov.in/fln.html" class="ms-auto"><img height="50px" width="290px" src="../../../assets/images/Dashboard/nipunBharat.png" alt="">
+    <a href="https://diksha.gov.in/fln.html" class="ms-auto"><img height="50px" width="290px" [ngClass]="communicationServiceMobile ? 'mt-2' : 'd-flex'" src="../../../assets/images/Dashboard/nipunBharat.png" alt="">
     </a>
 </ul>
 <div class="tab-content" id="pills-tabContent">

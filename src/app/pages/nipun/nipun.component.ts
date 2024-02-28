@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommunicationService } from 'src/app/services/communication.service';
 
 @Component({
   selector: 'app-nipun',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class NipunComponent {
 
+  communicationServiceMobile: any;
+
+  constructor(private communicationService: CommunicationService){
+    this.communicationServiceMobile = this.communicationService.isMobile;
+  }
 }

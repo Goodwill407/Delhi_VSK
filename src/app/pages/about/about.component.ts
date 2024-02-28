@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommunicationService } from 'src/app/services/communication.service';
 
 @Component({
   selector: 'app-about',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./about.component.css']
 })
 export class AboutComponent {
-
+  communicationServiceMobile: any;
+  constructor(private communicationService: CommunicationService){
+    this.communicationServiceMobile = this.communicationService.isMobile;
+  }
 }

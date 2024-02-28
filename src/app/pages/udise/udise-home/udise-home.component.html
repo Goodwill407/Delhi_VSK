@@ -25,7 +25,7 @@
         </select>
     </div>
 
-    <div class="d-flex justify-content-center filter-box-total mt-2"
+    <div class="justify-content-center filter-box-total mt-2" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'"
         *ngIf="districtModel || zoneModel || schoolModel.School_Name">
         <h3 class="text-center mb-0" *ngIf="districtModel">{{districtModel}}&nbsp; </h3>
         <h3 class="text-center mb-0" *ngIf="zoneModel"> <span *ngIf="districtModel">|</span> {{zoneModel}}&nbsp; </h3>
@@ -81,7 +81,7 @@
     </div>
     <div class="d-flex justify-content-center">
         <div class="w-100  column">
-            <h5 class="header-bg p-2">Bar Graph</h5>
+            <h5 class="header-bg p-2">School Information</h5>
             <apx-chart [series]="totalSchoolsData?.series" [chart]="totalSchoolsData?.chart"
                 [dataLabels]="totalSchoolsData?.dataLabels" [plotOptions]="totalSchoolsData?.plotOptions"
                 [xaxis]="totalSchoolsData?.xaxis" [yaxis]="totalSchoolsData?.yaxis" [labels]="totalSchoolsData?.labels"
@@ -105,9 +105,9 @@
                 <h5 class="modal-title m-auto" *ngIf="dataPointIndex == 1" id="exampleModalLabel">Schools Details By
                     Student Received
                     Training </h5>
-                <h5 class="modal-title m-auto" *ngIf="dataPointIndex == 2 || dataPointIndex == 3 || dataPointIndex == 4"
+                <h5 class="modal-title m-auto" *ngIf="dataPointIndex == 2 || dataPointIndex == 3 || dataPointIndex == 4 || dataPointIndex == 5"
                     id="exampleModalLabel">Schools Details By Availability of {{ dataPointIndex == 2?'Play Master':
-                    dataPointIndex == 3 ? 'Free Uniform' : 'Free Text Book'}} </h5>
+                    dataPointIndex == 3 ? 'Free Uniform' : dataPointIndex == 4 ? 'Free Text Book' : 'Supply Material'}} </h5>
                
                 <div class="dropdown">
                     <span class="text-danger m-2"><img src="../../../assets/images/icons/downloads.png" width="25px"
@@ -139,12 +139,12 @@
                             *ngIf="dataPointIndex == 0 || dataPointIndex== 1 && dataPointIndex != 3 && dataPointIndex != 4 && dataPointIndex != 2">
                             <thead class="thead-light">
                                 <tr class="table-bordered">
-                                    <th rowspan="2">Sr No</th>
-                                    <th rowspan="2">District</th>
-                                    <th rowspan="2">Zone</th>
-                                    <th rowspan="2">School Id</th>
-                                    <th rowspan="2">School</th>
-                                    <th rowspan="2">Type</th>
+                                    <th rowspan="2" class="align-middle">Sr No</th>
+                                    <th rowspan="2" class="align-middle">District</th>
+                                    <th rowspan="2" class="align-middle">Zone</th>
+                                    <th rowspan="2" class="align-middle">School Id</th>
+                                    <th rowspan="2" class="align-middle">School</th>
+                                    <th rowspan="2" class="align-middle">Type</th>
                                     <th colspan="12" class="fw-bold text-center">{{dataPointIndex == 0 ? 'Cyber Safety'
                                         : 'Students Received Training'}}</th>
                                 </tr>
@@ -204,18 +204,18 @@
                         </table>
                         <table class="table table-responsive table-hover table-bordered table-striped"
                             id="contentToConvert"
-                            *ngIf="dataPointIndex == 2 || dataPointIndex == 3 || dataPointIndex == 4">
+                            *ngIf="dataPointIndex == 2 || dataPointIndex == 3 || dataPointIndex == 4 || dataPointIndex == 5 ">
                             <thead class="thead-light">
                                 <tr class="table-bordered">
-                                    <th rowspan="2">Sr No</th>
-                                    <th rowspan="2">District</th>
-                                    <th rowspan="2">Zone</th>
-                                    <th rowspan="2">School Id</th>
-                                    <th rowspan="2">School</th>
-                                    <th rowspan="2">Type</th>
+                                    <th rowspan="2" class="align-middle">Sr No</th>
+                                    <th rowspan="2" class="align-middle">District</th>
+                                    <th rowspan="2" class="align-middle">Zone</th>
+                                    <th rowspan="2" class="align-middle">School Id</th>
+                                    <th rowspan="2" class="align-middle">School</th>
+                                    <th rowspan="2" class="align-middle">Type</th>
                                     <th colspan="5" class="fw-bold text-center">
                                         {{ dataPointIndex == 2?'Play Master': dataPointIndex == 3 ? 'Free Uniform' :
-                                        'Free Text Book'}}</th>
+                                        dataPointIndex == 4 ? 'Free Text Book':'Supply Material'}}</th>
                                 </tr>
                                 <tr>
                                     <th>{{dataPointIndex == 4?'cpp tot' : 'Pre Primary'}}</th>
@@ -248,13 +248,18 @@
                                     <td *ngIf="dataPointIndex == 4">{{ data.Txtbook_Upperpri || 'No' }}</td>
                                     <td *ngIf="dataPointIndex == 4">{{ data.Txtbook_Sec || 'No' }}</td>
                                     <td *ngIf="dataPointIndex == 4">{{ data.Txtbook_HSec || 'No' }}</td>
+                                    <td *ngIf="dataPointIndex == 5">{{ data.SuppMat_Prepri || 'No' }}</td>
+                                    <td *ngIf="dataPointIndex == 5">{{ data.SuppMat_Pri || 'No' }}</td>
+                                    <td *ngIf="dataPointIndex == 5">{{ data.SuppMat_Upperpri || 'No' }}</td>
+                                    <td *ngIf="dataPointIndex == 5">{{ data.SuppMat_Sec || 'No' }}</td>
+                                    <td *ngIf="dataPointIndex == 5">{{ data.SuppMat_HSec || 'No' }}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </kendo-pdf-export>
             </div>
-
+            {{seriesData|json}}
         </div>
     </div>
 </div>

@@ -1,8 +1,8 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
 </ngx-spinner>
-<ul class="nav nav-pills mb-3 filter-box px-3 mt-3" id="pills-tab" role="tablist">
+<ul class="nav nav-pills mb-3 filter-box px-3 mt-3" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'" id="pills-tab" role="tablist">
     <h2 class="fw-bold">MISSION BUNIYAAD</h2>
-    <div class="vr mx-3 opacity-100"></div>
+    <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
             type="button" role="tab" aria-controls="pills-home" aria-selected="true">PHASES</button>
@@ -20,9 +20,9 @@
     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
         <div class="filter-box">
             <div class="filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
-                <input class="form-control w-25 ms-auto" type="text" [(ngModel)]="SearchBox" placeholder="School Id" value=""
+                <input class="form-control" [ngClass]="communicationServiceMobile ? 'w-100 mx-1' : 'w-25 ms-auto'" type="text" [(ngModel)]="SearchBox" placeholder="School Id" value=""
                     id="example-search-input">
-                <button class="btn btn-search mx-2" (click)="searchSchool()">Search</button>
+                <button class="btn btn-search" [ngClass]="communicationServiceMobile ? 'mt-2 w-100 mx-1' : 'mx-2'" (click)="searchSchool()">Search</button>
             </div>
         
             <div class="mt-5 table-container" style="overflow-x: auto; width: 90vw; height: 90vh;" *ngIf="allSchoolData && allSchoolData.length > 0">

@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CommunicationService } from 'src/app/services/communication.service';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import * as L from 'leaflet';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-geographical',
@@ -15,16 +16,14 @@ export class GeographicalComponent {
 
   allAttendanceData: any;
   allSchools: any;
-  districtModel: any = '';
   zoneModel: any = '';
   allZones: any;
   allShift: any = ['Morning', 'General', 'Evening'];
   shiftModel: any = '';
   dateModel: any;
   communicationServiceMobile: any;
-  allDistricts: any;
+  allDist: any;
   allStudent: any = 0;
-  mapData: any;
 
   constructor(private httpService: HttpServiceService, public datepipe: DatePipe, private spinner: NgxSpinnerService, private toastr: ToastrService, private communicationService: CommunicationService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
@@ -36,30 +35,11 @@ export class GeographicalComponent {
       if (data == "geographical") {
         this.dateModel = new Date();
         this.dateModel.setDate(this.dateModel.getDate() - 1);
-        this.getTableData('');
-        this.getAllDistricts();
+        this.getTableData();
+        this.getAllDistAndZone();
         this.getAllZone();
-        this.mapData = L.map('map').setView([28.6139, 77.2090], 11);
-      }
-      else {
-        this.districtModel = "";
-        this.shiftModel = "";
-        this.dateModel = "";
-        this.zoneModel = "";
       }
     });
-  }
-
-  mapClick() {
-    this.spinner.show();
-    const previousDistrict = sessionStorage.getItem('DistrictName');
-    setTimeout(() => {
-      const name = sessionStorage.getItem('DistrictName');
-      if (previousDistrict != name) {
-        this.districtModel = name;
-        this.getTableData('district');
-      }
-    }, 1000)
   }
 
   getAllZone() {
@@ -69,19 +49,9 @@ export class GeographicalComponent {
     })
   }
 
-  getAllDistricts() {
-    this.httpService.get('school/districtNames').subscribe((res: any) => {
-      this.allDistricts = res;
-      this.allDistricts = this.allDistricts.sort((a: any, b: any) => a.D_ID - b.D_ID)
-    }, (error: any) => {
-      this.toastr.error();
-    })
-  }
-
-  getDistrictWiseZones() {
-    const district = { "District_name": this.districtModel };
-    this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
-      this.allZones = res.ZoneSchool;
+  getAllDistAndZone() {
+    this.httpService.get('tabular-attendnace/get-district').subscribe((res: any) => {
+      this.allDist = res;
     }, (error: any) => {
       this.toastr.error();
     })
@@ -92,54 +62,69 @@ export class GeographicalComponent {
     return Mdate = this.datepipe.transform(date, 'yyyy-MM-dd');
   }
 
-  getTableData(event: any) {
+  getTableData() {
     const obj: any = {
-      district_name: this.districtModel,
       "Z_name": this.zoneModel,
       "shift": this.shiftModel,
       "attendance_DATE": this.getDate(this.dateModel)
     }
 
-    if (event == 'district') {
+    if (this.zoneModel && this.shiftModel) {
+      this.callAPIfun(obj);
+    }
+    else if (this.zoneModel) {
+      delete obj.shift;
+      this.callAPIfun(obj);
+    }
+    else if (this.shiftModel) {
+      delete obj.Z_name;
+      this.callAPIfun(obj);
+    }
+    else {
       delete obj.Z_name;
       delete obj.shift;
-      this.zoneModel = '';
-      this.shiftModel = '';
-      this.getDistrictWiseZones();
-    } else if (event == 'zone') {
-      delete obj.shift;
-      this.shiftModel = '';
+      this.callAPIfun(obj);
     }
-    this.callAPIfun(obj);
   }
 
   callAPIfun(obj: any) {
     this.spinner.show();
-    this.httpService.post('tabular-attendnace', obj).subscribe((res: any) => {
-      this.allAttendanceData = res;
-      this.spinner.hide();
-      this.setGeographicalGraph();
-    },
+    const api1$ = this.httpService.post('tabular-attendnace', obj);
+    const api2$ = this.httpService.get('school');
+    forkJoin([api1$, api2$]).subscribe(
+      ([api1Data, api2Data]) => {
+        this.allAttendanceData = api1Data;
+        this.allSchools = api2Data;
+        this.setGeographicalGraph();
+        this.spinner.hide();
+      },
       error => {
         this.spinner.hide();
-      })
+      }
+    );
   }
 
   setGeographicalGraph() {
-    var isLayersEmpty = Object.keys(this.mapData._layers).length === 0;
-    if (!isLayersEmpty) {
-      for (var key in this.mapData._layers) {
-        if (this.mapData._layers.hasOwnProperty(key)) {
-          var currentInstance = this.mapData._layers[key];
-          this.mapData.removeLayer(currentInstance);
+    const mapData = L.map('map').setView([28.6139, 77.2090], 11);
+    for (let i = 0; i < this.allSchools.length; i++) {
+      for (let j = 0; j < this.allAttendanceData.length; j++) {
+        if (this.allSchools[i].Schoolid == this.allAttendanceData[j].School_ID) {
+          const mapObject = {
+            School_Name: this.allSchools[i].School_Name,
+            Longitude: this.allSchools[i].Longitude,
+            Latitude: this.allSchools[i].Latitude,
+            totalStudentCount: this.allAttendanceData[j].totalStudentCount ? this.allAttendanceData[j].totalStudentCount : 0,
+            PresentCount: this.allAttendanceData[j].PresentCount ? this.allAttendanceData[j].PresentCount : 0,
+            AbsentCount: this.allAttendanceData[j].AbsentCount ? this.allAttendanceData[j].AbsentCount : 0,
+            totalLeaveCount: this.allAttendanceData[j].totalLeaveCount ? this.allAttendanceData[j].totalLeaveCount : 0,
+            totalNotMarkedAttendanceCount: this.allAttendanceData[j].totalNotMarkedAttendanceCount ? this.allAttendanceData[j].totalNotMarkedAttendanceCount : 0,
+          }
+          if (this.allSchools[i].School_Name && this.allSchools[i].Longitude && this.allSchools[i].Latitude) {
+            this.communicationService.allSchoolsData(mapObject, mapData);
+          }
         }
       }
     }
-    for (let j = 0; j < this.allAttendanceData.length; j++) {
-      if (this.allAttendanceData[j].school_name && this.allAttendanceData[j].Longitude && this.allAttendanceData[j].Latitude) {
-        this.communicationService.allSchoolsData(this.allAttendanceData[j], this.mapData, L);
-      }
-    }
-    const map = this.communicationService.grographicalGraph(this.mapData, L);
+    const map = this.communicationService.grographicalGraph(mapData);
   }
 }

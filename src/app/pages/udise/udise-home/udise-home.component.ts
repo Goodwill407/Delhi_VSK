@@ -33,7 +33,7 @@ export class UdiseHomeComponent {
   itemCount: number | undefined;
   subscription: Subscription | undefined;
 
-  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService, private cdr:ChangeDetectorRef) {
+  constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService, private cdr: ChangeDetectorRef) {
     this.communicationServiceMobile = this.communicationService.isMobile;
   }
 
@@ -45,13 +45,13 @@ export class UdiseHomeComponent {
         this.getAllZones();
         this.getAllSchoolName();
         this.subscription = this.graphService
-        .getItemCountObservable()
-        .subscribe((count) => {
-          this.itemCount = count;
-          if (this.itemCount && (this.schoolModel || this.zoneModel) && this.dataPointIndex == this.dataPointIndex || 0) {
-            this.openModalData();
-          } 
-        });
+          .getItemCountObservable()
+          .subscribe((count) => {
+            this.itemCount = count;
+            if (this.itemCount && (this.schoolModel || this.zoneModel) && this.dataPointIndex == this.dataPointIndex || 0) {
+              this.openModalData();
+            }
+          });
       }
     });
   }
@@ -76,15 +76,16 @@ export class UdiseHomeComponent {
       const api3 = this.httpService.get('equipment/get-sports-games-equipment?district=' + this.districtModel);
       const api4 = this.httpService.get('free-uniform/get-free-uniform?district=' + this.districtModel);
       const api5 = this.httpService.get('free-textbook/get-free-textbook?district=' + this.districtModel);
+      const api6 = this.httpService.get('supply-material/get-supply-material?district=' + this.districtModel);
 
-      forkJoin([api1, api2, api3, api4, api5]).subscribe(([res1, res2, res3, res4, res5]) => {
+      forkJoin([api1, api2, api3, api4, api5, api6]).subscribe(([res1, res2, res3, res4, res5, res6]) => {
         if (res1) {
           this.studentOrientationGraph(res1);
           this.studentTrainingGraph(res2);
           this.sportsAndGamesEquipment(res3);
           this.freeUniformGraph(res4);
           this.freeBookGraph(res5);
-          this.barGraphOfData([res1, res2, res3, res4, res5], ['cyber safety', 'training received', 'sport and games', 'free uniform', 'free Book'])
+          this.barGraphOfData([res1, res2, res3, res4, res5, res6], ['cyber safety', 'training received', 'sport and games', 'free uniform', 'free Book', 'supply material']);
           this.getAllZones();
           this.getAllSchoolsByDistrict();
           this.zoneModel = '';
@@ -113,15 +114,16 @@ export class UdiseHomeComponent {
       const api3 = this.httpService.get('equipment/get-sports-games-equipment?zone=' + zone);
       const api4 = this.httpService.get('free-uniform/get-free-uniform?zone=' + zone);
       const api5 = this.httpService.get('free-textbook/get-free-textbook?zone=' + zone);
+      const api6 = this.httpService.get('supply-material/get-supply-material?zone=' + zone);
 
-      forkJoin([api1, api2, api3, api4, api5]).subscribe(([res1, res2, res3, res4, res5]) => {
+      forkJoin([api1, api2, api3, api4, api5, api6]).subscribe(([res1, res2, res3, res4, res5, res6]) => {
         if (res1) {
           this.studentOrientationGraph(res1);
           this.studentTrainingGraph(res2);
           this.sportsAndGamesEquipment(res3);
           this.freeUniformGraph(res4);
           this.freeBookGraph(res5);
-          this.barGraphOfData([res1, res2, res3, res4, res5], ['cyber safety', 'training received', 'sport and games', 'free uniform', 'free Book'])
+          this.barGraphOfData([res1, res2, res3, res4, res5, res6], ['cyber safety', 'training received', 'sport and games', 'free uniform', 'free Book', 'supply material']);
           this.spinner.hide();
           this.getSchoolDataByZone();
         }
@@ -141,15 +143,16 @@ export class UdiseHomeComponent {
     const api3 = this.httpService.get('equipment/get-sports-games-equipment?SchoolID=' + this.schoolModel.Schoolid);
     const api4 = this.httpService.get('free-uniform/get-free-uniform?SchoolID=' + this.schoolModel.Schoolid);
     const api5 = this.httpService.get('free-textbook/get-free-textbook?SchoolID=' + this.schoolModel.Schoolid);
+    const api6 = this.httpService.get('supply-material/get-supply-material?SchoolID=' + this.schoolModel.Schoolid);
 
-    forkJoin([api1, api2, api3, api4, api5]).subscribe(([res1, res2, res3, res4, res5]) => {
+    forkJoin([api1, api2, api3, api4, api5, api6]).subscribe(([res1, res2, res3, res4, res5, res6]) => {
       if (res1) {
         this.studentOrientationGraph(res1);
         this.studentTrainingGraph(res2);
         this.sportsAndGamesEquipment(res3);
         this.freeUniformGraph(res4);
         this.freeBookGraph(res5);
-        this.barGraphOfData([res1, res2, res3, res4, res5], ['cyber safety', 'training received', 'sport and games', 'free uniform', 'free Book'])
+        this.barGraphOfData([res1, res2, res3, res4, res5, res6], ['cyber safety', 'training received', 'sport and games', 'free uniform', 'free Book', 'supply material']);
         this.spinner.hide();
       }
     }, (error) => {
@@ -234,15 +237,16 @@ export class UdiseHomeComponent {
     const api3 = this.httpService.get('equipment/path-to-get-all-data?page=1');
     const api4 = this.httpService.get('free-uniform/path-to-get-all-data?page=1');
     const api5 = this.httpService.get('free-textbook/path-to-get-all-data?page=1');
+    const api6 = this.httpService.get('supply-material/path-to-get-all-data?page=1');
 
-    forkJoin([api1, api2, api3, api4, api5]).subscribe(([res1, res2, res3, res4, res5]) => {
+    forkJoin([api1, api2, api3, api4, api5, api6]).subscribe(([res1, res2, res3, res4, res5, res6]) => {
       if (res1) {
         this.studentOrientationGraph(res1.results);
         this.studentTrainingGraph(res2.results);
         this.sportsAndGamesEquipment(res3.results);
         this.freeUniformGraph(res4.results);
         this.freeBookGraph(res5.results);
-        this.barGraphOfData([res1.results, res2.results, res3.results, res4.results, res5.results], ['cyber safety', 'training received', 'sport and games', 'free uniform', 'free Book'])
+        this.barGraphOfData([res1.results, res2.results, res3.results, res4.results, res5.results, res6.results], ['cyber safety', 'training received', 'sport and games', 'free uniform', 'free Book', 'supply material'])
       }
       else {
         this.toastr.warning('Data Not Found');
@@ -297,14 +301,15 @@ export class UdiseHomeComponent {
     this.freeBook.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
         console.log(config);
-        
+
       }
     }
   }
 
-  seriesData:any;
-  dataPointIndex:any;
+  seriesData: any;
+  dataPointIndex: any;
   @ViewChild('openModal') openModal: any;
+
   barGraphOfData(seriesData: any, categories: any) {
     const series = seriesData.map((item: any) => item.length)
     this.totalSchoolsData = this.graphService.VerticleBarGraph();
@@ -317,14 +322,14 @@ export class UdiseHomeComponent {
         this.seriesData = []
         this.dataPointIndex = config.dataPointIndex;
         this.seriesData = seriesData[this.dataPointIndex];
-        console.log(this.dataPointIndex,'data',this.seriesData);
+        console.log(this.dataPointIndex, 'data', this.seriesData);
         this.graphService.addToCart();
         this.cdr.detectChanges();
       }
-      
+
     }
   }
-  openModalData(){
+  openModalData() {
     this.openModal.nativeElement.click();
   }
 
