@@ -1,5 +1,5 @@
 <div class="my-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
-    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="zoneModel" (change)="getTableData()">
+    <!-- <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="zoneModel" (change)="getTableData()">
         <option value="">All Zones</option>
         <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
             {{zone.Zone_Name}} ({{zone.Z_ID}})
@@ -10,8 +10,9 @@
         <option *ngFor="let shift of allShift" value="{{shift}}">
             {{shift}}
         </option>
-    </select>
-    <input type="date" class="form-control  ms-2 mx-1 my-1" [(ngModel)]="dateModel" (change)="getTableData()">
+    </select> -->
+    <input type="date" [max]="maxDate | date:'yyyy-MM-dd'" class="form-control  ms-auto mx-1 my-1" [ngClass]="communicationServiceMobile ? 'w-100' : 'w-25'" [(ngModel)]="dateModel"
+        (change)="getTableData()">
 </div>
 
 <!-- <div class="container1">

@@ -1,73 +1,84 @@
-<!-- dropdown -->
-<div class="filter-box">
-    <div class="filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
-        <input class="form-control w-25 ms-auto" type="text" [(ngModel)]="SearchBox" placeholder="School Id" value=""
-            id="example-search-input">
-        <button class="btn btn-search mx-2" (click)="searchSchool()">Search</button>
+<ul class="nav nav-pills mb-3 filter-box px-3 mt-3" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'"
+    id="pills-tab" role="tablist">
+
+
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="pills-about-tab" data-bs-toggle="pill" data-bs-target="#pills-about"
+            type="button" role="tab" aria-controls="pills-about" aria-selected="true">SCHOOL ACCREDITATION</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-sch-tab" data-bs-toggle="pill" data-bs-target="#pills-sch"
+            type="button" role="tab" aria-controls="pills-sch" aria-selected="false"
+            >ABOUT</button>
+    </li>
+</ul>
+<div class="tab-content" id="pills-tabContent">
+    <!-- == 1 == -->
+    <div class="tab-pane fade show active" id="pills-about" role="tabpanel" aria-labelledby="pills-about-tab">
+        <div class="position-absolute bottom-0 end-0">
+            <h2 class="fst-italic">Data Will be Added After Sometime..</h2>
+        </div>
     </div>
 
-    <div class="mt-5 table-container" style="overflow-x: auto; width: 90vw; height: 90vh;" *ngIf="allSchoolData && allSchoolData.length > 0">
-        <table class="table table-striped table-hover" style="min-width: 1200px;">
-            <!-- Setting min-width to maintain the width of the table -->
-            <thead class="sticky-top top-0">
-                <tr class="table-success align-middle">
-                    <!-- <th>S.No</th> -->
-                    <th>Year</th>
-                    <th>Class</th>
-                    <th>Phase</th>
-                    <th>English Absent</th>
-                    <th>English Advance Story</th>
-                    <th>English Beginner</th>
-                    <th>English Charecter</th>
-                    <th>English Paragraph</th>
-                    <th>English Story</th>
-                    <th>English Words</th>
-                    <th>Hindi Absent</th>
-                    <th>Hindi Advance Story</th>
-                    <th>Hindi Beginner</th>
-                    <th>Hindi Charecter</th>
-                    <th>Hindi Paragraph</th>
-                    <th>Hindi Story</th>
-                    <th>Hindi Words</th>
-                    <th>Maths Absent</th>
-                    <th>Maths Beginner</th>
-                    <th>Maths Division</th>
-                    <th>Maths Subtraction</th>
-                    <th>No. recog (0-9)</th>
-                    <th>No. recog (10-99)</th>
-                </tr>
-            </thead>
-            <tbody class="text-center">
-                <tr *ngFor="let data of allSchoolData">
-                    <!-- <td>{{i+1}}</td> -->
-                    <td>{{data?.Year}}</td>
-                    <td>{{data?.class}}</td>
-                    <td>{{data?.Phase}}</td>
-                    <td>{{data?.English_Absent}}</td>
-                    <td>{{data?.English_Advance_Story}}</td>
-                    <td>{{data?.English_Beginner}}</td>
-                    <td>{{data?.English_Charecter}}</td>
-                    <td>{{data?.English_Paragraph}}</td>
-                    <td>{{data?.English_Story}}</td>
-                    <td>{{data?.English_Words}}</td>
-                    <td>{{data?.Hindi_Absent}}</td>
-                    <td>{{data?.Hindi_Advance_Story}}</td>
-                    <td>{{data?.Hindi_Beginner}}</td>
-                    <td>{{data?.Hindi_Charecter}}</td>
-                    <td>{{data?.Hindi_Paragraph}}</td>
-                    <td>{{data?.Hindi_Story}}</td>
-                    <td>{{data?.Hindi_Words}}</td>
-                    <td>{{data?.Maths_Absent}}</td>
-                    <td>{{data?.Maths_Beginner}}</td>
-                    <td>{{data?.Maths_Division}}</td>
-                    <td>{{data?.Maths_Subtraction}}</td>
-                    <td>{{data?.['No. recog (0-9)']}}</td>
-                    <td>{{data?.['No. recog (10-99)']}}</td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- == 2 == -->
+    <div class="tab-pane fade" id="pills-sch" role="tabpanel" aria-labelledby="pills-sch-tab">
+        <div class="mx-3 mt-5 fs-6">
+            <p>School accreditation is a vital aspect of educational quality assurance, ensuring that schools meet
+                specific standards and criteria set forth by accrediting bodies. In the context of Delhi VSK (Virtual
+                School of Knowledge), accreditation plays a crucial role in maintaining educational standards, fostering
+                continuous improvement, and instilling confidence in students, parents, and the community.
+            </p>
+            <p> Accreditation is a voluntary process that schools undergo to demonstrate their commitment to excellence
+                in education. It involves an extensive evaluation of various aspects of the school, including
+                curriculum, teaching methods, infrastructure, student support services, and overall organizational
+                effectiveness.</p>
+            <p>In Delhi VSK, the accreditation process is designed to assess the school's adherence to educational best
+                practices and to identify areas for improvement. Accrediting bodies typically consist of experienced
+                educators and professionals who evaluate schools based on established standards and criteria.</p>
+            <p>By 2026-27, the initiative seeks to guarantee that every child in the nation attains these essential
+                skills.</p>
+
+
+            <p>One of the primary benefits of school accreditation is that it provides a framework for continuous
+                improvement. By undergoing the accreditation process, schools in Delhi VSK are encouraged to reflect on
+                their practices, identify areas of strength and weakness, and implement changes to enhance the quality
+                of education they provide.
+            </p>
+            <p>Accreditation also serves as a mark of quality and credibility for Delhi VSK. Students and parents can
+                trust that accredited schools meet recognized standards of excellence and are committed to providing a
+                high-quality educational experience. Accreditation can also enhance the reputation of Delhi VSK schools,
+                making them more attractive to prospective students and families.</p>
+            <p>Furthermore, accreditation can facilitate the transfer of credits and recognition of qualifications.
+                Students who attend accredited schools in Delhi VSK can more easily transfer to other educational
+                institutions or apply for higher education programs, both domestically and internationally.
+                Accreditation provides assurance that students have received a rigorous and comprehensive education that
+                meets established standards.
+            </p>
+            <p>For teachers and staff in Delhi VSK schools, accreditation offers professional development opportunities
+                and recognition for their efforts. Through the accreditation process, educators can engage in
+                self-assessment, collaborate with colleagues, and participate in training and development activities to
+                enhance their skills and effectiveness in the classroom.
+            </p>
+            <p>Accreditation also promotes accountability and transparency in education. By undergoing external
+                evaluation and scrutiny, Delhi VSK schools demonstrate their commitment to accountability and their
+                willingness to be held to high standards of performance. Accreditation reports and findings are often
+                made available to the public, promoting transparency and enabling stakeholders to make informed
+                decisions about education.
+            </p>
+            <p>In Delhi VSK, accreditation is an ongoing process that involves regular evaluations and reviews.
+                Accredited schools are typically subject to periodic re-evaluations to ensure that they continue to meet
+                accreditation standards and maintain their commitment to excellence. This process of continuous
+                improvement helps Delhi VSK schools stay current with evolving educational trends and best practices.
+            </p>
+            <p>It's important to note that accreditation is not a one-size-fits-all process. Different accrediting
+                bodies may have different standards and criteria, and schools in Delhi VSK may choose to pursue
+                accreditation from various organizations based on their specific needs and priorities.</p>
+            <p>In conclusion, school accreditation plays a vital role in ensuring quality education in Delhi VSK. By
+                undergoing the accreditation process, schools demonstrate their commitment to excellence, foster
+                continuous improvement, and enhance accountability and transparency in education. Accreditation benefits
+                students, parents, teachers, and the community by providing assurance of educational quality and
+                credibility. In Delhi VSK, accreditation is not just a badge of honor but a commitment to providing the
+                best possible educational experience for students.</p>
+        </div>
     </div>
-    <div class="bg-primary m-4" *ngIf="allSchoolData && allSchoolData.length <= 0">
-        <h2 class="text-center text-white fst-italic p-2">Please Search By School Id...</h2>
-      </div>
 </div>

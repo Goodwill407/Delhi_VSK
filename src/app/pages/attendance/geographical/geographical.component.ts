@@ -24,7 +24,9 @@ export class GeographicalComponent {
   communicationServiceMobile: any;
   allDist: any;
   allStudent: any = 0;
-
+  maxDate: any = '2024-08-28';
+  mapData: any;
+  
   constructor(private httpService: HttpServiceService, public datepipe: DatePipe, private spinner: NgxSpinnerService, private toastr: ToastrService, private communicationService: CommunicationService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
   }
@@ -34,10 +36,12 @@ export class GeographicalComponent {
     this.communicationService.sharedData$.subscribe(data => {
       if (data == "geographical") {
         this.dateModel = new Date();
-        this.dateModel.setDate(this.dateModel.getDate() - 1);
+        this.dateModel = this.getDate(this.dateModel.setDate(this.dateModel.getDate() - 1));
+        this.maxDate = this.getDate(this.dateModel);
         this.getTableData();
         this.getAllDistAndZone();
         this.getAllZone();
+        this.mapData = L.map('map').setView([28.6139, 77.2090], 11);
       }
     });
   }
@@ -68,23 +72,17 @@ export class GeographicalComponent {
       "shift": this.shiftModel,
       "attendance_DATE": this.getDate(this.dateModel)
     }
-
-    if (this.zoneModel && this.shiftModel) {
-      this.callAPIfun(obj);
-    }
-    else if (this.zoneModel) {
+    if (this.zoneModel) {
       delete obj.shift;
-      this.callAPIfun(obj);
     }
     else if (this.shiftModel) {
       delete obj.Z_name;
-      this.callAPIfun(obj);
     }
     else {
       delete obj.Z_name;
       delete obj.shift;
-      this.callAPIfun(obj);
     }
+    this.callAPIfun(obj);
   }
 
   callAPIfun(obj: any) {
@@ -105,7 +103,6 @@ export class GeographicalComponent {
   }
 
   setGeographicalGraph() {
-    const mapData = L.map('map').setView([28.6139, 77.2090], 11);
     for (let i = 0; i < this.allSchools.length; i++) {
       for (let j = 0; j < this.allAttendanceData.length; j++) {
         if (this.allSchools[i].Schoolid == this.allAttendanceData[j].School_ID) {
@@ -120,11 +117,11 @@ export class GeographicalComponent {
             totalNotMarkedAttendanceCount: this.allAttendanceData[j].totalNotMarkedAttendanceCount ? this.allAttendanceData[j].totalNotMarkedAttendanceCount : 0,
           }
           if (this.allSchools[i].School_Name && this.allSchools[i].Longitude && this.allSchools[i].Latitude) {
-            this.communicationService.allSchoolsData(mapObject, mapData);
+            this.communicationService.allSchoolsData(mapObject, this.mapData);
           }
         }
       }
     }
-    const map = this.communicationService.grographicalGraph(mapData);
+    const map = this.communicationService.grographicalGraph(this.mapData);
   }
 }

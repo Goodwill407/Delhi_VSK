@@ -16,6 +16,8 @@ import { TeacherAttendanceComponent } from './teacher-attendance/teacher-attenda
 import { NipunComponent } from './nipun/nipun.component';
 import { MissionBuniyaadComponent } from './mission-buniyaad/mission-buniyaad.component';
 import { AboutComponent } from './about/about.component';
+import { SchoolAdministrativeComponent } from './school-administrative/school-administrative.component';
+import { LearningInitiativesComponent } from './learning-initiatives/learning-initiatives.component';
 
 const routes: Routes = [
   { path: 'admin-dashboard', component: DashboardComponent },
@@ -34,6 +36,8 @@ const routes: Routes = [
   { path: 'nipun', component: NipunComponent },
   { path: 'mission-buniyaad', component: MissionBuniyaadComponent },
   { path: 'about', component: AboutComponent },
+  { path: 'learning-initiatives', component: LearningInitiativesComponent },
+  { path: 'school-administrative', component: SchoolAdministrativeComponent },
 ];
 
 @NgModule({
