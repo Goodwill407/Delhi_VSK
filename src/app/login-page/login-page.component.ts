@@ -87,6 +87,7 @@ export class LoginPageComponent {
       if (data) {
         this.toastr.success('', 'Logged in succesfully!');
         sessionStorage.setItem('userProfile', JSON.stringify(data.user));
+        this.communicationService.setLoginDetails(data);
         this.router.navigateByUrl('/content/admin-dashboard');
         this.loginFlag.emit(true)
       }

@@ -6,13 +6,29 @@ import { saveAs } from 'file-saver';
 import jspdf, { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import { NgxSpinnerService } from "ngx-spinner";
+import { HttpServiceService } from "./http-service.service";
 @Injectable({
     providedIn: 'root'
 })
 
 export class CommunicationService {
 
-    constructor(private spinner: NgxSpinnerService) { }
+    constructor(private spinner: NgxSpinnerService, private httpService: HttpServiceService) { }
+
+    loginDetails: any;
+
+    setLoginDetails(details: any) {
+      this.loginDetails = details.user;
+      sessionStorage.setItem('userProfile', JSON.stringify(details.user));
+      sessionStorage.setItem('tokens', JSON.stringify(details.tokens));
+      this.httpService.setTokens();
+    }
+  
+    setRefreshToken(data: any) {
+      sessionStorage.setItem('tokens', JSON.stringify(data));
+      this.httpService.setTokens();
+    }
+
     statesData: any = {
         "type": "FeatureCollection",
         "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },

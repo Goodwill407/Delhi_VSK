@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -6,11 +6,15 @@ import { Injectable } from '@angular/core';
 })
 export class HttpServiceService {
 
-  // apiURL = 'http://165.22.210.138:3000/v1/' // Development
+  apiURL = 'http://165.22.210.138:3000/v1/' // Development
   // // apiURL = 'http://165.22.216.223:3000/v1/' // Production
-  apiURL = 'https://server.toknowmore.com/v1/' // Production
+  // apiURL = 'https://server.toknowmore.com/v1/' // Production
 
-  constructor(private http: HttpClient) { }
+  token = '';
+  headerToken: any
+  constructor(private http: HttpClient) {
+    this.setTokens();
+  }
 
   post(url: string, data: any) {
     return this.http.post<any>(this.apiURL + url, data);
@@ -32,7 +36,7 @@ export class HttpServiceService {
   }
 
   get(url: string) {
-    return this.http.get<any>(this.apiURL + url);
+    return this.http.get<any>(this.apiURL + url, { headers: this.headerToken });
   }
 
   getById(url: string, id: string) {
@@ -41,5 +45,15 @@ export class HttpServiceService {
 
   delete(url: string, id: any) {
     return this.http.delete<any>(this.apiURL + url + "/" + id);
+  }
+
+  setTokens() {
+    const token = JSON.parse(sessionStorage.getItem('tokens') || '{}');
+    if (token && token.access) {
+      this.token = token.access.token;
+      this.headerToken = new HttpHeaders({
+        'Authorization': `Bearer ${this.token}`
+      });
+    }
   }
 }
