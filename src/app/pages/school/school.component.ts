@@ -81,6 +81,23 @@ export class SchoolComponent {
 
   }
 
+  // Emitted Data
+  selectedDistrictEmit(event: any) {
+    this.districtModel = event;
+    this.getGraphsByDistrictName();
+  }
+
+  selectedZoneEmit(event: any) {
+    this.zoneModel = event;
+    this.getGraphsByZone();
+  }
+
+  selectedSchoolEmit(event: any) {
+    this.schoolModel = event;
+    this.getGraphsBySchoolName();
+  }
+  // Emitted Data
+
   getAllDistricts() {
     // this.spinner.show();
     this.httpService.get('school/districtNames').subscribe((data: any) => {
@@ -171,14 +188,14 @@ export class SchoolComponent {
       lowClassCount: data.lowClassCount,
       highClassCount: data.highClassCount
     }
-    const teacherType = {guestTeachers:data.guestTeachers,regularTeachers:data.regularTeachers};
+    const teacherType = { guestTeachers: data.guestTeachers, regularTeachers: data.regularTeachers };
     this.getallTeachers(teacherType);
     this.getTypesOfSchools(data.typeOfSchoolCounts);
     // this.getStreamCount(data.streamCounts);
     // this.getMinorityCount(data.minorityCounts);
     // this.getAffiliationCount(data.afiliationCounts);
     if (zone) {
-      this.getAllZones();
+      // this.getAllZones();
     }
   }
 
@@ -287,6 +304,7 @@ export class SchoolComponent {
       forkJoin([api1, api2]).subscribe(([res1, res2]) => {
         this.setAllGraphs(res1, true);
         this.setClassGraph(res2);
+        this.getAllZones();
         this.spinner.hide();
       }, ([err1, err2]) => {
         if (err1 || err2) {
@@ -422,16 +440,16 @@ export class SchoolComponent {
         this.shiftWiseSchools.yaxis.show = false;
       }
     }
-    shiftWiseCount.tooltip= {
+    shiftWiseCount.tooltip = {
       y: {
-          title: {
-              formatter: (val: any) => {
-                  return 'Shit ' + val + ':'
-              }
+        title: {
+          formatter: (val: any) => {
+            return 'Shit ' + val + ':'
           }
+        }
       }
-  }
-    
+    }
+
   }
 
   getLowClassHighClass(lowClassHighClass: any) {

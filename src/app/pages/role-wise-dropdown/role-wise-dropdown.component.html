@@ -1,0 +1,27 @@
+<div class="filter-box d-flex">
+    <select class="form-select" *ngIf="user.role == 'admin'" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'">
+        <option value="">All Districts</option>
+        <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
+            {{district.districtName}} ({{district.D_ID}})
+        </option>
+    </select>
+    <select class="form-select" [(ngModel)]="zoneModel" (change)="getGraphsByZone()" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'">
+        <option value="">All Zones</option>
+        <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
+            {{zone.Zone_Name}} ({{zone.Z_ID}})
+        </option>
+    </select>
+    <select class="form-select" [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'">
+        <option value="">Select Schools</option>
+        <option *ngFor="let school of allSchools" [ngValue]="school">
+            {{school.School_Name}} - ({{school.Schoolid}})
+        </option>
+    </select>
+</div>
+
+<!-- <select class="form-select">
+    <option value="">All Districts</option>
+    <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
+        {{district.districtName}} ({{district.D_ID}})
+    </option>
+</select> -->

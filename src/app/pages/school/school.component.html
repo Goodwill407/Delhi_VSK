@@ -1,12 +1,16 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
 </ngx-spinner>
 <!-- tab -->
+<app-role-wise-dropdown [allDistricts]="allDistricts" [allZones]="allZones" [allSchools]="allSchools"
+    (selectedDistrict)="selectedDistrictEmit($event)" (selectedZone)="selectedZoneEmit($event)"
+    (selectedSchool)="selectedSchoolEmit($event)"></app-role-wise-dropdown>
 <nav>
     <div class="nav nav-pills mb-3 filter-box px-3 mt-3" id="pills-tab" role="tablist">
         <h2 class="fw-bold mb-0">SCHOOL</h2>
         <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
-        <button class="nav-link active" [ngClass]="communicationServiceMobile ? 'ms-2' : ''" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
-            role="tab" aria-controls="nav-home" aria-selected="true">GRAPHICAL VIEW</button>
+        <button class="nav-link active" [ngClass]="communicationServiceMobile ? 'ms-2' : ''" id="nav-home-tab"
+            data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
+            aria-selected="true">GRAPHICAL VIEW</button>
         <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"
             role="tab" aria-controls="nav-profile" aria-selected="false">SCHOOL ACCREDITATION</button>
         <!-- <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button"
@@ -17,31 +21,7 @@
     <!-- tab1 -->
     <div class="tab-pane fade show active filter-box" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 
-        <div class="filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
-            <!-- <h2 class="fw-bold mb-0 p-1">School</h2>
-            <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div> -->
-            <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
-                [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
-                <option value="">All Districts</option>
-                <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
-                    {{district.districtName}} ({{district.D_ID}})
-                </option>
-            </select>
-            <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
-                [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
-                <option value="">All Zones</option>
-                <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
-                    {{zone.Zone_Name}} ({{zone.Z_ID}})
-                </option>
-            </select>
-            <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
-                [(ngModel)]="schoolModel" (change)="getGraphsBySchoolName()">
-                <option value="" disabled>Select Schools</option>
-                <option *ngFor="let school of allSchools" [ngValue]="school">
-                    {{school.School_Name}} - ({{school.Schoolid}})
-                </option>
-            </select>
-        </div>
+
         <div class="d-flex justify-content-center filter-box mt-2" *ngIf="districtModel || zoneModel || schoolModel">
             <h3 class="text-center mb-0" *ngIf="districtModel">{{districtModel}}&nbsp; </h3>
             <h3 class="text-center mb-0" *ngIf="zoneModel"> <span *ngIf="districtModel">|</span> {{zoneModel}}&nbsp;
@@ -168,9 +148,9 @@
     </div>
 
     <!-- tab2 -->
-    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+    <!-- <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
         <app-tabular-school></app-tabular-school>
-    </div>
+    </div> -->
 
     <!-- tab3 -->
     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
