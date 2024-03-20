@@ -40,10 +40,13 @@ export class UdiseHomeComponent {
   ngOnInit() {
     this.communicationService.sharedData$.subscribe(data => {
       if (data == 'home') {
-        this.getAllData();
-        this.getAllDistricts();
-        this.getAllZones();
-        this.getAllSchoolName();
+        const user = JSON.parse(sessionStorage.getItem('userProfile')!);
+        if (user.role == 'admin') {
+          this.getAllData();
+          this.getAllDistricts();
+          this.getAllZones();
+          this.getAllSchoolName();
+        }
         this.subscription = this.graphService
           .getItemCountObservable()
           .subscribe((count) => {
@@ -56,6 +59,22 @@ export class UdiseHomeComponent {
     });
   }
 
+  // Emitted Data
+  selectedDistrictEmit(event: any) {
+    this.districtModel = event;
+    this.getGraphsByDistrictName();
+  }
+
+  selectedZoneEmit(event: any) {
+    this.zoneModel = event;
+    this.getGraphsByZone();
+  }
+
+  selectedSchoolEmit(event: any) {
+    this.schoolModel = event;
+    this.getGraphsBySchoolName();
+  }
+  // Emitted Data
 
   getAllDistricts() {
     this.httpService.get('school/districtNames').subscribe((data: any) => {

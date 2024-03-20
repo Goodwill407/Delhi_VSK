@@ -39,6 +39,7 @@ export class UdiseSchoolComponent {
   SchoolType: any;
   allSchoolTypeData: any
   communicationServiceMobile: any;
+  user: any;
 
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService) {
     this.subscription = this.communicationService.parentClick$.subscribe(() => {
@@ -48,16 +49,19 @@ export class UdiseSchoolComponent {
       this.TypeofSchoolCountsGraph = {}
       this.getAllUdiseSchoolData();
     });
+    this.user = JSON.parse(sessionStorage.getItem('userProfile')!);
     this.communicationServiceMobile = this.communicationService.isMobile;
   }
 
   ngOnInit() {
     this.communicationService.sharedData$.subscribe(data => {
       if (data == 'udise-school') {
-        this.getAllDistricts();
-        this.getAllZones();
-        this.getAllUdiseSchoolData();
-
+        this.setRoleWiseDropdowns();
+        if (this.user.role == 'admin') {
+          this.getAllDistricts();
+          this.getAllZones();
+          this.getAllUdiseSchoolData();
+        }
         this.subscription = this.graphService
           .getItemCountObservable()
           .subscribe((count) => {
@@ -76,10 +80,23 @@ export class UdiseSchoolComponent {
     });
   }
 
-  // ngOnDestroy() {
-  //   this.subscription.unsubscribe();
-  // }
-
+  setRoleWiseDropdowns() {
+    if (this.user.role == 'district') {
+      const inputString = this.user.assignedTO;
+      let regex = /([^-]+)-[0-9]+/;
+      let match = inputString.match(regex);
+      let valueBeforeHyphen = match ? match[1] : null;
+      this.districtModel = valueBeforeHyphen;
+      this.getGraphsByDistrictName();
+    } else if (this.user.role == 'zone') {
+      const text = this.user.assignedTO;
+      const match = text.match(/(?<=-)(0*)([1-9]\d*)/);
+      if (match) {
+        this.zoneModel = match[2];
+      }
+      this.getGraphsByZone();
+    }
+  }
 
   getAllDistricts() {
     this.httpService.get('udise-school/district').subscribe((data: any) => {
