@@ -69,10 +69,14 @@ export class StudentComponent {
   }
 
   ngOnInit() {
-    this.getStudentGraphData();
-    this.getAllDistricts();
-    this.getAllZones();
-    this.getAllSchoolName();
+
+    const user = JSON.parse(sessionStorage.getItem('userProfile')!);
+    if (user.role == 'admin') {
+      this.getStudentGraphData();
+      this.getAllDistricts();
+      this.getAllZones();
+      this.getAllSchoolName();
+    }
 
     this.subscription = this.graphService
       .getItemCountObservable()
@@ -88,8 +92,25 @@ export class StudentComponent {
           this.getStudentByStatusWise(false);
         }
       });
-
   }
+
+  // Emitted Data
+  selectedDistrictEmit(event: any) {
+    this.districtModel = event;
+    this.getGraphsByDistrictName();
+  }
+
+  selectedZoneEmit(event: any) {
+    this.ZoneModel = event;
+    this.getGraphsByZone();
+  }
+
+  selectedSchoolEmit(event: any) {
+    this.schoolModel = event;
+    this.getGraphsBySchoolName();
+  }
+  // Emitted Data
+
   getAllDistricts() {
     this.httpService.get('school/districtNames').subscribe((data: any) => {
       if (data && data.length > 0) {
@@ -99,11 +120,11 @@ export class StudentComponent {
     })
   }
 
-  getAllSchoolName(){
-    this.httpService.get('school/get-all-school-name').subscribe((res:any)=>{
-      if(res){
+  getAllSchoolName() {
+    this.httpService.get('school/get-all-school-name').subscribe((res: any) => {
+      if (res) {
         this.allSchools = res;
-      }else{
+      } else {
         this.allSchools = [];
       }
     })
@@ -113,11 +134,11 @@ export class StudentComponent {
     if (this.districtModel) {
       const district = { "District_name": this.districtModel };
       this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
-        this.allZones = res.ZoneSchool.map((zone: any) => ({ id: zone.Z_ID, name: zone.Zone_Name }));
+        this.allZones = res.ZoneSchool.map((zone: any) => ({ Z_ID: zone.Z_ID, Zone_Name: zone.Zone_Name }));
       })
     } else {
       this.httpService.get('school/zonename').subscribe((res: any) => {
-        this.allZones = res.ZoneInfo.map((zone: any) => ({ id: zone.Z_ID, name: zone.Zone_Name }));
+        this.allZones = res.ZoneInfo.map((zone: any) => ({ Z_ID: zone.Z_ID, Zone_Name: zone.Zone_Name }));
         this.allZones = this.allZones.sort((a: any, b: any) => a.id - b.id);
       })
     }

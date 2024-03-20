@@ -5,7 +5,7 @@
             {{district.districtName}} ({{district.D_ID}})
         </option>
     </select>
-    <select class="form-select" [(ngModel)]="zoneModel" (change)="getGraphsByZone()" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'">
+    <select class="form-select" *ngIf="user.role == 'district' || user.role == 'admin'" [(ngModel)]="zoneModel" (change)="getGraphsByZone()" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'">
         <option value="">All Zones</option>
         <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
             {{zone.Zone_Name}} ({{zone.Z_ID}})

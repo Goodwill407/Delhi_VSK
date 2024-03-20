@@ -1,4 +1,4 @@
-<div class="mt-2 filter-box-guest" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
+<!-- <div class="mt-2 filter-box-guest" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
     <h2 class="fw-bold">GUEST</h2>
     <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
     <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
@@ -22,7 +22,11 @@
             {{school.School_Name}} - ({{school.Schoolid}})
         </option>
     </select>
-</div>
+</div> -->
+
+<app-role-wise-dropdown [allDistricts]="allDistricts" [allZones]="allZones" [allSchools]="allSchools"
+    (selectedDistrict)="selectedDistrictEmit($event)" (selectedZone)="selectedZoneEmit($event)"
+    (selectedSchool)="selectedSchoolEmit($event)"></app-role-wise-dropdown>
 
 <div class="d-flex justify-content-center filter-box-guest mt-2"
     *ngIf="districtModel || zoneModel || schoolModel.School_Name">
@@ -80,8 +84,8 @@
             Teacher</h3>
     </div>
 
-      <!--  -->
-      <div class="column">
+    <!--  -->
+    <div class="column">
         <h5 class="header-bg p-2">Shift wise Teacher</h5>
         <apx-chart [series]="shiftWiseSchoolsGuest?.series" [chart]="shiftWiseSchoolsGuest?.chart"
             [labels]="shiftWiseSchoolsGuest?.labels" [fill]="shiftWiseSchoolsGuest?.fill"
@@ -132,7 +136,7 @@
 </div>
 
 <!-- Button trigger modal -->
-<button #openModalGuest data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal1" data-bs-backdrop="static" 
+<button #openModalGuest data-bs-toggle="modal" class="d-none" data-bs-target="#exampleModal1" data-bs-backdrop="static"
     (click)="getTeachersByDesignation(true)">
 
 </button>

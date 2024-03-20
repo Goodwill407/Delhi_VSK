@@ -60,9 +60,11 @@ export class AttendanceRegularComponent {
   allAttendanceData: any;
   allSchoolAttendance: any = [];
   maxDate: any = '2024-08-28';
+  user: any;
 
   constructor(private communicationService: CommunicationService, private httpService: HttpServiceService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private graphService: GraphService, public datepipe: DatePipe, private toastr: ToastrService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
+    this.user = JSON.parse(sessionStorage.getItem('userProfile')!);
   }
 
   ngOnInit() {
@@ -71,10 +73,13 @@ export class AttendanceRegularComponent {
         this.dateModel = new Date();
         this.dateModel = this.getDate(this.dateModel.setDate(this.dateModel.getDate() - 1));
         this.maxDate = this.getDate(this.dateModel);
-        this.getGraphsByDate(true);
-        this.getAllDistricts();
-        this.getAllZones();
-        this.getAllSchoolName();
+        this.setRoleWiseDropdowns();
+        if (this.user.role == 'admin') {
+          this.getGraphsByDate(true);
+          this.getAllDistricts();
+          this.getAllZones();
+          this.getAllSchoolName();
+        }
       }
       else {
         this.districtModel = "";
@@ -93,6 +98,20 @@ export class AttendanceRegularComponent {
     //       this.getAttendanceStatusCountClick(false);
     //     }
     //   });
+  }
+
+  setRoleWiseDropdowns() {
+    if (this.user.role == 'district') {
+      const inputString = this.user.assignedTO;
+      let regex = /([^-]+)-[0-9]+/;
+      let match = inputString.match(regex);
+      let valueBeforeHyphen = match ? match[1] : null;
+      this.districtModel = valueBeforeHyphen;
+      this.getGraphsByDistrictName();
+    } else if (this.user.role == 'zone') {
+      this.zoneModel = this.user.assignedTO;
+      this.getGraphsByZone();
+    }
   }
 
   handleParentClick() {
@@ -564,7 +583,8 @@ export class AttendanceRegularComponent {
       rotate: -45, // Adjust the rotation angle as needed
       style: {
         fontSize: '8px'
-      }}
+      }
+    }
     this.districtWiseTopFiveGraph.series = [...series];
     // this.districtWiseTopFiveGraph.plotOptions.bar.isFunnel = false;
     this.districtWiseTopFiveGraph.legend.show = false;
@@ -599,7 +619,8 @@ export class AttendanceRegularComponent {
       rotate: -45, // Adjust the rotation angle as needed
       style: {
         fontSize: '8px'
-      }}
+      }
+    }
     this.districtWiseBottomFiveGraph.series = [...series];
     // this.districtWiseBottomFiveGraph.chart.height = 200;
     // this.districtWiseBottomFiveGraph.plotOptions.bar.isFunnel = true;
@@ -634,7 +655,8 @@ export class AttendanceRegularComponent {
       rotate: -45, // Adjust the rotation angle as needed
       style: {
         fontSize: '8px'
-      }}
+      }
+    }
     this.zoneWiseTopFiveGraph.series = [...series];
     // this.zoneWiseTopFiveGraph.chart.height = 200;
     // this.zoneWiseTopFiveGraph.plotOptions.bar.isFunnel = true;
@@ -669,7 +691,8 @@ export class AttendanceRegularComponent {
       rotate: -45, // Adjust the rotation angle as needed
       style: {
         fontSize: '8px'
-      }}
+      }
+    }
     this.zoneWiseBottomFiveGraph.series = [...series];
     // this.zoneWiseBottomFiveGraph.chart.height = 200;
     // this.zoneWiseBottomFiveGraph.plotOptions.bar.isFunnel = true;
@@ -704,7 +727,8 @@ export class AttendanceRegularComponent {
       rotate: -45, // Adjust the rotation angle as needed
       style: {
         fontSize: '8px'
-      }}
+      }
+    }
     this.schoolWiseTopFiveGraph.series = [...series];
     // this.schoolWiseTopFiveGraph.chart.height = 200;
     // this.schoolWiseTopFiveGraph.plotOptions.bar.isFunnel = true;
@@ -740,7 +764,8 @@ export class AttendanceRegularComponent {
       rotate: -45, // Adjust the rotation angle as needed
       style: {
         fontSize: '8px'
-      }}
+      }
+    }
     // this.schoolWiseBottomFiveGraph.chart.height = 200;
     // this.schoolWiseBottomFiveGraph.plotOptions.bar.isFunnel = true;
     this.schoolWiseBottomFiveGraph.legend.show = false;

@@ -1,4 +1,4 @@
-<div class="mt-2 filter-box-total" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
+<!-- <div class="mt-2 filter-box-total" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
     <h2 class="fw-bold">TOTAL</h2>
     <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
     <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
@@ -22,7 +22,11 @@
             {{school.School_Name}} - ({{school.Schoolid}})
         </option>
     </select>
-</div>
+</div> -->
+
+<app-role-wise-dropdown [allDistricts]="allDistricts" [allZones]="allZones" [allSchools]="allSchools"
+    (selectedDistrict)="selectedDistrictEmit($event)" (selectedZone)="selectedZoneEmit($event)"
+    (selectedSchool)="selectedSchoolEmit($event)"></app-role-wise-dropdown>
 
 <div class="d-flex justify-content-center filter-box-total mt-2"
     *ngIf="districtModel || zoneModel || schoolModel.School_Name">
@@ -81,7 +85,7 @@
             Teacher</h3>
     </div>
 
-    
+
     <div class="column" [ngClass]="communicationServiceMobile ? '' : 'wide-height'" style="height: auto;">
         <h5 class="header-bg p-2">Designation wise Teacher</h5>
         <apx-chart [series]="designation?.series" [chart]="designation?.chart" [dataLabels]="designation?.dataLabels"

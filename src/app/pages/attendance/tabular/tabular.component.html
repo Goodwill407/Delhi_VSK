@@ -1,6 +1,6 @@
 <!-- dropdown -->
 <div class="my-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
-    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="zoneModel" (change)="getTableData()">
+    <select class="form-select ms-2 mx-1 my-1" *ngIf="user.role == 'district' || user.role == 'admin'" [(ngModel)]="zoneModel" (change)="getTableData()">
         <option *ngFor="let zone of allZones" [ngValue]="zone">
             {{zone.Zone_Name}} ({{zone.Z_ID}})
         </option>

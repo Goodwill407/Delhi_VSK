@@ -21,9 +21,11 @@ export class TabularComponent implements OnInit {
   allDist: any;
   allTotalData: any = {};
   maxDate: any = '2024-08-28';
+  user: any;
 
   constructor(private httpService: HttpServiceService, public datepipe: DatePipe, private spinner: NgxSpinnerService, private toastr: ToastrService, private communicationService: CommunicationService, private cdRef: ChangeDetectorRef) {
     this.communicationServiceMobile = this.communicationService.isMobile;
+    this.user = JSON.parse(sessionStorage.getItem('userProfile')!);
   }
 
   ngOnInit() {
@@ -32,11 +34,21 @@ export class TabularComponent implements OnInit {
         this.dateModel = new Date();
         this.dateModel = this.getDate(this.dateModel.setDate(this.dateModel.getDate()));
         this.maxDate = this.getDate(this.dateModel);
-        this.getTableData();
-        this.getAllDistAndZone();
-        this.getAllZone();
+        this.setRoleWiseDropdowns();
+        if (this.user.role == 'admin') {
+          this.getTableData();
+          this.getAllDistAndZone();
+          this.getAllZone();
+        }
       }
     });
+  }
+
+  setRoleWiseDropdowns() {
+    if (this.user.role == 'zone') {
+      this.zoneModel = this.user.assignedTO;
+      this.getTableData();
+    }
   }
 
   getAllZone() {
@@ -76,10 +88,10 @@ export class TabularComponent implements OnInit {
       (res: any) => {
         // if(this.shiftModel){
         //  this.allAttendanceData = res.filter((item:any)=>{
-         
+
         //   console.log(item.shift, this.shiftModel);
         //   return  item.shift.toLowerCase() === this.shiftModel;
-        
+
         // });
         // }else{
         //   this.allAttendanceData = res;
@@ -91,7 +103,7 @@ export class TabularComponent implements OnInit {
         }
 
         this.allTotalData = {
-          allStudent: 0,allStudyingStudent: 0, allAbsent: 0, allPresent: 0, allLeave: 0, allUnmark: 0, allPercent: 0
+          allStudent: 0, allStudyingStudent: 0, allAbsent: 0, allPresent: 0, allLeave: 0, allUnmark: 0, allPercent: 0
         };
         res.forEach((school: any) => {
           this.allTotalData.allStudent += school.totalStudentCount;
@@ -111,10 +123,10 @@ export class TabularComponent implements OnInit {
     );
   }
 
-  dataByShift(){
-    if(this.shiftModel){
+  dataByShift() {
+    if (this.shiftModel) {
 
-    }else{
+    } else {
 
     }
   }

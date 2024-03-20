@@ -32,15 +32,17 @@ export class RoleWiseDropdownComponent {
   }
 
   setRoleWiseDropdowns() {
-    if (this.user.role == 'district') {
-      const inputString = this.user.assignedTO;
+    const inputString = this.user.assignedTO;
+    let regex = /([^-]+)-[0-9]+/;
+    let match = inputString.match(regex);
+    let valueBeforeHyphen = match ? match[1] : null;
 
-      let regex = /([^-]+)-[0-9]+/;
-      let match = inputString.match(regex);
-      let valueBeforeHyphen = match ? match[1] : null;
-      
+    if (this.user.role == 'district') {
       this.districtModel = valueBeforeHyphen;
       this.selectedDistrict.emit(this.districtModel);
+    } else if (this.user.role == 'zone') {
+      this.zoneModel = this.user.assignedTO;
+      this.selectedZone.emit(this.zoneModel);
     }
   }
 

@@ -35,18 +35,23 @@ export class AttendanceRangeWiseComponent {
   allShift: any = ['Morning', 'General', 'Evening'];
   dataNotFound: boolean = false;
   communicationServiceMobile: any;
+  user: any;
 
   constructor(private toastr: ToastrService, private httpService: HttpServiceService, public datepipe: DatePipe, private spinner: NgxSpinnerService, private graphService: GraphService, private communicationService: CommunicationService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
+    this.user = JSON.parse(sessionStorage.getItem('userProfile')!);
   }
 
 
   ngOnInit() {
     this.communicationService.sharedData$.subscribe(data => {
       if (data == "range") {
-        this.getAllDistricts();
-        this.getAllZones();
-        this.getAllSchoolName();
+        this.setRoleWiseDropdowns();
+        if (this.user.role == 'admin') {
+          this.getAllDistricts();
+          this.getAllZones();
+          this.getAllSchoolName();
+        }
       }
       else {
         this.districtModel = "";
@@ -56,6 +61,20 @@ export class AttendanceRangeWiseComponent {
         this.zoneModel = "";
       }
     });
+  }
+
+  setRoleWiseDropdowns() {
+    if (this.user.role == 'district') {
+      const inputString = this.user.assignedTO;
+      let regex = /([^-]+)-[0-9]+/;
+      let match = inputString.match(regex);
+      let valueBeforeHyphen = match ? match[1] : null;
+      this.districtModel = valueBeforeHyphen;
+      this.getGraphsByDistrictName();
+    } else if (this.user.role == 'zone') {
+      this.zoneModel = this.user.assignedTO;
+      this.getGraphsByZone();
+    }
   }
 
   getAllDistricts() {

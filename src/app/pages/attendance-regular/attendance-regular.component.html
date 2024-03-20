@@ -9,13 +9,13 @@
 <div class="mt-3 filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
     <h2 class="fw-bold">REGULAR </h2>
     <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
-    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
+    <select class="form-select ms-2 mx-1 my-1" *ngIf="user.role == 'admin'" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()">
         <option value="">All District</option>
         <option *ngFor="let district of allDistricts" value="{{district.districtName}}">
             {{district.districtName}} ({{district.D_ID}})
         </option>
     </select>
-    <select class="form-select ms-2 mx-1 my-1" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
+    <select class="form-select ms-2 mx-1 my-1" *ngIf="user.role == 'district' || user.role == 'admin'" [(ngModel)]="zoneModel" (change)="getGraphsByZone()">
         <option value="">All Zones</option>
         <option *ngFor="let zone of allZones" value="{{zone.Zone_Name}}">
             {{zone.Zone_Name}} ({{zone.Z_ID}})

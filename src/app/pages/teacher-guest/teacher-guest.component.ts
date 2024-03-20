@@ -60,7 +60,7 @@ export class TeacherGuestComponent {
   constructor(private httpService: HttpServiceService, private spinner: NgxSpinnerService, private graphService: GraphService, private toastr: ToastrService, private communicationService: CommunicationService) {
     this.communicationServiceMobile = this.communicationService.isMobile;
     this.subscription = this.communicationService.parentClick$.subscribe(() => {
-     this.getAllGuestTeacherData();
+      this.getAllGuestTeacherData();
     });
   }
 
@@ -71,11 +71,14 @@ export class TeacherGuestComponent {
   ngOnInit() {
     this.communicationService.sharedData$.subscribe(data => {
       if (data == 'guest') {
-        this.getAllGuestTeacherData();
-        this.getAllDistricts();
-        this.getAllZones();
-        this.getAllSchoolName();
-    
+        const user = JSON.parse(sessionStorage.getItem('userProfile')!);
+        if (user.role == 'admin') {
+          this.getAllGuestTeacherData();
+          this.getAllDistricts();
+          this.getAllZones();
+          this.getAllSchoolName();
+        }
+
         this.subscription = this.graphService
           .getItemCountObservable()
           .subscribe((count) => {
@@ -93,6 +96,23 @@ export class TeacherGuestComponent {
     });
   }
 
+  // Emitted Data
+  selectedDistrictEmit(event: any) {
+    this.districtModel = event;
+    this.getGraphsByDistrictName();
+  }
+
+  selectedZoneEmit(event: any) {
+    this.zoneModel = event;
+    this.getGraphsByZone();
+  }
+
+  selectedSchoolEmit(event: any) {
+    this.schoolModel = event;
+    this.getGraphsBySchoolName();
+  }
+  // Emitted Data
+
   getAllDistricts() {
     this.httpService.get('school/districtNames').subscribe((data: any) => {
       if (data && data.length > 0) {
@@ -103,12 +123,12 @@ export class TeacherGuestComponent {
       this.toastr.error('', 'Something went wrong !');
     })
   }
-  
-  getAllSchoolName(){
-    this.httpService.get('school/get-all-school-name').subscribe((res:any)=>{
-      if(res){
+
+  getAllSchoolName() {
+    this.httpService.get('school/get-all-school-name').subscribe((res: any) => {
+      if (res) {
         this.allSchools = res;
-      }else{
+      } else {
         this.allSchools = [];
       }
     })
@@ -335,7 +355,8 @@ export class TeacherGuestComponent {
       rotate: -45, // Adjust the rotation angle as needed
       style: {
         fontSize: '9px'
-      }}
+      }
+    }
     this.teacherCategoryGuest.series = [...series];
     this.teacherCategoryGuest.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
@@ -375,9 +396,9 @@ export class TeacherGuestComponent {
     this.designationGuest.xaxis.title.text = "Designation";
     this.designationGuest.yaxis.title.text = "Teachers";
     // this.designationGuest.dataLabels.enabled = false;
-    this.designationGuest.plotOptions.bar.dataLabels={
+    this.designationGuest.plotOptions.bar.dataLabels = {
       position: 'start', // Set data label position to start
-  }
+    }
     this.designationGuest.chart.height = "660px"
     this.designationGuest.chart.events = {
       dataPointSelection: (event: any, chartContext: any, config: any) => {
@@ -389,18 +410,18 @@ export class TeacherGuestComponent {
   }
 
   getTeachersByDesignation(flash: any) {
-    if(this.configDesignation){
-    const parameter = {
-      "SchoolID": String(this.schoolModel.Schoolid),
-      "Post": this.allData.postdescWiseTeacherCounts[this.configDesignation]._id
-    }
-    this.httpService.post('guest-teacher/school/post-wise/teacher-list', parameter).subscribe((res: any) => {
-      this.allTeacherData = res;
-      if (!flash) {
-        this.openModalGuest.nativeElement.click();
+    if (this.configDesignation) {
+      const parameter = {
+        "SchoolID": String(this.schoolModel.Schoolid),
+        "Post": this.allData.postdescWiseTeacherCounts[this.configDesignation]._id
       }
-    })
-  }
+      this.httpService.post('guest-teacher/school/post-wise/teacher-list', parameter).subscribe((res: any) => {
+        this.allTeacherData = res;
+        if (!flash) {
+          this.openModalGuest.nativeElement.click();
+        }
+      })
+    }
   }
 
   getTachersBySchoolName() {
@@ -419,7 +440,7 @@ export class TeacherGuestComponent {
   }
 
   getSchoolTypeWiseCount(data: any) {
-    data = data.filter((item:any) => item.typeOfSchool !== null && item.typeOfSchool.trim() !== "");
+    data = data.filter((item: any) => item.typeOfSchool !== null && item.typeOfSchool.trim() !== "");
     this.schoolTypeWiseCount = this.graphService.PolarGraph('School Teachers');
     for (let i = 0; i < data.length; i++) {
       this.schoolTypeWiseCount.series.push(data[i].teacherTypeOfSchoolWiseCount);

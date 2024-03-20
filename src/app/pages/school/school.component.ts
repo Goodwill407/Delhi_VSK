@@ -61,12 +61,15 @@ export class SchoolComponent {
   }
 
   ngOnInit() {
-    this.getAllDistricts();
-    this.getAllSchoolGraph();
-    this.getDistrictName();
-    this.getAllZones();
-    this.getAllSchoolName();
-    this.getSchoolByDistrict();
+    const user = JSON.parse(sessionStorage.getItem('userProfile')!);
+    if (user.role == 'admin') {
+      this.getAllDistricts();
+      this.getAllSchoolGraph();
+      this.getDistrictName();
+      this.getAllZones();
+      this.getAllSchoolName();
+      this.getSchoolByDistrict();
+    }
 
     this.subscription = this.graphService
       .getItemCountObservable()

@@ -1,5 +1,5 @@
 <div class="filter-box-total">
-    <div class="filter-box-total" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
+    <!-- <div class="filter-box-total" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
         <h2 class="fw-bold">HOME</h2>
         <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
         <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
@@ -23,9 +23,14 @@
                 {{school.School_Name}} - ({{school.Schoolid}})
             </option>
         </select>
-    </div>
+    </div> -->
 
-    <div class="justify-content-center filter-box-total mt-2" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'"
+    <app-role-wise-dropdown [allDistricts]="allDistricts" [allZones]="allZones" [allSchools]="allSchools"
+        (selectedDistrict)="selectedDistrictEmit($event)" (selectedZone)="selectedZoneEmit($event)"
+        (selectedSchool)="selectedSchoolEmit($event)"></app-role-wise-dropdown>
+
+    <div class="justify-content-center filter-box-total mt-2"
+        [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'"
         *ngIf="districtModel || zoneModel || schoolModel.School_Name">
         <h3 class="text-center mb-0" *ngIf="districtModel">{{districtModel}}&nbsp; </h3>
         <h3 class="text-center mb-0" *ngIf="zoneModel"> <span *ngIf="districtModel">|</span> {{zoneModel}}&nbsp; </h3>
@@ -105,10 +110,12 @@
                 <h5 class="modal-title m-auto" *ngIf="dataPointIndex == 1" id="exampleModalLabel">Schools Details By
                     Student Received
                     Training </h5>
-                <h5 class="modal-title m-auto" *ngIf="dataPointIndex == 2 || dataPointIndex == 3 || dataPointIndex == 4 || dataPointIndex == 5"
+                <h5 class="modal-title m-auto"
+                    *ngIf="dataPointIndex == 2 || dataPointIndex == 3 || dataPointIndex == 4 || dataPointIndex == 5"
                     id="exampleModalLabel">Schools Details By Availability of {{ dataPointIndex == 2?'Play Master':
-                    dataPointIndex == 3 ? 'Free Uniform' : dataPointIndex == 4 ? 'Free Text Book' : 'Supply Material'}} </h5>
-               
+                    dataPointIndex == 3 ? 'Free Uniform' : dataPointIndex == 4 ? 'Free Text Book' : 'Supply Material'}}
+                </h5>
+
                 <div class="dropdown">
                     <span class="text-danger m-2"><img src="../../../assets/images/icons/downloads.png" width="25px"
                             alt=""></span>
