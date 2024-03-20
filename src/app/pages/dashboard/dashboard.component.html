@@ -113,11 +113,33 @@
 <br>
 
 <!-- ALL DISTRICT -->
-<div class="container1">
+<div class="container1" *ngIf="user.role == 'admin'">
     <div class="column mt-3 ms-3 text-center" *ngFor="let data of allDistrictData" [routerLink]="['/school']"
         [queryParams]="{districtName : data.districtName}">
         <div class="header-dashboard">
             <h4 class="fw-bold mb-0 p-2 text-white">{{data?.districtName}}</h4>
+        </div>
+
+        <!-- <div class="glass"></div> -->
+        <div class="content d-flex mt-4">
+            <span class="text">Total Schools :</span>
+            <span class="title ms-2">{{data?.totalSchoolCount}}</span>
+        </div>
+        <div class="content d-flex">
+            <span class="text">Total Students :</span>
+            <span class="title ms-2">{{data?.totalStudentCount}}</span>
+        </div>
+        <!-- <button class="btn rounded-pill mt-3 mb-2 green-border" [routerLink]="['/school']"
+            [queryParams]="{districtName : data.districtName}">Go to Dashboard</button> -->
+    </div>
+</div>
+
+<!-- ALL Zone -->
+<div class="container1" *ngIf="user.role == 'district'">
+    <div class="column mt-3 ms-3 text-center" *ngFor="let data of allZoneData" [routerLink]="['/school']"
+        >
+        <div class="header-dashboard">
+            <h4 class="fw-bold mb-0 p-2 text-white">{{data?.zoneName}}</h4>
         </div>
 
         <!-- <div class="glass"></div> -->

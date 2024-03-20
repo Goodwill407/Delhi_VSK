@@ -83,7 +83,7 @@
       </ul>
 
       <!-- Admin -->
-      <ul class="nav flex-column" *ngIf="user.role == 'district'">
+      <ul class="nav flex-column" *ngIf="user.role == 'district'|| user.role == 'zone' || user.role == 'admin'">
         <li class="nav-item">
           <a class="nav-link" routerLink="content/admin-dashboard" routerLinkActive="active" href="#">
             <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard">
@@ -105,7 +105,8 @@
 
         <li class="nav-item">
           <a class="nav-link" routerLink="teacher" routerLinkActive="active" href="#">
-            <span class="image-icon text-center justify-content-center" data-bs-toggle="tooltip" data-bs-placement="right" title="Teacher">
+            <span class="image-icon text-center justify-content-center" data-bs-toggle="tooltip"
+              data-bs-placement="right" title="Teacher">
               <img src="../assets/images/Dashboard/teacher.png" alt="">
             </span>
             <span class="ms-2"
@@ -115,7 +116,8 @@
 
         <li class="nav-item">
           <a class="nav-link" routerLink="student" routerLinkActive="active" href="#">
-            <span class="image-icon text-center justify-content-center" data-bs-toggle="tooltip" data-bs-placement="right" title="Student">
+            <span class="image-icon text-center justify-content-center" data-bs-toggle="tooltip"
+              data-bs-placement="right" title="Student">
               <img src="../assets/images/Dashboard/reading.png" alt="">
             </span>
             <span class="ms-2"
@@ -125,7 +127,8 @@
 
         <li class="nav-item">
           <a class="nav-link" routerLink="attendance" routerLinkActive="active" href="#">
-            <span class="image-icon text-center justify-content-center" data-bs-toggle="tooltip" data-bs-placement="right" title="Attendance">
+            <span class="image-icon text-center justify-content-center" data-bs-toggle="tooltip"
+              data-bs-placement="right" title="Attendance">
               <img src="../assets/images/Dashboard/attendance.png" alt="">
             </span>
             <span class="ms-2"
@@ -135,11 +138,12 @@
 
         <li class="nav-item">
           <a class="nav-link" routerLink="teacher-attendance" routerLinkActive="active" href="#">
-            <span class="image-icon text-center justify-content-center" data-bs-toggle="tooltip" data-bs-placement="right" title="Teacher Attendance">
+            <span class="image-icon text-center justify-content-center" data-bs-toggle="tooltip"
+              data-bs-placement="right" title="Teacher Attendance">
               <img src="../assets/images/Dashboard/immigration.png" alt="">
             </span>
-            <span class="ms-2"
-              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Teacher Attendance</span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Teacher
+              Attendance</span>
           </a>
         </li>
 
@@ -189,7 +193,7 @@
               Diksha</span>
           </a>
         </li>
-        
+
         <li class="nav-item mt-2">
           <a class="nav-link" routerLink="nipun" routerLinkActive="active">
             <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Nipun">
@@ -199,7 +203,7 @@
               Nipun</span>
           </a>
         </li>
-        
+
         <li class="nav-item mt-2">
           <a class="nav-link" routerLink="mission-buniyaad" routerLinkActive="active">
             <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Mission Buniyaad">
@@ -209,17 +213,28 @@
               Mission Buniyaad</span>
           </a>
         </li>
-          
+
         <li class="nav-item mt-2">
           <a class="nav-link" routerLink="school-administrative" routerLinkActive="active">
-            <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="School Administrative Module">
+            <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right"
+              title="School Administrative Module">
               <img src="../assets/images/Dashboard/notebook.png" width="25px" alt="">
             </span>
             <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">
               School Administrative Module</span>
           </a>
         </li>
-       
+
+        <li class="nav-item mt-2">
+          <a class="nav-link" routerLink="pm-poshan" routerLinkActive="active">
+            <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="PM-Poshan">
+              <img src="../assets/images/Dashboard/poshan.png" width="25px" alt="">
+            </span>
+            <span class="ms-2" [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">
+              PM-Poshan</span>
+          </a>
+        </li>
+
         <li class="nav-item mt-2">
           <a class="nav-link" routerLink="learning-initiatives" routerLinkActive="active">
             <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Learning Initiative">
@@ -229,7 +244,7 @@
               Learning Initiatives </span>
           </a>
         </li>
-           
+
         <li class="nav-item mt-2">
           <a class="nav-link" routerLink="about" routerLinkActive="active">
             <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="About">
@@ -377,7 +392,7 @@
           <p class="mb-0 ">Attendance</p>
         </li>
         <hr class="m-0 w-100">
-        
+
         <li class="nav-item">
           <a class="nav-link" (click)="sideBarNav()" routerLink="teacher-attendance" routerLinkActive="active" href="#">
             <span class="image-icon text-center justify-content-center">
@@ -437,7 +452,7 @@
           <p class="mb-0 ">Diksha</p>
         </li>
         <hr class="m-0 w-100">
-        
+
         <li class="nav-item">
           <a class="nav-link" (click)="sideBarNav()" routerLink="nipun" routerLinkActive="active">
             <span class="image-icon">
@@ -447,7 +462,7 @@
           <p class="mb-0 ">Nipun</p>
         </li>
         <hr class="m-0 w-100">
-        
+
         <li class="nav-item">
           <a class="nav-link" (click)="sideBarNav()" routerLink="mission-buniyaad" routerLinkActive="active">
             <span class="image-icon">
@@ -457,17 +472,27 @@
           <p class="mb-0 ">Mission Buniyaad</p>
         </li>
         <hr class="m-0 w-100">
-               
+
         <li class="nav-item">
           <a class="nav-link" (click)="sideBarNav()" routerLink="school-administrative" routerLinkActive="active">
-            <span class="image-icon" >
+            <span class="image-icon">
               <img src="../assets/images/Dashboard/notebook.png" width="25px" alt="">
             </span>
           </a>
           <p class="mb-0 ">School Administrative Module</p>
         </li>
         <hr class="m-0 w-100">
-       
+
+        <li class="nav-item">
+          <a class="nav-link" (click)="sideBarNav()" routerLink="pm-poshan" routerLinkActive="active">
+            <span class="image-icon">
+              <img src="../assets/images/Dashboard/poshan.png" width="25px" alt="">
+            </span>
+          </a>
+          <p class="mb-0 ">PM-POSHAN</p>
+        </li>
+        <hr class="m-0 w-100">
+
         <li class="nav-item">
           <a class="nav-link" (click)="sideBarNav()" routerLink="learning-initiatives" routerLinkActive="active">
             <span class="image-icon">
@@ -477,7 +502,7 @@
           <p class="mb-0 ">Learning Initiatives</p>
         </li>
         <hr class="m-0 w-100">
-        
+
         <li class="nav-item">
           <a class="nav-link" (click)="sideBarNav()" routerLink="about" routerLinkActive="active">
             <span class="image-icon">
@@ -497,7 +522,8 @@
 </div>
 <!-- Body content -->
 <!-- <router-outlet *ngIf="!isLogIn"></router-outlet> -->
-<app-login-page *ngIf="!isLogIn" (loginFlag)="loginFlagFunc($event)"></app-login-page>
+<app-login-page-main *ngIf="!isLogIn" (loginFlag)="loginFlagFunc($event)"></app-login-page-main>
+<!-- <app-login-page-otp *ngIf="!isLogIn" (loginFlag2)="loginFlagFunc2($event)"></app-login-page-otp> -->
 <!-- <footer class="site-footer">
   <p class="text-white text-center m-0">Developed by Laboni Media Solutions LLP</p>
 </footer> -->

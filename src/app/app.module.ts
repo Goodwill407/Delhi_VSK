@@ -8,14 +8,18 @@ import { PagesModule } from './pages/pages.module';
 import { LocationStrategy, HashLocationStrategy, PathLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginPageComponent } from './login-page/login-page.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
+import { LoginPageOtpComponent } from './login-page-otp/login-page-otp.component';
+import { LoginPageMainComponent } from './login-page-main/login-page-main.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
+    LoginPageOtpComponent,
+    LoginPageMainComponent,
   ],
   imports: [
     BrowserModule,
@@ -23,6 +27,7 @@ import { ToastrModule } from 'ngx-toastr';
     AppRoutingModule,
     ChartModule,
     ReactiveFormsModule,
+    FormsModule,
     PagesModule,
     NgxSpinnerModule,
     ToastrModule.forRoot()

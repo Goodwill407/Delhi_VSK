@@ -11,12 +11,17 @@ import { HttpServiceService } from 'src/app/services/http-service.service';
 })
 export class DashboardComponent {
   allDistrictData: any = [];
+  allZoneData: any = [];
 
   totalCount: any = [];
-  constructor(private spinner: NgxSpinnerService, private httpService: HttpServiceService, private toastr: ToastrService) { }
+  user:any;
+  constructor(private spinner: NgxSpinnerService, private httpService: HttpServiceService, private toastr: ToastrService) {
+    this.user = JSON.parse(sessionStorage.getItem('userProfile')!);
+   }
 
   ngOnInit() {
     this.getSchoolByDistrict();
+    this.getSchoolByZone();
     this.allTotalCount();
   }
 
@@ -25,6 +30,24 @@ export class DashboardComponent {
     this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
       if (data) {
         this.allDistrictData = data;
+        this.spinner.hide();
+      }
+    }, error => {
+      this.spinner.hide();
+      this.toastr.error('', 'Something went wrong !');
+    })
+  }
+
+  getSchoolByZone() {
+    const inputString = this.user.assignedTO;
+
+    let regex = /([^-]+)-[0-9]+/;
+    let match = inputString.match(regex);
+    let valueBeforeHyphen = match ? match[1] : null;
+    this.spinner.show();
+    this.httpService.post('/graphs/school-student-count/zone',{"district": valueBeforeHyphen}).subscribe((data: any) => {
+      if (data) {
+        this.allZoneData = data;
         this.spinner.hide();
       }
     }, error => {
@@ -45,5 +68,7 @@ export class DashboardComponent {
       this.toastr.error('', 'Something went wrong !');
     })
   }
+
+
 }
 

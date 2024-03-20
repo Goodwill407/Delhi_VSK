@@ -40,6 +40,7 @@ import { UdiseHomeComponent } from './udise/udise-home/udise-home.component';
 import { SchoolAdministrativeComponent } from './school-administrative/school-administrative.component';
 import { LearningInitiativesComponent } from './learning-initiatives/learning-initiatives.component';
 import { RoleWiseDropdownComponent } from './role-wise-dropdown/role-wise-dropdown.component';
+import { PmPoshanComponent } from './pm-poshan/pm-poshan.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { RoleWiseDropdownComponent } from './role-wise-dropdown/role-wise-dropdo
     UdiseHomeComponent,
     SchoolAdministrativeComponent,
     LearningInitiativesComponent,
-    RoleWiseDropdownComponent
+    RoleWiseDropdownComponent,
+    PmPoshanComponent
   ],
   imports: [
     CommonModule,

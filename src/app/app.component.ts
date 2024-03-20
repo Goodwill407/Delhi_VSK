@@ -1,4 +1,4 @@
-import { Component, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommunicationService } from './services/communication.service';
 
@@ -17,7 +17,7 @@ export class AppComponent {
   isLogIn: boolean = false;
   user: any;
   isMobile: boolean = false;
-  showFlag:boolean = false;
+  showFlag: boolean = false;
 
   constructor(private router: Router, private communicationService: CommunicationService) {
     this.isMobile = window.innerWidth <= 768 ? true : false;
@@ -34,6 +34,15 @@ export class AppComponent {
   loginFlagFunc(event: any) {
     this.isLogIn = event;
     this.user = JSON.parse(sessionStorage.getItem('userProfile')!);
+  }
+
+  loginFlagFunc2(event: any) {
+    this.isLogIn = event;
+    this.user = JSON.parse(sessionStorage.getItem('userProfile')!);
+  }
+
+  ngOnChanges(change: SimpleChanges) {
+    change;
   }
 
   logout() {
@@ -55,10 +64,10 @@ export class AppComponent {
     }
   }
 
-  sideBarNav(){
-    if(this.showFlag){
+  sideBarNav() {
+    if (this.showFlag) {
       this.showFlag = false;
-    }else{
+    } else {
       this.showFlag = true;
     }
   }

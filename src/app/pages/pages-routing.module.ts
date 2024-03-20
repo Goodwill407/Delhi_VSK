@@ -18,6 +18,7 @@ import { MissionBuniyaadComponent } from './mission-buniyaad/mission-buniyaad.co
 import { AboutComponent } from './about/about.component';
 import { SchoolAdministrativeComponent } from './school-administrative/school-administrative.component';
 import { LearningInitiativesComponent } from './learning-initiatives/learning-initiatives.component';
+import { PmPoshanComponent } from './pm-poshan/pm-poshan.component';
 
 const routes: Routes = [
   { path: 'admin-dashboard', component: DashboardComponent },
@@ -38,6 +39,7 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'learning-initiatives', component: LearningInitiativesComponent },
   { path: 'school-administrative', component: SchoolAdministrativeComponent },
+  { path: 'pm-poshan', component: PmPoshanComponent },
 ];
 
 @NgModule({
