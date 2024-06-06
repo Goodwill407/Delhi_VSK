@@ -16,10 +16,10 @@
             <select name="" id="" formControlName="Role" class="form-select form-control-lg"
             [ngClass]="{'is-invalid':submitted && f.Role.errors}">
                 <option value="" disable>Select Role</option>
-                <option value="admin">Admin</option>
-                <option value="district">District</option>
-                <option value="zone">Zone</option>
-                <option value="school">School</option>
+                <!-- <option value="admin">Admin</option> -->
+                <option *ngIf="f.userId.value.length == 2" value="district">District</option>
+                <option *ngIf="f.userId.value.length == 4" value="zone">Zone</option>
+                <!-- <option value="school">School</option> -->
             </select>
             <div *ngIf="submitted && f.Role.errors" class="invalid-feedback">
                 <div *ngIf="submitted && f.Role.errors.required">Role is required</div>

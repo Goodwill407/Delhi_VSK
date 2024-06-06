@@ -48,6 +48,7 @@ export class RegularTeacherComponent {
 
   configGender: any;
   commonName: any;
+  user: any;
   configDesignation: any;
   searchBox: any;
   globalSearchBox: any;
@@ -64,11 +65,20 @@ export class RegularTeacherComponent {
   ngOnInit() {
     this.communicationService.sharedData$.subscribe(data => {
       if (data == 'regular') {
-        const user = JSON.parse(sessionStorage.getItem('userProfile')!);
-        if (user.role == 'admin') {
+        this.user = JSON.parse(sessionStorage.getItem('userProfile')!);
+        if (this.user.role == 'admin') {
           this.getAllTeacherData();
           this.getAllDistricts();
           this.getAllZones();
+          this.getAllSchoolName();
+        }else if(this.user.role == 'district'){
+          this.districtModel = this.user.assignedTO;
+          this.getGraphsByDistrictName();
+          this.getAllZones();
+          this.getAllSchoolName();
+        }else if(this.user.role == 'zone'){
+          this.zoneModel = this.user.assignedTO;
+          this.getGraphsByZone();
           this.getAllSchoolName();
         }
         this.subscription = this.graphService

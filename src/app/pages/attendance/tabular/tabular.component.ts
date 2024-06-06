@@ -12,7 +12,7 @@ import { HttpServiceService } from 'src/app/services/http-service.service';
 })
 export class TabularComponent implements OnInit {
   allAttendanceData: any;
-  zoneModel: any = { "Zone_Name": "Zone-01", "Z_ID": 1001 };
+  zoneModel: any = '';
   allZones: any;
   allShift: string[] = ['Morning', 'General', 'Evening'];
   shiftModel: any = '';
@@ -35,11 +35,9 @@ export class TabularComponent implements OnInit {
         this.dateModel = this.getDate(this.dateModel.setDate(this.dateModel.getDate()));
         this.maxDate = this.getDate(this.dateModel);
         this.setRoleWiseDropdowns();
-        if (this.user.role == 'admin') {
-          this.getTableData();
-          this.getAllDistAndZone();
-          this.getAllZone();
-        }
+        this.getAllDistAndZone();
+        this.getAllZones();
+        this.getTableData();
       }
     });
   }
@@ -51,12 +49,28 @@ export class TabularComponent implements OnInit {
     }
   }
 
-  getAllZone() {
-    this.httpService.get('school/zonename').subscribe((res: any) => {
-      this.allZones = res.ZoneInfo;
-      this.allZones = this.allZones.sort((a: any, b: any) => a.Z_ID - b.Z_ID);
-      this.zoneModel = this.allZones[0];
-    })
+  // getAllZones() {
+  //   this.httpService.get('school/zonename').subscribe((res: any) => {
+  //     this.allZones = res.ZoneInfo;
+  //     this.allZones = this.allZones.sort((a: any, b: any) => a.Z_ID - b.Z_ID);
+  //     this.zoneModel = this.allZones[0];
+  //   })
+  // }
+  getAllZones() {
+    if (this.user.role == 'district') {
+      const district = { "District_name": this.user.assignedTO };
+      this.httpService.post('school/getDistrictZone', district).subscribe((res: any) => {
+        this.allZones = res.ZoneSchool;
+        this.allZones = this.allZones.sort((a: any, b: any) => a.Z_ID - b.Z_ID);
+        this.zoneModel = this.allZones[0];
+      })
+    } else {
+      this.httpService.get('school/zonename').subscribe((res: any) => {
+        this.allZones = res.ZoneInfo;
+        this.allZones = this.allZones.sort((a: any, b: any) => a.Z_ID - b.Z_ID);
+        this.zoneModel = this.allZones[0];
+      })
+    }
   }
 
   getAllDistAndZone() {

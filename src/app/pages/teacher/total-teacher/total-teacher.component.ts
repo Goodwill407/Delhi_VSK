@@ -48,6 +48,7 @@ export class TotalTeacherComponent {
 
   configGender: any;
   commonName: any;
+  user: any;
   configDesignation: any;
   searchBox: any;
   globalSearchBox: any;
@@ -67,11 +68,18 @@ export class TotalTeacherComponent {
   ngOnInit() {
     this.communicationService.sharedData$.subscribe(data => {
       if (data == 'total') {
-        const user = JSON.parse(sessionStorage.getItem('userProfile')!);
-        if (user.role == 'admin') {
+        this.user = JSON.parse(sessionStorage.getItem('userProfile')!);
+        if (this.user.role == 'admin') {
           this.getAllTeacherData();
           this.getAllDistricts();
           this.getAllZones();
+          this.getAllSchoolName();
+        }else if(this.user.role == 'district'){
+          this.districtModel = this.user.assignedTO;
+          this.getAllZones();
+          this.getAllSchoolName();
+        }else if(this.user.role == 'zone'){
+          this.zoneModel = this.user.assignedTO;
           this.getAllSchoolName();
         }
         this.subscription = this.graphService

@@ -1,4 +1,4 @@
-<div class="filter-box d-flex">
+<div class="filter-box" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
     <select class="form-select" *ngIf="user.role == 'admin'" [(ngModel)]="districtModel" (change)="getGraphsByDistrictName()" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'">
         <option value="">All Districts</option>
         <option *ngFor="let district of allDistricts" value="{{district.districtName}}">

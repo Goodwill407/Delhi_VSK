@@ -102,11 +102,7 @@ export class AttendanceRegularComponent {
 
   setRoleWiseDropdowns() {
     if (this.user.role == 'district') {
-      const inputString = this.user.assignedTO;
-      let regex = /([^-]+)-[0-9]+/;
-      let match = inputString.match(regex);
-      let valueBeforeHyphen = match ? match[1] : null;
-      this.districtModel = valueBeforeHyphen;
+      this.districtModel = this.user.assignedTO;
       this.getGraphsByDistrictName();
     } else if (this.user.role == 'zone') {
       this.zoneModel = this.user.assignedTO;

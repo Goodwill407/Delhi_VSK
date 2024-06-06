@@ -41,6 +41,7 @@ import { SchoolAdministrativeComponent } from './school-administrative/school-ad
 import { LearningInitiativesComponent } from './learning-initiatives/learning-initiatives.component';
 import { RoleWiseDropdownComponent } from './role-wise-dropdown/role-wise-dropdown.component';
 import { PmPoshanComponent } from './pm-poshan/pm-poshan.component';
+import { HomePageComponent } from './home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { PmPoshanComponent } from './pm-poshan/pm-poshan.component';
     SchoolAdministrativeComponent,
     LearningInitiativesComponent,
     RoleWiseDropdownComponent,
-    PmPoshanComponent
+    PmPoshanComponent,
+    HomePageComponent
   ],
   imports: [
     CommonModule,

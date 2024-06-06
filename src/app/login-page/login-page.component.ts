@@ -21,10 +21,10 @@ export class LoginPageComponent {
   submitted: boolean = false;
   loginModel!: LoginClass;
   setLoginType: string = "admin";
-  @Output() loginFlag = new EventEmitter<boolean>(); 
+  @Output() loginFlag = new EventEmitter<boolean>();
   communicationServiceMobile: any;
 
-  constructor(private fb: FormBuilder, private httpService: HttpServiceService, private route: ActivatedRoute, private router: Router, private spinner: NgxSpinnerService, private toastr: ToastrService,private communicationService:CommunicationService) {
+  constructor(private fb: FormBuilder, private httpService: HttpServiceService, private route: ActivatedRoute, private router: Router, private spinner: NgxSpinnerService, private toastr: ToastrService, private communicationService: CommunicationService) {
     const user: any = JSON.parse(sessionStorage.getItem('userProfile')!);
     if (user) {
       this.router.navigateByUrl('/dashboard');
@@ -85,10 +85,20 @@ export class LoginPageComponent {
     this.spinner.show();
     this.httpService.post('auth/login', this.loginForm.value).subscribe((data: any) => {
       if (data) {
+        // if(data.user.role == 'district'){
+        // const inputString = data.user.assignedTO;
+        // let regex = /([^-]+)-[0-9]+/;
+        // let match = inputString.match(regex);
+        // data.user.assignedTO = match ? match[1] : null;
+        // }
         this.toastr.success('', 'Logged in succesfully!');
         sessionStorage.setItem('userProfile', JSON.stringify(data.user));
         this.communicationService.setLoginDetails(data);
-        this.router.navigateByUrl('/content/admin-dashboard');
+        if(data.user.role == 'zone'){
+          this.router.navigateByUrl('/school');
+        }else{
+          this.router.navigateByUrl('/content/admin-dashboard');
+        }
         this.loginFlag.emit(true)
       }
       this.spinner.hide();

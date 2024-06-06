@@ -84,7 +84,7 @@
 
       <!-- Admin -->
       <ul class="nav flex-column" *ngIf="user.role == 'district'|| user.role == 'zone' || user.role == 'admin'">
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="user.role != 'zone'">
           <a class="nav-link" routerLink="content/admin-dashboard" routerLinkActive="active" href="#">
             <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard">
               <img src="../assets/images/dashboard.png" alt="">
@@ -281,8 +281,7 @@
     <nav class="navbar navbar-expand-xl navbar-light large-screen">
       <div class="container-fluid d-flex">
         <p routerLink="content/admin-dashboard" class="text-center text-white header-font mb-0"
-          style="cursor: pointer;">Vidya
-          Samiksha Kendra, Delhi</p>
+          style="cursor: pointer;">Vidya Samiksha Kendra, Delhi</p>
         <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
           data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false"
           aria-label="Toggle navigation">
@@ -297,7 +296,7 @@
               <img src="../../../assets/images/vsk_logo.png">
             </li>
             <li class="nav-item">
-              <img src="../../../assets/images/SSA.png" style="width: 150px;height: 55px;">
+              <img src="../../../assets/images/SSA.png" style="width: 150px; height: 55px;">
             </li>
             <li class="nav-item">
               <i class="bi bi-box-arrow-right h2 text-white ms-4" (click)="logout()"></i>
@@ -310,8 +309,7 @@
     <nav class="navbar navbar-expand-xl navbar-light small-screen" style="background-color: #3d9be9;">
       <div class="container-fluid d-block">
         <h3 routerLink="content/admin-dashboard" class="text-center text-white header-font mb-0"
-          style="cursor: pointer; font-size:large;">Vidya
-          Samiksha Kendra, Delhi</h3>
+          style="cursor: pointer; font-size:large;">Vidya Samiksha Kendra, Delhi</h3>
         <!-- <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
           aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
           <i class="bi bi-three-dots-vertical"></i>
@@ -345,7 +343,7 @@
         <li class="nav-item mt-2">
           <a class="nav-link" (click)="sideBarNav()" routerLink="content/admin-dashboard" routerLinkActive="active"
             href="#">
-            <span>
+            <span class="mx-auto">
               <img src="../assets/images/dashboard.png" alt="">
             </span>
           </a>
@@ -355,7 +353,7 @@
 
         <li class="nav-item">
           <a class="nav-link" (click)="sideBarNav()" routerLink="school" routerLinkActive="active" href="#">
-            <span class="image-icon text-center">
+            <span class="image-icon mx-auto">
               <img src="../assets/images/Dashboard/school.png" alt="">
             </span>
           </a>
@@ -365,7 +363,7 @@
 
         <li class="nav-item">
           <a class="nav-link" (click)="sideBarNav()" routerLink="teacher" routerLinkActive="active" href="#">
-            <span class="image-icon text-center justify-content-center">
+            <span class="image-icon mx-auto">
               <img src="../assets/images/Dashboard/teacher.png" alt="">
             </span>
           </a>
@@ -375,7 +373,7 @@
 
         <li class="nav-item">
           <a class="nav-link" (click)="sideBarNav()" routerLink="student" routerLinkActive="active" href="#">
-            <span class="image-icon text-center justify-content-center">
+            <span class="image-icon mx-auto">
               <img src="../assets/images/Dashboard/reading.png" alt="">
             </span>
           </a>
@@ -385,7 +383,7 @@
 
         <li class="nav-item">
           <a class="nav-link" (click)="sideBarNav()" routerLink="attendance" routerLinkActive="active" href="#">
-            <span class="image-icon text-center justify-content-center">
+            <span class="image-icon mx-auto">
               <img src="../assets/images/Dashboard/attendance.png" alt="">
             </span>
           </a>
@@ -395,7 +393,7 @@
 
         <li class="nav-item">
           <a class="nav-link" (click)="sideBarNav()" routerLink="teacher-attendance" routerLinkActive="active" href="#">
-            <span class="image-icon text-center justify-content-center">
+            <span class="image-icon mx-auto">
               <img src="../assets/images/Dashboard/immigration.png" alt="">
             </span>
           </a>
@@ -465,7 +463,7 @@
 
         <li class="nav-item">
           <a class="nav-link" (click)="sideBarNav()" routerLink="mission-buniyaad" routerLinkActive="active">
-            <span class="image-icon">
+            <span class="image-icon mx-auto">
               <img src="../assets/images/Dashboard/missionBuniyaad.png" alt="">
             </span>
           </a>
@@ -475,7 +473,7 @@
 
         <li class="nav-item">
           <a class="nav-link" (click)="sideBarNav()" routerLink="school-administrative" routerLinkActive="active">
-            <span class="image-icon">
+            <span class="image-icon mx-auto">
               <img src="../assets/images/Dashboard/notebook.png" width="25px" alt="">
             </span>
           </a>
@@ -485,7 +483,7 @@
 
         <li class="nav-item">
           <a class="nav-link" (click)="sideBarNav()" routerLink="pm-poshan" routerLinkActive="active">
-            <span class="image-icon">
+            <span class="image-icon mx-auto">
               <img src="../assets/images/Dashboard/poshan.png" width="25px" alt="">
             </span>
           </a>
@@ -495,7 +493,7 @@
 
         <li class="nav-item">
           <a class="nav-link" (click)="sideBarNav()" routerLink="learning-initiatives" routerLinkActive="active">
-            <span class="image-icon">
+            <span class="image-icon mx-auto">
               <img src="../assets/images/Dashboard/education12.png" width="25px" alt="">
             </span>
           </a>

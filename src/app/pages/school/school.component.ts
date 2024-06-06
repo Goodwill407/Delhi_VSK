@@ -70,6 +70,11 @@ export class SchoolComponent {
       this.getAllSchoolName();
       this.getSchoolByDistrict();
     }
+    else if(user.role == 'zone'){
+      this.zoneModel = user.assignedTO;
+      this.getGraphsByZone();
+      this.getAllSchoolName();
+    }
 
     this.subscription = this.graphService
       .getItemCountObservable()
@@ -236,7 +241,7 @@ export class SchoolComponent {
       this.genderWiseClass.series[1].data.push(data[i].F ? data[i].F : 0);
       this.genderWiseClass.series[2].data.push(data[i].T ? data[i].T : 0);
       this.genderWiseClass.xaxis.categories.push(data[i].class ? (data[i].class == "KG" || data[i].class == "Nursery" ? data[i].class : 'Class' + ' ' + data[i].class) : 'Class NA');
-      this.genderWiseClass.dataLabels = { enabled: false }
+      this.genderWiseClass.dataLabels = { enabled: false };
     }
   }
 

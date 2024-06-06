@@ -51,6 +51,9 @@ export class AttendanceRangeWiseComponent {
           this.getAllDistricts();
           this.getAllZones();
           this.getAllSchoolName();
+        } else if (this.user.role == 'district') {
+          this.districtModel = this.user.assignedTO;
+          this.getAllZones();
         }
       }
       else {

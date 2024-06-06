@@ -111,7 +111,11 @@ export class LoginPageOtpComponent {
         // sessionStorage.setItem('userProfile', JSON.stringify(userRole));
         sessionStorage.setItem('userProfile', JSON.stringify(response.user));
         this.communicationService.setLoginDetails(response);
-        this.router.navigateByUrl('/content/admin-dashboard');
+        if(response.user.role == 'zone'){
+          this.router.navigateByUrl('/school');
+        }else{
+          this.router.navigateByUrl('/content/admin-dashboard');
+        }
         this.loginFlag.emit(true);
       }
     }, (error) => {

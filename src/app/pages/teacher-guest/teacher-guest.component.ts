@@ -31,6 +31,7 @@ export class TeacherGuestComponent {
   schoolModel: any = "";
   zoneModel: any = "";
   allZones: any;
+  user: any;
   districtName: any;
   schoolName: any;
   allTeacherData: any;
@@ -71,11 +72,20 @@ export class TeacherGuestComponent {
   ngOnInit() {
     this.communicationService.sharedData$.subscribe(data => {
       if (data == 'guest') {
-        const user = JSON.parse(sessionStorage.getItem('userProfile')!);
-        if (user.role == 'admin') {
+        this.user = JSON.parse(sessionStorage.getItem('userProfile')!);
+        if (this.user.role == 'admin') {
           this.getAllGuestTeacherData();
           this.getAllDistricts();
           this.getAllZones();
+          this.getAllSchoolName();
+        }else if(this.user.role == 'district'){
+          this.districtModel = this.user.assignedTO;
+          this.getGraphsByDistrictName();
+          this.getAllZones();
+          this.getAllSchoolName();          
+        }else if(this.user.role == 'zone'){
+          this.zoneModel = this.user.assignedTO;
+          this.getGraphsByZone();
           this.getAllSchoolName();
         }
 

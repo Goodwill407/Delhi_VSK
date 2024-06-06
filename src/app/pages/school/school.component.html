@@ -2,7 +2,7 @@
 </ngx-spinner>
 <!-- tab -->
 <nav>
-    <div class="nav nav-pills mb-3 filter-box px-3 mt-3" id="pills-tab" role="tablist">
+    <div class="nav nav-pills mb-3 filter-box px-3 mt-3" id="pills-tab" role="tablist" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
         <h2 class="fw-bold mb-0">SCHOOL</h2>
         <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
         <button class="nav-link active" [ngClass]="communicationServiceMobile ? 'ms-2' : ''" id="nav-home-tab"
@@ -10,13 +10,13 @@
             aria-selected="true">GRAPHICAL VIEW</button>
         <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"
             role="tab" aria-controls="nav-profile" aria-selected="false">SCHOOL ACCREDITATION</button>
-        <!-- <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button"
-            role="tab" aria-controls="nav-contact" aria-selected="false">Bird Eye</button> -->
+        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button"
+            role="tab" aria-controls="nav-contact" aria-selected="false">TABLETS</button>
     </div>
 </nav>
 <div class="tab-content" id="nav-tabContent">
     <!-- tab1 -->
-    <div class="tab-pane fade show active filter-box" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" [ngClass]="communicationServiceMobile ? '' : 'filter-box'">
 
         <app-role-wise-dropdown [allDistricts]="allDistricts" [allZones]="allZones" [allSchools]="allSchools"
             (selectedDistrict)="selectedDistrictEmit($event)" (selectedZone)="selectedZoneEmit($event)"
@@ -31,7 +31,7 @@
             </h3>
         </div>
 
-        <div class="input-group float-end mt-2 me-2" style="width: 300px;">
+        <div class="input-group" style="width: 300px;" [ngClass]="communicationServiceMobile ? 'mx-2' : 'mt-2 me-2 float-end'">
             <input class="form-control" type="search" [(ngModel)]="globalSearchBox" placeholder="Search School..."
                 value="" id="example-search-input" (search)="search()">
             <span class="input-group-text" role="button" id="basic-addon1" (click)="searchSchool()">🔍</span>

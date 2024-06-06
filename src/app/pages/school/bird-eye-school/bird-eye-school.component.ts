@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommunicationService } from 'src/app/services/communication.service';
 
 @Component({
   selector: 'app-bird-eye-school',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class BirdEyeSchoolComponent {
 
+  communicationServiceMobile: any;
+
+  constructor(private communicationService: CommunicationService) {
+    this.communicationServiceMobile = this.communicationService.isMobile;
+  }
 }

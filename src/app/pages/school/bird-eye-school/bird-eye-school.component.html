@@ -1,1 +1,14 @@
-<p>bird-eye-school works!</p>
+<div class="filter-box mt-3" [ngClass]="communicationServiceMobile ? 'd-block' : 'd-flex'">
+    <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'" >
+        <option value="">Select Schools</option>
+    </select>
+    <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'" >
+        <option value="">Select Month</option>
+    </select>
+    <!-- <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'" >
+        <option value="" >SUBJECT</option>
+    </select> -->
+</div>
+<div class="position-absolute bottom-0 end-0">
+    <h2 class="fst-italic">Data will be added once received from the department...</h2>
+</div>

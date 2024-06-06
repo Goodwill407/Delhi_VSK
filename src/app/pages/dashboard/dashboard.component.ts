@@ -26,42 +26,38 @@ export class DashboardComponent {
   }
 
   getSchoolByDistrict() {
-    this.spinner.show();
+    // this.spinner.show();
     this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
       if (data) {
         this.allDistrictData = data;
-        this.spinner.hide();
+        // this.spinner.hide();
       }
     }, error => {
-      this.spinner.hide();
+      // this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     })
   }
 
   getSchoolByZone() {
-    const inputString = this.user.assignedTO;
-
-    let regex = /([^-]+)-[0-9]+/;
-    let match = inputString.match(regex);
-    let valueBeforeHyphen = match ? match[1] : null;
-    this.spinner.show();
-    this.httpService.post('/graphs/school-student-count/zone',{"district": valueBeforeHyphen}).subscribe((data: any) => {
+    this.httpService.post('/graphs/school-student-count/zone',{"district": this.user.assignedTO}).subscribe((data: any) => {
       if (data) {
         this.allZoneData = data;
-        this.spinner.hide();
       }
     }, error => {
-      this.spinner.hide();
       this.toastr.error('', 'Something went wrong !');
     })
   }
 
   allTotalCount() {
     this.spinner.show();
-    this.httpService.get('graphs/school-teacher-student-graph').subscribe((data: any) => {
+    let admin = this.httpService.get('graphs/school-teacher-student-graph');
+    let district = this.httpService.post('graphs/dashboard/district-wise',{district:this.user.assignedTO});
+    let zone = this.httpService.post('graphs/dashboard/district-wise',{district:this.user.assignedTO});
+    
+    (this.user.role == 'admin'? admin : this.user.role == 'district'? district:zone).subscribe((data: any) => {
       if (data) {
         this.totalCount = data;
-        // this.spinner.hide();
+        this.spinner.hide();
       }
     }, (error) => {
       this.spinner.hide();
