@@ -6,9 +6,9 @@ import { Injectable } from '@angular/core';
 })
 export class HttpServiceService {
 
-  // apiURL = 'http://165.22.210.138:3000/v1/' // Development
+  apiURL = 'http://165.22.210.138:3000/v1/' // Development
   // // apiURL = 'http://165.22.216.223:3000/v1/' // Production
-  apiURL = 'https://server.toknowmore.com/v1/' // Production
+  // apiURL = 'https://server.toknowmore.com/v1/' // Production
 
   token = '';
   headerToken: any

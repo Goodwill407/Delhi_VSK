@@ -1,3 +1,4 @@
+// role-wise-dropdown.component.ts
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommunicationService } from 'src/app/services/communication.service';
 
@@ -10,14 +11,18 @@ export class RoleWiseDropdownComponent {
   @Input() allDistricts: any;
   @Input() allZones: any;
   @Input() allSchools: any;
+  @Input() showOptionalDropdown: boolean = false;
+  @Input() optionalData: any[] = [];
 
   @Output() selectedDistrict = new EventEmitter<string>();
   @Output() selectedZone = new EventEmitter<string>();
   @Output() selectedSchool = new EventEmitter<any>();
+  @Output() managementType = new EventEmitter<any>();
 
   districtModel: any = "";
   zoneModel: any = "";
   schoolModel: any = "";
+  managementModel: any = "";
 
   communicationServiceMobile: any;
   user: any;
@@ -32,11 +37,6 @@ export class RoleWiseDropdownComponent {
   }
 
   setRoleWiseDropdowns() {
-    const inputString = this.user.assignedTO;
-    // let regex = /([^-]+)-[0-9]+/;
-    // let match = inputString.match(regex);
-    // let valueBeforeHyphen = match ? match[1] : null;
-
     if (this.user.role == 'district') {
       this.districtModel = this.user.assignedTO;
       this.selectedDistrict.emit(this.districtModel);
@@ -56,5 +56,9 @@ export class RoleWiseDropdownComponent {
 
   getGraphsBySchoolName() {
     this.selectedSchool.emit(this.schoolModel);
+  }
+
+  getOptionalData() {
+    this.managementType.emit(this.managementModel);
   }
 }

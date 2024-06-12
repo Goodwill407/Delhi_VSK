@@ -111,7 +111,7 @@ export class NishthaComponent {
   getTotal_Courses(allDashboardData: any) {
     const total_Courses = allDashboardData.map((item: any) => item.total_courses)
     const program = allDashboardData.map((item: any) => item.program)
-    this.Total_Courses = this.graphService.PolarGraph();
+    this.Total_Courses = this.graphService.PieGraph('donut','');
     const series = total_Courses.map((str: any) => Number(str));
     const labels = program
     this.Total_Courses.series = [...series];

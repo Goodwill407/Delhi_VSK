@@ -77,24 +77,23 @@
         </div>
     </div>
 
-    <div class="column text-center">
+    <!-- <div class="column text-center">
         <h5 class="header-bg p-2">Studying Student & Teacher Ratio</h5>
         <img class="img-fluid mt-5" width="120" src="../../../assets/images/Dashboard/education.png"><br>
         <h3 class="mt-5 fw-semibold teacher-ratio-count">{{allData?.studentRatio | number: '1.0-0'}} : 1
             Teacher</h3>
-    </div>
+    </div> -->
 
     <!--  -->
     <div class="column">
         <h5 class="header-bg p-2">Shift wise Teacher</h5>
-        <apx-chart [series]="shiftWiseSchoolsGuest?.series" [chart]="shiftWiseSchoolsGuest?.chart"
-            [labels]="shiftWiseSchoolsGuest?.labels" [fill]="shiftWiseSchoolsGuest?.fill"
-            [stroke]="shiftWiseSchoolsGuest?.stroke" [responsive]="shiftWiseSchoolsGuest?.responsive"
-            [legend]="shiftWiseSchoolsGuest?.legend" [colors]="shiftWiseSchoolsGuest?.colors"
-            [tooltip]="shiftWiseSchoolsGuest?.tooltip"></apx-chart>
+        <apx-chart [series]="shiftWiseSchoolsGuest?.series" [chart]="shiftWiseSchoolsGuest?.chart" [dataLabels]="shiftWiseSchoolsGuest?.dataLabels"
+        [plotOptions]="shiftWiseSchoolsGuest?.plotOptions" [xaxis]="shiftWiseSchoolsGuest?.xaxis" [yaxis]="shiftWiseSchoolsGuest?.yaxis"
+        [labels]="shiftWiseSchoolsGuest?.labels" [legend]="shiftWiseSchoolsGuest?.legend" [colors]="shiftWiseSchoolsGuest?.colors"
+        [grid]="shiftWiseSchoolsGuest?.grid" [title]="shiftWiseSchoolsGuest?.title" [fill]="shiftWiseSchoolsGuest?.fill"></apx-chart>
     </div>
     <!--  -->
-    <div class="column">
+    <!-- <div class="column">
         <h5 class="header-bg p-2">Schools Management Wise Teacher</h5>
         <apx-chart [series]="schoolsManagementWiseTeacherGuest?.series"
             [chart]="schoolsManagementWiseTeacherGuest?.chart" [labels]="schoolsManagementWiseTeacherGuest?.labels"
@@ -104,9 +103,19 @@
             [responsive]="schoolsManagementWiseTeacherGuest?.responsive"
             [legend]="schoolsManagementWiseTeacherGuest?.legend"
             [tooltip]="schoolsManagementWiseTeacherGuest?.tooltip"></apx-chart>
+    </div> -->
+
+    <!--  -->
+    <div class="column">
+        <h5 class="header-bg p-2">Schools Type Wise Teacher</h5>
+        <apx-chart [series]="schoolTypeWiseCount?.series" [chart]="schoolTypeWiseCount?.chart" [dataLabels]="schoolTypeWiseCount?.dataLabels"
+            [plotOptions]="schoolTypeWiseCount?.plotOptions" [xaxis]="schoolTypeWiseCount?.xaxis" [yaxis]="schoolTypeWiseCount?.yaxis"
+            [labels]="schoolTypeWiseCount?.labels" [legend]="schoolTypeWiseCount?.legend" [colors]="schoolTypeWiseCount?.colors"
+            [grid]="schoolTypeWiseCount?.grid" [title]="schoolTypeWiseCount?.title" [fill]="schoolTypeWiseCount?.fill"></apx-chart>
     </div>
 
     <div class="column" [ngClass]="communicationServiceMobile ? '' : 'wide-height'" style="height: auto;">
+    <!-- <div class="column" [ngClass]="communicationServiceMobile ? '' : 'wide'"> -->
         <h5 class="header-bg p-2">Designation wise Teacher</h5>
         <apx-chart [series]="designationGuest?.series" [chart]="designationGuest?.chart"
             [dataLabels]="designationGuest?.dataLabels" [plotOptions]="designationGuest?.plotOptions"
@@ -123,15 +132,7 @@
             [colors]="teacherCategoryGuest?.colors" [title]="teacherCategoryGuest?.title"
             [legend]="teacherCategoryGuest?.legend" [fill]="teacherCategoryGuest?.fill"></apx-chart>
     </div>
-    <!--  -->
-    <div class="column">
-        <h5 class="header-bg p-2">Schools Type Wise Teacher</h5>
-        <apx-chart [series]="schoolTypeWiseCount?.series" [chart]="schoolTypeWiseCount?.chart"
-            [labels]="schoolTypeWiseCount?.labels" [fill]="schoolTypeWiseCount?.fill"
-            [dataLabels]="schoolTypeWiseCount?.dataLabels" [plotOptions]="schoolTypeWiseCount?.plotOptions"
-            [responsive]="schoolTypeWiseCount?.responsive" [legend]="schoolTypeWiseCount?.legend"
-            [colors]="schoolTypeWiseCount?.colors" [tooltip]="schoolTypeWiseCount?.tooltip"></apx-chart>
-    </div>
+   
 
 </div>
 

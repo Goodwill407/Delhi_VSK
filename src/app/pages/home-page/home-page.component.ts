@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent {
-
+  user: any;
+  ngOnInit() {
+    this.user = JSON.parse(sessionStorage.getItem('userProfile')!);
+  }
 }

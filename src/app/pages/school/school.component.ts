@@ -68,7 +68,7 @@ export class SchoolComponent {
       this.getDistrictName();
       this.getAllZones();
       this.getAllSchoolName();
-      this.getSchoolByDistrict();
+      this.getSchoolByDistrict(1);
     }
     else if(user.role == 'zone'){
       this.zoneModel = user.assignedTO;
@@ -103,6 +103,34 @@ export class SchoolComponent {
   selectedSchoolEmit(event: any) {
     this.schoolModel = event;
     this.getGraphsBySchoolName();
+  }
+
+  selectedManagementEmit(event:any){
+    this.getGraphsByManagement(event);
+  }
+
+  getGraphsByManagement(data:any){
+    if (data) {
+      this.spinner.show();
+      const api1 = this.httpService.get('zonegraph/stats-by-school-managment?SchManagement='+data.type);
+      const api2 = this.httpService.get('class-student');
+
+      forkJoin([api1, api2]).subscribe(([res1, res2]) => {
+        this.setClassGraph(res2);
+        this.setAllGraphs(res1, true);
+        this.schoolModel = '';
+        this.zoneModel = '';
+        this.districtModel = '';
+        this.spinner.hide();
+      }, ([err1, err2]) => {
+        if (err1 || err2) {
+          this.toastr.error('', 'Something went wrong !');
+          this.spinner.hide();
+        }
+      });
+    } else {
+      
+    }
   }
   // Emitted Data
 
@@ -262,11 +290,13 @@ export class SchoolComponent {
     });
   }
 
-  getSchoolByDistrict() {
+  getSchoolByDistrict(call?:any) {
     this.spinner.show();
     this.httpService.get('graphs/school-student-count-by-district').subscribe((data: any) => {
       if (data) {
-        this.spinner.hide();
+        if(!call){
+          this.spinner.hide();
+        }
       }
     }, error => {
       this.spinner.hide();
@@ -435,7 +465,7 @@ export class SchoolComponent {
   }
 
   getShiftWiseSchools(shiftWiseCount: any) {
-    this.shiftWiseSchools = this.graphService.PolarGraph('Shift');
+    this.shiftWiseSchools = this.graphService.PieGraph('donut', 'Shift');
     const entries = Object.entries(shiftWiseCount);
     entries.forEach(([key, value]) => {
       if (Number(value) > 0) {
@@ -467,7 +497,7 @@ export class SchoolComponent {
   }
 
   getTypesOfSchools(typesOfSchools: any) {
-    this.typesOfSchools = this.graphService.PolarGraph('Schools');
+    this.typesOfSchools = this.graphService.PieGraph('donut', 'Schools');
     if (typesOfSchools.length > 0) {
       typesOfSchools.forEach((key: any, value: any) => {
         if (Number(key.count) > 0) {

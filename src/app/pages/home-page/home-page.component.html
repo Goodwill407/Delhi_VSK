@@ -1,1 +1,191 @@
-<p>home-page works!</p>
+<div class="home-logo w-75 mx-auto">
+    <ul class="nav flex-column" *ngIf="user.role == 'district'|| user.role == 'zone' || user.role == 'admin'">
+        <li class="nav-item" *ngIf="user.role != 'zone'">
+            <a class="nav-link" routerLink="/content/admin-dashboard" routerLinkActive="active" href="#">
+                <span class="back-img">
+                    <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard">
+                        <img src="../assets/images/dashboard.png" alt="">
+                    </span>
+                </span>
+                <span class="title">Dashboard</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/content/school" routerLinkActive="active" href="#">
+                <span class="back-img">
+                    <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="School">
+                        <img src="../assets/images/Dashboard/school.png" alt="">
+                    </span>
+                </span>
+                <span class="title">School</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/content/teacher" routerLinkActive="active" href="#">
+                <span class="back-img">
+                    <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Teacher">
+                        <img src="../assets/images/Dashboard/teacher.png" alt="">
+                    </span>
+                </span>
+                <span class="title">Teacher</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/content/student" routerLinkActive="active" href="#">
+                <span class="back-img">
+                    <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Student">
+                        <img src="../assets/images/Dashboard/reading.png" alt="">
+                    </span>
+                </span>
+                <span class="title">Student</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/content/attendance" routerLinkActive="active" href="#">
+                <span class="back-img">
+                    <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Attendance">
+                        <img src="../assets/images/Dashboard/attendance.png" alt="">
+                    </span>
+                </span>
+                <span class="title">Student Attendance</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/content/teacher-attendance" routerLinkActive="active" href="#">
+                <span class="back-img">
+                    <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Teacher Attendance">
+                        <img src="../assets/images/Dashboard/immigration.png" alt="">
+                    </span>
+                </span>
+                <span class="title">Teacher Attendance</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/content/nishtha" routerLinkActive="active" href="#">
+                <span class="back-img">
+                    <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="NISHTHA">
+                        <img src="../assets/images/Dashboard/nishtha.png" alt="">
+                    </span>
+                </span>
+                <span class="title">NISHTHA</span>
+            </a>
+        </li>
+
+        <li class="nav-item mt-2">
+            <a class="nav-link" routerLink="/content/pgi" routerLinkActive="active">
+                <span class="back-img">
+                    <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="PGI">
+                        <img src="../assets/images/Dashboard/pgi.png" alt="">
+                    </span>
+                </span>
+                <span class="title">PGI</span>
+            </a>
+        </li>
+
+        <li class="nav-item mt-2">
+            <a class="nav-link" routerLink="/content/udise" routerLinkActive="active">
+                <span class="back-img">
+                    <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="UDISE">
+                        <img src="../assets/images/UDISE.png"  alt="">
+                    </span>
+                </span>
+                <span class="title">UDISE</span>
+            </a>
+        </li>
+
+        <li class="nav-item mt-2">
+            <a class="nav-link" routerLink="/content/nas" routerLinkActive="active">
+                <span class="back-img">
+                    <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="NAS">
+                        <img src="../assets/images/Dashboard/unnamed.png" alt="">
+                    </span>
+                </span>
+                <span class="title">NAS</span>
+            </a>
+        </li>
+
+        <li class="nav-item mt-2">
+            <a class="nav-link" routerLink="/content/diksha" routerLinkActive="active">
+                <span class="back-img">
+                    <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Diksha">
+                        <img src="../assets/images/ETB & E-Content.png" alt="">
+                    </span>
+                </span>
+                <span class="title">Diksha</span>
+            </a>
+        </li>
+
+        <li class="nav-item mt-2">
+            <a class="nav-link" routerLink="/content/nipun" routerLinkActive="active">
+                <span class="back-img">
+                    <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Nipun">
+                        <img src="../assets/images/Nipun Bharat Logo-01.png" alt="">
+                    </span>
+                </span>
+                <span class="title">Nipun</span>
+            </a>
+        </li>
+
+        <li class="nav-item mt-2">
+            <a class="nav-link" routerLink="/content/mission-buniyaad" routerLinkActive="active">
+                <span class="back-img">
+                    <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Mission Buniyaad">
+                        <img src="../assets/images/Dashboard/missionBuniyaad.png" alt="">
+                    </span>
+                </span>
+                <span class="title">Mission Buniyaad</span>
+            </a>
+        </li>
+
+        <li class="nav-item mt-2">
+            <a class="nav-link" routerLink="/content/school-administrative" routerLinkActive="active">
+                <span class="back-img">
+                    <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right"
+                        title="School Administrative Module">
+                        <img src="../assets/images/Dashboard/notebook.png" width="25px" alt="">
+                    </span>
+                </span>
+                <span class="title">School Administrative Module</span>
+            </a>
+        </li>
+
+        <li class="nav-item mt-2">
+            <a class="nav-link" routerLink="/content/pm-poshan" routerLinkActive="active">
+                <span class="back-img">
+                    <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="PM-Poshan">
+                        <img src="../assets/images/Dashboard/poshan.png" width="25px" alt="">
+                    </span>
+                </span>
+                <span class="title">PM-Poshan</span>
+            </a>
+        </li>
+
+        <li class="nav-item mt-2">
+            <a class="nav-link" routerLink="/content/learning-initiatives" routerLinkActive="active">
+                <span class="back-img">
+                    <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Learning Initiative">
+                        <img src="../assets/images/Dashboard/education12.png" width="25px" alt="">
+                    </span>
+                </span>
+                <span class="title">Learning Initiatives</span>
+            </a>
+        </li>
+
+        <li class="nav-item mt-2">
+            <a class="nav-link" routerLink="/content/about" routerLinkActive="active">
+                <span class="back-img">
+                    <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="About">
+                        <img src="../assets/images/Dashboard/info.png" width="25px" alt="">
+                    </span>
+                </span>
+                <span class="title">About</span>
+            </a>
+        </li>
+    </ul>
+</div>

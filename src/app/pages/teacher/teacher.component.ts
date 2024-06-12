@@ -16,11 +16,28 @@ export class TeacherComponent {
     this.communicationServiceMobile = this.communicationService.isMobile;
   }
 
+  @ViewChild('tab1') tab1: any;
+  @ViewChild('tab2') tab2: any;
+  @ViewChild('tab3') tab3: any;
+  teacherType: any = 'Total Teacher';
+  
   ngOnInit() {
     this.handleParentClick('total');
   }
 
   handleParentClick(name: any) {
     this.communicationService.setSelectedTab(name);
+  }
+
+  selectTeacherType() {
+    if (this.teacherType == 'Total Teacher') {
+      this.tab1.nativeElement.click();
+    }
+    else if (this.teacherType == 'Regular Teacher') {
+      this.tab2.nativeElement.click();
+    }
+    else if (this.teacherType == 'Guest Teacher') {
+      this.tab3.nativeElement.click();
+    }
   }
 }

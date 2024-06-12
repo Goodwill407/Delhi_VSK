@@ -84,6 +84,16 @@
 
       <!-- Admin -->
       <ul class="nav flex-column" *ngIf="user.role == 'district'|| user.role == 'zone' || user.role == 'admin'">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="content/home" routerLinkActive="active" href="#">
+            <span class="image-icon">
+              <img src="../assets/images/house.png" alt="">
+            </span>
+            <span class="ms-2"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkGenis animated fadeInRight'">Home</span>
+          </a>
+        </li>
+        
         <li class="nav-item" *ngIf="user.role != 'zone'">
           <a class="nav-link" routerLink="content/admin-dashboard" routerLinkActive="active" href="#">
             <span class="image-icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard">
@@ -296,7 +306,7 @@
               <img src="../../../assets/images/vsk_logo.png">
             </li>
             <li class="nav-item">
-              <img src="../../../assets/images/SSA.png" style="width: 150px; height: 55px;">
+              <img src="../../../assets/images/samagra.png" style="width: 150px; height: 55px;">
             </li>
             <li class="nav-item">
               <i class="bi bi-box-arrow-right h2 text-white ms-4" (click)="logout()"></i>

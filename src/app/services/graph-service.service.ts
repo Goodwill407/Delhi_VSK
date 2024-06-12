@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { fontWeight } from "html2canvas/dist/types/css/property-descriptors/font-weight";
 import { BehaviorSubject } from "rxjs";
 
 @Injectable({
@@ -127,7 +128,8 @@ export class GraphService {
                 labels: {
                     maxWidth: 250,
                     style: {
-                        fontSize: '10px'
+                        fontSize: '10px',
+                        fontWeight:'bold'
                     }
                 }
             }
@@ -213,7 +215,7 @@ export class GraphService {
             fill: {
                 colors: colors
             },
-            tooltip: {
+            tooltip: { 
                 y: {
                     title: {
                         formatter: (val: any) => {
@@ -231,6 +233,9 @@ export class GraphService {
                             name: {
                                 formatter: (val:any) => {
                                     return val + ' ' + totalType
+                                },
+                                style: {
+                                    fontWeight: 'bold'
                                 }
                             },
                             total: {
@@ -258,6 +263,7 @@ export class GraphService {
             labels: [],
             legend: {
                 position: 'bottom',
+                fontWeight:'bold',
                 formatter: function (val: any, opts: any) {
                     opts.w.globals.series[opts.seriesIndex] = (opts.w.globals.series[opts.seriesIndex] % 1 != 0) ? Number(opts.w.globals.series[opts.seriesIndex].toFixed(2)) : opts.w.globals.series[opts.seriesIndex];
 

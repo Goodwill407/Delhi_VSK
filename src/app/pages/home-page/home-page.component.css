@@ -1,0 +1,56 @@
+.home-logo{
+    margin-top: 50px;
+}
+.nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.nav-item {
+    list-style: none;
+}
+
+.nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0px;
+}
+
+.back-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    background-color: #3d9be9; /* Light blue background */
+    border-radius: 8%; /* Fully rounded corners */
+    padding: 8px;
+}
+
+.image-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 50%; /* Fully rounded corners */
+    padding: 4px;
+}
+
+.image-icon img {
+    width: 60px;
+    /* border-radius: 50px; */
+    padding: 2px;
+}
+.nav-item {
+    padding: 5px;
+}
+.title{
+    font-size: 18px;
+    font-weight: bold;
+    color: rgb(72, 71, 71);
+}

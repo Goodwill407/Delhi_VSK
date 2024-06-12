@@ -277,7 +277,7 @@ export class UdiseSchoolComponent {
   getShiftWiseCountGraph(Shift_ofSchoolCounts: any) {
     const TypeOfShift = Shift_ofSchoolCounts.map((item: any) => item._id)
     const ShiftWiseCount = Shift_ofSchoolCounts.map((item: any) => item.count)
-    this.ShiftfSchoolCountsGraph = this.graphService.PolarGraph();
+    this.ShiftfSchoolCountsGraph = this.graphService.PieGraph('donut','');
     const series = ShiftWiseCount;
     const labels = TypeOfShift
     this.ShiftfSchoolCountsGraph.series = [...series];

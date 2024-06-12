@@ -97,7 +97,8 @@ export class LoginPageComponent {
         if(data.user.role == 'zone'){
           this.router.navigateByUrl('/school');
         }else{
-          this.router.navigateByUrl('/content/admin-dashboard');
+          // this.router.navigateByUrl('/content/admin-dashboard');
+          this.router.navigateByUrl('/content/home');
         }
         this.loginFlag.emit(true)
       }

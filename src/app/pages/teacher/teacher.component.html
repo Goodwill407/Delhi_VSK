@@ -7,21 +7,27 @@
 <ul class="nav nav-pills mb-3 filter-box px-3 mt-3" id="pills-tab" role="tablist">
   <h2 class="fw-bold mb-0">TEACHER </h2>
   <div class="vr mx-3 opacity-100" [ngClass]="communicationServiceMobile ? 'd-none' : 'd-block'"></div>
-  <li class="nav-item" role="presentation" [ngClass]="communicationServiceMobile ? 'ms-2' : ''">
-    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button"
+  <li class="nav-item d-none" role="presentation" [ngClass]="communicationServiceMobile ? 'ms-2' : ''">
+    <button class="nav-link active" id="pills-home-tab" #tab1 data-bs-toggle="pill" data-bs-target="#pills-home" type="button"
       role="tab" aria-controls="pills-home" aria-selected="true" (click)="handleParentClick('total')">TOTAL
       TEACHERS</button>
   </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="pills-regular-tab" data-bs-toggle="pill" data-bs-target="#pills-regular" type="button"
+  <li class="nav-item d-none" role="presentation">
+    <button class="nav-link" id="pills-regular-tab" #tab2 data-bs-toggle="pill" data-bs-target="#pills-regular" type="button"
       role="tab" aria-controls="pills-regular" aria-selected="false" (click)="handleParentClick('regular')">REGULAR
       TEACHERS</button>
   </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button"
+  <li class="nav-item d-none" role="presentation">
+    <button class="nav-link" id="pills-profile-tab" #tab3 data-bs-toggle="pill" data-bs-target="#pills-profile" type="button"
       role="tab" aria-controls="pills-profile" aria-selected="false" (click)="handleParentClick('guest')">GUEST
       TEACHERS</button>
   </li>
+  <select class="form-select" [ngClass]="communicationServiceMobile ? 'mx-1 my-1' : 'w-25 ms-2'"
+        [(ngModel)]="teacherType" (change)="selectTeacherType()">
+        <option value="Total Teacher">TOTAL TEACHER</option>
+        <option value="Regular Teacher">REGULAR TEACHER</option>
+        <option value="Guest Teacher">GUEST TEACHER</option>
+    </select>
 </ul>
 
 <div class="tab-content" id="pills-tabContent">

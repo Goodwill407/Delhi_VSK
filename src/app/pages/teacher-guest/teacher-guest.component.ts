@@ -320,7 +320,7 @@ export class TeacherGuestComponent {
       }
     }
     const series = [Morning, Afternoon, Evening, General]
-    this.shiftWiseSchoolsGuest = this.graphService.PolarGraph('Shift Teachers');
+    this.shiftWiseSchoolsGuest = this.graphService.PieGraph('donut', 'Shift');
     this.shiftWiseSchoolsGuest.series = [...series];
     this.shiftWiseSchoolsGuest.labels = ['Morning', 'Afternoon', 'Evening', 'General'];
     this.shiftWiseSchoolsGuest.chart.events = {
@@ -352,6 +352,22 @@ export class TeacherGuestComponent {
   }
 
   getCategoryWiseTeacher(data: any) {
+    const customOrder = [
+      "Sarvodaya Sr. Secondary Schools",
+      "Sarvodaya Middle Schools",
+      "Sarvodaya Secondary Schools",
+      "Senior Secondary Schools",
+      "Middle Schools",
+      "Secondary Schools",
+      "Partibha Vikas Vidhyalya",
+      "School of Specialized Excellence(SOSE)",
+      "Virtual School",
+      "Primary"
+    ];
+  
+    data.sort((a: any, b: any) => {
+      return customOrder.indexOf(a.SchCategory) - customOrder.indexOf(b.SchCategory);
+    });
     this.teacherCategoryGuest = this.graphService.VerticleBarGraph();;
     const series: any = [{
       name: "Teachers",
@@ -451,7 +467,7 @@ export class TeacherGuestComponent {
 
   getSchoolTypeWiseCount(data: any) {
     data = data.filter((item: any) => item.typeOfSchool !== null && item.typeOfSchool.trim() !== "");
-    this.schoolTypeWiseCount = this.graphService.PolarGraph('School Teachers');
+    this.schoolTypeWiseCount = this.graphService.PieGraph('donut', 'Shift');
     for (let i = 0; i < data.length; i++) {
       this.schoolTypeWiseCount.series.push(data[i].teacherTypeOfSchoolWiseCount);
       this.schoolTypeWiseCount.labels.push(data[i].typeOfSchool);

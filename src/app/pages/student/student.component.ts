@@ -330,6 +330,22 @@ export class StudentComponent {
 
 
   getStudentCatogoryWise(catogoryWiseStudentCount: any) {
+    const customOrder = [
+      "Sarvodaya Sr. Secondary Schools",
+      "Sarvodaya Middle Schools",
+      "Sarvodaya Secondary Schools",
+      "Senior Secondary Schools",
+      "Middle Schools",
+      "Secondary Schools",
+      "Partibha Vikas Vidhyalya",
+      "School of Specialized Excellence(SOSE)",
+      "Virtual School",
+      "Primary"
+    ];
+  
+    catogoryWiseStudentCount.sort((a: any, b: any) => {
+      return customOrder.indexOf(a.SchCategory) - customOrder.indexOf(b.SchCategory);
+    });
     const categories = catogoryWiseStudentCount.map((category: any) => category.SchCategory);
     const counts = catogoryWiseStudentCount.map((category: any) => category.count);
     this.StudentCatogoryWiseCount = this.graphService.VerticleBarGraph()
@@ -381,7 +397,7 @@ export class StudentComponent {
     TypeOfStudSchool = TypeOfStudSchool.filter((item: any) => item.gender !== null && item.gender.trim() !== "");
     const TypeOfSchool = TypeOfStudSchool.map((item: any) => item.gender !== "" ? item.gender : "Not Identified")
     const TypeOfStudCount = TypeOfStudSchool.map((item: any) => item.count)
-    this.TypeOfStudSchool = this.graphService.PolarGraph('School Students');
+    this.TypeOfStudSchool = this.graphService.PieGraph('donut','Students');
     const series = TypeOfStudCount;
     const labels = TypeOfSchool
     this.TypeOfStudSchool.series = [...series];
@@ -412,7 +428,7 @@ export class StudentComponent {
   getStudentShiftWiseCounts(StudentShiftWiseCounts: any) {
     const shift = StudentShiftWiseCounts.map((item: any) => item.shift)
     const StudCount = StudentShiftWiseCounts.map((item: any) => item.count)
-    this.StudentShiftWiseCounts = this.graphService.PolarGraph('Shift Students');
+    this.StudentShiftWiseCounts = this.graphService.PieGraph('donut','Shift');
     const series = StudCount;
     const labels = shift
     this.StudentShiftWiseCounts.series = [...series];

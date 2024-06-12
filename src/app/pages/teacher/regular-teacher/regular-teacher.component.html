@@ -78,12 +78,12 @@
     </div>
 
 
-    <div class="column text-center">
+    <!-- <div class="column text-center">
         <h5 class="header-bg p-2"> Student & Teacher Ratio</h5>
         <img class="img-fluid mt-5" width="120" src="../../../assets/images/Dashboard/education.png"><br>
         <h3 class="mt-5 fw-semibold teacher-ratio-count">{{allData?.teacherStudentRatio | number: '1.0-0'}} : 1
             Teacher</h3>
-    </div>
+    </div> -->
 
     <div class="column text-center">
         <h5 class="header-bg p-2">Teachers Gender Ratio</h5>
@@ -97,10 +97,10 @@
     <!--  -->
     <div class="column">
         <h5 class="header-bg p-2">Shift wise Teacher</h5>
-        <apx-chart [series]="shiftWiseSchools?.series" [chart]="shiftWiseSchools?.chart"
-            [labels]="shiftWiseSchools?.labels" [fill]="shiftWiseSchools?.fill" [stroke]="shiftWiseSchools?.stroke"
-            [responsive]="shiftWiseSchools?.responsive" [legend]="shiftWiseSchools?.legend"
-            [colors]="shiftWiseSchools?.colors" [tooltip]="shiftWiseSchools?.tooltip"></apx-chart>
+        <apx-chart [series]="shiftWiseSchools?.series" [chart]="shiftWiseSchools?.chart" [dataLabels]="shiftWiseSchools?.dataLabels"
+            [plotOptions]="shiftWiseSchools?.plotOptions" [xaxis]="shiftWiseSchools?.xaxis" [yaxis]="shiftWiseSchools?.yaxis"
+            [labels]="shiftWiseSchools?.labels" [legend]="shiftWiseSchools?.legend" [colors]="shiftWiseSchools?.colors"
+            [grid]="shiftWiseSchools?.grid" [title]="shiftWiseSchools?.title" [fill]="shiftWiseSchools?.fill"></apx-chart>
     </div>
 
     <div class="column" [ngClass]="communicationServiceMobile ? '' : 'wide-height'" style="height: auto;">
@@ -112,7 +112,7 @@
     </div>
 
     <!--  -->
-    <div class="column">
+    <!-- <div class="column">
         <h5 class="header-bg p-2">Schools Management Wise Teacher</h5>
         <apx-chart [series]="schoolsManagementWiseTeacher?.series" [chart]="schoolsManagementWiseTeacher?.chart"
             [labels]="schoolsManagementWiseTeacher?.labels" [fill]="schoolsManagementWiseTeacher?.fill"
@@ -120,7 +120,7 @@
             [plotOptions]="schoolsManagementWiseTeacher?.plotOptions"
             [responsive]="schoolsManagementWiseTeacher?.responsive" [legend]="schoolsManagementWiseTeacher?.legend"
             [tooltip]="schoolsManagementWiseTeacher?.tooltip"></apx-chart>
-    </div>
+    </div> -->
 
     <div class="column">
         <h5 class="header-bg p-2">Schools Category Wise Teacher</h5>
@@ -144,9 +144,10 @@
         <h5 class="header-bg p-2">Schools Type Wise Teacher</h5>
         <apx-chart [series]="schoolTypeWiseCount?.series" [chart]="schoolTypeWiseCount?.chart"
             [labels]="schoolTypeWiseCount?.labels" [fill]="schoolTypeWiseCount?.fill"
-            [dataLabels]="schoolTypeWiseCount?.dataLabels" [plotOptions]="schoolTypeWiseCount?.plotOptions"
+            [colors]="schoolTypeWiseCount?.colors" [dataLabels]="schoolTypeWiseCount?.dataLabels"
+            [plotOptions]="schoolTypeWiseCount?.plotOptions"
             [responsive]="schoolTypeWiseCount?.responsive" [legend]="schoolTypeWiseCount?.legend"
-            [colors]="schoolTypeWiseCount?.colors" [tooltip]="schoolTypeWiseCount?.tooltip"></apx-chart>
+            [tooltip]="schoolTypeWiseCount?.tooltip"></apx-chart>
     </div>
 </div>
 
